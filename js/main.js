@@ -7,7 +7,7 @@ import {  db, doc,getDoc, query, updateDoc,
   onAuthStateChanged, 
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
-  where, getDocs, storage, collection, auth, analytics } from '../js/firebaseConfig.js';
+  where, getDocs, storage, collection, auth, analytics } from 'https://shutterworx.co/js/firebaseConfig.js';
 
 console.log("Page loaded main ?????????????");
 
@@ -491,7 +491,7 @@ async function updateFooter() {
   // ShutterWorx links and social data
   const shutterWorxLinks = {
       pages: {
-          home: { link: "https://shutterworx.co/", title: "Home", status: "active", order: 1 },
+          home: { link: "https://shutterworx.co", title: "Home", status: "active", order: 1 },
           about: { link: "https://shutterworx.co/about", title: "About Us", status: "inactive", order: 2 },
           contact: { link: "https://shutterworx.co/contact", title: "Contact", status: "active", order: 3 },
           faqs: { link: "https://shutterworx.co/FAQs", title: "FAQs", status: "active", order: 4 },

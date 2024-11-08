@@ -8,7 +8,7 @@ import {  db, doc,getDoc, query, updateDoc,
     onAuthStateChanged,
     createUserWithEmailAndPassword,
     signInWithEmailAndPassword,
-    where, getDocs, storage, collection, auth, analytics } from '../js/firebaseConfig.js';
+    where, getDocs, storage, collection, auth, analytics } from 'https://shutterworx.co/js/firebaseConfig.js';
 
 
    /* 
