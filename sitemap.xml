@@ -27,7 +27,7 @@
 
     <!-- FAQs Page -->
     <url>
-        <loc>https://shutterworx.co/faq</loc>
+        <loc>https://shutterworx.co/FAQs</loc>
         <status>Active</status>
         <order>4</order>
         <description>A list of frequently asked questions to help users find answers to common queries.</description>

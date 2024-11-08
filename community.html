@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ShutterWorx Community</title>
+    <meta name="description" content="Join the ShutterWorx community to connect with other photographers and explore events, galleries, and more.">
+    <meta name="keywords" content="ShutterWorx, photography, community, events, galleries, photographers">
+    <meta property="og:title" content="ShutterWorx Community">
+    <meta property="og:description" content="Explore photography events, galleries, and connect with members of the ShutterWorx community.">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://shutterworx.co/css/main.css">
+
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+        }
+
+        .header {
+            background: linear-gradient(90deg, #ff7e5f, #feb47b);
+            padding: 50px 0;
+            text-align: center;
+            color: white;
+        }
+
+        .header h1 {
+            font-size: 3rem;
+            font-weight: bold;
+        }
+
+        .cta-button {
+            background-color: #007bff;
+            color: #fff;
+            padding: 12px 24px;
+            font-size: 1.2rem;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+
+        .cta-button:hover {
+            background-color: #0056b3;
+        }
+
+        .community-item {
+            margin-bottom: 30px;
+        }
+
+        .community-item img {
+            max-width: 100%;
+            height: auto;
+        }
+
+        .footer {
+            background-color: #343a40;
+            color: white;
+            padding: 20px 0;
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Header -->
+    <header class="header" id="site-header">
+        <h1>ShutterWorx Community</h1>
+        <p>Explore, connect, and share with fellow photographers!</p>
+    </header>
+
+    <!-- Main Content -->
+    <main>
+        <div class="container mt-5">
+            <h3><strong>Featured Members</strong></h3>
+            <div id="members-container"></div>
+
+            <h3><strong>Upcoming Events</strong></h3>
+            <div id="events-container"></div>
+
+            <h3><strong>Public Galleries</strong></h3>
+            <div id="galleries-container"></div>
+        </div>
+    </main>
+
+
+    <!-- Footer -->
+    <footer id="site-footer">
+        <div class="social-icons">
+            <!-- Social media links dynamically added here -->
+        </div>
+        <footer-body>
+            <p>&copy; 2024 <a href="https://shutterworx.co" style="color: #fff;">ShutterWorx</a>/ TechNoob All Rights Reserved.</p>
+            <p><small><a href="https://shutterworx.co/privacy" style="color: #fff;">Privacy Policy</a> | <a href="https://shutterworx.co/terms" style="color: #fff;">Terms of Service</a></small></p>
+        </footer-body>
+    </footer>
+
+    <!-- Firebase and JavaScript -->
+    <script src="https://www.gstatic.com/firebasejs/9.0.2/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.0.2/firebase-firestore.js"></script>
+
+    <script>
+        // Initialize Firebase
+        const firebaseConfig = {
+            apiKey: "YOUR_API_KEY",
+            authDomain: "YOUR_AUTH_DOMAIN",
+            projectId: "YOUR_PROJECT_ID",
+            storageBucket: "YOUR_STORAGE_BUCKET",
+            messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
+            appId: "YOUR_APP_ID"
+        };
+        const app = firebase.initializeApp(firebaseConfig);
+        const db = firebase.firestore();
+
+        // Fetch random members, events, and galleries
+        async function fetchCommunityData() {
+            try {
+                // Fetch random members
+                const membersRef = db.collection('members');
+                const membersSnapshot = await membersRef.where('isPublic', '==', true).get();
+                const members = membersSnapshot.docs.map(doc => doc.data());
+                displayMembers(members);
+
+                // Fetch random events
+                const eventsRef = db.collection('events');
+                const eventsSnapshot = await eventsRef.where('isPublic', '==', true).get();
+                const events = eventsSnapshot.docs.map(doc => doc.data());
+                displayEvents(events);
+
+                // Fetch random galleries
+                const galleriesRef = db.collection('galleries');
+                const galleriesSnapshot = await galleriesRef.where('isPublic', '==', true).get();
+                const galleries = galleriesSnapshot.docs.map(doc => doc.data());
+                displayGalleries(galleries);
+
+            } catch (error) {
+                console.error("Error fetching community data: ", error);
+            }
+        }
+
+        // Display members
+        function displayMembers(members) {
+            const membersContainer = document.getElementById('members-container');
+            members.forEach(member => {
+                const memberDiv = document.createElement('div');
+                memberDiv.classList.add('community-item');
+                memberDiv.innerHTML = `
+                    <h5>${member.name}</h5>
+                    <p>${member.bio}</p>
+                    <img src="${member.photoUrl}" alt="${member.name}">
+                `;
+                membersContainer.appendChild(memberDiv);
+            });
+        }
+
+        // Display events
+        function displayEvents(events) {
+            const eventsContainer = document.getElementById('events-container');
+            events.forEach(event => {
+                const eventDiv = document.createElement('div');
+                eventDiv.classList.add('community-item');
+                eventDiv.innerHTML = `
+                    <h5>${event.title}</h5>
+                    <p>${event.date}</p>
+                    <p>${event.description}</p>
+                `;
+                eventsContainer.appendChild(eventDiv);
+            });
+        }
+
+        // Display galleries
+        function displayGalleries(galleries) {
+            const galleriesContainer = document.getElementById('galleries-container');
+            galleries.forEach(gallery => {
+                const galleryDiv = document.createElement('div');
+                galleryDiv.classList.add('community-item');
+                galleryDiv.innerHTML = `
+                    <h5>${gallery.title}</h5>
+                    <p>${gallery.description}</p>
+                    <img src="${gallery.coverImage}" alt="${gallery.title}">
+                `;
+                galleriesContainer.appendChild(galleryDiv);
+            });
+        }
+
+        // Run the fetchCommunityData function on page load
+        window.onload = fetchCommunityData;
+    </script>
+</body>
+
+</html>
