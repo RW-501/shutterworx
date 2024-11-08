@@ -494,7 +494,7 @@ async function updateFooter() {
           home: { link: "https://shutterworx.co", title: "Home", status: "active", order: 1 },
           about: { link: "https://shutterworx.co/about", title: "About Us", status: "inactive", order: 2 },
           contact: { link: "https://shutterworx.co/contact", title: "Contact", status: "active", order: 3 },
-          faqs: { link: "https://shutterworx.co/FAQs", title: "FAQs", status: "active", order: 4 },
+          faqs: { link: "https://shutterworx.co/FAQ", title: "FAQs", status: "active", order: 4 },
           join: { link: "https://shutterworx.co/join", title: "Join Us", status: "active", order: 5 },  
           signup: { link: "https://shutterworx.co/signup", title: "Sign Up", status: "active", order: 6 },
           terms: { link: "https://shutterworx.co/terms", title: "Terms of Service", status: "active", order: 7 },
