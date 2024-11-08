@@ -1,108 +1,169 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<!DOCTYPE html>
+<html lang="en">
 
-    <!-- Home Page -->
-    <url>
-        <loc>https://shutterworx.co/</loc>
-        <status>Active</status>
-        <order>1</order>
-        <description>The homepage of Shutterworx, where users can explore all services and information related to photography and photography events.</description>
-    </url>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us - ShutterWorx</title>
+    <meta name="description" content="Learn more about ShutterWorx, a platform dedicated to empowering photographers through event photo management and monetization.">
+    <meta name="keywords" content="ShutterWorx, photography platform, photographers, event photos, photo sales, watermarking">
+    <meta property="og:title" content="About Us - ShutterWorx">
+    <meta property="og:description" content="ShutterWorx helps photographers manage and monetize event photos through a secure platform with watermarking, galleries, and easy sales.">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://shutterworx.co/css/main.css">
 
-    <!-- About Us Page -->
-    <url>
-        <loc>https://shutterworx.co/about</loc>
-        <status>Active</status>
-        <order>2</order>
-        <description>Information about Shutterworx, its mission, vision, and team.</description>
-    </url>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+        }
 
-    <!-- Contact Page -->
-    <url>
-        <loc>https://shutterworx.co/contact</loc>
-        <status>Active</status>
-        <order>3</order>
-        <description>A page where users can find contact information and reach out to Shutterworx for inquiries.</description>
-    </url>
+        .header {
+            animation: gradientAnimation 12s ease-in-out infinite;
+            padding: 50px 0;
+            text-align: center;
+        }
 
-    <!-- FAQs Page -->
-    <url>
-        <loc>https://shutterworx.co/faq</loc>
-        <status>Active</status>
-        <order>4</order>
-        <description>A list of frequently asked questions to help users find answers to common queries.</description>
-    </url>
+        @keyframes gradientAnimation {
+            0%, 100% {
+                background: linear-gradient(90deg, #ff7e5f, #feb47b);
+            }
+            50% {
+                background: linear-gradient(90deg, #6a11cb, #2575fc);
+            }
+        }
 
-    <!-- Join Us Page -->
-    <url>
-        <loc>https://shutterworx.co/join</loc>
-        <status>Active</status>
-        <order>5</order>
-        <description>A page for users who want to become part of the Shutterworx community (currently inactive).</description>
-    </url>
+        #site-header h1 {
+            font-size: 3rem;
+            font-weight: bold;
+            color: #343a40;
+        }
 
-    <!-- Sign Up Page -->
-    <url>
-        <loc>https://shutterworx.co/signup</loc>
-        <status>Active</status>
-        <order>6</order>
-        <description>A registration page for new users to sign up for Shutterworx.</description>
-    </url>
+        #site-header p {
+            font-size: 1.2rem;
+            color: #6c757d;
+        }
 
-    <!-- Terms of Service Page -->
-    <url>
-        <loc>https://shutterworx.co/terms</loc>
-        <status>Active</status>
-        <order>7</order>
-        <description>Legal terms governing the use of Shutterworx services (currently inactive).</description>
-    </url>
+        #nav-menu ul {
+            list-style: none;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+        }
 
-    <!-- Privacy Policy Page -->
-    <url>
-        <loc>https://shutterworx.co/privacy</loc>
-        <status>Active</status>
-        <order>7</order>
-        <description>The privacy policy outlining how user data is handled (currently inactive).</description>
-    </url>
+        #nav-menu ul li a {
+            font-size: 1.1rem;
+            color: #ffffff;
+            transition: color 0.3s;
+        }
 
-    <!-- Community Page -->
-    <url>
-        <loc>https://shutterworx.co/community</loc>
-        <status>Active</status>
-        <order>8</order>
-        <description>A space for the Shutterworx community to interact, share, and collaborate (currently inactive).</description>
-    </url>
+        #nav-menu ul li a:hover {
+            color: #0056b3;
+        }
 
-    <!-- Basic Membership Page -->
-    <url>
-        <loc>https://shutterworx.co/signup-basic</loc>
-        <status>Active</status>
-        <order>9</order>
-        <description>Information about the basic membership and sign-up page.</description>
-    </url>
+        .cta-button {
+            background-color: #007bff;
+            color: #fff;
+            padding: 12px 24px;
+            font-size: 1.2rem;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
 
-    <!-- Pro Membership Page -->
-    <url>
-        <loc>https://shutterworx.co/signup-pro</loc>
-        <status>Active</status>
-        <order>10</order>
-        <description>Information about the pro membership and sign-up page.</description>
-    </url>
+        .cta-button:hover {
+            background-color: #0056b3;
+        }
 
-    <!-- Elite Membership Page -->
-    <url>
-        <loc>https://shutterworx.co/signup-elite</loc>
-        <status>Active</status>
-        <order>11</order>
-        <description>Information about the elite membership and sign-up page.</description>
-    </url>
+        footer {
+            background-color: #343a40;
+            color: #fff;
+            padding: 20px 0;
+            text-align: center;
+        }
 
-    <!-- Admin Login Page -->
-    <url>
-        <loc>https://shutterworx.co/admin-login</loc>
-        <status>Active</status>
-        <order>12</order>
-        <description>A page for administrators to log in to the backend of Shutterworx for content and site management.</description>
-    </url>
+        .social-media .social-icon {
+            width: 40px;
+            height: 40px;
+            margin: 0 10px;
+            transition: transform 0.3s;
+        }
 
-</urlset>
+        .social-icon:hover {
+            transform: scale(1.1);
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Header -->
+    <header class="header" id="site-header">
+        <h1>About Us - ShutterWorx</h1>
+        <p>Your gateway to a seamless photography experience and community!</p>
+        <nav id="nav-menu" aria-label="Main Navigation">
+            <ul>
+                <li><a href="https://shutterworx.co" aria-label="Home">Home</a></li>
+                <li><a href="https://shutterworx.co/join" aria-label="Join Now">Join Now</a></li>
+                <li><a href="https://shutterworx.co/FAQ" aria-label="FAQ">FAQ</a></li>
+                <li><a href="https://shutterworx.co/contact" aria-label="Contact">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <main>
+        <div class="container mt-5">
+            <section>
+                <h3><strong>Who We Are</strong></h3>
+                <p>ShutterWorx is a photography platform dedicated to empowering photographers to manage, protect, and monetize their event photos with ease. Our mission is to provide photographers with the tools they need to thrive in the digital age, including custom watermarking, private galleries, and seamless photo sales.</p>
+            </section>
+
+            <section>
+                <h3><strong>Our Services</strong></h3>
+                <ul>
+                    <li><strong>Upload & Watermark Photos:</strong> Custom watermarking and organization by event.</li>
+                    <li><strong>Event Galleries:</strong> Secure, private galleries with unique access codes for your clients.</li>
+                    <li><strong>Sell Photos:</strong> Easily sell photos through integrated payment systems like Stripe, with detailed earnings tracking.</li>
+                </ul>
+            </section>
+
+            <section>
+                <h3><strong>Membership Options</strong></h3>
+                <p>Choose a membership plan that best suits your needs:</p>
+                <ul>
+                    <li><strong><a href="https://shutterworx.co/signup-basic" aria-label="Basic Membership">Basic Membership</a></strong> ($29/month): Includes essential features, 5 events/month, standard watermarking.</li>
+                    <li><strong><a href="https://shutterworx.co/signup-pro" aria-label="Pro Membership">Pro Membership</a></strong> ($49/month): Custom watermarking, 20 events/month, priority support.</li>
+                    <li><strong><a href="https://shutterworx.co/signup-elite" aria-label="Elite Membership">Elite Membership</a></strong> ($99/month): Unlimited events, advanced analytics, 24/7 support.</li>
+                </ul>
+            </section>
+
+            <section>
+                <h3><strong>Get Started</strong></h3>
+                <p>Join ShutterWorx today and elevate your photography business to the next level!</p>
+                <a href="https://shutterworx.co/join" class="cta-button" aria-label="Join ShutterWorx Now">Join ShutterWorx Now</a>
+            </section>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer id="site-footer">
+        <div class="social-icons">
+            <!-- Social media links dynamically added here -->
+        </div>
+        <footer-body>
+            <p>&copy; 2024 <a href="https://shutterworx.co" style="color: #fff;">ShutterWorx</a>/ TechNoob All Rights Reserved.</p>
+            <p><small><a href="https://shutterworx.co/privacy" style="color: #fff;">Privacy Policy</a> | <a href="https://shutterworx.co/terms" style="color: #fff;">Terms of Service</a></small></p>
+        </footer-body>
+    </footer>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.0/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+    <script  type="module" src="https://shutterworx.co/js/main.js"></script>
+    <script  type="module" src="https://shutterworx.co/js/firebaseConfig.js"></script>
+
+</body>
+</html>

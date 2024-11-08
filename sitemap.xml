@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+
+    <!-- Home Page -->
+    <url>
+        <loc>https://shutterworx.co/</loc>
+        <status>Active</status>
+        <order>1</order>
+        <description>The homepage of Shutterworx, where users can explore all services and information related to photography and photography events.</description>
+    </url>
+
+    <!-- About Us Page -->
+    <url>
+        <loc>https://shutterworx.co/about</loc>
+        <status>Active</status>
+        <order>2</order>
+        <description>Information about Shutterworx, its mission, vision, and team.</description>
+    </url>
+
+    <!-- Contact Page -->
+    <url>
+        <loc>https://shutterworx.co/contact</loc>
+        <status>Active</status>
+        <order>3</order>
+        <description>A page where users can find contact information and reach out to Shutterworx for inquiries.</description>
+    </url>
+
+    <!-- FAQs Page -->
+    <url>
+        <loc>https://shutterworx.co/faq</loc>
+        <status>Active</status>
+        <order>4</order>
+        <description>A list of frequently asked questions to help users find answers to common queries.</description>
+    </url>
+
+    <!-- Join Us Page -->
+    <url>
+        <loc>https://shutterworx.co/join</loc>
+        <status>Active</status>
+        <order>5</order>
+        <description>A page for users who want to become part of the Shutterworx community (currently inactive).</description>
+    </url>
+
+    <!-- Sign Up Page -->
+    <url>
+        <loc>https://shutterworx.co/signup</loc>
+        <status>Active</status>
+        <order>6</order>
+        <description>A registration page for new users to sign up for Shutterworx.</description>
+    </url>
+
+    <!-- Terms of Service Page -->
+    <url>
+        <loc>https://shutterworx.co/terms</loc>
+        <status>Active</status>
+        <order>7</order>
+        <description>Legal terms governing the use of Shutterworx services (currently inactive).</description>
+    </url>
+
+    <!-- Privacy Policy Page -->
+    <url>
+        <loc>https://shutterworx.co/privacy</loc>
+        <status>Active</status>
+        <order>7</order>
+        <description>The privacy policy outlining how user data is handled (currently inactive).</description>
+    </url>
+
+    <!-- Community Page -->
+    <url>
+        <loc>https://shutterworx.co/community</loc>
+        <status>Active</status>
+        <order>8</order>
+        <description>A space for the Shutterworx community to interact, share, and collaborate (currently inactive).</description>
+    </url>
+
+    <!-- Basic Membership Page -->
+    <url>
+        <loc>https://shutterworx.co/signup-basic</loc>
+        <status>Active</status>
+        <order>9</order>
+        <description>Information about the basic membership and sign-up page.</description>
+    </url>
+
+    <!-- Pro Membership Page -->
+    <url>
+        <loc>https://shutterworx.co/signup-pro</loc>
+        <status>Active</status>
+        <order>10</order>
+        <description>Information about the pro membership and sign-up page.</description>
+    </url>
+
+    <!-- Elite Membership Page -->
+    <url>
+        <loc>https://shutterworx.co/signup-elite</loc>
+        <status>Active</status>
+        <order>11</order>
+        <description>Information about the elite membership and sign-up page.</description>
+    </url>
+
+    <!-- Admin Login Page -->
+    <url>
+        <loc>https://shutterworx.co/admin-login</loc>
+        <status>Active</status>
+        <order>12</order>
+        <description>A page for administrators to log in to the backend of Shutterworx for content and site management.</description>
+    </url>
+
+</urlset>
