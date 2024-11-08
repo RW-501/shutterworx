@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Purchase Image</title>
+    <link rel="stylesheet" href="css/main.css">
+    <script src="https://js.stripe.com/v3/"></script>
+    <script src="js/firebaseConfig.js"></script>
+    <script src="js/main.js" defer></script>
+    <style>
+        /* Add your CSS styling here */
+        .image-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 40px auto;
+            max-width: 600px;
+        }
+        .image-container img {
+            max-width: 100%;
+            height: auto;
+            margin-bottom: 20px;
+        }
+        .price {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+        .checkout-button {
+            background-color: #007BFF;
+            color: white;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 18px;
+        }
+        .checkout-button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+
+
+    <!-- Header -->
+    <header id="site-header">
+        <h1 id="header-title">Welcome to My Photography Site</h1>
+        <p id="header-subtitle">Capturing Moments, One Click at a Time</p>
+    
+        <!-- Toggle Button for Collapsible Navigation -->
+        <button id="menu-toggle" aria-label="Toggle navigation" aria-expanded="false" aria-controls="nav-menu">
+            <span class="bar top-bar"></span>
+            <span class="bar middle-bar"></span>
+            <span class="bar bottom-bar"></span>
+        </button>
+    
+        <nav id="nav-menu" aria-hidden="true">
+            <ul>
+                <li><a href="index">Home</a></li>
+                <li><a href="events">Events</a></li>
+                <li><a href="portfolio">Portfolio</a></li>
+                <li><a href="contact">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+    
+    <main>
+
+    <div>
+        <div class="image-container">
+            <img id="imagePreview" src="" alt="Image Preview" />
+            <div class="price" id="imagePrice">$0.00</div>
+            <button class="checkout-button" id="checkoutButton">Checkout</button>
+        </div>
+    </div>
+</main>
+    
+<!-- Footer -->
+<footer id="site-footer" class="footer">
+    <div class="footer-container">
+        <div class="social-icons">
+            <!-- Social media links dynamically added here -->
+            <a href="https://facebook.com" target="_blank" class="social-icon" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+            <a href="https://instagram.com" target="_blank" class="social-icon" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+            <a href="https://twitter.com" target="_blank" class="social-icon" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+            <a href="https://linkedin.com" target="_blank" class="social-icon" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+        </div>
+        <div class="footer-body">
+            <p>&copy; 2024 My Photography Site. All Rights Reserved.</p>
+            <p class="footer-links">
+                <small>
+                    <a href="privacy" class="footer-link">Privacy Policy</a> |
+                    <a href="terms" class="footer-link">Terms of Service</a>
+                </small>
+            </p>
+            <p><a href="admin-login" class="footer-link">Admin Login</a></p>
+        </div>
+    </div>
+</footer>
+
+<!-- Font Awesome for icons -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+    <script src="js/main.js"></script>
+
+    <!-- Include your firebaseConfig.js as a module -->
+    <script type="module">
+        import { db, doc,getDoc, query, updateDoc,
+    setDoc,     signInWithPopup,
+    GoogleAuthProvider,
+    FacebookAuthProvider,
+    OAuthProvider,
+    signOut, arrayUnion ,
+    onAuthStateChanged,
+    createUserWithEmailAndPassword,
+    signInWithEmailAndPassword,
+    where, getDocs, storage, collection, auth, analytics } from './js/firebaseConfig.js';
+
+        // Retrieve image ID from URL parameters
+        const urlParams = new URLSearchParams(window.location.search);
+        const imageId = urlParams.get('imageId');
+
+        if (imageId) {
+            // Fetch image details from Firestore
+            firebase.firestore().collection('images').doc(imageId).get()
+                .then((doc) => {
+                    if (doc.exists) {
+                        const imageData = doc.data();
+                        document.getElementById('imagePreview').src = imageData.watermarkUrl; // Watermarked image
+                        document.getElementById('imagePrice').innerText = `$${imageData.price.toFixed(2)}`;
+                    } else {
+                        console.error("No such document!");
+                    }
+                })
+                .catch((error) => {
+                    console.error("Error getting document:", error);
+                });
+        }
+
+        // Handle checkout button click
+        document.getElementById('checkoutButton').addEventListener('click', () => {
+            // Integrate Stripe Checkout
+            const stripe = Stripe('your-publishable-key'); // Replace with your Stripe publishable key
+            const price = document.getElementById('imagePrice').innerText.replace('$', '');
+
+            // Call your server to create a checkout session
+            fetch('/create-checkout-session', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ price: price, imageId: imageId })
+            })
+            .then(response => response.json())
+            .then(sessionId => {
+                return stripe.redirectToCheckout({ sessionId: sessionId });
+            })
+            .then(result => {
+                if (result.error) {
+                    alert(result.error.message);
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+        });
+    </script>
+    <script  type="module" src="./js/main.js"></script>
+</body>
+</html>

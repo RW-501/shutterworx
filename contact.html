@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us - ShutterWorxs | Professional Photography Services</title>
+
+    <!-- Meta Descriptions -->
+    <meta name="description" content="Get in touch with ShutterWorxs for top-notch photography services. Our team is here to assist you with any inquiries about our photo shoots, events, and more.">
+    <meta name="keywords" content="ShutterWorxs, photography services, contact photography, photo shoots, event photography">
+    <meta name="robots" content="index, follow">
+
+    <!-- Open Graph for Social Sharing -->
+    <meta property="og:title" content="Contact Us - ShutterWorxs">
+    <meta property="og:description" content="Reach out to ShutterWorxs for professional photography services. We're here to help!">
+    <meta property="og:image" content="https://yourwebsite.com/images/contact-page-image.jpg"> <!-- Replace with an actual URL to an image -->
+    <meta property="og:url" content="https://yourwebsite.com/contact">
+    <meta property="og:type" content="website">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Contact Us - ShutterWorxs">
+    <meta name="twitter:description" content="Contact ShutterWorxs for all your professional photography needs.">
+    <meta name="twitter:image" content="https://yourwebsite.com/images/contact-page-image.jpg"> <!-- Replace with an actual URL to an image -->
+
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://yourwebsite.com/contact">
+        <!-- Bootstrap CSS for styling -->
+        <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+        <link rel="stylesheet" href="../css/main.css">
+        
+    <style>
+        /* Styling for the contact section */
+        .contact-section {
+            background: #fff; /* White background */
+            padding: 2rem; /* Padding inside section */
+            border-radius: 10px; /* Rounded corners */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Shadow effect */
+            max-width: 600px; /* Max width for section */
+            width: 100%; /* Full width */
+            margin: auto;
+            margin-top: 2rem; /* Margin above section */
+            text-align: left; /* Left-aligned text */
+        }
+
+        /* Contact section header styling */
+        .contact-section h1 {
+            font-size: 1.8rem; /* Font size for title */
+            margin-bottom: 1rem; /* Space below title */
+            color: #333; /* Dark text color */
+        }
+
+        /* Form group styling */
+        .form-group {
+            margin-bottom: 1.2rem; /* Space between form groups */
+        }
+
+        /* Label styling */
+        .form-group label {
+            display: block; /* Block for stacking */
+            margin-bottom: 0.3rem; /* Space below label */
+            color: #555; /* Gray text for labels */
+        }
+
+        /* Input, textarea, and select styling */
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%; /* Full width */
+            padding: 0.75rem; /* Padding for inputs */
+            border: 1px solid #ddd; /* Light border */
+            border-radius: 5px; /* Rounded corners */
+            font-size: 1rem; /* Base font size */
+            transition: border-color 0.3s ease; /* Transition for border color */
+        }
+
+        /* Focus state styling for inputs */
+        .form-group input:focus,
+        .form-group textarea:focus,
+        .form-group select:focus {
+            border-color: #28a745; /* Green border on focus */
+            outline: none; /* Remove outline */
+        }
+
+        /* Textarea specific styling */
+        .form-group textarea {
+            resize: vertical; /* Allow vertical resizing */
+        }
+
+        /* Button styling */
+        .btn {
+            width: 100%; /* Full width */
+            padding: 0.75rem; /* Padding inside button */
+            background-color: #28a745; /* Green background */
+            color: white; /* White text */
+            border: none; /* No border */
+            border-radius: 5px; /* Rounded corners */
+            font-size: 1.1rem; /* Larger font size */
+            cursor: pointer; /* Pointer cursor on hover */
+            transition: background-color 0.3s ease; /* Transition for background */
+        }
+
+        /* Button hover effect */
+        .btn:hover {
+            background-color: #218838; /* Darker green on hover */
+            transform: scale(1.02); /* Slightly larger on hover */
+        }
+
+        /* Loading spinner styles */
+        .spinner {
+            display: none; /* Hidden by default */
+            margin: 1rem auto; /* Center spinner */
+            width: 40px; /* Spinner size */
+            height: 40px; /* Spinner size */
+            border: 4px solid rgba(0, 0, 0, 0.1); /* Light border */
+            border-radius: 50%; /* Circular shape */
+            border-top-color: #28a745; /* Green top */
+            animation: spin 1s linear infinite; /* Spin animation */
+        }
+
+        /* Keyframes for spinning animation */
+        @keyframes spin {
+            to { transform: rotate(360deg); } /* Rotate 360 degrees */
+        }
+
+        /* Responsive design for smaller screens */
+        @media (max-width: 600px) {
+            .contact-section {
+                padding: 1.5rem; /* Less padding on smaller screens */
+                width: 90%; /* Width for smaller screens */
+            }
+        }
+
+        /* Modal styles for thank you message */
+        .modal {
+            display: none; /* Hidden by default */
+            position: fixed; /* Fixed position */
+            z-index: 1; /* Sit on top */
+            left: 0; /* Full width */
+            top: 0; /* Full height */
+            width: 100%; /* Full width */
+            height: 100%; /* Full height */
+            overflow: auto; /* Enable scroll if needed */
+            background-color: rgb(0,0,0); /* Fallback color */
+            background-color: rgba(0,0,0,0.4); /* Black with opacity */
+            padding-top: 60px; /* Space from the top */
+        }
+
+        /* Modal content styling */
+        .modal-content {
+            background-color: #fefefe; /* White background */
+            margin: 5% auto; /* Center modal */
+            padding: 20px; /* Padding inside modal */
+            border: 1px solid #888; /* Border around modal */
+            width: 80%; /* Width for modal */
+            border-radius: 10px; /* Rounded corners */
+        }
+
+        /* Close button styling */
+        .close {
+            color: #aaa; /* Gray close button */
+            float: right; /* Right aligned */
+            font-size: 28px; /* Large font size */
+            font-weight: bold; /* Bold font */
+        }
+
+        /* Close button hover effect */
+        .close:hover,
+        .close:focus {
+            color: black; /* Change color on hover */
+            text-decoration: none; /* Remove underline */
+            cursor: pointer; /* Pointer cursor */
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header -->
+    <header id="site-header">
+        <h1 id="header-title">Welcome to ShutterWorxs</h1>
+        <p id="header-subtitle">Capturing Moments, One Click at a Time</p>
+    
+        <!-- Toggle Button for Collapsible Navigation -->
+        <button id="menu-toggle" aria-label="Toggle navigation" aria-expanded="false" aria-controls="nav-menu">
+            <span class="bar top-bar"></span>
+            <span class="bar middle-bar"></span>
+            <span class="bar bottom-bar"></span>
+        </button>
+    
+        <nav id="nav-menu" aria-hidden="true">
+            <ul>
+                <li><a href="../shutterWorx" aria-label="Home">Home</a></li>
+                <li><a href="../shutterWorx/join" aria-label="Join Now">Join Now</a></li>
+                <li><a href="../shutterWorx/FAQ" aria-label="FAQ">FAQ</a></li>
+                <li><a href="../shutterWorx/contact" aria-label="Contact">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+    
+<main>
+    <!-- Main Contact Section -->
+    <section class="contact-section">
+        <h1 id="contactFormTitle">Contact Us</h1>
+        <form id="contactForm" aria-labelledby="contact-section">
+            <div class="form-group">
+                <label for="name">Name:</label>
+                <input type="text" id="name" name="name" required aria-required="true" aria-label="Your full name">
+            </div>
+            <div class="form-group">
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" required aria-required="true" aria-label="Your email address">
+            </div>
+            <div class="form-group">
+                <label for="phone">Phone Number:</label>
+                <input type="tel" id="phone" name="phone" aria-describedby="phoneHelp" aria-label="Your phone number" maxlength="10">
+                <small id="phoneHelp">Optional: Provide your phone number for easier communication.</small>
+            </div>
+            <div class="form-group">
+                <label for="subject">Subject:</label>
+                <input type="text" id="subject" name="subject" aria-label="Subject of your message">
+            </div>
+            <div class="form-group">
+                <label for="messageType">Message Type:</label>
+                <select id="messageType" name="messageType" aria-label="Type of your message">
+                    <option value="general">General Inquiry</option>
+                    <option value="website-bugs">Website Bugs</option>
+                    <option value="sign-up">Sign-Up Questions</option>
+                    <option value="business">Business Inquiries</option>
+                     <option value="feedback">Feedback</option>
+                </select>
+                
+            </div>
+            <div class="form-group">
+                <label for="message">Message:</label>
+                <textarea id="message" name="message" rows="5" required aria-label="Your message" maxlength="500"></textarea>
+            </div>
+            <button id="submitButton" type="submit" class="btn">Send Message</button>
+        </form>
+        <div id="formResponse"></div>
+    </section>
+
+
+  
+    <!-- Thank You Modal -->
+    <div id="thankYouModal" class="modal">
+        <div class="modal-content">
+            <span class="close" id="closeModal">&times;</span>
+            <h2>Thank You!</h2>
+            <p>Your message has been sent successfully. We will get back to you shortly!</p>
+        </div>
+    </div>
+</main>
+
+      <!-- Footer -->
+      <footer id="site-footer">
+        <div class="social-icons">
+            <!-- Social media links dynamically added here -->
+        </div>
+        <footer-body>
+            <p>&copy; 2024 <a href="../shutterWorx/" style="color: #fff;">ShutterWorx</a>/ TechNoob All Rights Reserved.</p>
+            <p><small><a href="privacy" style="color: #fff;">Privacy Policy</a> | <a href="terms" style="color: #fff;">Terms of Service</a></small></p>
+        </footer-body>
+    </footer>
+
+<!-- Font Awesome for icons -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+<script  type="module" src="../js/main.js"></script>
+<script  type="module" src="../js/firebaseConfig.js"></script>
+
+
+<!-- Include your firebaseConfig.js as a module -->
+<script type="module">
+    import {  db, doc,getDoc, query, updateDoc,
+    setDoc,     signInWithPopup,
+    GoogleAuthProvider,
+    FacebookAuthProvider,
+    OAuthProvider,arrayUnion ,
+    signOut, addDoc , increment,
+    onAuthStateChanged,
+    createUserWithEmailAndPassword,
+    signInWithEmailAndPassword,
+    where, getDocs, storage, collection, auth, analytics  } from '../js/firebaseConfig.js';
+
+    
+
+
+
+
+ 
+
+
+
+
+
+        let viewStartTime;
+
+// Function to set the last internal page in sessionStorage before navigating
+function setInternalPageSource() {
+    sessionStorage.setItem('lastInternalPage', window.location.href);
+}
+
+// Function to start tracking the view time when the page loads
+function startViewTimer() {
+    viewStartTime = Date.now();
+    //console.log("viewStartTime   ",viewStartTime);
+
+}
+
+
+
+    // Determine the source
+    const externalSource = document.referrer && !document.referrer.includes(window.location.origin)
+        ? document.referrer
+        : null;
+    const internalSource = sessionStorage.getItem('lastInternalPage');
+    const viewSource = externalSource || internalSource || 'Direct Visit';
+
+
+
+    let ipAddress;
+let locationData;
+
+document.addEventListener("DOMContentLoaded", async () => {
+    try {
+        const { ip, location } = await window.userLocationService.getUserIPAndLocation();
+
+        ipAddress = ip;
+        locationData = location;
+    } catch (error) {
+        console.error("Error fetching user IP and location:", error);
+    }
+});
+
+
+
+
+
+  document.getElementById("contactForm").addEventListener("submit", async function (event) {
+    event.preventDefault();
+    window.showLoadingSpinner(false);
+    document.getElementById("submitButton").disabled = true; // Disable button
+document.getElementById("submitButton").innerHTML = "Sending..."; // Show loading state
+
+    // Retrieve and sanitize input values
+    const name = sanitizeInput(document.getElementById('name').value);
+    const email = sanitizeInput(document.getElementById('email').value);
+    const phone = sanitizeInput(document.getElementById('phone').value);
+    const subject = sanitizeInput(document.getElementById('subject').value);
+    const messageType = document.getElementById('messageType').value;
+    const message = sanitizeInput(document.getElementById('message').value);
+
+ 
+
+
+    // Input validation
+    if (!isSafeInput(name) || !isSafeInput(email) || !isSafeInput(phone) || !isSafeInput(subject) || !isSafeInput(message)) {
+        const formResponse = document.getElementById("formResponse");
+        formResponse.textContent = 'Invalid characters detected in form. Please remove any special characters.';
+        formResponse.style.color = 'red';
+        window.hideLoadingSpinner();
+        return;
+    }
+
+    // Prepare data for Firestore
+    const formData = {
+        name,
+        email,
+        phone,
+        subject,
+        messageType,
+        message,
+        externalSource,
+        internalSource,
+        ipAddress: ipAddress,                       // ID of the user or 'guest'
+            city: locationData.city,
+            zipCode: locationData.zip,
+    state: locationData.state,
+    country: locationData.country,
+        contact_form: "Contact Page",
+        timestamp: new Date(),
+    };
+
+    try {
+        // Save to Firestore
+        const messagesCollectionRef = collection(db, 'Contact_ShutterWorx');
+        await addDoc(messagesCollectionRef, formData);
+
+        // Success feedback
+        window.showToast('Message sent successfully!', 'success');
+        document.getElementById("contactForm").reset();
+        document.getElementById("formResponse").innerHTML = "";
+
+        // Display the thank you modal
+        document.getElementById("thankYouModal").style.display = "block";
+    } catch (error) {
+        console.error("Error sending message: ", error);
+        const formResponse = document.getElementById("formResponse");
+        formResponse.textContent = 'There was an error sending your message. Please try again.';
+        formResponse.style.color = 'red';
+    } finally {
+        window.hideLoadingSpinner();
+        document.getElementById("submitButton").innerHTML = "Sent"; // Show loading state
+        setTimeout(() => {
+    modal.style.display = "none";
+}, 5000); // Close modal after 5 seconds
+
+    }
+});
+
+// Close modal
+document.getElementById("closeModal").onclick = function () {
+    document.getElementById("thankYouModal").style.display = "none";
+};
+
+// Close the modal when clicking anywhere outside of it
+window.onclick = function(event) {
+    const modal = document.getElementById("thankYouModal"); // Reference to the modal
+    if (event.target === modal) {
+        modal.style.display = "none"; // Hide the modal if the click was outside
+    }
+}
+
+    
+
+ function updateViewData() {
+    // Calculate view duration in seconds
+    const viewEndTime = Date.now();
+    const durationOfView = (viewEndTime - viewStartTime) / 1000; // Convert ms to seconds
+
+    // Validate IP address before proceeding
+    if (!ipAddress) {
+        console.error("Missing IP address. View data not recorded.");
+        return;
+    }
+
+
+    // Prepare the data to be updated
+    const viewData = {
+        contactViewedBy: {
+            viewDate: new Date().toISOString(),
+            viewMethod: navigator.userAgentData?.mobile ? "mobile" : "desktop",
+            durationOfView: (Date.now() - viewStartTime) / 1000,
+            viewSource: viewSource
+        },
+        ipAddress: ipAddress,
+        city: locationData.city,
+        zipCode: locationData.zip,
+        state: locationData.state,
+        country: locationData.country,
+        contactViews: increment(1)
+    };
+
+    console.log("viewData   ",viewData);
+
+    // Update or create the job view data in the Jobs collection
+    setDoc(doc(db, 'guest-ShutterWorx', ipAddress), viewData, { merge: true });
+      //  console.log("Job view data updated successfully.");
+ 
+}
+
+
+// Event listener to set last internal page before navigating away
+window.addEventListener('beforeunload', setInternalPageSource);
+
+// Event listener to start timing the view when the page loads
+window.addEventListener('load', startViewTimer);
+
+// Event listener to record data when the page is unloaded
+document.addEventListener('visibilitychange', () => {
+    if (document.visibilityState === 'hidden') {
+        updateViewData();
+    }
+});
+
+     
+  
+/*
+setTimeout(() => {
+    updateViewData();
+}, 5000); // Close modal after 5 seconds
+*/
+
+</script>
+
+</body>
+</html>
+

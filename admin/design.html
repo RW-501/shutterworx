@@ -1,0 +1,780 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Design and Customization - Admin</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../css/admin.css">
+     <style>
+        /* Live preview styles */
+        #live-preview {
+            border: 1px solid #ccc;
+            padding: 20px;
+            margin-top: 20px;
+            transition: background-color 0.3s, color 0.3s, font-family 0.3s;
+        }
+
+        .collapsible {
+    margin: 10px 0;
+}
+
+.collapsible-header {
+    background-color: #f1f1f1;
+    color: #444;
+    cursor: pointer;
+    padding: 10px;
+    width: 100%;
+    border: none;
+    text-align: left;
+    outline: none;
+    font-size: 16px;
+}
+
+.collapsible-content {
+    display: none; /* Hidden by default */
+    overflow: hidden;
+    padding: 0 10px;
+    background-color: #f9f9f9;
+    border: 1px solid #ccc;
+}
+
+.active {
+    background-color: #ccc; /* Change background color when active */
+}
+
+    </style>
+</head>
+<body>
+    
+    <header class="admin-header">
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <a class="navbar-brand" href="#">Design and Customization</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item"><a class="nav-link" href="/">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="../admin/dashboard">Dashboard</a></li>
+                    <li class="nav-item"><a class="nav-link" href="design.html">Design</a></li>
+                    <li class="nav-item"><a class="nav-link" href="images.html">Images</a></li>
+                    <li class="nav-item"><a class="nav-link" href="analytics.html">Analytics</a></li>
+                    <li class="nav-item"><a class="nav-link" href="purchases.html">Purchases</a></li>
+                    <li class="nav-item"><a class="nav-link" href="appointments.html">Appointments</a></li>
+                    <li class="nav-item"><a class="nav-link" href="settings.html">Settings</a></li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <div class="container-fluid admin-container">
+        <main class="dashboard-content">
+          <h1 class="page-title">Design and Customization</h1>
+      
+          <!-- Collapsible Website Design Area -->
+          <div class="collapsible">
+            <button class="collapsible-header btn btn-info" aria-expanded="false" aria-controls="design-form-content">Website Design</button>
+            <div class="collapsible-content" id="design-form-content">
+              <form id="design-form" class="form-design">
+                <div class="form-group">
+                  <label for="themeColor">Theme Color:</label>
+                  <input type="color" id="themeColor" name="themeColor" required aria-label="Choose the main theme color">
+                  <span class="tooltip">Choose the main theme color</span>
+                </div>
+      
+                <div class="form-group">
+                  <label for="fontSelect">Font:</label>
+                  <select id="fontSelect" name="fontSelect" aria-label="Select the website font">
+                    <option value="Arial">Arial</option>
+                    <option value="Courier New">Courier New</option>
+                    <option value="Georgia">Georgia</option>
+                    <option value="Times New Roman">Times New Roman</option>
+                    <option value="Verdana">Verdana</option>
+                  </select>
+                  <span class="tooltip">Select the website font</span>
+                </div>
+      
+                <!-- Navigation Design Section -->
+                <h2>Navigation Design</h2>
+                <div class="form-group">
+                  <label for="navFontColor">Navigation Font Color:</label>
+                  <input type="color" id="navFontColor" name="navFontColor" aria-label="Font color for navigation">
+                  <span class="tooltip">Font color for navigation</span>
+                </div>
+      
+                <div class="form-group">
+                  <label for="navBackgroundColor">Navigation Background Color:</label>
+                  <input type="color" id="navBackgroundColor" name="navBackgroundColor" aria-label="Background color for navigation">
+                  <span class="tooltip">Background color for navigation</span>
+                </div>
+      
+                <!-- Footer Design Section -->
+                <h2>Footer Design</h2>
+                <div class="form-group">
+                  <label for="footerFontColor">Footer Font Color:</label>
+                  <input type="color" id="footerFontColor" name="footerFontColor" aria-label="Font color for the footer">
+                  <span class="tooltip">Font color for the footer</span>
+                </div>
+      
+                <div class="form-group">
+                  <label for="footerBackgroundColor">Footer Background Color:</label>
+                  <input type="color" id="footerBackgroundColor" name="footerBackgroundColor" aria-label="Background color for the footer">
+                  <span class="tooltip">Background color for the footer</span>
+                </div>
+      
+                <div class="form-group form-check">
+                  <input type="checkbox" id="showTime" name="showTime" aria-label="Show current time in the footer" class="form-check-input">
+                  <label for="showTime" class="form-check-label">Display Time in Footer</label>
+                  <span class="tooltip">Show current time in the footer</span>
+                </div>
+                <button id="saveDesignSettings" class="btn btn-primary" onclick="saveDesignSettings()">Update Design</button>
+</form>
+</div>
+</div>
+
+
+          <!-- Collapsible Header, Spinner -->
+          <div class="collapsible">
+            <button class="collapsible-header btn btn-info" aria-expanded="false" aria-controls="header-footer-nav-content">Header, Footer, Nav, and Social Media Links</button>
+            <div class="collapsible-content" id="header-footer-nav-content">
+<form>
+                <!-- Loading Spinner Design Section -->
+                <h2>Loading Spinner Design</h2>
+                <div class="form-group">
+                  <label for="backgroundColor">Background Color:</label>
+                  <input type="color" id="backgroundColor" name="backgroundColor" required aria-label="Loading spinner background color">
+                </div>
+                <div class="form-group">
+                  <label for="cameraBodyColor">Camera Body Color:</label>
+                  <input type="color" id="cameraBodyColor" name="cameraBodyColor" required aria-label="Camera body color">
+                </div>
+                <div class="form-group">
+                  <label for="shutterButtonColor">Shutter Button Color:</label>
+                  <input type="color" id="shutterButtonColor" name="shutterButtonColor" required aria-label="Shutter button color">
+                </div>
+                <div class="form-group">
+                  <label for="flashColor">Flash Color:</label>
+                  <input type="color" id="flashColor" name="flashColor" required aria-label="Flash color">
+                </div>
+                <div class="form-group">
+                  <label for="lensColor">Lens Color:</label>
+                  <input type="color" id="lensColor" name="lensColor" required aria-label="Lens color">
+                </div>
+                <div class="form-group">
+                  <label for="lensBorderColor">Lens Border Color:</label>
+                  <input type="color" id="lensBorderColor" name="lensBorderColor" required aria-label="Lens border color">
+                </div>
+                <div class="form-group">
+                  <label for="spinnerCircleColor">Spinner Circle Color:</label>
+                  <input type="color" id="spinnerCircleColor" name="spinnerCircleColor" required aria-label="Spinner circle color">
+                </div>
+      
+                <button id="spinnerColorForm" class="btn btn-primary"  onclick="updateSpinner()">Update Spinner</button>
+                <button type="button" class="btn btn-secondary" id="reset-button">Reset</button>
+              </form>
+              <div id="colorResponse" class="mt-2"></div>
+            </div>
+          </div>
+      
+          <!-- Collapsible Header, Footer, Nav, and Social Media Links -->
+          <div class="collapsible">
+            <button class="collapsible-header btn btn-info" aria-expanded="false" aria-controls="header-footer-nav-content">Header, Footer, Nav, and Social Media Links</button>
+            <div class="collapsible-content" id="header-footer-nav-content">
+              <h2>Header</h2>
+              <p><strong>Title:</strong> <span id="header-title"></span></p>
+              <p><strong>Subtitle:</strong> <span id="header-subtitle"></span></p>
+      
+              <h2>Navigation Menu</h2>
+              <ul id="navigation-menu"></ul>
+      
+              <!-- Social Media Links Form -->
+              <h3>Social Media Links</h3>
+              <div class="form-group">
+                <label for="facebook">Facebook:</label>
+                <input type="text" id="facebook" placeholder="Facebook URL" aria-label="Facebook URL">
+              </div>
+              <div class="form-group">
+                <label for="instagram">Instagram:</label>
+                <input type="text" id="instagram" placeholder="Instagram URL" aria-label="Instagram URL">
+              </div>
+              <div class="form-group">
+                <label for="twitter">Twitter:</label>
+                <input type="text" id="twitter" placeholder="Twitter URL" aria-label="Twitter URL">
+              </div>
+              <div class="form-group">
+                <label for="additionalLink">Additional Website:</label>
+                <input type="text" id="additionalLink" placeholder="Other URL (e.g., LinkedIn, YouTube)" aria-label="Additional website URL">
+              </div>
+      
+              <!-- Footer Content -->
+              <h3>Footer Content</h3>
+              <div class="form-group">
+                <label for="footerText">Footer Text:</label>
+                <textarea id="footerText" placeholder="Footer copyright text" aria-label="Footer copyright text"></textarea>
+              </div>
+      
+              <button id="updateSettings" class="btn btn-primary" onclick="saveSocialMediaAndFooter()">Update Header & Footer</button> 
+            </div>
+          </div>
+      
+          <!-- Collapsible Home Page Design -->
+          <div class="collapsible">
+            <button class="collapsible-header btn btn-info" aria-expanded="false" aria-controls="home-page-design-content">Home Page Design</button>
+            <div class="collapsible-content" id="home-page-design-content">
+              <h1>Home Page Settings</h1>
+      
+              <!-- Display Current Settings -->
+              <section>
+                <h2>Gallery</h2>
+                <p><strong>Title:</strong> <span id="gallery-title"></span></p>
+      
+                <h2>Testimonials</h2>
+                <p><strong>Title:</strong> <span id="testimonials-title"></span></p>
+                <textarea id="testimonials"  aria-label="testimonials"></textarea>
+                <div id="testimonial-list"></div>
+      
+                <h2>Contact</h2>
+                <p><strong>Title:</strong> <span id="contact-title"></span></p>
+              </section>
+      
+              <!-- Update Settings Form -->
+              <form id="settingsForm" class="form-settings">
+                <h2>Update Settings</h2>
+                <div class="form-group">
+                  <label for="headerTitle">Header Title:</label>
+                  <input type="text" id="headerTitle" required aria-label="Header title">
+                </div>
+                <div class="form-group">
+                  <label for="headerSubtitle">Header Subtitle:</label>
+                  <input type="text" id="headerSubtitle" required aria-label="Header subtitle">
+                </div>
+                <div class="form-group">
+                  <label for="navigationItems">Navigation Items (comma-separated):</label>
+                  <input type="text" id="navigationItems" required aria-label="Navigation items">
+                </div>
+                <div class="form-group">
+                  <label for="galleryTitle">Gallery Title:</label>
+                  <input type="text" id="galleryTitle" required aria-label="Gallery title">
+                </div>
+                <div class="form-group">
+                  <label for="testimonialsTitle">Testimonials Title:</label>
+                  <input type="text" id="testimonialsTitle" required aria-label="Testimonials title">
+                </div>
+                <div class="form-group">
+                  <label for="contactTitle">Contact Title:</label>
+                  <input type="text" id="contactTitle" required aria-label="Contact title">
+                </div>
+                <button id="update_home_page"  class="btn btn-primary">Update Home Page</button>
+              </form>
+            </div>
+          </div>
+      
+          <!-- Collapsible Site Settings -->
+          <div class="collapsible">
+            <button class="collapsible-header btn btn-info" aria-expanded="false" aria-controls="site-settings-content">Site Settings</button>
+            <div class="collapsible-content" id="site-settings-content">
+              <h2>Site Settings</h2>
+              <div class="form-group">
+                <label for="siteName">Site Name:</label>
+                <input type="text" id="siteName" required aria-label="Site name">
+              </div>
+              <div class="form-group">
+                <label for="siteURL">Site URL:</label>
+                <input type="url" id="siteURL" required aria-label="Site URL">
+              </div>
+              <div class="form-group">
+                <label for="siteDescription">Site Description:</label>
+                <textarea id="siteDescription" required aria-label="Site description"></textarea>
+              </div>
+              <div class="form-group">
+                <label for="siteKeywords">Site Keywords (comma-separated):</label>
+                <input type="text" id="siteKeywords" required aria-label="Site keywords">
+              </div>
+              <button id="updateSiteSettings" class="btn btn-primary" onclick="updateSiteSettings()">Save Settings</button>
+            </div>
+          </div>
+ 
+    
+            <!-- Collapsible Events Page Area -->
+            <div class="collapsible">
+                <button class="collapsible-header">Events Page</button>
+                <div class="collapsible-content">
+                    <h1>Events Page Settings</h1>
+    
+                    <!-- Section to display current event settings -->
+                   
+                </div>
+            </div>
+
+
+        
+    
+            <!-- Collapsible Portfolio Page Area -->
+            <div class="collapsible">
+                <button class="collapsible-header">Portfolio Page</button>
+                <div class="collapsible-content">
+                    <h1>Portfolio Page Settings</h1>
+    
+                    <!-- Section to display current Portfolio settings -->
+                   
+                </div>
+            </div>
+
+        </main>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <!-- Footer -->
+    <footer id="site-footer">
+      <div class="social-icons">
+          <!-- Social media links dynamically added here -->
+      </div>
+      <footer-body>
+          <p>&copy; 2024 <a href="./shutterWorx/" style="color: #fff;">ShutterWorx</a>/ TechNoob All Rights Reserved.</p>
+          <p><small><a href="privacy" style="color: #fff;">Privacy Policy</a> | <a href="terms" style="color: #fff;">Terms of Service</a></small></p>
+      </footer-body>
+  </footer>
+
+    
+        <!-- Include your firebaseConfig.js as a module -->
+        <script type="module">
+            import {  db, doc,getDoc, query, updateDoc,
+    setDoc,     signInWithPopup,
+    GoogleAuthProvider,
+    FacebookAuthProvider,
+    OAuthProvider,
+    signOut,
+    onAuthStateChanged,
+    createUserWithEmailAndPassword,
+    signInWithEmailAndPassword,
+    where, getDocs, storage, collection, auth, analytics } from '../js/firebaseConfig.js';
+     
+
+
+
+    async function applyLoadingSpinnerColors() {
+    const defaultSettings = {
+        backgroundColor: "rgba(255, 255, 255, 0.8)",
+        cameraBodyColor: "#333",
+        shutterButtonColor: "#007bff",
+        flashColor: "#999",
+        lensColor: "#222",
+        lensBorderColor: "#666",
+        spinnerCircleColor: "#007bff"
+    };
+
+    try {
+        const docRef = firestore.collection("settings").doc("loading_spinner");
+        const doc = await docRef.get();
+
+        if (doc.exists) {
+            const data = doc.data();
+            // Apply settings from database or fall back to default settings
+            const {
+                backgroundColor = defaultSettings.backgroundColor,
+                cameraBodyColor = defaultSettings.cameraBodyColor,
+                shutterButtonColor = defaultSettings.shutterButtonColor,
+                flashColor = defaultSettings.flashColor,
+                lensColor = defaultSettings.lensColor,
+                lensBorderColor = defaultSettings.lensBorderColor,
+                spinnerCircleColor = defaultSettings.spinnerCircleColor
+            } = data || {};
+
+            document.querySelector("#loadingContainer").style.backgroundColor = backgroundColor;
+            document.querySelector(".camera-icon").style.backgroundColor = cameraBodyColor;
+            document.querySelector(".camera-icon::before").style.backgroundColor = shutterButtonColor;
+            document.querySelector(".camera-icon::after").style.backgroundColor = flashColor;
+            document.querySelector(".lens").style.backgroundColor = lensColor;
+            document.querySelector(".lens").style.borderColor = lensBorderColor;
+            document.querySelector(".spinner-circle").style.borderTopColor = spinnerCircleColor;
+
+        } else {
+            console.warn("No color settings found in 'loading_spinner' document. Applying default settings.");
+            applyDefaultSettings(defaultSettings);
+        }
+    } catch (error) {
+        console.error("Error fetching color settings:", error);
+        applyDefaultSettings(defaultSettings);
+    }
+}
+
+// Function to apply default settings
+function applyDefaultSettings(settings) {
+    document.querySelector("#loadingContainer").style.backgroundColor = settings.backgroundColor;
+    document.querySelector(".camera-icon").style.backgroundColor = settings.cameraBodyColor;
+    document.querySelector(".camera-icon::before").style.backgroundColor = settings.shutterButtonColor;
+    document.querySelector(".camera-icon::after").style.backgroundColor = settings.flashColor;
+    document.querySelector(".lens").style.backgroundColor = settings.lensColor;
+    document.querySelector(".lens").style.borderColor = settings.lensBorderColor;
+    document.querySelector(".spinner-circle").style.borderTopColor = settings.spinnerCircleColor;
+}
+
+// Event Listener for Color Settings Form Submission
+
+async function updateSpinner(){
+    let colorSettings = {
+        backgroundColor: document.getElementById('backgroundColor').value,
+        cameraBodyColor: document.getElementById('cameraBodyColor').value,
+        shutterButtonColor: document.getElementById('shutterButtonColor').value,
+        flashColor: document.getElementById('flashColor').value,
+        lensColor: document.getElementById('lensColor').value,
+        lensBorderColor: document.getElementById('lensBorderColor').value,
+        spinnerCircleColor: document.getElementById('spinnerCircleColor').value
+    };
+    
+    try {
+        // Reference the document in the "settings" collection
+        const docRef = doc(db, "settings", "loading_spinner");
+        
+         colorSettings = {
+    themeColor: "#ff5733", // Example color settings
+    navFontColor: "#ffffff",
+    navBackgroundColor: "#333333",
+    footerFontColor: "#ffffff",
+    footerBackgroundColor: "#444444",
+    font: "Arial, sans-serif"
+};
+
+        // Update the document with color settings
+        await setDoc(docRef, colorSettings, { merge: true });
+        
+        showToast("Color settings updated successfully!","success");
+        alert("Color settings updated successfully!","success");
+        
+        // Call this function to apply the updated colors, if defined
+        applyLoadingSpinnerColors(); 
+
+    } catch (error) {
+        console.error("Error updating color settings:", error);
+        showToast("Error updating color settings.","error");
+        alert("Error updating color settings:", error);
+
+    }
+};
+
+// Call to apply initial colors on page load
+window.onload = applyLoadingSpinnerColors;
+
+// Function to Apply Styles Dynamically to Preview
+function applyStyles(styles) {
+    const livePreview = document.getElementById('live-preview');
+    livePreview.style.backgroundColor = styles.themeColor;
+    livePreview.style.color = styles.navFontColor;
+    livePreview.style.fontFamily = styles.font;
+    document.querySelector('nav').style.backgroundColor = styles.navBackgroundColor;
+    document.querySelector('nav').style.color = styles.navFontColor;
+    document.querySelector('footer').style.backgroundColor = styles.footerBackgroundColor;
+    document.querySelector('footer').style.color = styles.footerFontColor;
+}
+
+
+// Function to load and apply styles
+async function loadStyles() {
+  try {
+    // Reference the document in the Firestore database
+    const docRef = doc(db, "settings", "siteDesign");
+    const docSnap = await getDoc(docRef);
+
+    if (docSnap.exists()) {
+      const styles = docSnap.data();
+
+      // Apply styles to elements on the page
+      applyStyles(styles);
+      
+      // Populate style settings in the form
+     // Safely set values for theme settings with null checks
+document.getElementById("themeColor").value = styles?.themeColor ?? '';
+document.getElementById("navFontColor").value = styles?.navFontColor ?? '';
+document.getElementById("navBackgroundColor").value = styles?.navBackgroundColor ?? '';
+document.getElementById("footerFontColor").value = styles?.footerFontColor ?? '';
+document.getElementById("footerBackgroundColor").value = styles?.footerBackgroundColor ?? '';
+document.getElementById("fontSelect").value = styles?.font ?? '';
+} else {
+      showToast("No style settings found.", "error");
+    }
+  } catch (error) {
+    showToast("Failed to load styles. Please try again.", "error");
+    console.error("Error loading styles:", error);
+  }
+}
+
+
+
+
+async function loadSocialMediaAndFooter() {
+  try {
+    // Get the social media document
+    const socialMediaRef = doc(db, "settings", "social_media");
+    const socialMediaSnap = await getDoc(socialMediaRef);
+    
+    if (socialMediaSnap.exists()) {
+      const socialData = socialMediaSnap.data();
+      document.getElementById("facebook").value = socialData.facebook || "";
+      document.getElementById("instagram").value = socialData.instagram || "";
+      document.getElementById("twitter").value = socialData.twitter || "";
+      document.getElementById("additionalLink").value = socialData.additionalLink || "";
+    }
+
+    // Get the header and footer document
+    const headerFooterRef = doc(db, "settings", "header_footer");
+    const headerFooterSnap = await getDoc(headerFooterRef);
+
+    if (headerFooterSnap.exists()) {
+      const h_f_Data = headerFooterSnap.data();
+      document.getElementById("header-title").innerText = h_f_Data?.headerTitle ?? "Default Title";
+document.getElementById("header-subtitle").innerText = h_f_Data?.headerSubtitle ?? "Default Subtitle";
+
+      // Update navigation menu
+      const navMenu = document.getElementById("navigation-menu");
+      navMenu.innerHTML = ''; // Clear existing menu
+   // Check if h_f_Data and navigationItems are defined and is an array
+if (h_f_Data && Array.isArray(h_f_Data.navigationItems)) {
+    h_f_Data.navigationItems.forEach(item => {
+        // Ensure that item is a valid string
+        if (typeof item === 'string' && item.trim() !== '') {
+            const li = document.createElement("li");
+            li.innerText = item;
+            navMenu.appendChild(li);
+        } else {
+            console.warn(`Invalid navigation item: '${item}'`);
+        }
+    });
+} else {
+    console.warn('Navigation items are not available.');
+}
+
+
+      document.getElementById("footerText").value = h_f_Data?.copyrightText ?? "";
+    }
+  } catch (error) {
+    showToast("Failed to load social media and footer settings.", "error");
+    console.error("Error loading social media and footer settings:", error);
+  }
+}
+
+// Save Design Settings to Firestore
+async function saveDesignSettings(event) {
+    event.preventDefault();
+    const designSettings = {
+        themeColor: document.getElementById('themeColor').value,
+        font: document.getElementById('fontSelect').value,
+        navFontColor: document.getElementById('navFontColor').value,
+        navBackgroundColor: document.getElementById('navBackgroundColor').value,
+        footerFontColor: document.getElementById('footerFontColor').value,
+        footerBackgroundColor: document.getElementById('footerBackgroundColor').value,
+        showTime: document.getElementById('showTime').checked
+    };
+
+    try {
+        await db.collection('settings').doc('siteDesign').set(designSettings, { merge: true });
+        showToast("Design settings updated successfully!", "success");
+    } catch (error) {
+        showToast("Failed to update design settings. Please try again.", "error");
+        console.error("Error saving design settings:", error);
+    }
+}
+
+// Save Social Media Links and Footer Content to Firestore
+async function saveSocialMediaAndFooter() {
+    try {
+        const socialMediaData = {
+            facebook: document.getElementById("facebook").value,
+            instagram: document.getElementById("instagram").value,
+            twitter: document.getElementById("twitter").value,
+            additionalLink: document.getElementById("additionalLink").value
+        };
+
+        const headerFooterData = {
+            copyrightText: document.getElementById("footerText").value,
+            headerTitle: document.getElementById('header-title').value,
+            headerSubtitle: document.getElementById('header-subtitle').value,
+            navigationItems: document.getElementById('navigationItems').value.split(',').map(item => item.trim())
+        };
+
+        await db.collection("settings").doc("social_media").set(socialMediaData, { merge: true });
+        await db.collection("settings").doc("header_footer").set(headerFooterData, { merge: true });
+
+        showToast("Social media and footer settings updated!", "success");
+    } catch (error) {
+        showToast("Failed to update settings. Please try again.", "error");
+        console.error("Error saving social media and footer settings:", error);
+    }
+}
+
+
+// Initialize on page load
+window.onload = function() {
+    loadStyles();
+    loadSocialMediaAndFooter();
+};
+
+
+
+
+
+
+// Handle form submission to update settings
+document
+  .getElementById("update_home_page")
+  .addEventListener("click", async function (event) {
+      // Prevent the default action if necessary
+      event.preventDefault(); // Only if this is a button in a form
+
+    const galleryTitle = document.getElementById("galleryTitle").value;
+    const testimonialsTitle = document.getElementById("testimonialsTitle")
+      .value;
+    const testimonials = document
+      .getElementById("testimonials")
+      .value.split(",")
+      .map((item) => item.trim());
+    const contactTitle = document.getElementById("contactTitle").value;
+
+    const updatedData = {
+      galleryTitle,
+      testimonialsTitle,
+      testimonials,
+      contactTitle
+    };
+
+    // Update Firestore document
+    try {
+      await db
+        .collection("settings")
+        .doc("home_Page")
+        .set(updatedData, { merge: true });
+      document.getElementById("responseMessage").innerText =
+        "Settings updated successfully!";
+      loadSettings(); // Reload settings to show updated values
+    } catch (error) {
+      console.error("Error updating settings:", error);
+      document.getElementById("responseMessage").innerText =
+        "Error updating settings.";
+    }
+  });
+
+
+
+
+
+
+
+
+
+      // ** Toggle Collapsible Section and Save Inputs to Local Storage **
+document.querySelectorAll('.collapsible-header').forEach((header, index) => {
+    header.addEventListener('click', function () {
+        // Toggle the active class on the header
+        this.classList.toggle('active');
+
+        // Toggle the display of the collapsible content
+        const content = this.nextElementSibling;
+        content.style.display = content.style.display === "block" ? "none" : "block";
+
+        // Save input values to local storage on each toggle
+        saveInputsToLocalStorage(index);
+    });
+});
+
+// ** Function to Save All Inputs within a Collapsible Section to Local Storage **
+function saveInputsToLocalStorage(sectionIndex) {
+    const section = document.querySelectorAll('.collapsible-header')[sectionIndex].nextElementSibling;
+    const inputs = section.querySelectorAll('input, select, textarea'); // Collect all form elements
+
+    inputs.forEach(input => {
+        if (input.type === 'checkbox') {
+            localStorage.setItem(input.id, input.checked); // Save checkbox state
+        } else {
+            localStorage.setItem(input.id, input.value); // Save text, select, textarea values
+        }
+    });
+}
+
+// ** Load Saved Inputs and Collapsible State on Page Load **
+document.addEventListener("DOMContentLoaded", loadInputsFromLocalStorage);
+
+// ** Load Inputs from Local Storage on Page Load ** 
+function loadInputsFromLocalStorage() {
+    document.querySelectorAll('.collapsible-header').forEach((header, index) => {
+        const section = header.nextElementSibling;
+        const inputs = section.querySelectorAll('input, select, textarea');
+
+        inputs.forEach(input => {
+            if (input.type === 'checkbox') {
+                input.checked = JSON.parse(localStorage.getItem(input.id)) || false;
+            } else {
+                input.value = localStorage.getItem(input.id) || '';
+            }
+        });
+
+        // Restore the collapsible open/close state from local storage
+        const isExpanded = localStorage.getItem(`sectionExpanded_${index}`) === "true";
+        section.style.display = isExpanded ? "block" : "none";
+        if (isExpanded) header.classList.add('active');
+    });
+}
+
+// ** Store Input Values in Local Storage on Change **
+function storeInputsInLocalStorage() {
+    document.querySelectorAll('.collapsible-header').forEach((header, index) => {
+        const section = header.nextElementSibling;
+        const inputs = section.querySelectorAll('input, select, textarea');
+
+        inputs.forEach(input => {
+            if (input.type === 'checkbox') {
+                localStorage.setItem(input.id, input.checked);
+            } else {
+                localStorage.setItem(input.id, input.value);
+            }
+        });
+
+        // Store the collapsible expanded/collapsed state
+        const isExpanded = header.classList.contains('active');
+        localStorage.setItem(`sectionExpanded_${index}`, isExpanded);
+    });
+}
+
+// ** Event Listener for Collapsible Headers **
+const collapsibleHeaders = document.querySelectorAll('.collapsible-header');
+
+collapsibleHeaders.forEach(header => {
+    header.addEventListener('click', function() {
+        const content = this.nextElementSibling;
+        const isExpanded = this.getAttribute('aria-expanded') === 'true';
+
+        // Toggle the expanded state
+        this.setAttribute('aria-expanded', !isExpanded);
+        content.style.display = isExpanded ? 'none' : 'block';
+        
+        // Update class for active header
+        if (!isExpanded) {
+            header.classList.add('active');
+        } else {
+            header.classList.remove('active');
+        }
+    });
+});
+
+// ** Load inputs and state on page load **
+document.addEventListener('DOMContentLoaded', loadInputsFromLocalStorage);
+
+// ** Store inputs on change **
+document.querySelectorAll('input, select, textarea').forEach(input => {
+    input.addEventListener('change', storeInputsInLocalStorage);
+});
+
+
+
+
+
+    </script>
+  
+  <script  type="module" src="../js/main.js"></script>
+  <script  type="module" src="../js/admin.js"></script>
+
+</body>
+</html>

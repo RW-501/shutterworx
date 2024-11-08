@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Settings - Raw Photography</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../css/admin.css">
+   </head>
+<body>
+
+    <header class="admin-header">
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <a class="navbar-brand" href="#">Site Configuration</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item"><a class="nav-link" href="/">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="../admin/dashboard">Dashboard</a></li>
+                    <li class="nav-item"><a class="nav-link" href="design.html">Design</a></li>
+                    <li class="nav-item"><a class="nav-link" href="images.html">Images</a></li>
+                    <li class="nav-item"><a class="nav-link" href="analytics.html">Analytics</a></li>
+                    <li class="nav-item"><a class="nav-link" href="purchases.html">Purchases</a></li>
+                    <li class="nav-item"><a class="nav-link" href="appointments.html">Appointments</a></li>
+                    <li class="nav-item"><a class="nav-link" href="settings.html">Settings</a></li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    
+    <div class="container-fluid admin-container">
+
+
+        <main class="dashboard-content">
+            
+            <section>
+            <h2>Site Configuration</h2>
+            <form id="settingsForm">
+                <div>
+                    <label for="themeColor">Theme Color:</label>
+                    <input type="color" id="themeColor" name="themeColor" required>
+                </div>
+                <div>
+                    <label for="font">Font:</label>
+                    <input type="text" id="font" name="font" required>
+                </div>
+                <div>
+                    <label for="homePageText">Homepage Text:</label>
+                    <textarea id="homePageText" name="homePageText" rows="4" required></textarea>
+                </div>
+                <div>
+                    <label for="contactEmail">Contact Email:</label>
+                    <input type="email" id="contactEmail" name="contactEmail" required>
+                </div>
+                <div>
+                    <label for="stripeApiKey">Stripe API Key:</label>
+                    <input type="text" id="stripeApiKey" name="stripeApiKey" required>
+                </div>
+                <button type="submit">Save Settings</button>
+            </form>
+        </section>
+
+        <section>
+            <h2>Site Preferences</h2>
+            <form id="preferencesForm">
+                <div>
+                    <label for="enablePurchases">Enable Purchases:</label>
+                    <input type="checkbox" id="enablePurchases" name="enablePurchases">
+                </div>
+                <div>
+                    <label for="downloadProtection">Enable Download Protection:</label>
+                    <input type="checkbox" id="downloadProtection" name="downloadProtection">
+                </div>
+                <button type="submit">Update Preferences</button>
+            </form>
+        </section>
+        
+        <section>
+            <h2>Password Management</h2>
+            <form id="passwordForm">
+                <div>
+                    <label for="currentPassword">Current Password:</label>
+                    <input type="password" id="currentPassword" name="currentPassword" required>
+                </div>
+                <div>
+                    <label for="newPassword">New Password:</label>
+                    <input type="password" id="newPassword" name="newPassword" required>
+                </div>
+                <div>
+                    <label for="confirmPassword">Confirm New Password:</label>
+                    <input type="password" id="confirmPassword" name="confirmPassword" required>
+                </div>
+                <button type="submit">Change Password</button>
+            </form>
+        </section>
+    </main>
+</div>
+
+
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <!-- Footer -->
+    <footer id="site-footer">
+        <div class="social-icons">
+            <!-- Social media links dynamically added here -->
+        </div>
+        <footer-body>
+            <p>&copy; 2024 <a href="./shutterWorx/" style="color: #fff;">ShutterWorx</a>/ TechNoob All Rights Reserved.</p>
+            <p><small><a href="privacy" style="color: #fff;">Privacy Policy</a> | <a href="terms" style="color: #fff;">Terms of Service</a></small></p>
+        </footer-body>
+    </footer>
+
+
+
+    <!-- Include your firebaseConfig.js as a module -->
+    <script type="module">
+        import {  db, doc,getDoc, query, updateDoc,
+    setDoc,     signInWithPopup,
+    GoogleAuthProvider,
+    FacebookAuthProvider,
+    OAuthProvider,
+    signOut,
+    onAuthStateChanged,
+    createUserWithEmailAndPassword,
+    signInWithEmailAndPassword,
+    where, getDocs, storage, collection, auth, analytics } from '../js/firebaseConfig.js';
+    
+    
+        // Load current settings on page load
+        document.addEventListener("DOMContentLoaded", function() {
+            loadSettings();
+        });
+
+        // Load settings function
+        function loadSettings() {
+            const settingsRef = db.collection('settings').doc('global');
+            settingsRef.get().then((doc) => {
+                if (doc.exists) {
+                    const data = doc.data();
+                    document.getElementById('themeColor').value = data.themeColor || "#ffffff";
+                    document.getElementById('font').value = data.font || "Arial";
+                    document.getElementById('homePageText').value = data.homePageText || "";
+                    document.getElementById('contactEmail').value = data.contactEmail || "";
+                    document.getElementById('stripeApiKey').value = data.stripeApiKey || "";
+                    document.getElementById('enablePurchases').checked = data.enablePurchases || false;
+                    document.getElementById('downloadProtection').checked = data.downloadProtection || false;
+                }
+            });
+        }
+
+        // Save settings form submission
+        document.getElementById('settingsForm').onsubmit = function(event) {
+            event.preventDefault();
+            const settingsData = {
+                themeColor: document.getElementById('themeColor').value,
+                font: document.getElementById('font').value,
+                homePageText: document.getElementById('homePageText').value,
+                contactEmail: document.getElementById('contactEmail').value,
+                stripeApiKey: document.getElementById('stripeApiKey').value
+            };
+            db.collection('settings').doc('global').set(settingsData)
+                .then(() => alert('Settings saved successfully!'))
+                .catch((error) => console.error('Error saving settings:', error));
+        };
+
+        // Save preferences form submission
+        document.getElementById('preferencesForm').onsubmit = function(event) {
+            event.preventDefault();
+            const preferencesData = {
+                enablePurchases: document.getElementById('enablePurchases').checked,
+                downloadProtection: document.getElementById('downloadProtection').checked
+            };
+            db.collection('settings').doc('global').update(preferencesData)
+                .then(() => alert('Preferences updated successfully!'))
+                .catch((error) => console.error('Error updating preferences:', error));
+        };
+
+        // Change password form submission
+        document.getElementById('passwordForm').onsubmit = function(event) {
+            event.preventDefault();
+            const currentPassword = document.getElementById('currentPassword').value;
+            const newPassword = document.getElementById('newPassword').value;
+            const confirmPassword = document.getElementById('confirmPassword').value;
+
+            if (newPassword !== confirmPassword) {
+                alert("New passwords do not match!");
+                return;
+            }
+
+            // Add password change logic using Firebase Authentication
+            const user = firebase.auth().currentUser;
+            if (user) {
+                const credential = firebase.auth.EmailAuthProvider.credential(user.email, currentPassword);
+                user.reauthenticateWithCredential(credential).then(() => {
+                    user.updatePassword(newPassword).then(() => {
+                        alert('Password changed successfully!');
+                    }).catch((error) => {
+                        console.error('Error changing password:', error);
+                    });
+                }).catch((error) => {
+                    console.error('Error reauthenticating user:', error);
+                });
+            }
+        };
+    </script>
+  
+  <script  type="module" src="../js/main.js"></script>
+  <script  type="module" src="../js/admin.js"></script>
+
+</body>
+</html>

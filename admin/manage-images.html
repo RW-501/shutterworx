@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage Images</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../css/admin.css">
+</head>
+<body>
+
+    <!-- Header -->
+    <header class="bg-dark text-white text-center py-3">
+        <h1>Photography Management System</h1>
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+            <a class="navbar-brand" href="../index.html">Home</a>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item"><a class="nav-link" href="../admin/dashboard.html">Dashboard</a></li>
+                    <li class="nav-item"><a class="nav-link" href="../admin/manage-images.html">Manage Images</a></li>
+                    <li class="nav-item"><a class="nav-link" href="../admin/manage-events.html">Manage Events</a></li>
+                    <li class="nav-item"><a class="nav-link" href="../admin/analytics.html">Analytics</a></li>
+                    <li class="nav-item"><a class="nav-link" href="../admin/settings.html">Settings</a></li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+    <div class="container-fluid admin-container">
+
+
+        <main class="dashboard-content">
+    <div class="container my-4">
+        <h2 class="my-4">Manage Images</h2>
+        
+        <form id="imageForm" class="mb-4">
+            <div class="form-group">
+                <label for="imageUpload">Upload Image</label>
+                <input type="file" class="form-control-file" id="imageUpload" accept="image/*" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Upload Image</button>
+        </form>
+
+        <h2>Uploaded Images</h2>
+        <div class="row" id="imageGallery">
+            <!-- Uploaded images will be displayed here -->
+        </div>
+    </div>
+</main>
+</div>
+
+
+
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <!-- Footer -->
+    <footer id="site-footer">
+        <div class="social-icons">
+            <!-- Social media links dynamically added here -->
+        </div>
+        <footer-body>
+            <p>&copy; 2024 <a href="./shutterWorx/" style="color: #fff;">ShutterWorx</a>/ TechNoob All Rights Reserved.</p>
+            <p><small><a href="privacy" style="color: #fff;">Privacy Policy</a> | <a href="terms" style="color: #fff;">Terms of Service</a></small></p>
+        </footer-body>
+    </footer>
+
+
+    <!-- Include your firebaseConfig.js as a module -->
+    <script type="module">
+        import {  db, doc,getDoc, query, updateDoc,
+    setDoc,     signInWithPopup,
+    GoogleAuthProvider,
+    FacebookAuthProvider,
+    OAuthProvider,
+    signOut,
+    onAuthStateChanged,
+    createUserWithEmailAndPassword,
+    signInWithEmailAndPassword,
+    where, getDocs, storage, collection, auth, analytics } from '../js/firebaseConfig.js';
+   
+        
+        // JavaScript to handle image upload and display
+        document.getElementById('imageForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const imageUpload = document.getElementById('imageUpload').files[0];
+
+            // Create a new FileReader to display the image
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const gallery = document.getElementById('imageGallery');
+                const newCol = document.createElement('div');
+                newCol.className = 'col-md-4 mb-4';
+                newCol.innerHTML = `<div class="card">
+                                        <img src="${e.target.result}" class="card-img-top" alt="Uploaded Image">
+                                        <div class="card-body">
+                                            <button class="btn btn-danger btn-sm" onclick="this.parentElement.parentElement.parentElement.remove();">Delete</button>
+                                        </div>
+                                    </div>`;
+                gallery.appendChild(newCol);
+            };
+            reader.readAsDataURL(imageUpload);
+
+            // Clear the file input
+            this.reset();
+        });
+    </script>
+
+  
+<script  type="module" src="../js/main.js"></script>
+<script  type="module" src="../js/admin.js"></script>
+
+</body>
+</html>

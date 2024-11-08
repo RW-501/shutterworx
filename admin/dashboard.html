@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+ <title>Admin Dashboard</title>
+ <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+ <link rel="stylesheet" href="../css/admin.css">
+
+</head>
+
+<body>
+    <header class="admin-header">
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <a class="navbar-brand" href="#">Admin Dashboard</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item"><a class="nav-link" href="../index">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="../admin/dashboard">Dashboard</a></li>
+                    <li class="nav-item"><a class="nav-link" href="design">Design</a></li>
+                    <li class="nav-item"><a class="nav-link" href="images">Images</a></li>
+                    <li class="nav-item"><a class="nav-link" href="analytics">Analytics</a></li>
+                    <li class="nav-item"><a class="nav-link" href="purchases">Purchases</a></li>
+                    <li class="nav-item"><a class="nav-link" href="appointments">Appointments</a></li>
+                    <li class="nav-item"><a class="nav-link" href="settings">Settings</a></li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+    <div class="container-fluid admin-container">
+
+
+        <main class="dashboard-content">
+            <section class="key-metrics my-4">
+                <h2>Key Metrics</h2>
+                <div class="row" id="metrics">
+                    <div class="col-md-3">
+                        <div class="card text-center">
+                            <div class="card-body">
+                                <h5 class="card-title">Total Images</h5>
+                                <p class="card-text" id="totalImages">Loading...</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="card text-center">
+                            <div class="card-body">
+                                <h5 class="card-title">Total Purchases</h5>
+                                <p class="card-text" id="totalPurchases">Loading...</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="card text-center">
+                            <div class="card-body">
+                                <h5 class="card-title">Pending Appointments</h5>
+                                <p class="card-text" id="pendingAppointments">Loading...</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="card text-center">
+                            <div class="card-body">
+                                <h5 class="card-title">Total Revenue</h5>
+                                <p class="card-text" id="totalRevenue">Loading...</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="recent-activity my-4">
+                <h2>Recent Activity</h2>
+                <ul class="list-group" id="recentPurchases">
+                    <li class="list-group-item">Loading recent purchases...</li>
+                </ul>
+            </section>
+        </main>
+
+ 
+</div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <!-- Footer -->
+    <footer id="site-footer">
+        <div class="social-icons">
+            <!-- Social media links dynamically added here -->
+        </div>
+        <footer-body>
+            <p>&copy; 2024 <a href="./shutterWorx/" style="color: #fff;">ShutterWorx</a>/ TechNoob All Rights Reserved.</p>
+            <p><small><a href="privacy" style="color: #fff;">Privacy Policy</a> | <a href="terms" style="color: #fff;">Terms of Service</a></small></p>
+        </footer-body>
+    </footer>
+
+
+
+    <!-- Include your firebaseConfig.js as a module -->
+    <script type="module">
+        import { db, doc,getDoc, query, updateDoc,
+    setDoc,     signInWithPopup,
+    GoogleAuthProvider,
+    FacebookAuthProvider,
+    OAuthProvider,
+    signOut,
+    onAuthStateChanged,
+    createUserWithEmailAndPassword,
+    signInWithEmailAndPassword,
+    where, getDocs, storage, collection, auth, analytics } from '../js/firebaseConfig.js';
+
+    
+
+// Function to fetch and display metrics
+async function fetchMetrics() {
+    try {
+        const metricsDocRef = doc(db, 'analytics', 'metrics');
+        const docSnap = await getDoc(metricsDocRef);
+
+        if (docSnap.exists()) {
+            const metrics = docSnap.data();
+            document.getElementById('totalImages').innerText = metrics.totalImages || 0;
+            document.getElementById('totalPurchases').innerText = metrics.totalPurchases || 0;
+            document.getElementById('pendingAppointments').innerText = metrics.pendingAppointments || 0;
+            document.getElementById('totalRevenue').innerText = `$${metrics.totalRevenue || 0}`;
+        } else {
+            console.log("No metrics document found!");
+        }
+    } catch (error) {
+        console.error('Error fetching metrics:', error);
+    }
+}
+
+// Function to fetch recent purchases
+async function fetchRecentPurchases() {
+    try {
+        const purchasesQuery = query(
+            collection(db, 'purchases'),
+            orderBy('datePurchased', 'desc'),
+            limit(5)
+        );
+
+        const querySnapshot = await getDocs(purchasesQuery);
+        const purchasesList = document.getElementById('recentPurchases');
+        purchasesList.innerHTML = ''; // Clear existing list
+
+        querySnapshot.forEach((doc) => {
+            const purchase = doc.data();
+            const listItem = document.createElement('li');
+            listItem.className = 'list-group-item';
+            listItem.textContent = `${purchase.userId} purchased ${purchase.imageId} on ${new Date(purchase.datePurchased).toLocaleDateString()}`;
+            purchasesList.appendChild(listItem);
+        });
+    } catch (error) {
+        console.error('Error fetching purchases:', error);
+    }
+}
+
+
+
+// Call the functions on page load
+fetchMetrics();
+fetchRecentPurchases();
+
+
+
+
+
+        </script>
+  
+  <script  type="module" src="../js/main.js"></script>
+  <script  type="module" src="../js/admin.js"></script>
+
+</body>
+
+</html>

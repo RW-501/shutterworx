@@ -1,0 +1,396 @@
+[
+    {
+        "question": "How do I create an account?",
+        "answer": "To create an account, click on 'Sign Up' and fill out the required information.",
+        "topic": "Account"
+    },
+    {
+        "question": "What is ShutterWorx?",
+        "answer": "ShutterWorx is a platform for photographers to showcase their work.",
+        "topic": "General"
+    },
+    {
+        "question": "How do I reset my password?",
+        "answer": "Click on 'Forgot Password' at the login page, and follow the instructions.",
+        "topic": "Account"
+    },
+    {
+        "question": "Can I change my subscription plan?",
+        "answer": "Yes, go to 'Account Settings' and select 'Change Plan'.",
+        "topic": "Subscription"
+    },
+    {
+        "question": "How do I contact support?",
+        "answer": "Use the 'Contact Us' page or email support@shutterworx.com.",
+        "topic": "Support"
+    },
+    {
+            "question": "How do I upload photos?",
+            "answer": "Go to 'My Gallery' and click on 'Upload Photos' to add images to your portfolio.",
+            "topic": "Gallery"
+        },
+        {
+            "question": "What file formats are supported for uploads?",
+            "answer": "We support JPEG, PNG, and TIFF formats for photo uploads.",
+            "topic": "Gallery"
+        },
+        {
+            "question": "How do I edit my profile information?",
+            "answer": "Visit 'Profile Settings' and edit your details, including bio, profile picture, and contact info.",
+            "topic": "Account"
+        },
+        {
+            "question": "How can I delete my account?",
+            "answer": "To delete your account, go to 'Account Settings' and click on 'Delete Account'. Note that this action is irreversible.",
+            "topic": "Account"
+        },
+        {
+            "question": "Can I download photos from other photographers?",
+            "answer": "Currently, downloads are only available for images you’ve purchased or if the photographer has allowed it.",
+            "topic": "Gallery"
+        },
+        {
+            "question": "Is there a mobile app for ShutterWorx?",
+            "answer": "Yes, ShutterWorx is available on both iOS and Android for easy access to your gallery and account.",
+            "topic": "General"
+        },
+        {
+            "question": "How do I report a copyright issue?",
+            "answer": "If you find a copyright violation, please report it via the 'Report' button on the photo or email us at legal@shutterworx.com.",
+            "topic": "Legal"
+        },
+        {
+            "question": "How can I upgrade to a premium subscription?",
+            "answer": "Go to 'Subscription' in your account settings and choose a premium plan that suits you.",
+            "topic": "Subscription"
+        },
+        {
+            "question": "Can I track views on my photos?",
+            "answer": "Yes, premium users can see detailed analytics, including views and favorites for each photo.",
+            "topic": "Analytics"
+        },
+        {
+            "question": "How do I connect with other photographers?",
+            "answer": "You can follow photographers, comment on their photos, and message them if they have enabled messaging.",
+            "topic": "Community"
+        },
+        {
+            "question": "How can I purchase prints of photos?",
+            "answer": "Select the photo you want and click on 'Purchase Print'. Follow the prompts to choose print size and delivery options.",
+            "topic": "Purchase"
+        },
+        {
+            "question": "Can I organize my photos into albums?",
+            "answer": "Yes, go to 'My Gallery' and select 'Create Album' to organize your photos by theme, event, or style.",
+            "topic": "Gallery"
+        },
+        {
+            "question": "How do I add keywords to my photos?",
+            "answer": "In the upload or edit photo screen, add relevant keywords to make your photos easier to find in searches.",
+            "topic": "SEO"
+        },
+        {
+            "question": "What payment methods are accepted?",
+            "answer": "We accept credit/debit cards, PayPal, and Apple Pay.",
+            "topic": "Payments"
+        },
+        {
+            "question": "How do I cancel my subscription?",
+            "answer": "Go to 'Subscription Settings' and click 'Cancel Subscription'. Your plan will remain active until the end of the billing period.",
+            "topic": "Subscription"
+        },
+        {
+            "question": "What are the benefits of a premium subscription?",
+            "answer": "Premium subscribers enjoy unlimited uploads, advanced analytics, and priority support.",
+            "topic": "Subscription"
+        },
+        {
+            "question": "Can I limit who sees my photos?",
+            "answer": "Yes, you can set individual photo privacy in 'Edit Photo' options to control visibility.",
+            "topic": "Privacy"
+        },
+        {
+            "question": "How do I reset my photo privacy settings?",
+            "answer": "In 'My Gallery', select the photos you want to modify, and choose 'Edit Privacy' to adjust visibility.",
+            "topic": "Privacy"
+        },
+        {
+            "question": "How do I update my billing information?",
+            "answer": "Go to 'Account Settings' and select 'Billing' to update your payment method and billing details.",
+            "topic": "Payments"
+        },
+        {
+            "question": "Is my data secure on ShutterWorx?",
+            "answer": "Yes, we use encryption and other security measures to protect your data.",
+            "topic": "Privacy"
+        },
+        {
+            "question": "Can I recover deleted photos?",
+            "answer": "Deleted photos are retained in 'Trash' for 30 days before permanent deletion. You can restore them within this period.",
+            "topic": "Gallery"
+        },
+        {
+            "question": "Do I need a subscription to upload photos?",
+            "answer": "Free users have limited uploads, while premium users can upload unlimited photos.",
+            "topic": "Subscription"
+        },
+        {
+            "question": "How do I join the ShutterWorx community?",
+            "answer": "Create an account, start uploading photos, and engage with other photographers by following and commenting on their work.",
+            "topic": "Community"
+        },
+        {
+            "question": "Can I get notified of new comments on my photos?",
+            "answer": "Yes, enable notifications in your account settings to receive updates on comments, likes, and messages.",
+            "topic": "Notifications"
+        },
+        {
+            "question": "What is the refund policy for photo purchases?",
+            "answer": "Refunds are granted in cases of technical issues. Please contact support within 30 days of purchase.",
+            "topic": "Purchase"
+        },
+        {
+            "question": "How do I change the language on the website?",
+            "answer": "In 'Account Settings', select 'Language Preferences' to choose your preferred language.",
+            "topic": "General"
+        },
+        {
+            "question": "Can I get featured on the home page?",
+            "answer": "Featured photos are selected by our team based on quality, creativity, and relevance. Follow our blog for tips on getting featured!",
+            "topic": "Community"
+        },
+        {
+            "question": "How can I sign up for newsletters?",
+            "answer": "Go to 'Account Settings' and enable 'Newsletter' to receive updates and tips.",
+            "topic": "General"
+        },
+        {
+            "question": "How do I report an issue with a photo?",
+            "answer": "Click the 'Report' button below the photo, and select the reason for reporting.",
+            "topic": "Support"
+        },
+        {
+            "question": "How do I deactivate my account temporarily?",
+            "answer": "Go to 'Account Settings' and select 'Deactivate Account' to temporarily disable it. You can reactivate it anytime by logging in again.",
+            "topic": "Account"
+        },
+        {
+            "question": "What should I do if my payment fails?",
+            "answer": "If your payment fails, try a different method or contact support for assistance.",
+            "topic": "Payments"
+        },
+        {
+            "question": "How do I filter photos by category?",
+            "answer": "Use the 'Filter' option in the gallery to sort photos by category, such as nature, portraits, or events.",
+            "topic": "Gallery"
+        },
+        {
+            "question": "Can I add watermarks to my photos?",
+            "answer": "Yes, premium users can enable watermarks on photos before uploading them.",
+            "topic": "Gallery"
+        },
+        {
+            "question": "How do I search for specific photographers?",
+            "answer": "Use the 'Search' bar and enter the photographer's name to find their profile.",
+            "topic": "General"
+        },
+        {
+            "question": "Can I download my transaction history?",
+            "answer": "Yes, go to 'Billing' in 'Account Settings' and click on 'Download History'.",
+            "topic": "Payments"
+        },
+         {
+                "question": "How do I enable notifications for new followers?",
+                "answer": "Go to 'Account Settings' and enable 'Follow Notifications' to receive alerts when new users follow you.",
+                "topic": "Notifications"
+            },
+            {
+                "question": "Can I upload videos as well?",
+                "answer": "Currently, ShutterWorx supports only photo uploads. Video support is in development.",
+                "topic": "Gallery"
+            },
+            {
+                "question": "How do I manage my photo tags?",
+                "answer": "In 'My Gallery', select a photo, click 'Edit Tags', and add or remove tags to improve searchability.",
+                "topic": "SEO"
+            },
+            {
+                "question": "What happens if I exceed my upload limit?",
+                "answer": "If you reach your upload limit, you can either delete existing photos or upgrade to a higher plan for additional storage.",
+                "topic": "Subscription"
+            },
+            {
+                "question": "How can I link my social media accounts?",
+                "answer": "Visit 'Account Settings' > 'Social Links' to add links to your Facebook, Instagram, and Twitter profiles.",
+                "topic": "General"
+            },
+            {
+                "question": "What if my purchased print arrives damaged?",
+                "answer": "If your print is damaged upon arrival, contact our support within 7 days to arrange a replacement.",
+                "topic": "Purchase"
+            },
+            {
+                "question": "How do I mark a photo as a favorite?",
+                "answer": "Click the heart icon below any photo to add it to your 'Favorites'. You can view these in your profile.",
+                "topic": "Community"
+            },
+            {
+                "question": "Can I see who viewed my profile?",
+                "answer": "Yes, Pro and Elite members can access profile view analytics.",
+                "topic": "Analytics"
+            },
+            {
+                "question": "How do I create an event gallery?",
+                "answer": "Under 'My Gallery', select 'Create Event', add photos, and set privacy options for each gallery.",
+                "topic": "Gallery"
+            },
+            {
+                "question": "Can I recover my photos if I cancel my subscription?",
+                "answer": "If you cancel, your photos remain accessible but are hidden from public view until you reactivate your subscription.",
+                "topic": "Subscription"
+            },
+            {
+                "question": "How do I connect with clients for commissioned work?",
+                "answer": "Use our 'Hire Me' button on your profile or enable direct messaging to discuss projects with potential clients.",
+                "topic": "General"
+            },
+            {
+                "question": "What is the difference between the Basic and Pro plans?",
+                "answer": "Pro includes customizable watermarks, a built-in photo editor, and priority support, among other features.",
+                "topic": "Subscription"
+            },
+            {
+                "question": "Is there a way to schedule posts?",
+                "answer": "Currently, post scheduling is available for Elite members under 'My Gallery' > 'Schedule Upload'.",
+                "topic": "Gallery"
+            },
+            {
+                "question": "How do I receive payment for my sales?",
+                "answer": "Earnings from photo sales are transferred to your linked Stripe account weekly.",
+                "topic": "Payments"
+            },
+            {
+                "question": "Can I upload photos in bulk?",
+                "answer": "Yes, premium members have access to bulk uploads for faster photo management.",
+                "topic": "Gallery"
+            },
+                {
+                    "question": "How do I connect with clients for commissioned work?",
+                    "answer": "Use our 'Hire Me' button on your profile, where clients can contact you directly to discuss potential projects.",
+                    "topic": "Community"
+                },
+                {
+                    "question": "Can I adjust the brightness and contrast of my photos?",
+                    "answer": "Yes, use our photo editor in 'My Gallery' to adjust brightness, contrast, and other settings before uploading.",
+                    "topic": "Gallery"
+                },
+                {
+                    "question": "How do I add a bio to my profile?",
+                    "answer": "Go to 'Profile Settings' and enter a brief description about yourself in the 'Bio' section to share your story with others.",
+                    "topic": "Account"
+                },
+                {
+                    "question": "How do I get featured as Photographer of the Month?",
+                    "answer": "Our team selects one Photographer of the Month based on creativity, engagement, and quality. To improve your chances, actively share high-quality work and engage with the community.",
+                    "topic": "Community"
+                },
+                {
+                    "question": "Can I limit which clients see my rates?",
+                    "answer": "Yes, you can choose to make your rates visible only to clients who contact you directly, or set up custom visibility options in 'Hire Me' settings.",
+                    "topic": "Privacy"
+                },
+                {
+                    "question": "What happens to my account if I don't log in for a long time?",
+                    "answer": "Inactive accounts are preserved for two years. After that, you may be notified before any data changes are made.",
+                    "topic": "Account"
+                },
+                {
+                    "question": "How can I be alerted about upcoming photography events?",
+                    "answer": "Enable event notifications in 'Settings' to receive alerts about local and global photography events.",
+                    "topic": "Notifications"
+                },
+                {
+                    "question": "What is the maximum file size for photo uploads?",
+                    "answer": "Each photo upload is limited to 50MB. If your file exceeds this, try compressing it before uploading.",
+                    "topic": "Gallery"
+                },
+                {
+                    "question": "Can I see analytics for each photo, like likes and shares?",
+                    "answer": "Yes, premium users can view detailed analytics including likes, shares, and viewer engagement metrics.",
+                    "topic": "Analytics"
+                },
+                {
+                    "question": "How do I protect my photos from unauthorized downloads?",
+                    "answer": "Enable the watermark option in your upload settings. Premium users can also restrict downloads for added protection.",
+                    "topic": "Privacy"
+                },
+                    {
+                        "question": "How do I navigate through the photo gallery?",
+                        "answer": "To view our gallery, simply click on the 'Gallery' section from the top navigation bar. You can filter images by album or event, and click on any image for a closer view.",
+                        "topic": "Gallery"
+                    },
+                    {
+                        "question": "How can I find upcoming events and photo shoots?",
+                        "answer": "Go to the 'Events' page in the navigation menu, where you will find a list of all upcoming events and photo shoots with details and booking options.",
+                        "topic": "Events"
+                    },
+                    {
+                        "question": "Can I search for specific photos in the gallery?",
+                        "answer": "Yes, use the search bar at the top of the gallery page to search by keywords, tags, or event names to quickly find the photos you're looking for.",
+                        "topic": "Gallery"
+                    },
+                    {
+                        "question": "How do I purchase prints or digital copies of photos?",
+                        "answer": "Visit the 'Purchase' page, where you can browse images, select your preferred format (print or digital), and proceed with the checkout process.",
+                        "topic": "Purchase"
+                    },
+                    {
+                        "question": "How do I manage my personal gallery?",
+                        "answer": "Once logged in, you can go to 'My Gallery' under your profile to manage your photos, including uploading new ones and editing existing images.",
+                        "topic": "Gallery"
+                    },
+                    {
+                        "question": "Where can I find the admin panel to manage content?",
+                        "answer": "To access the admin panel, use the 'Admin Login' page from the footer. Once logged in, you can manage content, events, images, and more from the admin dashboard.",
+                        "topic": "Admin"
+                    },
+                    {
+                        "question": "How do I schedule an appointment for a photo session?",
+                        "answer": "Head to the 'Appointments' page in the admin section to view and manage available slots. Users can book appointments directly from this page.",
+                        "topic": "Appointments"
+                    },
+                    {
+                        "question": "Can I view detailed analytics about my photo sales?",
+                        "answer": "Yes, the 'Analytics' page in the admin section provides detailed insights into photo views, purchases, and overall performance.",
+                        "topic": "Admin"
+                    },
+                    {
+                        "question": "How do I find the FAQ page?",
+                        "answer": "You can find the FAQ page by clicking on the 'FAQ' link in the footer or by navigating directly to the FAQ section from the main menu.",
+                        "topic": "Navigation"
+                    },
+                    {
+                        "question": "What should I do if I can't find what I'm looking for?",
+                        "answer": "If you're having trouble navigating the site or finding specific information, use the 'Support' page to contact us for assistance.",
+                        "topic": "Support"
+                    },
+                    {
+                        "question": "How do I change my account settings?",
+                        "answer": "Click on your profile icon at the top right corner and select 'Settings' from the dropdown menu to manage your account preferences, privacy settings, and notifications.",
+                        "topic": "Account"
+                    },
+                    {
+                        "question": "How do I access the terms of service?",
+                        "answer": "You can view the terms of service by clicking on the link located in the website footer or navigating directly to the 'Terms of Service' page.",
+                        "topic": "Navigation"
+                    },
+                    {
+                        "question": "Where do I find the contact form for support?",
+                        "answer": "The 'Support' page includes a contact form. You can access it from the navigation menu or footer to send us your inquiries.",
+                        "topic": "Support"
+                    }
+                ]
+                
+            
+        
+    

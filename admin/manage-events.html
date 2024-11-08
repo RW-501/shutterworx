@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage Events</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../css/admin.css">
+   </head>
+<body>
+  <!-- Header -->
+  <header class="bg-dark text-white text-center py-3">
+    <h1>Photography Management System</h1>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <a class="navbar-brand" href="../index">Home</a>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
+                <li class="nav-item"><a class="nav-link" href="../admin/dashboard.html">Dashboard</a></li>
+                <li class="nav-item"><a class="nav-link" href="../admin/manage-images.html">Manage Images</a></li>
+                <li class="nav-item"><a class="nav-link" href="../admin/manage-events.html">Manage Events</a></li>
+                <li class="nav-item"><a class="nav-link" href="../admin/analytics.html">Analytics</a></li>
+                <li class="nav-item"><a class="nav-link" href="../admin/settings.html">Settings</a></li>
+            </ul>
+        </div>
+    </nav>
+</header>
+    <div class="container-fluid admin-container">
+
+
+        <main class="dashboard-content">
+            
+            
+            <h1 class="my-4">Manage Events</h1>
+        
+        <form id="eventForm" class="mb-4">
+            <div class="form-group">
+                <label for="eventName">Event Name</label>
+                <input type="text" class="form-control" id="eventName" placeholder="Enter event name" required>
+            </div>
+            <div class="form-group">
+                <label for="eventDate">Event Date</label>
+                <input type="date" class="form-control" id="eventDate" required>
+            </div>
+            <div class="form-group">
+                <label for="eventDescription">Event Description</label>
+                <textarea class="form-control" id="eventDescription" rows="3" placeholder="Enter event description" required></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary">Add Event</button>
+        </form>
+
+        <h2>Existing Events</h2>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Name</th>
+                    <th>Date</th>
+                    <th>Description</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody id="eventTableBody">
+                <!-- Existing events will be populated here -->
+            </tbody>
+        </table>
+
+        </main>
+    </div>
+
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <!-- Footer -->
+    <footer id="site-footer">
+        <div class="social-icons">
+            <!-- Social media links dynamically added here -->
+        </div>
+        <footer-body>
+            <p>&copy; 2024 <a href="./shutterWorx/" style="color: #fff;">ShutterWorx</a>/ TechNoob All Rights Reserved.</p>
+            <p><small><a href="privacy" style="color: #fff;">Privacy Policy</a> | <a href="terms" style="color: #fff;">Terms of Service</a></small></p>
+        </footer-body>
+    </footer>
+
+    
+    
+        <!-- Include your firebaseConfig.js as a module -->
+        <script type="module">
+            import { db, doc,getDoc, query, updateDoc,
+    setDoc,     signInWithPopup,
+    GoogleAuthProvider,
+    FacebookAuthProvider,
+    OAuthProvider,
+    signOut,
+    onAuthStateChanged,
+    createUserWithEmailAndPassword,
+    signInWithEmailAndPassword,
+    where, getDocs, storage, collection, auth, analytics } from '../js/firebaseConfig.js';
+       
+    
+        // JavaScript to handle event form submission and management
+        document.getElementById('eventForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const eventName = document.getElementById('eventName').value;
+            const eventDate = document.getElementById('eventDate').value;
+            const eventDescription = document.getElementById('eventDescription').value;
+
+            // Code to add the event to the database and update the table
+            // This part is a placeholder and should be replaced with your implementation
+            
+            const tableBody = document.getElementById('eventTableBody');
+            const newRow = tableBody.insertRow();
+            newRow.innerHTML = `<td>${tableBody.rows.length}</td>
+                                <td>${eventName}</td>
+                                <td>${eventDate}</td>
+                                <td>${eventDescription}</td>
+                                <td><button class="btn btn-danger btn-sm">Delete</button></td>`;
+            
+            // Clear form fields
+            this.reset();
+        });
+    </script>
+  
+  <script  type="module" src="../js/main.js"></script>
+  <script  type="module" src="../js/admin.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,1784 @@
+[
+	{
+		"question": "How do I create an account?",
+		"answer": "To create an account, click on 'Sign Up' and fill out the required information.",
+		"topic": "Account",
+		"user_level": "basic",
+		"related_links": [
+			{
+				"url": "https://shutterworx.com/signup"
+			}
+		],
+		"status": "active",
+		"keywords": [
+			"sign up",
+			"create account",
+			"registration"
+		]
+	},
+	{
+		"question": "What is ShutterWorx?",
+		"answer": "ShutterWorx is a platform for photographers to showcase their work.",
+		"topic": "General",
+		"user_level": "basic",
+		"related_links": [
+			{
+				"url": "https://shutterworx.com/about"
+			}
+		],
+		"status": "active",
+		"keywords": [
+			"platform",
+			"photographers",
+			"showcase"
+		]
+	},
+	{
+		"question": "How do I reset my password?",
+		"answer": "Click on 'Forgot Password' at the login page, and follow the instructions.",
+		"topic": "Account",
+		"user_level": "basic",
+		"related_links": [
+			{
+				"url": "https://shutterworx.com/password-reset"
+			}
+		],
+		"status": "active",
+		"keywords": [
+			"reset password",
+			"account recovery"
+		]
+	},
+	{
+		"question": "Can I change my subscription plan?",
+		"answer": "Yes, go to 'Account Settings' and select 'Change Plan'.",
+		"topic": "Subscription",
+		"user_level": "basic",
+		"related_links": [
+			{
+				"url": "https://shutterworx.com/account/settings"
+			}
+		],
+		"status": "active",
+		"keywords": [
+			"change plan",
+			"subscription",
+			"account settings"
+		]
+	},
+	{
+		"question": "How do I contact support?",
+		"answer": "Use the 'Contact Us' page or email support@shutterworx.com.",
+		"topic": "Support",
+		"user_level": "basic",
+		"related_links": [
+			{
+				"url": "https://shutterworx.com/contact"
+			}
+		],
+		"status": "active",
+		"keywords": [
+			"contact support",
+			"help",
+			"customer service"
+		]
+	},
+	{
+		"question": "How do I upload photos?",
+		"answer": "Go to 'My Gallery' and click on 'Upload Photos' to add images to your portfolio.",
+		"topic": "Gallery",
+		"user_level": "basic",
+		"related_links": [
+			{
+				"url": "https://shutterworx.com/my-gallery"
+			}
+		],
+		"status": "active",
+		"keywords": [
+			"upload photos",
+			"gallery",
+			"portfolio"
+		]
+	},
+	{
+		"question": "What file formats are supported for uploads?",
+		"answer": "We support JPEG, PNG, and TIFF formats for photo uploads.",
+		"topic": "Gallery",
+		"user_level": "basic",
+		"related_links": [],
+		"status": "active",
+		"keywords": [
+			"file formats",
+			"uploads",
+			"JPEG",
+			"PNG",
+			"TIFF"
+		]
+	},
+	{
+		"question": "How do I edit my profile information?",
+		"answer": "Visit 'Profile Settings' and edit your details, including bio, profile picture, and contact info.",
+		"topic": "Account",
+		"user_level": "basic",
+		"related_links": [
+			{
+				"url": "https://shutterworx.com/profile-settings"
+			}
+		],
+		"status": "active",
+		"keywords": [
+			"edit profile",
+			"account settings",
+			"profile details"
+		]
+	},
+	{
+		"question": "How can I delete my account?",
+		"answer": "To delete your account, go to 'Account Settings' and click on 'Delete Account'. Note that this action is irreversible.",
+		"topic": "Account",
+		"user_level": "basic",
+		"related_links": [
+			{
+				"url": "https://shutterworx.com/account/settings"
+			}
+		],
+		"status": "active",
+		"keywords": [
+			"delete account",
+			"account deletion",
+			"settings"
+		]
+	},
+	{
+		"question": "Can I download photos from other photographers?",
+		"answer": "Currently, downloads are only available for images you’ve purchased or if the photographer has allowed it.",
+		"topic": "Gallery",
+		"user_level": "basic",
+		"related_links": [],
+		"status": "active",
+		"keywords": [
+			"download photos",
+			"photographers",
+			"purchased images"
+		]
+	},
+	{
+		"question": "Is there a mobile app for ShutterWorx?",
+		"answer": "Yes, ShutterWorx is available on both iOS and Android for easy access to your gallery and account.",
+		"topic": "General",
+		"user_level": "basic",
+		"related_links": [
+			{
+				"url": "https://shutterworx.com/mobile-app"
+			}
+		],
+		"status": "active",
+		"keywords": [
+			"mobile app",
+			"iOS",
+			"Android",
+			"gallery access"
+		]
+	},
+	{
+		"question": "How do I report a copyright issue?",
+		"answer": "If you find a copyright violation, please report it via the 'Report' button on the photo or email us at legal@shutterworx.com.",
+		"topic": "Legal",
+		"user_level": "pro",
+		"related_links": [
+			{
+				"url": "https://shutterworx.com/legal"
+			}
+		],
+		"status": "active",
+		"keywords": [
+			"copyright issue",
+			"report",
+			"legal"
+		]
+	},
+	{
+		"question": "How can I upgrade to a premium subscription?",
+		"answer": "Go to 'Subscription' in your account settings and choose a premium plan that suits you.",
+		"topic": "Subscription",
+		"user_level": "basic",
+		"related_links": [
+			{
+				"url": "https://shutterworx.com/account/settings"
+			}
+		],
+		"status": "active",
+		"keywords": [
+			"upgrade",
+			"premium subscription",
+			"account settings"
+		]
+	},
+	{
+		"question": "Can I track views on my photos?",
+		"answer": "Yes, premium users can see detailed analytics, including views and favorites for each photo.",
+		"topic": "Analytics",
+		"user_level": "pro",
+		"related_links": [],
+		"status": "active",
+		"keywords": [
+			"track views",
+			"analytics",
+			"photo views"
+		]
+	},
+	{
+		"question": "How do I connect with other photographers?",
+		"answer": "You can follow photographers, comment on their photos, and message them if they have enabled messaging.",
+		"topic": "Community",
+		"user_level": "basic",
+		"related_links": [
+			{
+				"url": "https://shutterworx.com/community"
+			}
+		],
+		"status": "active",
+		"keywords": [
+			"connect",
+			"follow",
+			"photographers",
+			"community"
+		]
+	},
+	{
+		"question": "How can I purchase prints of photos?",
+		"answer": "Select the photo you want and click on 'Purchase Print'. Follow the prompts to choose print size and delivery options.",
+		"topic": "Purchase",
+		"user_level": "basic",
+		"related_links": [
+			{
+				"url": "https://shutterworx.com/purchase"
+			}
+		],
+		"status": "active",
+		"keywords": [
+			"purchase prints",
+			"buy photo",
+			"print options"
+		]
+	},
+	{
+		"question": "Can I organize my photos into albums?",
+		"answer": "Yes, go to 'My Gallery' and select 'Create Album' to organize your photos by theme, event, or style.",
+		"topic": "Gallery",
+		"user_level": "basic",
+		"related_links": [
+			{
+				"url": "https://shutterworx.com/my-gallery"
+			}
+		],
+		"status": "active",
+		"keywords": [
+			"organize photos",
+			"create album",
+			"gallery"
+		]
+	},
+	{
+		"question": "How do I add keywords to my photos?",
+		"answer": "In the upload or edit photo screen, add relevant keywords to make your photos easier to find in searches.",
+		"topic": "SEO",
+		"user_level": "pro",
+		"related_links": [],
+		"status": "active",
+		"keywords": [
+			"add keywords",
+			"SEO",
+			"photo search"
+		]
+	},
+	{
+		"question": "What payment methods are accepted?",
+		"answer": "We accept credit/debit cards, PayPal, and Apple Pay.",
+		"topic": "Payments",
+		"user_level": "basic",
+		"related_links": [],
+		"status": "active",
+		"keywords": [
+			"payment methods",
+			"credit card",
+			"PayPal",
+			"Apple Pay"
+		]
+	},
+	{
+		"question": "How do I cancel my subscription?",
+		"answer": "Go to 'Subscription Settings' and click 'Cancel Subscription'. Your plan will remain active until the end of the billing period.",
+		"topic": "Subscription",
+		"user_level": "basic",
+		"related_links": [
+			{
+				"url": "https://shutterworx.com/subscription-settings"
+			}
+		],
+		"status": "active",
+		"keywords": [
+			"cancel subscription",
+			"account settings",
+			"subscription management"
+		]
+	},
+	{
+		"question": "Can I share my photos on social media?",
+		"answer": "Yes, you can easily share your photos to platforms like Facebook, Instagram, and Twitter directly from your gallery.",
+		"topic": "Social Sharing",
+		"user_level": "basic",
+		"related_links": [
+			{
+				"url": "https://shutterworx.com/share"
+			}
+		],
+		"status": "active",
+		"keywords": [
+			"share photos",
+			"social media",
+			"Facebook",
+			"Instagram",
+			"Twitter"
+		]
+	},
+	{
+		"question": "How can I promote my photos to get more views?",
+		"answer": "Premium users can boost their photos for more exposure through the 'Promote' option available in the photo settings.",
+		"topic": "Promotion",
+		"user_level": "pro",
+		"related_links": [
+			{
+				"url": "https://shutterworx.com/promote"
+			}
+		],
+		"status": "active",
+		"keywords": [
+			"promote photos",
+			"boost views",
+			"premium features"
+		]
+	},
+	{
+		"question": "How can I change my email address?",
+		"answer": "Visit 'Account Settings' and update your email address under 'Personal Information'.",
+		"topic": "Account",
+		"user_level": "basic",
+		"related_links": [
+			{
+				"url": "https://shutterworx.com/account-settings"
+			}
+		],
+		"status": "active",
+		"keywords": [
+			"change email",
+			"account settings",
+			"update information"
+		]
+	},
+	{
+		"question": "What happens if I don’t renew my subscription?",
+		"answer": "If you don't renew your subscription, your account will revert to the free plan with limited access to features.",
+		"topic": "Subscription",
+		"user_level": "basic",
+		"related_links": [],
+		"status": "active",
+		"keywords": [
+			"subscription renewal",
+			"account access",
+			"free plan"
+		]
+	},
+	{
+		"question": "Can I schedule posts on my gallery?",
+		"answer": "Yes, you can schedule photos for future posting by selecting 'Schedule' in the photo settings.",
+		"topic": "Gallery",
+		"user_level": "pro",
+		"related_links": [],
+		"status": "active",
+		"keywords": [
+			"schedule posts",
+			"gallery",
+			"photo settings"
+		]
+	},
+	{
+		"question": "How do I find photographers for a photoshoot?",
+		"answer": "Use the search bar to browse photographers by location, style, or portfolio type.",
+		"topic": "Photography Services",
+		"user_level": "basic",
+		"related_links": [
+			{
+				"url": "https://shutterworx.com/find-photographers"
+			}
+		],
+		"status": "active",
+		"keywords": [
+			"find photographers",
+			"photoshoot",
+			"search photographers"
+		]
+	},
+	{
+		"question": "Can I receive feedback on my photos?",
+		"answer": "Yes, other users can leave comments and feedback on your photos if you allow it in the photo settings.",
+		"topic": "Community",
+		"user_level": "basic",
+		"related_links": [],
+		"status": "active",
+		"keywords": [
+			"receive feedback",
+			"comments",
+			"photo settings"
+		]
+	},
+	{
+		"question": "What are ShutterWorx’s community guidelines?",
+		"answer": "Our community guidelines promote respect and positivity. Please read them before posting your photos or interacting with other users.",
+		"topic": "Community",
+		"user_level": "basic",
+		"related_links": [
+			{
+				"url": "https://shutterworx.com/community-guidelines"
+			}
+		],
+		"status": "active",
+		"keywords": [
+			"community guidelines",
+			"rules",
+			"interaction"
+		]
+	},
+	{
+		"question": "How can I set my account to private?",
+		"answer": "In your account settings, you can select 'Private Account' to limit access to your gallery.",
+		"topic": "Privacy",
+		"user_level": "pro",
+		"related_links": [
+			{
+				"url": "https://shutterworx.com/account-settings"
+			}
+		],
+		"status": "active",
+		"keywords": [
+			"private account",
+			"gallery settings",
+			"privacy"
+		]
+	},
+	{
+		"question": "How do I add a watermark to my photos?",
+		"answer": "Watermarking can be done during the upload process by selecting the 'Add Watermark' option.",
+		"topic": "Gallery",
+		"user_level": "basic",
+		"related_links": [],
+		"status": "active",
+		"keywords": [
+			"add watermark",
+			"upload photos",
+			"gallery settings"
+		]
+	},
+	{
+		"question": "Can I sell my photos on ShutterWorx?",
+		"answer": "Yes, you can list your photos for sale directly in your gallery or set your own pricing.",
+		"topic": "Sales",
+		"user_level": "pro",
+		"related_links": [
+			{
+				"url": "https://shutterworx.com/sell-photos"
+			}
+		],
+		"status": "active",
+		"keywords": [
+			"sell photos",
+			"photo pricing",
+			"gallery sales"
+		]
+	},
+	{
+		"question": "How can I track my earnings?",
+		"answer": "Premium users can access earnings reports under 'Account Settings' to track sales and payments.",
+		"topic": "Payments",
+		"user_level": "pro",
+		"related_links": [
+			{
+				"url": "https://shutterworx.com/account-settings"
+			}
+		],
+		"status": "active",
+		"keywords": [
+			"track earnings",
+			"sales reports",
+			"payments"
+		]
+	},
+	{
+		"question": "What is the photo submission review process?",
+		"answer": "Once submitted, photos are reviewed by our team for quality and compliance with our guidelines before being published.",
+		"topic": "Gallery",
+		"user_level": "basic",
+		"related_links": [],
+		"status": "active",
+		"keywords": [
+			"photo submission",
+			"review process",
+			"gallery"
+		]
+	},
+	{
+		"question": "Can I customize my gallery layout?",
+		"answer": "Yes, premium users can customize the layout of their gallery by selecting themes and grid options.",
+		"topic": "Customization",
+		"user_level": "pro",
+		"related_links": [],
+		"status": "active",
+		"keywords": [
+			"customize gallery",
+			"themes",
+			"layout options"
+		]
+	},
+	{
+		"question": "How do I get featured on the homepage?",
+		"answer": "Photographers who have a premium account can apply to be featured on the homepage through the 'Feature Me' option.",
+		"topic": "Promotion",
+		"user_level": "pro",
+		"related_links": [],
+		"status": "active",
+		"keywords": [
+			"featured homepage",
+			"promotion",
+			"premium account"
+		]
+	},
+	{
+		"question": "How can I create a professional portfolio?",
+		"answer": "You can create a portfolio by selecting the 'Create Portfolio' option from your account settings. Upload your best photos and organize them into categories.",
+		"topic": "Portfolio",
+		"user_level": "pro",
+		"related_links": [
+			{
+				"url": "https://shutterworx.com/create-portfolio"
+			}
+		],
+		"status": "active",
+		"keywords": [
+			"create portfolio",
+			"professional portfolio",
+			"organize photos"
+		]
+	},
+	{
+		"question": "Can I sync my photos with other platforms?",
+		"answer": "Yes, you can sync your gallery with platforms like Instagram, Google Photos, and Dropbox through the integrations page.",
+		"topic": "Integrations",
+		"user_level": "pro",
+		"related_links": [
+			{
+				"url": "https://shutterworx.com/integrations"
+			}
+		],
+		"status": "active",
+		"keywords": [
+			"sync photos",
+			"integrations",
+			"Google Photos",
+			"Dropbox",
+			"Instagram"
+		]
+	},
+	{
+		"question": "Can I add my photos to a blog post?",
+		"answer": "Yes, you can easily embed your photos into blog posts by selecting the 'Embed' option from the photo settings.",
+		"topic": "Blog",
+		"user_level": "basic",
+		"related_links": [],
+		"status": "active",
+		"keywords": [
+			"embed photos",
+			"blog posts",
+			"photo settings"
+		]
+	},
+	{
+		"question": "How can I add my photos to a digital magazine?",
+		"answer": "Our platform allows you to submit photos directly to partnered digital magazines for publication. Apply via your account settings.",
+		"topic": "Publication",
+		"user_level": "pro",
+		"related_links": [
+			{
+				"url": "https://shutterworx.com/digital-magazines"
+			}
+		],
+		"status": "active",
+		"keywords": [
+			"digital magazine",
+			"photo submission",
+			"publication"
+		]
+	},
+	{
+		"question": "How do I set up payment for photo sales?",
+		"answer": "You can link your PayPal or bank account to receive payments for photo sales through the 'Payment Settings' page.",
+		"topic": "Payments",
+		"user_level": "pro",
+		"related_links": [
+			{
+				"url": "https://shutterworx.com/payment-settings"
+			}
+		],
+		"status": "active",
+		"keywords": [
+			"set up payment",
+			"photo sales",
+			"PayPal",
+			"payment settings"
+		]
+	},
+	{
+		"question": "How do I deactivate my account?",
+		"answer": "To deactivate your account, go to 'Account Settings' and click on 'Deactivate Account'. Note that this will remove all your photos and data.",
+		"topic": "Account",
+		"user_level": "basic",
+		"related_links": [],
+		"status": "active",
+		"keywords": [
+			"deactivate account",
+			"account settings",
+			"delete account"
+		]
+	},
+	{
+		"question": "Can I upgrade my membership at any time?",
+		"answer": "Yes, you can upgrade your membership at any time by visiting the 'Upgrade Plan' section in your account settings.",
+		"topic": "Subscription",
+		"user_level": "basic",
+		"related_links": [],
+		"status": "active",
+		"keywords": [
+			"upgrade membership",
+			"account settings",
+			"premium plan"
+		]
+	},
+	{
+		"question": "How can I participate in ShutterWorx events?",
+		"answer": "You can participate in events by registering through the 'Events' section on the homepage. Stay updated with new events via email notifications.",
+		"topic": "Events",
+		"user_level": "basic",
+		"related_links": [
+			{
+				"url": "https://shutterworx.com/events"
+			}
+		],
+		"status": "active",
+		"keywords": [
+			"participate in events",
+			"ShutterWorx events",
+			"event registration"
+		]
+	},
+	{
+		"question": "Can I use my photos for commercial purposes?",
+		"answer": "Yes, you can set your photos as available for commercial use by enabling the 'Commercial Use' option in the photo settings.",
+		"topic": "Licensing",
+		"user_level": "pro",
+		"related_links": [
+			{
+				"url": "https://shutterworx.com/photo-settings"
+			}
+		],
+		"status": "active",
+		"keywords": [
+			"commercial use",
+			"photo licensing",
+			"photo settings"
+		]
+	},
+	{
+		"question": "How do I manage my photo tags?",
+		"answer": "You can manage your photo tags in the photo settings by adding, editing, or removing tags that best describe your images.",
+		"topic": "Gallery",
+		"user_level": "basic",
+		"related_links": [],
+		"status": "active",
+		"keywords": [
+			"manage photo tags",
+			"edit tags",
+			"photo settings"
+		]
+	},
+	{
+		"question": "How do I organize my photos into albums?",
+		"answer": "You can organize your photos into albums by going to the 'Albums' tab in your gallery and selecting 'Create Album'. Then, add photos to each album.",
+		"topic": "Gallery",
+		"user_level": "basic",
+		"related_links": [],
+		"status": "active",
+		"keywords": [
+			"organize photos",
+			"create albums",
+			"gallery"
+		]
+	},
+	{
+		"question": "How do I set a cover photo for my gallery?",
+		"answer": "To set a cover photo, select a photo from your gallery and click the 'Set as Cover' button in the photo settings.",
+		"topic": "Gallery",
+		"user_level": "basic",
+		"related_links": [],
+		"status": "active",
+		"keywords": [
+			"set cover photo",
+			"gallery settings",
+			"profile photo"
+		]
+	},
+	{
+		"question": "Can I block other users?",
+		"answer": "Yes, you can block other users by visiting their profile and selecting 'Block User' from the options menu.",
+		"topic": "Account",
+		"user_level": "basic",
+		"related_links": [],
+		"status": "active",
+		"keywords": [
+			"block user",
+			"user settings",
+			"account settings"
+		]
+	},
+	{
+		"question": "What is ShutterWorx’s refund policy?",
+		"answer": "Refunds are available within 30 days of purchase if you are not satisfied with the service. Please contact support for more details.",
+		"topic": "Payments",
+		"user_level": "basic",
+		"related_links": [
+			{
+				"url": "https://shutterworx.com/refund-policy"
+			}
+		],
+		"status": "active",
+		"keywords": [
+			"refund policy",
+			"payment issues",
+			"ShutterWorx refund"
+		]
+	},
+	{
+		"question": "How do I download my photos?",
+		"answer": "You can download your photos by selecting the 'Download' option in the photo settings or album settings.",
+		"topic": "Gallery",
+		"user_level": "basic",
+		"related_links": [],
+		"status": "active",
+		"keywords": [
+			"download photos",
+			"photo settings",
+			"album settings"
+		]
+	},
+	{
+		"question": "How can I delete my photos?",
+		"answer": "To delete a photo, open the photo settings and select 'Delete'. Be aware that this action is irreversible.",
+		"topic": "Gallery",
+		"user_level": "basic",
+		"related_links": [],
+		"status": "active",
+		"keywords": [
+			"delete photo",
+			"photo settings",
+			"delete image"
+		]
+	},
+	{
+		"question": "How do I share my photos with others?",
+		"answer": "You can share your photos directly through social media links or by generating a shareable link from the photo settings.",
+		"topic": "Gallery",
+		"user_level": "basic",
+		"related_links": [],
+		"status": "active",
+		"keywords": [
+			"share photos",
+			"shareable link",
+			"social media"
+		]
+	},
+	{
+		"question": "What are the photo resolution requirements?",
+		"answer": "For best quality, we recommend uploading photos with a resolution of at least 3000 x 2000 pixels. The minimum acceptable resolution is 1200 x 800 pixels.",
+		"topic": "Gallery",
+		"user_level": "basic",
+		"related_links": [],
+		"status": "active",
+		"keywords": [
+			"photo resolution",
+			"upload quality",
+			"photo settings"
+		]
+	},
+	{
+		"question": "Can I save my photos as drafts?",
+		"answer": "Yes, you can save photos as drafts and come back to edit them later before publishing. The option is available in the photo settings.",
+		"topic": "Gallery",
+		"user_level": "basic",
+		"related_links": [],
+		"status": "active",
+		"keywords": [
+			"save drafts",
+			"edit photos",
+			"photo settings"
+		]
+	},
+	{
+		"question": "How do I request a feature?",
+		"answer": "You can request a feature by visiting the 'Feedback' section in your account settings and submitting a feature suggestion.",
+		"topic": "Support",
+		"user_level": "basic",
+		"related_links": [
+			{
+				"url": "https://shutterworx.com/feedback"
+			}
+		],
+		"status": "active",
+		"keywords": [
+			"feature request",
+			"feedback",
+			"suggestions"
+		]
+	},
+	{
+		"question": "What are the benefits of the premium subscription?",
+		"answer": "With a premium subscription, you get additional storage space, access to exclusive events, priority customer support, and the ability to sell photos for commercial use.",
+		"topic": "Subscription",
+		"user_level": "basic",
+		"related_links": [
+			{
+				"url": "https://shutterworx.com/premium-benefits"
+			}
+		],
+		"status": "active",
+		"keywords": [
+			"premium subscription",
+			"subscription benefits",
+			"exclusive events"
+		]
+	},
+	{
+		"question": "How do I contact customer support?",
+		"answer": "You can contact customer support by visiting the 'Help' section in your account settings and submitting a support ticket or starting a live chat.",
+		"topic": "Support",
+		"user_level": "basic",
+		"related_links": [
+			{
+				"url": "https://shutterworx.com/contact-support"
+			}
+		],
+		"status": "active",
+		"keywords": [
+			"customer support",
+			"contact support",
+			"support ticket"
+		]
+	},
+	{
+		"question": "What should I do if I forgot my password?",
+		"answer": "If you forgot your password, click on 'Forgot Password' on the login page and follow the instructions to reset it.",
+		"topic": "Account",
+		"user_level": "basic",
+		"related_links": [],
+		"status": "active",
+		"keywords": [
+			"forgot password",
+			"password reset",
+			"account recovery"
+		]
+	},
+	{
+		"question": "How can I change my email address?",
+		"answer": "You can change your email address by going to 'Account Settings' and selecting the 'Update Email' option.",
+		"topic": "Account",
+		"user_level": "basic",
+		"related_links": [],
+		"status": "active",
+		"keywords": [
+			"change email",
+			"account settings",
+			"update email"
+		]
+	},
+	{
+		"question": "How do I customize my profile?",
+		"answer": "To customize your profile, visit the 'Profile Settings' page where you can update your name, bio, photo, and other personal information.",
+		"topic": "Account",
+		"user_level": "basic",
+		"related_links": [],
+		"status": "active",
+		"keywords": [
+			"customize profile",
+			"profile settings",
+			"update profile"
+		]
+	},
+	{
+		"question": "How do I enable two-factor authentication?",
+		"answer": "To enable two-factor authentication, go to 'Account Settings' and enable it under 'Security'. You'll need to enter a verification code sent to your mobile device.",
+		"topic": "Security",
+		"user_level": "basic",
+		"related_links": [],
+		"status": "active",
+		"keywords": [
+			"two-factor authentication",
+			"security settings",
+			"account security"
+		]
+	},
+	{
+		"question": "How do I restore deleted photos?",
+		"answer": "Currently, deleted photos cannot be restored. We recommend downloading your photos regularly to back up your collection.",
+		"topic": "Gallery",
+		"user_level": "basic",
+		"related_links": [],
+		"status": "active",
+		"keywords": [
+			"restore deleted photos",
+			"deleted photo recovery",
+			"backup photos"
+		]
+	},
+	{
+		"question": "How do I upgrade my storage plan?",
+		"answer": "To upgrade your storage plan, visit the 'Storage' section in your account settings and select your preferred plan.",
+		"topic": "Subscription",
+		"user_level": "basic",
+		"related_links": [],
+		"status": "active",
+		"keywords": [
+			"upgrade storage",
+			"storage plan",
+			"account settings"
+		]
+	},
+	{
+		"question": "Can I transfer photos to another account?",
+		"answer": "Currently, transferring photos between accounts is not supported. You can share your photos through public links instead.",
+		"topic": "Gallery",
+		"user_level": "basic",
+		"related_links": [],
+		"status": "active",
+		"keywords": [
+			"transfer photos",
+			"share photos",
+			"account settings"
+		]
+	},
+	{
+		"question": "How do I delete my account permanently?",
+		"answer": "To permanently delete your account, go to 'Account Settings' and select 'Delete Account'. Please note that this action cannot be undone.",
+		"topic": "Account",
+		"user_level": "basic",
+		"related_links": [],
+		"status": "active",
+		"keywords": [
+			"delete account",
+			"account settings",
+			"permanent deletion"
+		]
+	},
+	{
+		"question": "How do I apply filters to my gallery?",
+		"answer": "To apply filters to your gallery, click on the 'Filters' button at the top of the page and select your desired filters, such as date, tags, or image resolution.",
+		"topic": "Gallery",
+		"user_level": "basic",
+		"related_links": [],
+		"status": "active",
+		"keywords": [
+			"gallery filters",
+			"filter photos",
+			"image tags"
+		]
+	},
+	{
+		"question": "How can I create albums for my photos?",
+		"answer": "You can create albums by selecting multiple photos and clicking 'Create Album' in the gallery settings. Name the album and organize your photos as desired.",
+		"topic": "Gallery",
+		"user_level": "basic",
+		"related_links": [],
+		"status": "active",
+		"keywords": [
+			"create albums",
+			"organize photos",
+			"photo organization"
+		]
+	},
+	{
+		"question": "How do I upload multiple photos at once?",
+		"answer": "To upload multiple photos at once, click the 'Upload' button and select all the photos you want to upload. You can also drag and drop files into the upload window.",
+		"topic": "Gallery",
+		"user_level": "basic",
+		"related_links": [],
+		"status": "active",
+		"keywords": [
+			"upload multiple photos",
+			"bulk upload",
+			"drag and drop"
+		]
+	},
+	{
+		"question": "What is the maximum file size for photo uploads?",
+		"answer": "The maximum file size for photo uploads is 50MB. If your photo exceeds this size, try compressing it before uploading.",
+		"topic": "Gallery",
+		"user_level": "basic",
+		"related_links": [],
+		"status": "active",
+		"keywords": [
+			"file size",
+			"upload limit",
+			"photo upload"
+		]
+	},
+	{
+		"question": "Can I schedule photo posts for later?",
+		"answer": "Yes, you can schedule photo posts for later by selecting the 'Schedule' option in the photo settings and setting the date and time for the post to go live.",
+		"topic": "Gallery",
+		"user_level": "basic",
+		"related_links": [],
+		"status": "active",
+		"keywords": [
+			"schedule posts",
+			"photo scheduler",
+			"schedule photo uploads"
+		]
+	},
+	{
+		"question": "How do I view analytics for my photos?",
+		"answer": "You can view analytics for your photos by selecting the 'Analytics' tab in the gallery settings. This will show metrics such as views, likes, and shares.",
+		"topic": "Analytics",
+		"user_level": "basic",
+		"related_links": [],
+		"status": "active",
+		"keywords": [
+			"photo analytics",
+			"view analytics",
+			"photo metrics"
+		]
+	},
+	{
+		"question": "How can I make my photos public?",
+		"answer": "To make your photos public, go to the photo settings and select 'Public' under the privacy options. This will allow anyone to view your photos.",
+		"topic": "Gallery",
+		"user_level": "basic",
+		"related_links": [],
+		"status": "active",
+		"keywords": [
+			"make photos public",
+			"photo privacy",
+			"privacy settings"
+		]
+	},
+	{
+		"question": "Can I add watermarks to my photos?",
+		"answer": "Yes, you can add watermarks to your photos by selecting the 'Watermark' option in the photo editing settings before uploading or editing your photos.",
+		"topic": "Gallery",
+		"user_level": "advanced",
+		"related_links": [],
+		"status": "active",
+		"keywords": [
+			"add watermark",
+			"photo editing",
+			"photo watermark"
+		]
+	},
+	{
+		"question": "How do I set up a photo shop for selling images?",
+		"answer": "To set up a photo shop, go to the 'Sell Photos' section in your account settings, upload your images, set prices, and enable the payment gateway to start selling.",
+		"topic": "Selling",
+		"user_level": "advanced",
+		"related_links": [
+			{
+				"url": "https://shutterworx.com/sell-photos"
+			}
+		],
+		"status": "active",
+		"keywords": [
+			"sell photos",
+			"photo shop",
+			"sell images"
+		]
+	},
+	{
+		"question": "How do I manage my orders from customers?",
+		"answer": "To manage your orders, go to the 'Orders' section in your account settings. Here you can view order details, track shipping, and manage payments.",
+		"topic": "Selling",
+		"user_level": "advanced",
+		"related_links": [],
+		"status": "active",
+		"keywords": [
+			"manage orders",
+			"track orders",
+			"order management"
+		]
+	},
+	{
+		"question": "How do I request a refund for a purchase?",
+		"answer": "To request a refund for a purchase, contact customer support through the 'Refund Request' form available in the 'Support' section of your account.",
+		"topic": "Support",
+		"user_level": "basic",
+		"related_links": [
+			{
+				"url": "https://shutterworx.com/refund-request"
+			}
+		],
+		"status": "active",
+		"keywords": [
+			"refund request",
+			"customer support",
+			"refund policy"
+		]
+	},
+	{
+		"question": "How do I apply for a partnership?",
+		"answer": "You can apply for a partnership by filling out the partnership application form in the 'Partners' section of the website.",
+		"topic": "Partnerships",
+		"user_level": "advanced",
+		"related_links": [
+			{
+				"url": "https://shutterworx.com/partners"
+			}
+		],
+		"status": "active",
+		"keywords": [
+			"partnership application",
+			"business partnership",
+			"affiliate program"
+		]
+	},
+	{
+		"question": "Can I sell prints of my photos?",
+		"answer": "Yes, you can sell prints of your photos by enabling the 'Print Sales' option in the 'Sell Photos' section. You can choose to offer physical prints to customers.",
+		"topic": "Selling",
+		"user_level": "advanced",
+		"related_links": [],
+		"status": "active",
+		"keywords": [
+			"sell prints",
+			"photo prints",
+			"physical prints"
+		]
+	},
+	{
+		"question": "How do I submit my photos for a contest?",
+		"answer": "To submit your photos for a contest, visit the 'Contests' section, choose the contest you want to enter, and upload your photo following the guidelines provided.",
+		"topic": "Contests",
+		"user_level": "basic",
+		"related_links": [
+			{
+				"url": "https://shutterworx.com/contests"
+			}
+		],
+		"status": "active",
+		"keywords": [
+			"photo contests",
+			"contest submission",
+			"enter contest"
+		]
+	},
+	{
+		"question": "Can I set up recurring payments for my subscription?",
+		"answer": "Yes, you can set up recurring payments for your subscription by enabling the 'Auto-Renew' option in your subscription settings.",
+		"topic": "Subscription",
+		"user_level": "basic",
+		"related_links": [],
+		"status": "active",
+		"keywords": [
+			"recurring payments",
+			"auto-renew",
+			"subscription settings"
+		]
+	},
+	{
+		"question": "How do I change my account settings?",
+		"answer": "To change your account settings, click on your profile icon in the top-right corner, then select 'Account Settings' from the dropdown menu. You can update your email, password, and other account details here.",
+		"topic": "Account Management",
+		"user_level": "basic",
+		"related_links": [],
+		"status": "active",
+		"keywords": [
+			"account settings",
+			"change password",
+			"update email"
+		]
+	},
+	{
+		"question": "How do I delete my account?",
+		"answer": "To delete your account, go to the 'Account Settings' page and scroll to the bottom. You'll find the option to delete your account under 'Account Deletion'. Please note that this action is permanent and cannot be undone.",
+		"topic": "Account Management",
+		"user_level": "advanced",
+		"related_links": [],
+		"status": "active",
+		"keywords": [
+			"delete account",
+			"account deletion",
+			"permanent deletion"
+		]
+	},
+	{
+		"question": "How do I reset my password?",
+		"answer": "If you've forgotten your password, go to the login page and click on 'Forgot Password?'. Enter your email address, and we'll send you instructions to reset your password.",
+		"topic": "Account Management",
+		"user_level": "basic",
+		"related_links": [],
+		"status": "active",
+		"keywords": [
+			"reset password",
+			"forgot password",
+			"password recovery"
+		]
+	},
+	{
+		"question": "How do I update my payment method?",
+		"answer": "To update your payment method, go to the 'Billing' section of your account settings and select 'Update Payment Method'. You can add, remove, or update your credit card or other payment details.",
+		"topic": "Billing",
+		"user_level": "basic",
+		"related_links": [],
+		"status": "active",
+		"keywords": [
+			"update payment",
+			"billing",
+			"payment methods"
+		]
+	},
+	{
+		"question": "How do I view my payment history?",
+		"answer": "To view your payment history, go to the 'Billing' section of your account settings. You'll find a history of all your payments, including dates and amounts.",
+		"topic": "Billing",
+		"user_level": "basic",
+		"related_links": [],
+		"status": "active",
+		"keywords": [
+			"payment history",
+			"billing history",
+			"view payments"
+		]
+	},
+	{
+		"question": "How do I contact customer support?",
+		"answer": "You can contact customer support by visiting the 'Support' section of our website and submitting a support ticket. Alternatively, you can reach us through our live chat feature or email us at support@shutterworx.com.",
+		"topic": "Support",
+		"user_level": "basic",
+		"related_links": [],
+		"status": "active",
+		"keywords": [
+			"customer support",
+			"contact support",
+			"help desk"
+		]
+	},
+	{
+		"question": "How can I track my orders?",
+		"answer": "To track your orders, go to the 'Orders' section of your account. You'll find tracking numbers and links to track the status of your shipments.",
+		"topic": "Orders",
+		"user_level": "basic",
+		"related_links": [],
+		"status": "active",
+		"keywords": [
+			"track orders",
+			"order tracking",
+			"shipping status"
+		]
+	},
+	{
+		"question": "Can I cancel an order after it has been placed?",
+		"answer": "Once an order has been placed, you can only cancel it within 24 hours. To cancel, go to the 'Orders' section and click 'Cancel Order' next to the order you want to cancel.",
+		"topic": "Orders",
+		"user_level": "basic",
+		"related_links": [],
+		"status": "active",
+		"keywords": [
+			"cancel order",
+			"order cancellation",
+			"order management"
+		]
+	},
+	{
+		"question": "How do I submit feedback for the website?",
+		"answer": "To submit feedback, go to the 'Feedback' section in your account settings. You can leave suggestions, comments, or report any issues you're experiencing.",
+		"topic": "Feedback",
+		"user_level": "basic",
+		"related_links": [],
+		"status": "active",
+		"keywords": [
+			"submit feedback",
+			"website feedback",
+			"customer feedback"
+		]
+	},
+	{
+		"question": "How can I become a beta tester?",
+		"answer": "To become a beta tester, sign up through the 'Beta Testing' section of the website. We will notify you when new features are available for testing.",
+		"topic": "Beta Testing",
+		"user_level": "advanced",
+		"related_links": [],
+		"status": "active",
+		"keywords": [
+			"beta tester",
+			"testing program",
+			"early access"
+		]
+	},
+	{
+		"question": "How do I change the theme of the website?",
+		"answer": "To change the theme, go to the 'Appearance' section in your account settings and choose your desired theme from the available options.",
+		"topic": "Customization",
+		"user_level": "basic",
+		"related_links": [],
+		"status": "active",
+		"keywords": [
+			"change theme",
+			"website customization",
+			"appearance settings"
+		]
+	},
+	{
+		"question": "Can I add custom branding to my page?",
+		"answer": "Yes, you can add custom branding by uploading your logo and choosing your brand colors in the 'Branding' section of your account settings.",
+		"topic": "Customization",
+		"user_level": "advanced",
+		"related_links": [],
+		"status": "active",
+		"keywords": [
+			"custom branding",
+			"brand logo",
+			"brand colors"
+		]
+	},
+	{
+		"question": "How do I change the language of the website?",
+		"answer": "To change the language of the website, go to the 'Language' section in your account settings and select your preferred language from the available options.",
+		"topic": "Localization",
+		"user_level": "basic",
+		"related_links": [],
+		"status": "active",
+		"keywords": [
+			"change language",
+			"website language",
+			"localization"
+		]
+	},
+	{
+		"question": "How can I update my website's metadata for SEO?",
+		"answer": "To update your website's metadata, go to the 'SEO Settings' section and update your title, description, and keywords for each page.",
+		"topic": "SEO",
+		"user_level": "advanced",
+		"related_links": [],
+		"status": "active",
+		"keywords": [
+			"SEO settings",
+			"update metadata",
+			"SEO optimization"
+		]
+	},
+	{
+		"question": "How do I integrate third-party apps with my website?",
+		"answer": "To integrate third-party apps, go to the 'Integrations' section and follow the instructions to connect your website with external tools like payment processors, email marketing services, and more.",
+		"topic": "Integrations",
+		"user_level": "advanced",
+		"related_links": [],
+		"status": "active",
+		"keywords": [
+			"integrate apps",
+			"third-party integrations",
+			"external tools"
+		]
+	},
+	{
+		"question": "How do I enable two-factor authentication?",
+		"answer": "To enable two-factor authentication (2FA), go to your 'Account Settings' and navigate to the 'Security' section. Follow the prompts to set up 2FA using an authenticator app or SMS.",
+		"topic": "Security",
+		"user_level": "advanced",
+		"related_links": [],
+		"status": "active",
+		"keywords": [
+			"two-factor authentication",
+			"2FA",
+			"security settings"
+		]
+	},
+	{
+		"question": "Can I manage my subscription from the app?",
+		"answer": "Yes, you can manage your subscription directly from the mobile app by going to 'Subscription' under your account settings. You can upgrade, downgrade, or cancel your subscription here.",
+		"topic": "Subscription",
+		"user_level": "basic",
+		"related_links": [],
+		"status": "active",
+		"keywords": [
+			"subscription management",
+			"app subscription",
+			"cancel subscription"
+		]
+	},
+	{
+		"question": "What should I do if my account is compromised?",
+		"answer": "If your account has been compromised, immediately change your password from the 'Account Settings' page. It's also recommended to enable two-factor authentication (2FA) and contact customer support for assistance.",
+		"topic": "Security",
+		"user_level": "basic",
+		"related_links": [],
+		"status": "active",
+		"keywords": [
+			"account compromised",
+			"account recovery",
+			"password change"
+		]
+	},
+	{
+		"question": "How do I delete my saved searches?",
+		"answer": "To delete a saved search, go to the 'Saved Searches' section of your account and click on the trash icon next to the search you wish to remove.",
+		"topic": "Account Management",
+		"user_level": "basic",
+		"related_links": [],
+		"status": "active",
+		"keywords": [
+			"delete saved searches",
+			"remove saved searches",
+			"account management"
+		]
+	},
+	{
+		"question": "How can I cancel my subscription during the trial period?",
+		"answer": "If you're still within the trial period, you can cancel your subscription at any time by going to 'Subscription' in your account settings and clicking 'Cancel Subscription'. Your subscription will not renew, and you won't be charged.",
+		"topic": "Subscription",
+		"user_level": "basic",
+		"related_links": [],
+		"status": "active",
+		"keywords": [
+			"cancel trial",
+			"free trial",
+			"subscription cancellation"
+		]
+	},
+	{
+		"question": "How can I customize the layout of my dashboard?",
+		"answer": "To customize your dashboard layout, go to the 'Dashboard Settings' section under your account settings. You can drag and drop widgets, choose a theme, and modify the layout to suit your needs.",
+		"topic": "Customization",
+		"user_level": "advanced",
+		"related_links": [],
+		"status": "active",
+		"keywords": [
+			"customize dashboard",
+			"dashboard layout",
+			"dashboard settings"
+		]
+	},
+	{
+		"question": "Can I integrate Google Analytics with my account?",
+		"answer": "Yes, you can integrate Google Analytics by going to the 'Integrations' section in your account settings. Follow the steps to connect your Google Analytics account and monitor your website's performance.",
+		"topic": "Integrations",
+		"user_level": "advanced",
+		"related_links": [],
+		"status": "active",
+		"keywords": [
+			"Google Analytics",
+			"analytics integration",
+			"track performance"
+		]
+	},
+	{
+		"question": "How do I set up email notifications?",
+		"answer": "To set up email notifications, go to the 'Notifications' section in your account settings. You can choose which events you'd like to receive emails about and customize the frequency.",
+		"topic": "Notifications",
+		"user_level": "basic",
+		"related_links": [],
+		"status": "active",
+		"keywords": [
+			"email notifications",
+			"notification settings",
+			"email preferences"
+		]
+	},
+	{
+		"question": "Can I track the performance of my listings?",
+		"answer": "Yes, you can track the performance of your listings in the 'Performance Analytics' section. This will show you views, clicks, and other key metrics for your listings.",
+		"topic": "Analytics",
+		"user_level": "advanced",
+		"related_links": [],
+		"status": "active",
+		"keywords": [
+			"track performance",
+			"listing analytics",
+			"performance metrics"
+		]
+	},
+	{
+		"question": "How do I add a new product or service to my account?",
+		"answer": "To add a new product or service, go to the 'Products' section and click on 'Add New'. Fill out the form with the necessary details, and click 'Save' to publish your new product or service.",
+		"topic": "Account Management",
+		"user_level": "basic",
+		"related_links": [],
+		"status": "active",
+		"keywords": [
+			"add product",
+			"add service",
+			"new listing"
+		]
+	},
+	{
+		"question": "How can I change my privacy settings?",
+		"answer": "To change your privacy settings, go to the 'Privacy Settings' section in your account. Here, you can manage your data sharing preferences and control who can view your information.",
+		"topic": "Privacy",
+		"user_level": "advanced",
+		"related_links": [],
+		"status": "active",
+		"keywords": [
+			"privacy settings",
+			"data privacy",
+			"manage privacy"
+		]
+	},
+	{
+		"question": "How do I set up recurring payments?",
+		"answer": "To set up recurring payments, go to the 'Billing' section and select the option to 'Set Up Recurring Payments'. Choose the payment method and billing cycle that works best for you.",
+		"topic": "Billing",
+		"user_level": "basic",
+		"related_links": [],
+		"status": "active",
+		"keywords": [
+			"recurring payments",
+			"set up billing",
+			"payment schedule"
+		]
+	},
+	{
+		"question": "How do I download my account data?",
+		"answer": "To download your account data, go to the 'Account Settings' and click on 'Download Data'. This will provide you with a file containing all your account-related information.",
+		"topic": "Data Management",
+		"user_level": "advanced",
+		"related_links": [],
+		"status": "active",
+		"keywords": [
+			"download data",
+			"account data",
+			"export data"
+		]
+	},
+	{
+		"question": "How can I manage my user roles?",
+		"answer": "To manage user roles, go to the 'User Management' section and select 'Roles'. You can assign roles to users, including admin, editor, and viewer, and set their permissions accordingly.",
+		"topic": "User Management",
+		"user_level": "advanced",
+		"related_links": [],
+		"status": "active",
+		"keywords": [
+			"manage roles",
+			"user roles",
+			"permissions"
+		]
+	},
+	{
+		"question": "How do I upgrade my plan?",
+		"answer": "To upgrade your plan, go to the 'Subscription' section in your account settings. Click 'Upgrade' and select the new plan that suits your needs.",
+		"topic": "Subscription",
+		"user_level": "basic",
+		"related_links": [],
+		"status": "active",
+		"keywords": [
+			"upgrade plan",
+			"change plan",
+			"subscription upgrade"
+		]
+	},
+	{
+		"question": "How do I enable dark mode?",
+		"answer": "To enable dark mode, go to the 'Display Settings' section in your account settings. Select 'Dark Mode' from the theme options to switch the interface to dark mode.",
+		"topic": "Customization",
+		"user_level": "basic",
+		"related_links": [],
+		"status": "active",
+		"keywords": [
+			"dark mode",
+			"theme settings",
+			"customize interface"
+		]
+	},
+	{
+		"question": "Can I change my username?",
+		"answer": "Currently, changing your username is not allowed. However, you can update your display name or email address in your account settings.",
+		"topic": "Account Management",
+		"user_level": "basic",
+		"related_links": [],
+		"status": "active",
+		"keywords": [
+			"username change",
+			"update display name",
+			"account settings"
+		]
+	},
+	{
+		"question": "How can I track job application statuses?",
+		"answer": "You can track job application statuses by visiting the 'Applications' section in your dashboard. Here, you'll see the status of all your applications, including 'Under Review', 'Interview Scheduled', and 'Accepted'.",
+		"topic": "Job Applications",
+		"user_level": "basic",
+		"related_links": [],
+		"status": "active",
+		"keywords": [
+			"track application status",
+			"application progress",
+			"job status"
+		]
+	},
+	{
+		"question": "How do I delete my account?",
+		"answer": "To delete your account, go to the 'Account Settings' section, scroll to the bottom, and click on 'Delete Account'. Please note that this action is irreversible, and all your data will be permanently deleted.",
+		"topic": "Account Management",
+		"user_level": "advanced",
+		"related_links": [],
+		"status": "active",
+		"keywords": [
+			"delete account",
+			"account deletion",
+			"permanent removal"
+		]
+	},
+	{
+		"question": "Can I add multiple payment methods?",
+		"answer": "Yes, you can add multiple payment methods by going to the 'Billing' section in your account settings. Click on 'Add Payment Method' to link another card or account.",
+		"topic": "Billing",
+		"user_level": "basic",
+		"related_links": [],
+		"status": "active",
+		"keywords": [
+			"add payment method",
+			"multiple payment methods",
+			"billing settings"
+		]
+	},
+	{
+		"question": "How do I enable push notifications?",
+		"answer": "To enable push notifications, go to the 'Notification Settings' in your account settings. Toggle the option to allow push notifications for updates on your device.",
+		"topic": "Notifications",
+		"user_level": "basic",
+		"related_links": [],
+		"status": "active",
+		"keywords": [
+			"push notifications",
+			"enable notifications",
+			"device notifications"
+		]
+	},
+	{
+		"question": "Can I change the language on the platform?",
+		"answer": "Yes, you can change the language by going to the 'Language Settings' under your account. Choose your preferred language from the list of supported languages.",
+		"topic": "Customization",
+		"user_level": "basic",
+		"related_links": [],
+		"status": "active",
+		"keywords": [
+			"language settings",
+			"change language",
+			"platform language"
+		]
+	},
+	{
+		"question": "What should I do if my payment fails?",
+		"answer": "If your payment fails, check the payment method for issues like insufficient funds or expired card. You can update your payment information in the 'Billing' section, or contact customer support for assistance.",
+		"topic": "Billing",
+		"user_level": "basic",
+		"related_links": [],
+		"status": "active",
+		"keywords": [
+			"payment failed",
+			"payment issues",
+			"update payment method"
+		]
+	},
+	{
+		"question": "How can I create a referral link?",
+		"answer": "To create a referral link, go to the 'Referral Program' section in your account settings. Here, you can generate a unique link to share with others to earn rewards when they sign up.",
+		"topic": "Referral Program",
+		"user_level": "basic",
+		"related_links": [],
+		"status": "active",
+		"keywords": [
+			"referral link",
+			"create referral",
+			"referral rewards"
+		]
+	},
+	{
+		"question": "How do I change the email notifications frequency?",
+		"answer": "To change the email notifications frequency, go to the 'Notification Settings' in your account. You can select 'Instant', 'Daily', or 'Weekly' for the frequency of notifications.",
+		"topic": "Notifications",
+		"user_level": "basic",
+		"related_links": [],
+		"status": "active",
+		"keywords": [
+			"email notifications frequency",
+			"change notification frequency",
+			"notification preferences"
+		]
+	},
+	{
+		"question": "How can I view my invoice history?",
+		"answer": "To view your invoice history, go to the 'Billing' section and select 'Invoice History'. You can download and review past invoices for your subscriptions and transactions.",
+		"topic": "Billing",
+		"user_level": "basic",
+		"related_links": [],
+		"status": "active",
+		"keywords": [
+			"view invoices",
+			"invoice history",
+			"billing statements"
+		]
+	},
+	{
+		"question": "How do I disable my account temporarily?",
+		"answer": "To temporarily disable your account, go to the 'Account Settings' and click on 'Deactivate Account'. This will deactivate your account until you decide to reactivate it.",
+		"topic": "Account Management",
+		"user_level": "advanced",
+		"related_links": [],
+		"status": "active",
+		"keywords": [
+			"deactivate account",
+			"temporarily disable account",
+			"account deactivation"
+		]
+	},
+	{
+		"question": "Can I upload a custom avatar?",
+		"answer": "Yes, you can upload a custom avatar by going to the 'Profile Settings' section. Click on 'Change Avatar' to upload a new image for your profile picture.",
+		"topic": "Customization",
+		"user_level": "basic",
+		"related_links": [],
+		"status": "active",
+		"keywords": [
+			"custom avatar",
+			"upload avatar",
+			"profile settings"
+		]
+	},
+	{
+		"question": "How do I subscribe to newsletters?",
+		"answer": "To subscribe to newsletters, go to the 'Newsletter Settings' in your account settings. Opt-in to receive updates, promotions, and news from the platform.",
+		"topic": "Notifications",
+		"user_level": "basic",
+		"related_links": [],
+		"status": "active",
+		"keywords": [
+			"newsletter subscription",
+			"subscribe to newsletter",
+			"email updates"
+		]
+	},
+	{
+		"question": "How do I export my data?",
+		"answer": "To export your data, go to the 'Data Management' section of your account settings. Click 'Export Data' to download a file containing your account information and activity.",
+		"topic": "Data Management",
+		"user_level": "advanced",
+		"related_links": [],
+		"status": "active",
+		"keywords": [
+			"export data",
+			"data export",
+			"download data"
+		]
+	}
+]

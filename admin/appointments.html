@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Appointment Management | Raw Photography</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../css/admin.css">
+   </head>
+<body>
+
+    <header class="admin-header">
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <a class="navbar-brand" href="#">Admin Dashboard</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item"><a class="nav-link" href="/">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="../admin/dashboard">Dashboard</a></li>
+                    <li class="nav-item"><a class="nav-link" href="design.html">Design</a></li>
+                    <li class="nav-item"><a class="nav-link" href="images.html">Images</a></li>
+                    <li class="nav-item"><a class="nav-link" href="analytics.html">Analytics</a></li>
+                    <li class="nav-item"><a class="nav-link" href="purchases.html">Purchases</a></li>
+                    <li class="nav-item"><a class="nav-link" href="appointments.html">Appointments</a></li>
+                    <li class="nav-item"><a class="nav-link" href="settings.html">Settings</a></li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+
+    <div class="container-fluid admin-container">
+
+
+        <main class="dashboard-content">
+            
+            <section id="appointments-section">
+            <h2>Submitted Appointments</h2>
+            <table id="appointments-table">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Requested Date</th>
+                        <th>Status</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Appointment rows will be populated here by JavaScript -->
+                </tbody>
+            </table>
+        </section>
+
+        <section id="appointment-form-section">
+            <h2>Request an Appointment</h2>
+            <form id="appointment-form">
+                <label for="name">Your Name:</label>
+                <input type="text" id="name" required>
+
+                <label for="email">Your Email:</label>
+                <input type="email" id="email" required>
+
+                <label for="date">Requested Date:</label>
+                <input type="datetime-local" id="date" required>
+
+                <label for="message">Additional Message:</label>
+                <textarea id="message" rows="4"></textarea>
+
+                <button type="submit">Submit Appointment</button>
+            </form>
+        </section>
+    </main>
+</div>
+
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <!-- Footer -->
+    <footer id="site-footer">
+        <div class="social-icons">
+            <!-- Social media links dynamically added here -->
+        </div>
+        <footer-body>
+            <p>&copy; 2024 <a href="./shutterWorx/" style="color: #fff;">ShutterWorx</a>/ TechNoob All Rights Reserved.</p>
+            <p><small><a href="privacy" style="color: #fff;">Privacy Policy</a> | <a href="terms" style="color: #fff;">Terms of Service</a></small></p>
+        </footer-body>
+    </footer>
+
+
+
+    <!-- Include your firebaseConfig.js as a module -->
+    <script type="module">
+        import {  db, doc,getDoc, query, updateDoc,
+    setDoc,     signInWithPopup,
+    GoogleAuthProvider,
+    FacebookAuthProvider,
+    OAuthProvider,
+    signOut,
+    onAuthStateChanged,
+    createUserWithEmailAndPassword,
+    signInWithEmailAndPassword,
+    where, getDocs, storage, collection, auth, analytics } from '../js/firebaseConfig.js';
+  
+    
+        // Function to fetch and display appointments
+        async function fetchAppointments() {
+            const appointmentsTableBody = document.querySelector('#appointments-table tbody');
+            appointmentsTableBody.innerHTML = ''; // Clear existing data
+
+            const snapshot = await db.collection('appointments').get();
+            snapshot.forEach(doc => {
+                const appointment = doc.data();
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${appointment.name}</td>
+                    <td>${appointment.email}</td>
+                    <td>${new Date(appointment.dateRequested.seconds * 1000).toLocaleString()}</td>
+                    <td>${appointment.status}</td>
+                    <td>
+                        <button onclick="updateAppointmentStatus('${doc.id}', 'confirmed')">Confirm</button>
+                        <button onclick="updateAppointmentStatus('${doc.id}', 'completed')">Complete</button>
+                        <button onclick="deleteAppointment('${doc.id}')">Delete</button>
+                    </td>
+                `;
+                appointmentsTableBody.appendChild(row);
+            });
+        }
+
+        // Function to submit appointment
+        document.getElementById('appointment-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const dateRequested = new Date(document.getElementById('date').value).getTime() / 1000;
+            const message = document.getElementById('message').value;
+
+            await db.collection('appointments').add({
+                name,
+                email,
+                dateRequested: firebase.firestore.Timestamp.fromMillis(dateRequested * 1000),
+                status: 'pending',
+                message
+            });
+
+            // Clear form
+            document.getElementById('appointment-form').reset();
+            fetchAppointments(); // Refresh the appointment list
+        });
+
+        // Function to update appointment status
+        async function updateAppointmentStatus(id, status) {
+            await db.collection('appointments').doc(id).update({ status });
+            fetchAppointments(); // Refresh the appointment list
+        }
+
+        // Function to delete an appointment
+        async function deleteAppointment(id) {
+            await db.collection('appointments').doc(id).delete();
+            fetchAppointments(); // Refresh the appointment list
+        }
+
+        // Initial fetch
+        fetchAppointments();
+    </script>
+  
+  <script  type="module" src="../js/main.js"></script>
+  <script  type="module" src="../js/admin.js"></script>
+
+</body>
+</html>

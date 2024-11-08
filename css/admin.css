@@ -1,0 +1,208 @@
+        /* Global Styles */
+        html, body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            color: #333;
+            background-color: #f4f4f4;
+            width: 100%;
+        }
+        
+body {
+
+    animation: backgroundFade 2s ease forwards;
+}
+
+/* Keyframes for fading background color */
+@keyframes backgroundFade {
+    from {
+        background-color: #ffffff !important; /* Start with white */
+    }
+    to {
+        background-color: #f4f4f4 !important; /* Fade to target color */
+    }
+}
+
+/* Responsive styling */
+@media (max-width: 600px) {
+    main {
+        padding: 10px;
+    }
+}
+
+div, main, label, input, textarea, button, img, image, .btn, div {
+    box-sizing: border-box;
+    user-select: none;
+    -webkit-user-select: none;
+}
+
+.close:hover {
+    color: #f20e0e;
+    text-decoration: none;
+    background-color: none;
+}
+.btn-primary {
+    background: linear-gradient(45deg,  #1a237e, #3f51b5);
+
+}
+.btn-secondary {
+    background: linear-gradient(45deg, #6c757d, #212529);
+
+}
+.btn-success {
+    background: linear-gradient(45deg, #286d3b, #1ec054);
+
+}
+
+.btn-danger {
+    background: linear-gradient(45deg, #c82333, #dc3545);
+
+}
+
+.modal-title {
+    margin-bottom: 0;
+    line-height: 1.5;
+    width: 40%;
+    color: #ffffff !important;
+    font-weight: 600;
+}
+.modal-body {
+    background: linear-gradient(45deg, #009cfa63, #ffffff);
+
+}
+        /* Footer Styles */
+        #site-footer {
+            text-align: center;
+            padding: 20px;
+            color: #fff;
+            width: 100%;
+            margin-top: 2rem;
+            background: linear-gradient(45deg, #3f51b5, #1a237e);
+        }
+
+#site-footer small {
+    display: block;
+    margin: 5px 0;
+}
+
+/* Social Media Icons */
+.social-icons {
+    margin-top: 10px;
+}
+
+.social-icons a {
+    margin: 0 10px;
+    color: #fff;
+    text-decoration: none;
+    font-size: 1.5em;
+}
+
+/* Custom styles for hover effects and button styling */
+.card:hover {
+    transform: scale(1.02);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+    transition: all 0.3s ease;
+}
+
+.btn-primary, .btn-success {
+    width: 100%;
+}
+
+.loading-spinner {
+    display: none;
+}
+
+/* Login container styling */
+.login-container {
+    background: white;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 300px;
+}
+
+h1 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+input {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+}
+
+button {
+    width: 100%;
+    padding: 10px;
+    background-color: #28a745;
+    color: white;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+}
+
+
+
+.error-message {
+    color: red;
+    margin-top: 10px;
+    text-align: center;
+}
+
+/* Navbar and footer styling */
+nav {
+    display: flex;
+    gap: 10px;
+    padding: 1rem;
+}
+
+#site-footer, .footer {
+    text-align: center;
+    padding: 20px;
+    width: 100%;
+}
+
+/* Admin panel container and layout styling */
+.admin-container {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.admin-header {
+    background-color: #f8f9fa;
+    padding: 1rem 0;
+}
+
+.dashboard-content {
+    flex: 1;
+}
+
+/* Key metrics and cards */
+.key-metrics {
+    margin-bottom: 2rem;
+}
+
+.card {
+    margin: 1rem 0;
+}
+
+/* List group item hover effect */
+.list-group-item {
+    cursor: pointer;
+}
+
+.list-group-item:hover {
+    background-color: #f1f1f1;
+}

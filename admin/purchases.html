@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Purchase Management - Admin</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../css/admin.css">
+   </head>
+<body>
+    
+    <header class="admin-header">
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <a class="navbar-brand" href="#">Purchase Management</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item"><a class="nav-link" href="/">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="../admin/dashboard">Dashboard</a></li>
+                    <li class="nav-item"><a class="nav-link" href="design.html">Design</a></li>
+                    <li class="nav-item"><a class="nav-link" href="images.html">Images</a></li>
+                    <li class="nav-item"><a class="nav-link" href="analytics.html">Analytics</a></li>
+                    <li class="nav-item"><a class="nav-link" href="purchases.html">Purchases</a></li>
+                    <li class="nav-item"><a class="nav-link" href="appointments.html">Appointments</a></li>
+                    <li class="nav-item"><a class="nav-link" href="settings.html">Settings</a></li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+    <div class="container-fluid admin-container">
+
+
+        <main class="dashboard-content">
+
+    <div class="admin-container">
+        <h1>Purchase Management</h1>
+        <table id="purchases-table">
+            <thead>
+                <tr>
+                    <th>Purchase ID</th>
+                    <th>User Email</th>
+                    <th>Image Title</th>
+                    <th>Amount</th>
+                    <th>Date Purchased</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody id="purchases-body">
+                <!-- Dynamic rows will be injected here -->
+            </tbody>
+        </table>
+    </div>
+    </main>
+    </div>
+
+
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    
+    <!-- Footer -->
+    <footer id="site-footer">
+        <div class="social-icons">
+            <!-- Social media links dynamically added here -->
+        </div>
+        <footer-body>
+            <p>&copy; 2024 <a href="./shutterWorx/" style="color: #fff;">ShutterWorx</a>/ TechNoob All Rights Reserved.</p>
+            <p><small><a href="privacy" style="color: #fff;">Privacy Policy</a> | <a href="terms" style="color: #fff;">Terms of Service</a></small></p>
+        </footer-body>
+    </footer>
+
+   
+    
+    
+        <!-- Include your firebaseConfig.js as a module -->
+        <script type="module">
+            import {  db, doc,getDoc, query, updateDoc,
+    setDoc,     signInWithPopup,
+    GoogleAuthProvider,
+    FacebookAuthProvider,
+    OAuthProvider,
+    signOut,
+    onAuthStateChanged,
+    createUserWithEmailAndPassword,
+    signInWithEmailAndPassword,
+    where, getDocs, storage, collection, auth, analytics } from '../js/firebaseConfig.js';
+     
+    
+        // Fetch purchases from Firestore
+        function fetchPurchases() {
+            db.collection('purchases').get().then(snapshot => {
+                const purchasesBody = document.getElementById('purchases-body');
+                purchasesBody.innerHTML = ''; // Clear existing entries
+
+                snapshot.forEach(doc => {
+                    const purchase = doc.data();
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                        <td>${doc.id}</td>
+                        <td>${purchase.userId}</td>
+                        <td>${purchase.imageId}</td>
+                        <td>${purchase.amount}</td>
+                        <td>${new Date(purchase.datePurchased.seconds * 1000).toLocaleString()}</td>
+                        <td>${purchase.status}</td>
+                        <td>
+                            <button onclick="markAsFulfilled('${doc.id}')">Mark as Fulfilled</button>
+                            <button onclick="initiateRefund('${doc.id}')">Refund</button>
+                        </td>
+                    `;
+                    purchasesBody.appendChild(row);
+                });
+            }).catch(error => {
+                console.error('Error fetching purchases:', error);
+            });
+        }
+
+        // Mark purchase as fulfilled
+        function markAsFulfilled(purchaseId) {
+            db.collection('purchases').doc(purchaseId).update({ status: 'fulfilled' })
+                .then(() => {
+                    fetchPurchases(); // Refresh the table
+                    alert('Purchase marked as fulfilled.');
+                })
+                .catch(error => {
+                    console.error('Error updating purchase status:', error);
+                });
+        }
+
+        // Initiate a refund (additional implementation required for Stripe)
+        function initiateRefund(purchaseId) {
+            // Implement refund logic with Stripe here
+            alert('Refund initiated for purchase ID: ' + purchaseId);
+        }
+
+        // Load purchases on page load
+        document.addEventListener('DOMContentLoaded', fetchPurchases);
+    </script>
+  
+  <script  type="module" src="../js/main.js"></script>
+  <script  type="module" src="../js/admin.js"></script>
+
+</body>
+</html>
