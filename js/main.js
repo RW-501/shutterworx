@@ -482,6 +482,232 @@ function loadMenuToggleControls(){
   
 }
   
+
+
+async function updateFooter() {
+  const footer = document.getElementById("site-footer");
+  const currentYear = new Date().getFullYear();
+
+  // ShutterWorx links and social data
+  const shutterWorxLinks = {
+      pages: {
+          home: { link: "https://shutterworx.co/", title: "Home", status: "active", order: 1 },
+          about: { link: "https://shutterworx.co/about", title: "About Us", status: "inactive", order: 2 },
+          contact: { link: "https://shutterworx.co/contact", title: "Contact", status: "active", order: 3 },
+          faqs: { link: "https://shutterworx.co/FAQs", title: "FAQs", status: "active", order: 4 },
+          join: { link: "https://shutterworx.co/join", title: "Join Us", status: "inactive", order: 5 },  
+          signup: { link: "https://shutterworx.co/signup", title: "Sign Up", status: "active", order: 6 },
+          terms: { link: "https://shutterworx.co/terms", title: "Terms of Service", status: "inactive", order: 7 },
+          community: { link: "https://shutterworx.co/views/", title: "Community", status: "inactive", order: 8 },
+          basic_membership: { link: "https://shutterworx.co/signup-basic", title: "Basic Membership", status: "active", order: 9 },
+          pro_membership: { link: "https://shutterworx.co/signup-pro", title: "Pro Membership", status: "active", order: 10 },
+          elite_membership: { link: "https://shutterworx.co/signup-elite", title: "Elite Membership", status: "active", order: 11 },
+          admin_login: { link: "https://shutterworx.co/views/admin-login", title: "Admin Login", status: "active", order: 12 }
+      },
+      socialLinks: {
+          facebook: { 
+              url: "https://facebook.com/shutterworx", 
+              icon: "<i class='fab fa-facebook'></i>", 
+              color: "#3b5998", 
+              title: "Facebook Page", 
+              status: "deactive", 
+              order: 1 
+          },
+          twitter: { 
+              url: "https://twitter.com/shutterworx", 
+              icon: "<i class='fab fa-twitter'></i>", 
+              color: "#1DA1F2", 
+              title: "Twitter Page", 
+              status: "deactive", 
+              order: 2 
+          },
+          linkedin: { 
+              url: "https://linkedin.com/company/shutterworx", 
+              icon: "<i class='fab fa-linkedin'></i>", 
+              color: "#0077b5", 
+              title: "LinkedIn Page", 
+              status: "deactive", 
+              order: 3 
+          },
+          instagram: { 
+              url: "https://instagram.com/shutterworx", 
+              icon: "<i class='fab fa-instagram'></i>", 
+              color: "#C13584", 
+              title: "Instagram Page", 
+              status: "deactive", 
+              order: 4 
+          },
+          youtube: { 
+              url: "https://youtube.com/c/shutterworx", 
+              icon: "<i class='fab fa-youtube'></i>", 
+              color: "#FF0000", 
+              title: "YouTube Channel", 
+              status: "deactive", 
+              order: 5 
+          },
+          pinterest: {
+              url: "https://pinterest.com/shutterworx",
+              icon: "<i class='fab fa-pinterest'></i>",
+              color: "#E60023",
+              title: "Pinterest Page",
+              status: "deactive",
+              order: 6
+          },
+          tiktok: {
+              url: "https://tiktok.com/@shutterworx",
+              icon: "<i class='fab fa-tiktok'></i>",
+              color: "#000000",
+              title: "TikTok Page",
+              status: "deactive",
+              order: 7
+          },
+          snapchat: {
+              url: "https://snapchat.com/add/shutterworx",
+              icon: "<i class='fab fa-snapchat-ghost'></i>",
+              color: "#FFFC00",
+              title: "Snapchat Profile",
+              status: "deactive",
+              order: 8
+          },
+          vimeo: {
+              url: "https://vimeo.com/shutterworx",
+              icon: "<i class='fab fa-vimeo'></i>",
+              color: "#1ab7ea",
+              title: "Vimeo Channel",
+              status: "deactive",
+              order: 9
+          },
+          behance: {
+              url: "https://behance.net/shutterworx",
+              icon: "<i class='fab fa-behance'></i>",
+              color: "#1769FF",
+              title: "Behance Profile",
+              status: "deactive",
+              order: 10
+          },
+          flickr: {
+              url: "https://flickr.com/shutterworx",
+              icon: "<i class='fab fa-flickr'></i>",
+              color: "#0063dc",
+              title: "Flickr Profile",
+              status: "deactive",
+              order: 11
+          },
+          reddit: {
+              url: "https://reddit.com/r/shutterworx",
+              icon: "<i class='fab fa-reddit'></i>",
+              color: "#FF4500",
+              title: "Reddit Community",
+              status: "deactive",
+              order: 12
+          }
+      }
+      
+  };
+
+  // Styling settings
+  const defaultSettings = {
+      backgroundColor: "linear-gradient(135deg, #4e54c8, #8f94fb)",
+      linkColor: "#5bc0de",
+      linkHoverColor: "#333",
+      socialIcon: {
+          color: "#fff",
+          hoverBackgroundColor: "rgba(0, 0, 0, 0.2)",
+          hoverScale: "scale(1.1)",
+          transition: "color 0.3s ease, transform 0.2s ease, background-color 0.3s ease"
+      },
+      linkTransition: "color 0.3s ease"
+  };
+
+  // Apply footer background style
+  footer.style.background = defaultSettings.backgroundColor;
+
+  // Detect if the user is on a mobile device (based on screen width)
+  const isMobile = window.innerWidth < 768;
+
+  // Create social fragment for social media icons
+  const socialFragment = document.createDocumentFragment();
+  const socialIconsDiv = footer.querySelector("#footer-Social-icons");
+
+  // Clear existing social icons
+  socialIconsDiv.innerHTML = '';
+
+  // Populate footer content with ordered and active links only
+  footer.innerHTML = `
+      <div id="footer-Social-icons" class="social-icons"></div>
+      <p>&copy; ${currentYear} <a href="${shutterWorxLinks.pages.home.link}" class="footer-link">${shutterWorxLinks.pages.home.title}</a> / TechNoob. All Rights Reserved.</p>
+      <p><small>
+          ${Object.values(shutterWorxLinks.pages)
+              .filter(linkData => linkData.status === "active") // Only active links
+              .sort((a, b) => a.order - b.order) // Sort links by order
+              .map(linkData => `<a href="${linkData.link}" class="footer-link">${linkData.title}</a>`)
+              .join(" | ")}
+      </small></p>
+  `;
+
+  // Populate social media icons
+  Object.values(shutterWorxLinks.socialLinks)
+      .filter(linkData => linkData.status === "active") // Only active links
+      .sort((a, b) => a.order - b.order) // Sort links by order
+      .forEach(linkData => {
+          const iconElement = document.createElement("a");
+          iconElement.href = linkData.url;
+          iconElement.target = "_blank";
+          iconElement.title = linkData.title;
+          iconElement.style.color = linkData.color;
+          iconElement.style.transition = defaultSettings.socialIcon.transition;
+          iconElement.innerHTML = isMobile ? linkData.icon : `${linkData.icon} ${linkData.title}`;
+          iconElement.classList.add("social-icon");
+          iconElement.setAttribute("aria-label", linkData.title);
+
+          // Add hover effects using reusable function
+          addHoverEffect(iconElement, linkData.color, defaultSettings.socialIcon.color, defaultSettings.socialIcon.hoverBackgroundColor, defaultSettings.socialIcon.hoverScale);
+
+          socialFragment.appendChild(iconElement);
+      });
+
+  // Append social icons after processing
+  socialIconsDiv.appendChild(socialFragment);
+
+  // Apply hover effect to footer links
+  document.querySelectorAll('.footer-link').forEach(link => {
+      link.style.color = defaultSettings.linkColor;
+      addHoverEffect(link, defaultSettings.linkColor, defaultSettings.linkHoverColor);
+  });
+}
+
+// Helper function for adding hover effects
+const addHoverEffect = (element, originalColor, hoverColor, backgroundColor = "transparent", transform = "scale(1)") => {
+  element.style.transition = defaultSettings.linkTransition;
+
+  // Desktop hover effects
+  element.addEventListener("mouseover", () => {
+      element.style.color = hoverColor;
+      if (backgroundColor !== "transparent") {
+          element.style.backgroundColor = backgroundColor;
+      }
+      element.style.transform = transform;
+  });
+  element.addEventListener("mouseout", () => {
+      element.style.color = originalColor;
+      element.style.backgroundColor = "transparent";
+      element.style.transform = "scale(1)";
+  });
+
+  // Touch support for mobile devices
+  element.addEventListener("touchstart", () => {
+      element.style.color = hoverColor;
+      if (backgroundColor !== "transparent") {
+          element.style.backgroundColor = backgroundColor;
+      }
+  });
+  element.addEventListener("touchend", () => {
+      element.style.color = originalColor;
+      element.style.backgroundColor = "transparent";
+      element.style.transform = "scale(1)";
+  });
+}
+
  // Define the checkUrl function to check if a specific keyword is in the URL
 window.checkUrl = function(keyword) {
   // Get the current URL
@@ -496,16 +722,19 @@ window.checkUrl = function(keyword) {
 // Run this after the DOM has loaded
 document.addEventListener("DOMContentLoaded", () => {
   // Check if either /admin/ OR shutterWorx exists in the URL
-  if (window.checkUrl("/admin/") || window.checkUrl("shutterWorx")) {
-      console.log("Admin/Member View");
-      // Add any admin-specific functionality or settings here
+  if (window.checkUrl("/views/")) {
+    console.log("User View");
+    // Apply fetched or default settings for user view
+    applyLoadingSpinnerColors();
+    applySettings();
+    loadMenuToggleControls();
+
 
   } else {
-      console.log("User View");
-      // Apply fetched or default settings for user view
-      applyLoadingSpinnerColors();
-      applySettings();
-      loadMenuToggleControls();
+
+      console.log("Admin/Member View");
+// Load the footer content
+updateFooter();
   }
 });
 
