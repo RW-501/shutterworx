@@ -725,12 +725,14 @@ footer.style.fontFamily = defaultSettings.fontName;    // Apply font family
           addHoverEffect(iconElement, linkData.color, defaultSettings.socialIcon.color, defaultSettings.socialIcon.hoverBackgroundColor, defaultSettings.socialIcon.hoverScale);
 
           socialFragment.appendChild(iconElement);
-      });
+     
 
   const socialIconsDiv = footer.querySelector("#footer-Social-icons");
   
   // Append social icons after processing
   socialIconsDiv.appendChild(socialFragment);
+});
+
 
 // Footer link styling
 const footerLinksContainer = document.getElementById("footer-links");
