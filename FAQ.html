@@ -297,22 +297,7 @@
                 <input type="text" id="faq-search" placeholder="Search FAQs..." class="form-control">
             </div>
 
-            <select id="faq-topic-filter" class="mb-2 p-2">
-                <option value="">All Topics</option>
-                <option value="Account">Account</option>
-                <option value="Analytics">Analytics</option>
-                <option value="Community">Community</option>
-                <option value="General">General</option>
-                <option value="Gallery">Gallery</option>
-                <option value="Legal">Legal</option>
-                <option value="Notifications">Notifications</option>
-                <option value="Payments">Payments</option>
-                <option value="Privacy">Privacy</option>
-                <option value="Purchase">Purchase</option>
-                <option value="SEO">SEO</option>
-                <option value="Subscription">Subscription</option>
-                <option value="Support">Support</option>
-            </select>
+ 
             
             
         
@@ -431,12 +416,6 @@ document.addEventListener("DOMContentLoaded", function () {
             displayRandomFaqs(faqs);
             getTopics(faqs);
 
-            // Filter FAQs by topic
-            topicFilter.addEventListener("change", (e) => {
-                const selectedTopic = e.target.value;
-                filteredFaqs = selectedTopic ? faqs.filter(faq => faq.topic === selectedTopic) : faqs;
-                displayFaqs(filteredFaqs);
-            });
         })
         .catch(error => {
             console.error("Error fetching FAQ data:", error);
@@ -539,7 +518,7 @@ function displayFaqs(faqData, limit = displayedFaqs) {
 
         const faqItems = document.querySelectorAll(".faq-item");
         const noResults = document.getElementById("no-results");
-                const loadMore = document.querySelector("load-more");
+        const loadMore = document.querySelector(".load-more");
 
         faqItems.forEach(faqItem => {
             let question = faqItem.querySelector(".faq-question");
@@ -621,17 +600,14 @@ function displayRandomFaqs(faqs) {
         // Ensure the selected FAQ is unique
         if (!randomFaqS.includes(selectedFaq)) {
             randomFaqS.push(selectedFaq);
-           // console.log("Selected random FAQ: ", selectedFaq);
         }
     }
 
     const ran_faqItemsContainer = document.getElementById("ran-faq-items-container");
     ran_faqItemsContainer.innerHTML = ''; // Clear existing content
-    //console.log("Final list of random FAQs:", randomFaqS);
 
     // Display each selected FAQ in the container
     randomFaqS.forEach(faq => {
-       // console.log("Displaying FAQ:", faq);
 
         const faqItem = document.createElement("div");
         faqItem.classList.add("faq-item-random");
@@ -674,18 +650,14 @@ function scrollToFaq() {
 }
 
 function getTopics(faqs){
-console.log("Displaying FAQ:", faqs);
 
 //const topics = ["Account", "General", "Subscription", "Support"]; // This can be dynamic
 if (Array.isArray(faqs)) {
-    console.log("fs   ?????????/  aq");
             // Create a set of unique topics
     const topics = [...new Set(faqs.map(faq => faq.topic))];
-    console.log("topics FAQ:", topics);
 
     // Populate topics dynamically
 topics.forEach(topic => {
-    console.log("topics each:", topics);
 
     const topicElement = document.createElement("div");
     topicElement.classList.add("topic");
