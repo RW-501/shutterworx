@@ -167,19 +167,9 @@
 
     
 
-    let ipAddress;
-let locationData;
+    const locationData = sessionStorage.getItem('userLocation');
+    const ipAddress = sessionStorage.getItem('userIP');
 
-document.addEventListener("DOMContentLoaded", async () => {
-    try {
-        const { ip, location } = await window.userLocationService.getUserIPAndLocation();
-
-        ipAddress = ip;
-        locationData = location;
-    } catch (error) {
-        console.error("Error fetching user IP and location:", error);
-    }
-});
 
 // Show error messages
 function showError(message) {
