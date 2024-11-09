@@ -976,6 +976,7 @@ function getViewedByField() {
         },
         ipAddress,
         ...locationData,
+        lastViewDate: new Date().toISOString(),
         contactViews: increment(1)
     };
 
