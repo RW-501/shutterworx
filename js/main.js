@@ -276,6 +276,46 @@ window.hideLoadingSpinner = function() {
   window.addEventListener('load', showLoadingSpinner);
   
 
+  document.addEventListener("DOMContentLoaded", function() {
+    // Create and append the favicon and meta tags
+    const head = document.head;
+
+    const iconLink1 = document.createElement("link");
+    iconLink1.rel = "icon";
+    iconLink1.type = "image/png";
+    iconLink1.href = "https://shutterworx.co/images/fav/favicon-96x96.png";
+    iconLink1.sizes = "96x96";
+    head.appendChild(iconLink1);
+
+    const iconLink2 = document.createElement("link");
+    iconLink2.rel = "icon";
+    iconLink2.type = "image/svg+xml";
+    iconLink2.href = "https://shutterworx.co/images/fav/favicon.svg";
+    head.appendChild(iconLink2);
+
+    const shortcutIconLink = document.createElement("link");
+    shortcutIconLink.rel = "shortcut icon";
+    shortcutIconLink.href = "https://shutterworx.co/images/fav/favicon.ico";
+    head.appendChild(shortcutIconLink);
+
+    const appleTouchIconLink = document.createElement("link");
+    appleTouchIconLink.rel = "apple-touch-icon";
+    appleTouchIconLink.sizes = "180x180";
+    appleTouchIconLink.href = "https://shutterworx.co/images/fav/apple-touch-icon.png";
+    head.appendChild(appleTouchIconLink);
+
+    const appleMeta = document.createElement("meta");
+    appleMeta.name = "apple-mobile-web-app-title";
+    appleMeta.content = "Shutterworx.co";
+    head.appendChild(appleMeta);
+
+    const manifestLink = document.createElement("link");
+    manifestLink.rel = "manifest";
+    manifestLink.href = "https://shutterworx.co/images/fav/site.webmanifest";
+    head.appendChild(manifestLink);
+});
+
+
 
 // Function to inject styles based on site design data
 function injectStyles(styles) {
