@@ -418,7 +418,7 @@ displayFaqs(relatedFaqs);
         .then(response => response.json())
         .then(FAQs => {
             faqData = FAQs;
-            getRelatedFaqs("General", faqData);
+            getRelatedFaqs("general", faqData);
 
         })
         .catch(error => {
