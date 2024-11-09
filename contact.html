@@ -383,6 +383,9 @@ let faqData = [];
   const relatedTopics = relationMap[selectedType];
 
   // Assuming `faqData` is an array of FAQ objects, filter them by the related topics
+  
+  console.log("faqData:   ", faqData);
+
   const relatedFaqs = faqData.filter(faq => 
     relatedTopics.includes(faq.topic)
   );
