@@ -952,38 +952,58 @@ async function createLowerQualityImage(dataURL) {
 }
 
 
-
-// Function to apply watermark to the canvas
 function addWatermark(ctx, width, height) {
-    const settings = getWatermarkSettings();
+    const settings = getWatermarkSettings();  // Get current watermark settings
 
     // Set watermark style properties
     ctx.save();
     ctx.globalAlpha = settings.opacity;
     ctx.font = `${settings.bold ? "bold" : "normal"} ${settings.fontSize}px ${settings.font}`;
     ctx.fillStyle = settings.color;
-    ctx.textAlign = "center";
-    ctx.textBaseline = "middle";
-    ctx.scale(settings.scale, settings.scale);
 
-    // Calculate gap for repeated watermarks, if applicable
-    const textWidth = ctx.measureText(settings.text).width;
-    const gap = Math.max(textWidth, settings.fontSize) * 1.2;
+    // Handle multiple vs. single watermark mode
+    if(settings.multipleWatermark){
+     // For multiple watermarks, calculate gap for repeated watermarks
+     const textWidth = ctx.measureText(settings.text).width;
+        const gap = Math.max(textWidth, settings.fontSize) * 1.2; // Define gap size for repetition
 
-    if (settings.multipleWatermark) {
-        // Draw repeated watermarks
-        drawRepeatedWatermarks(settings, ctx, width, height, gap);
-    } else {
-        // Draw single watermark
-        ctx.translate(width / 2, height / 2);
-        ctx.rotate(settings.rotation * RADIAN_FACTOR);
-        renderText(ctx, settings, textWidth);
-        if (settings.underline) drawUnderline(ctx, textWidth, settings.fontSize);
+
+        document.getElementById("watermarkStyle").style.display = "block";
+        
+    let selectedStyle = document.getElementById("watermarkStyle").value;
+
+    if (selectedStyle === "diagonal-left") {
+        drawDiagonalLeftWatermarks(settings, ctx, width, height, gap);
+    } else if (selectedStyle === "diagonal-right") {
+        drawDiagonalRightWatermarks(settings, ctx, width, height, gap);
+    }else{
+
+             // Draw repeated watermarks across the canvas
+             drawRepeatedWatermarks(settings, ctx, width, height, gap);
+      
     }
 
+        
+   
+ } else {
+        // For single watermark, center it on the canvas
+        ctx.textAlign = "center";
+        ctx.textBaseline = "middle";
+        ctx.translate(width / 2, height / 2);  // Position at center of the canvas
+        ctx.rotate(settings.rotation * RADIAN_FACTOR);  // Apply rotation if any
+
+        // Render the text for the watermark
+        renderText(ctx, settings, ctx.measureText(settings.text).width);
+
+        // Optionally, draw underline if enabled
+        if (settings.underline) {
+            drawUnderline(ctx, ctx.measureText(settings.text).width, settings.fontSize);
+        }
+    }
+
+    // Restore the context to its previous state
     ctx.restore();
 }
-
 
 
 // Element selectors and default settings
@@ -1024,33 +1044,44 @@ const defaultSettings = {
 
 // Reset settings to defaults
 function resetWatermarkSettings() {
-        Object.keys(defaultSettings).forEach(key => {
-            if (elements[key]) {
-                elements[key].value = defaultSettings[key];
-                elements[key].checked = defaultSettings[key];
+    // Loop through the default settings keys and update elements with their default values
+    Object.keys(defaultSettings).forEach(key => {
+        if (elements[key]) {
+            // If the element exists, reset its value or checked state based on the default settings
+            if (elements[key].type === "checkbox") {
+                elements[key].checked = defaultSettings[key];  // For checkboxes
+            } else {
+                elements[key].value = defaultSettings[key];  // For other input types like text, color, etc.
             }
-        });
-           // Clear the canvas
+        }
+    });
+
+    // Clear the canvas to remove any current watermark preview
     previewCtx.clearRect(0, 0, previewCanvas.width, previewCanvas.height);
 
-        updateWatermarkPreview();
-    }
+    // Re-render the watermark preview with default settings
+    updateWatermarkPreview();
+}
 
 
-// Fetch current settings with validation
-function getWatermarkSettings() { 
+function getWatermarkSettings() {
     const settings = {};
 
+    // Loop through each element in watermarkElements and fetch its value or checked state
     Object.entries(watermarkElements).forEach(([key, element]) => {
-        // Handle different input types
-        if (element.type === "checkbox") {
-            settings[key] = element.checked;
-        } else if (element.type === "text" || element.type === "color" || element.tagName.toLowerCase() === "select") {
-            // For text, color, and select elements, use their `value` directly
-            settings[key] = element.value || defaultSettings[key];
-        } else {
-            // Use parseValue for other element types
-            settings[key] = parseValue(element, defaultSettings[key]);
+        try {
+            if (element.type === "checkbox") {
+                settings[key] = element.checked;  // For checkboxes, use `checked` state
+            } else if (element.type === "text" || element.type === "color" || element.tagName.toLowerCase() === "select") {
+                // For text, color, and select elements, use their `value` directly
+                settings[key] = element.value || defaultSettings[key];  // Fallback to defaultSettings if no value
+            } else {
+                // For other element types, parse the value (e.g., range sliders, number inputs, etc.)
+                settings[key] = parseValue(element, defaultSettings[key]);
+            }
+        } catch (error) {
+            console.error(`Error getting setting for ${key}:`, error);
+            settings[key] = defaultSettings[key];  // Ensure fallback to default if any error occurs
         }
     });
 
@@ -1065,48 +1096,51 @@ function parseValue(element, fallback) {
 
 // Update preview with current settings
 function updateWatermarkPreview() {
-    previewCtx.clearRect(0, 0, previewCanvas.width, previewCanvas.height);
-    const settings = getWatermarkSettings();
+    previewCtx.clearRect(0, 0, previewCanvas.width, previewCanvas.height);  // Clear canvas before redrawing
+    const settings = getWatermarkSettings();  // Get current watermark settings
     
     previewCtx.save();
-    //previewCtx.text = settings.text;
+
+    // Set up watermark style properties
     previewCtx.globalAlpha = settings.opacity;
     previewCtx.font = `${settings.bold ? "bold" : "normal"} ${settings.fontSize}px ${settings.font}`;
     previewCtx.fillStyle = settings.color;
-    previewCtx.textAlign = "center";
-    previewCtx.textBaseline = "middle";
-    previewCtx.scale(settings.scale, settings.scale);
+    previewCtx.scale(settings.scale, settings.scale);  // Apply scale to the watermark
 
     const textWidth = previewCtx.measureText(settings.text).width;
-    const gap = Math.max(textWidth, settings.fontSize) * 1.2;
+    const gap = Math.max(textWidth, settings.fontSize) * 1.2;  // Calculate the gap for repeated watermarks
 
-
-    if(settings.multipleWatermark){
+    // Handle multiple watermark vs single watermark mode
+    if (settings.multipleWatermark) {
+        // Show the watermark style selector when in multiple watermark mode
         document.getElementById("watermarkStyle").style.display = "block";
-        
-    let selectedStyle = document.getElementById("watermarkStyle").value;
 
-    if (selectedStyle === "diagonal-left") {
-        drawDiagonalLeftWatermarks(settings, previewCtx, previewCanvas.width, previewCanvas.height, gap);
-    } else if (selectedStyle === "diagonal-right") {
-        drawDiagonalRightWatermarks(settings, previewCtx, previewCanvas.width, previewCanvas.height, gap);
+        let selectedStyle = document.getElementById("watermarkStyle").value;  // Get selected style
+
+        // Draw watermarks based on the selected style
+        switch (selectedStyle) {
+            case "diagonal-left":
+                drawDiagonalLeftWatermarks(settings, previewCtx, previewCanvas.width, previewCanvas.height, gap);
+                break;
+            case "diagonal-right":
+                drawDiagonalRightWatermarks(settings, previewCtx, previewCanvas.width, previewCanvas.height, gap);
+                break;
+            default:
+                // Default behavior: draw regular repeated watermarks
+                drawRepeatedWatermarks(settings, previewCtx, previewCanvas.width, previewCanvas.height, gap);
+                break;
+        }
+
     } else {
-
-        console.log("previewCanvas.width  ",previewCanvas.width);
-        console.log("previewCtx.width  ",previewCtx.width);
-        console.log("gap  ",gap); 
-       // drawRegularWatermarks(settings, previewCtx, previewCanvas.width, previewCanvas.height, gap);
-        drawRepeatedWatermarks(settings, ctx, previewCtx.width, previewCtx.height, gap);
-
-    }
-
-    }else{
+        // Hide watermark style selector in single watermark mode
         document.getElementById("watermarkStyle").style.display = "none";
 
-        drawSingleWatermark(settings, textWidth);
+        // Draw single watermark in the center
+        previewCtx.textAlign = "center";
+        previewCtx.textBaseline = "middle";
+        drawSingleWatermark(settings, previewCtx, textWidth);
     }
-  
-  
+
     previewCtx.restore();
 }
 
