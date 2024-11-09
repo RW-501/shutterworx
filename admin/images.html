@@ -1079,7 +1079,25 @@ function updateWatermarkPreview() {
     const textWidth = previewCtx.measureText(settings.text).width;
     const gap = Math.max(textWidth, settings.fontSize) * 1.2;
 
-    settings.multipleWatermark ? drawRepeatedWatermarks(settings, ctx, width, height, gap) : drawSingleWatermark(settings, textWidth);
+
+    if(settings.multipleWatermark){
+        document.getElementById("watermarkStyle").style.display = "block";
+        
+    let selectedStyle = document.getElementById("watermarkStyle").value;
+
+    if (selectedStyle === "diagonal-left") {
+        drawDiagonalLeftWatermarks(settings, previewCtx, previewCanvas.width, previewCanvas.height, gap);
+    } else if (selectedStyle === "diagonal-right") {
+        drawDiagonalRightWatermarks(settings, previewCtx, previewCanvas.width, previewCanvas.height, gap);
+    } else {
+        drawRegularWatermarks(settings, previewCtx, previewCanvas.width, previewCanvas.height, gap);
+    }
+
+    }else{
+        drawSingleWatermark(settings, textWidth);
+    }
+  
+  
     previewCtx.restore();
 }
 
