@@ -634,12 +634,7 @@ async function updateSW_Footer() {
   // Detect if the user is on a mobile device (based on screen width)
   const isMobile = window.innerWidth < 768;
 
-  // Create social fragment for social media icons
-  const socialFragment = document.createDocumentFragment();
-  const socialIconsDiv = footer.querySelector("#footer-Social-icons");
 
-  // Clear existing social icons
-  socialIconsDiv.innerHTML = '';
 
   // Populate footer content with ordered and active links only
   footer.innerHTML = `
@@ -653,6 +648,15 @@ async function updateSW_Footer() {
               .join(" | ")}
       </small></p>
   `;
+
+
+
+
+    // Create social fragment for social media icons
+    const socialFragment = document.createDocumentFragment();
+  
+    // Clear existing social icons
+    socialIconsDiv.innerHTML = '';
 
   // Populate social media icons
   Object.values(shutterWorxLinks.socialLinks)
@@ -678,6 +682,8 @@ async function updateSW_Footer() {
   // Append social icons after processing
   socialIconsDiv.appendChild(socialFragment);
 
+  const socialIconsDiv = footer.querySelector("#footer-Social-icons");
+  
   // Apply hover effect to footer links
   document.querySelectorAll('.footer-link').forEach(link => {
       link.style.color = defaultSettings.linkColor;
