@@ -531,7 +531,6 @@ function displayFaqs(faqData, limit = displayedFaqs) {
     // FAQ Search functionality
   function  searchFAQ(searchQuery){
         
-        const searchQuery = this.value.toLowerCase();
         console.log("searchQuery  ", searchQuery);
 
         let hasResults = false;
@@ -660,14 +659,20 @@ function scrollToFaq() {
     document.getElementById("faq-items").scrollIntoView({ behavior: 'smooth' });
 }
 
+
+console.log("Displaying FAQ:", faqs);
+
 //const topics = ["Account", "General", "Subscription", "Support"]; // This can be dynamic
 if (Array.isArray(faqs)) {
-
+    console.log("fs   ?????????/  aq");
             // Create a set of unique topics
     const topics = [...new Set(faqs.map(faq => faq.topic))];
-    
+    console.log("topics FAQ:", topics);
+
     // Populate topics dynamically
 topics.forEach(topic => {
+    console.log("topics each:", topics);
+
     const topicElement = document.createElement("div");
     topicElement.classList.add("topic");
     topicElement.textContent = topic;
