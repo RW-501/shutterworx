@@ -934,13 +934,43 @@ async function createLowerQualityImage(dataURL) {
     ctx.drawImage(img, 0, 0, width, height);
 
     // Add watermark to canvas
-  //  addWatermark(ctx, width, height);
+    addWatermark(ctx, width, height);
 
     return canvas.toDataURL("image/jpeg", 0.7); // Compression quality
 }
 
 
 
+// Function to apply watermark to the canvas
+function addWatermark(ctx, width, height) {
+    const settings = getWatermarkSettings();
+
+    // Set watermark style properties
+    ctx.save();
+    ctx.globalAlpha = settings.opacity;
+    ctx.font = `${settings.bold ? "bold" : "normal"} ${settings.fontSize}px ${settings.font}`;
+    ctx.fillStyle = settings.color;
+    ctx.textAlign = "center";
+    ctx.textBaseline = "middle";
+    ctx.scale(settings.scale, settings.scale);
+
+    // Calculate gap for repeated watermarks, if applicable
+    const textWidth = ctx.measureText(settings.text).width;
+    const gap = Math.max(textWidth, settings.fontSize) * 1.2;
+
+    if (settings.multipleWatermark) {
+        // Draw repeated watermarks
+        drawRepeatedWatermarks(settings, ctx, width, height, gap);
+    } else {
+        // Draw single watermark
+        ctx.translate(width / 2, height / 2);
+        ctx.rotate(settings.rotation * RADIAN_FACTOR);
+        renderText(ctx, settings, textWidth);
+        if (settings.underline) drawUnderline(ctx, textWidth, settings.fontSize);
+    }
+
+    ctx.restore();
+}
 
 
 
@@ -1084,36 +1114,39 @@ function drawRegularWatermarks(settings, gap) {
 
 
 // Draw multiple watermarks
-function drawRepeatedWatermarks(settings, gap) {
-    for (let x = 0; x < previewCanvas.width + gap; x += gap) {
-        for (let y = 0; y < previewCanvas.height + gap; y += gap) {
-            previewCtx.save();
-            previewCtx.translate(x, y);
-            previewCtx.rotate(settings.rotation * RADIAN_FACTOR);
-            renderText(settings);
-            previewCtx.restore();
+function drawRepeatedWatermarks(settings, ctx, width, height, gap) {
+    for (let x = 0; x < width + gap; x += gap) {
+        for (let y = 0; y < height + gap; y += gap) {
+            ctx.save();
+            ctx.translate(x, y);
+            ctx.rotate(settings.rotation * RADIAN_FACTOR);
+            renderText(ctx, settings);
+            ctx.restore();
         }
     }
 }
 
+
 // Render text with stroke and fill
-function renderText(settings) {
+// Render text with optional stroke and fill
+function renderText(ctx, settings) {
     if (settings.stroke) {
-        previewCtx.lineWidth = settings.stroke;
-        previewCtx.strokeStyle = settings.color;
-        previewCtx.strokeText(settings.text, 0, 0);
+        ctx.lineWidth = settings.stroke;
+        ctx.strokeStyle = settings.color;
+        ctx.strokeText(settings.text, 0, 0);
     }
-    previewCtx.fillText(settings.text, 0, 0);
+    ctx.fillText(settings.text, 0, 0);
 }
 
+
 // Draw underline for text
-function drawUnderline(textWidth, fontSize) {
+function drawUnderline(ctx, textWidth, fontSize) {
     const underlineY = fontSize / 2 + 5;
-    previewCtx.beginPath();
-    previewCtx.moveTo(-textWidth / 2, underlineY);
-    previewCtx.lineTo(textWidth / 2, underlineY);
-    previewCtx.lineWidth = 2;
-    previewCtx.stroke();
+    ctx.beginPath();
+    ctx.moveTo(-textWidth / 2, underlineY);
+    ctx.lineTo(textWidth / 2, underlineY);
+    ctx.lineWidth = 2;
+    ctx.stroke();
 }
 
 // Bind event listeners
