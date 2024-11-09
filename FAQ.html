@@ -537,6 +537,8 @@ function displayFaqs(faqData, limit = displayedFaqs) {
         const searchRegex = new RegExp(searchQuery, "gi");
 
         const faqItems = document.querySelectorAll(".faq-item");
+        const noResults = document.getElementById("no-results");
+                const loadMore = document.querySelector("load-more");
 
         faqItems.forEach(faqItem => {
             let question = faqItem.querySelector(".faq-question");
@@ -552,7 +554,11 @@ function displayFaqs(faqData, limit = displayedFaqs) {
                 hasResults = true;
                 faqItem.style.display = "block";
              
-                                
+
+                loadMore.style.display = "block";
+                noResults.style.display = "none";
+
+                  
 // Remove any <script> tags from the text content
     question.textContent = question.textContent.replace(/<script[^>]*>([\S\s]*?)<\/script>/g, '');
 
@@ -570,9 +576,16 @@ question.textContent = question.innerHTML.replace("+", match => `<div class="faq
                 question.classList.add("fade-in");
 
             } else {
+          
+
+                loadMore.style.display = "none";
+                noResults.style.display = "block";
+
+
+                noResults.classList.add("fade-in");
+
                 faqItem.style.display = "none";
                 hasResults = false;
-
             }
      
 
