@@ -566,7 +566,7 @@ function displayFaqs(faqData, limit = displayedFaqs) {
 
                   
 // Remove any <script> tags from the text content
-    question.textContent = question.textContent.replace(/<script[^>]*>([\S\s]*?)<\/script>/g, '');
+    question.textContent = question.textContent.replace(/<div[^>]*>([\S\s]*?)<\/div>/g, '');
 
 // Replace the "+" with a custom HTML element
 question.textContent = question.innerHTML.replace("+", match => `<div class="faq-icon">+</div>`);
