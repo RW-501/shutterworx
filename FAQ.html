@@ -701,6 +701,7 @@ topics.forEach(topic => {
     topicElement.addEventListener("click", () => {
         const filteredFaqs = faqs.filter(faq => faq.topic === topic);
         cleanUp();
+
         displayFaqs(filteredFaqs);
     });
     topicsContainer.appendChild(topicElement);
@@ -718,7 +719,7 @@ function cleanUp(){
     if(faqSearch){
         faqSearch = '';
     }
-    /*
+    
     const faqItems = document.querySelectorAll(".faq-item");
 
         if(faqItems.length > 0){
@@ -726,7 +727,7 @@ function cleanUp(){
         faqItems.className.add("seen");
 
     }
-        */
+        
 }
 
 
