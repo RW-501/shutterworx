@@ -934,7 +934,7 @@ async function createLowerQualityImage(dataURL) {
     ctx.drawImage(img, 0, 0, width, height);
 
     // Add watermark to canvas
-    addWatermark(ctx, width, height);
+  //  addWatermark(ctx, width, height);
 
     return canvas.toDataURL("image/jpeg", 0.7); // Compression quality
 }
