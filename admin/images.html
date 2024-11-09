@@ -1069,6 +1069,7 @@ function updateWatermarkPreview() {
     const settings = getWatermarkSettings();
     
     previewCtx.save();
+    //previewCtx.text = settings.text;
     previewCtx.globalAlpha = settings.opacity;
     previewCtx.font = `${settings.bold ? "bold" : "normal"} ${settings.fontSize}px ${settings.font}`;
     previewCtx.fillStyle = settings.color;
@@ -1469,7 +1470,7 @@ async function renderImages(imagesData) {
 
 
 // Event listener for "Save Selected Images" button with progress tracking
-imagePreviewContainer.getElementById("saveAllImagesBtn").addEventListener("click", async () => {
+document.getElementById("saveAllImagesBtn").addEventListener("click", async () => {
     const selectedImages = [];
 
     // Find checked checkboxes and gather corresponding images
