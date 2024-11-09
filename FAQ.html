@@ -259,7 +259,11 @@
     margin: .5rem;
 
 }
-    
+    .seen {
+
+        background-color: #0cd90f98; 
+
+    }
     
     </style>
 </head>
@@ -546,6 +550,12 @@ function displayFaqs(faqData, limit = displayedFaqs) {
         loadMore.style.display = "block";
         noResults.style.display = "none";
 
+        if(faqItems){
+        faqItems.style.display = "none";
+        faqItems.classList.add("seen");
+
+    }
+
         faqItems.forEach(faqItem => {
             let question = faqItem.querySelector(".faq-question");
             let answer = faqItem.querySelector(".faq-answer");
@@ -566,7 +576,7 @@ function displayFaqs(faqData, limit = displayedFaqs) {
 
                   
 // Remove any <script> tags from the text content
-    question.textContent = question.textContent.replace(/<div[^>]*>([\S\s]*?)<\/div>/g, '');
+    question.innerHTML = question.textContent.replace(/<div[^>]*>([\S\s]*?)<\/div>/g, '');
 
 // Replace the "+" with a custom HTML element
 question.textContent = question.innerHTML.replace("+", match => `<div class="faq-icon">+</div>`);
@@ -690,6 +700,7 @@ topics.forEach(topic => {
     topicElement.textContent = topic;
     topicElement.addEventListener("click", () => {
         const filteredFaqs = faqs.filter(faq => faq.topic === topic);
+        cleanUp();
         displayFaqs(filteredFaqs);
     });
     topicsContainer.appendChild(topicElement);
@@ -700,7 +711,15 @@ topics.forEach(topic => {
 }
   
 
+function cleanUp(){
 
+    const faqSearch = document.getElementById("faq-search").value;
+
+    if(faqSearch){
+        faqSearch = '';
+    }
+
+}
 
 
 });
