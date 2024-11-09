@@ -574,19 +574,6 @@ function startViewTimer() {
 
 
 
-    let ipAddress;
-let locationData;
-
-document.addEventListener("DOMContentLoaded", async () => {
-    try {
-        const { ip, location } = await window.userLocationService.getUserIPAndLocation();
-
-        ipAddress = ip;
-        locationData = location;
-    } catch (error) {
-        console.error("Error fetching user IP and location:", error);
-    }
-});
 
 
 
@@ -614,6 +601,9 @@ document.getElementById("send-message-btn").innerHTML = "Sending..."; // Show lo
         window.hideLoadingSpinner(); // Hide spinner on validation error
         return;
     }
+    const locationData = sessionStorage.getItem('userLocation');
+    const ipAddress = sessionStorage.getItem('userIP');
+
 
     // Prepare data for Firestore
     const formData = {
