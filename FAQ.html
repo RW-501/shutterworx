@@ -388,9 +388,6 @@ function displayFaqs(faqData, limit = displayedFaqs) {
 
 
 
-    
-
-    
 
     // FAQ Search functionality
     document.getElementById("faq-search").addEventListener("input", function () {
@@ -434,21 +431,25 @@ function displayFaqs(faqData, limit = displayedFaqs) {
                 hasResults = false;
 
             }
-        });
+     
 
-        // Show or hide 'No Results' message
-  // Ensure to show or hide the 'Load More' button based on the results
-  const loadMoreBtn = document.querySelector(".load-more");
-    if (loadMoreBtn) {
-        loadMoreBtn.style.display = hasResults ? "none" : "block";
-    }
-    
-    document.getElementById("no-results").style.display = hasResults ? "none" : "block";
+    // FAQ Search functionality
+    document.getElementById("faq-search").addEventListener("input", function () {
+        const searchQuery = this.value.toLowerCase();
+        console.log("searchQuery  ", searchQuery);
+        searchFAQ(searchQuery);
 
+ 
     });
+});
+    
 
+    
 
+});
+    
 
+    
     let randomFaqS = [];
 
 // Function to display random FAQs (10 random questions)
@@ -488,19 +489,29 @@ function displayRandomFaqs(faqs) {
         question.addEventListener("click", function () {
             const faqSearch = document.getElementById("faq-search");
             faqSearch.value = faq.question;
-            const event = new Event("input", {
-        bubbles: true,  // Make sure the event bubbles up if needed
-        cancelable: true  // Allow the event to be canceled if needed
-    });
-    faqSearch.dispatchEvent(new Event("input"));
+            searchFAQ(faq.question);
 
-    // Dispatch the event to simulate user input
-    faqSearch.dispatchEvent(event);
-        });
+    });
+ 
+       
     });
 }
 
+// Function to extract the 'q' parameter from the URL
+function getSearchTermFromURL() {
+    const urlParams = new URLSearchParams(window.location.search);
+    return urlParams.get("q") || ""; // Returns the value of 'q' or an empty string if not found
+}
 
+// Function to execute the FAQ search based on the 'q' URL parameter
+function initializeFAQSearch() {
+    const searchTerm = getSearchTermFromURL();
+    if (searchTerm) {
+        const faqSearch = document.getElementById("faq-search");
+        faqSearch.value = searchTerm;
+        searchFAQ(searchTerm);
+    }
+}
 
 function scrollToFaq() {
     document.getElementById("faq-items").scrollIntoView({ behavior: 'smooth' });
