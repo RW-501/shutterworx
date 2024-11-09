@@ -762,52 +762,57 @@ footerLinksContainer.style.gridTemplateColumns = "repeat(auto-fit, minmax(100px,
 
 
   // Apply hover effect to footer links
-  document.querySelectorAll('.footer-link').forEach(link => {
-    link.style.color = defaultSettings.linkColor;
-    link.style.transition = defaultSettings.linkTransition;
+  // document.querySelectorAll('.footer-link').forEach(link => {
     
     addHoverEffect(link, defaultSettings.linkColor, defaultSettings.linkHoverColor);
-  });
+ 
 
 
 // Tag link color
 const tagLinks = footerLinksContainer.querySelectorAll(".tag-link");
-tagLinks.forEach(tag => {
-    tag.style.color = defaultSettings.tagLinkColor;
-});
 
+tagLinks.style.color = defaultSettings.linkColor;
+/*
+
+tagLinks.forEach(tag => {
+  tag.style.color = defaultSettings.tagLinkColor;
+  tag.style.color = defaultSettings.tagLinkColor;
+});
+*/
 
 
 
   // Desktop hover effects
-  element.addEventListener("mouseover", () => {
-      element.style.color = hoverColor;
+  tagLinks.addEventListener("mouseover", () => {
+    tagLinks.style.color = hoverColor;
       if (backgroundColor !== "transparent") {
-          element.style.backgroundColor = backgroundColor;
+        tagLinks.style.backgroundColor = backgroundColor;
       }
-      element.style.transform = transform;
+      tagLinks.style.transform = transform;
   });
-  element.addEventListener("mouseout", () => {
-      element.style.color = originalColor;
-      element.style.backgroundColor = "transparent";
-      element.style.transform = "scale(1)";
+  tagLinks.addEventListener("mouseout", () => {
+    tagLinks.style.color = originalColor;
+    tagLinks.style.backgroundColor = "transparent";
+    tagLinks.style.transform = "scale(1)";
   });
 
   // Touch support for mobile devices
-  element.addEventListener("touchstart", () => {
-      element.style.color = hoverColor;
+  tagLinks.addEventListener("touchstart", () => {
+    tagLinks.style.color = hoverColor;
       if (backgroundColor !== "transparent") {
-          element.style.backgroundColor = backgroundColor;
+        tagLinks.style.backgroundColor = backgroundColor;
       }
   });
-  element.addEventListener("touchend", () => {
-      element.style.color = originalColor;
-      element.style.backgroundColor = "transparent";
-      element.style.transform = "scale(1)";
+  tagLinks.addEventListener("touchend", () => {
+    tagLinks.style.color = originalColor;
+    tagLinks.style.backgroundColor = "transparent";
+      tagLinks.style.transform = "scale(1)";
   });
+
+
+// });
+
 }
-
-
 
 }
 
