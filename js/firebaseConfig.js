@@ -43,14 +43,13 @@ function initializeFirebase() {
 
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
-    apiKey: "AIzaSyC2bb6osv0jnvpnETCVoG6bvBynGGsOVaw",
-    authDomain: "raw-photography-12616.firebaseapp.com",
-    databaseURL: "https://raw-photography-12616-default-rtdb.firebaseio.com",
-    projectId: "raw-photography-12616",
-    storageBucket: "raw-photography-12616.firebasestorage.app",
-    messagingSenderId: "1078385378836",
-    appId: "1:1078385378836:web:bb8f9611bfbdac1e480901",
-    measurementId: "G-0DLEHE7DEK"
+    apiKey: "AIzaSyCfgJRmnM_M_5qvevUvPnVVRyBqU-DSARw",
+    authDomain: "shutterworx-e7fa7.firebaseapp.com",
+    projectId: "shutterworx-e7fa7",
+    storageBucket: "shutterworx-e7fa7.firebasestorage.app",
+    messagingSenderId: "293593511765",
+    appId: "1:293593511765:web:6ef1ad12ba7ea15d0761dc",
+    measurementId: "G-FT6HPQ6RND"
   };
 
     try {
