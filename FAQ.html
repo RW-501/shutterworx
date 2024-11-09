@@ -439,13 +439,20 @@ document.addEventListener("DOMContentLoaded", function () {
   
 // Function to display FAQs with a limit
 function displayFaqs(faqData, limit = displayedFaqs) {
-    faqItemsContainer.innerHTML = ""; // Clear existing FAQs
+   // faqItemsContainer.innerHTML = ""; // Clear existing FAQs
+   const faqItems = document.querySelectorAll(".faq-item");
+        const noResults = document.getElementById("no-results");
+        const loadMore = document.querySelector(".load-more");
+        loadMore.style.display = "none";
+        noResults.style.display = "none"
+        faqItems.style.display = "none"
+
 
     // Ensure faqData is an array
     if (!Array.isArray(faqData)) return;
 
     // Display only the limited number of FAQs
-    faqData.slice(0, limit).forEach((faq, index) => {
+    faqData.forEach((faq, index) => {
         const faqItem = document.createElement("div");
         faqItem.className = "faq-item fade-in";
 
@@ -483,10 +490,24 @@ function displayFaqs(faqData, limit = displayedFaqs) {
 
         });
 
+
+
         // Append elements to the container
         faqItem.appendChild(faqItemOuter);
         faqItem.appendChild(answer);
+    if(index > limit){
+        faqItem.style.display = "none"
+        console.log("index  ", index);
+
+    }else{
+        faqItem.style.display = "block"
+        console.log("what be up to 10 index  ", index);
+
+    }
         faqItemsContainer.appendChild(faqItem);
+
+
+    
     });
 
     // Fade-in animation for each FAQ item (optional)
@@ -519,6 +540,8 @@ function displayFaqs(faqData, limit = displayedFaqs) {
         const faqItems = document.querySelectorAll(".faq-item");
         const noResults = document.getElementById("no-results");
         const loadMore = document.querySelector(".load-more");
+        loadMore.style.display = "block";
+        noResults.style.display = "none";
 
         faqItems.forEach(faqItem => {
             let question = faqItem.querySelector(".faq-question");
