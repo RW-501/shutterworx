@@ -892,8 +892,8 @@ window.userLocationService = (function() {
     // Main function to get IP and location together
     const getUserIPAndLocation = async () => {
         try {
-            let ipAddress = sessionStorage.getItem('userIP');
-            let locationData = JSON.parse(sessionStorage.getItem('userLocation'));
+             ipAddress = sessionStorage.getItem('userIP');
+             locationData = JSON.parse(sessionStorage.getItem('userLocation'));
   
             // If IP or location are not cached, fetch them
             if (!ipAddress || !location) {
