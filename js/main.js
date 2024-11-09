@@ -709,7 +709,7 @@ footerLinksContainer.style.gridTemplateColumns = "repeat(auto-fit, minmax(100px,
   });
 }
 // Tag link color
-const tagLinks = footer.querySelectorAll(".tag-link");
+const tagLinks = footerLinksContainer.querySelectorAll(".tag-link");
 tagLinks.forEach(tag => {
     tag.style.color = defaultSettings.tagLinkColor;
 });
