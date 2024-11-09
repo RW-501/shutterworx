@@ -723,9 +723,11 @@ function cleanUp(){
     const faqItems = document.querySelectorAll(".faq-item");
 
         if(faqItems.length > 0){
-        faqItems.style.display = "none";
-        faqItems.className.add("seen");
+            faqItems.forEach(faqItem => {
 
+                faqItem.style.display = "none";
+                faqItem.className.add("seen");
+            });
     }
         
 }
