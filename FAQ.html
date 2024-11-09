@@ -529,7 +529,8 @@ function displayFaqs(faqData, limit = displayedFaqs) {
 
 
     // FAQ Search functionality
-    document.getElementById("faq-search").addEventListener("input", function () {
+    searchFAQ(searchQuery){
+        
         const searchQuery = this.value.toLowerCase();
         console.log("searchQuery  ", searchQuery);
 
@@ -553,7 +554,11 @@ function displayFaqs(faqData, limit = displayedFaqs) {
                 faqItem.style.display = "block";
              
                                 
-                question.textContent = question.textContent.replace("+", match => `<div class="faq-icon">+</div>`);
+// Remove any <script> tags from the text content
+    question.textContent = question.textContent.replace(/<script[^>]*>([\S\s]*?)<\/script>/g, '');
+
+// Replace the "+" with a custom HTML element
+question.innerHTML = question.innerHTML.replace("+", match => `<div class="faq-icon">+</div>`);
 
                 //console.log("question  ", question);
 
@@ -572,6 +577,11 @@ function displayFaqs(faqData, limit = displayedFaqs) {
             }
      
 
+        });
+    
+
+        }
+    
     // FAQ Search functionality
     document.getElementById("faq-search").addEventListener("input", function () {
         const searchQuery = this.value.toLowerCase();
@@ -580,12 +590,6 @@ function displayFaqs(faqData, limit = displayedFaqs) {
 
  
     });
-});
-    
-
-    
-
-});
     
 
     
