@@ -356,7 +356,7 @@
 let faqData = [];
 
     // Fetch FAQ data from JSON file
-    fetch('faqs.json')
+    fetch('https://shutterworx.co/faqs.json')
         .then(response => response.json())
         .then(FAQs => {
             faqData = FAQs;
@@ -366,10 +366,31 @@ let faqData = [];
         });
 
 
-document.getElementById('messageType').addEventListener('change', function() {
+        document.getElementById('messageType').addEventListener('change', function() { 
   const selectedType = this.value.toLowerCase();
-  const relatedFaqs = faqData.filter(faq => faq.topic.toLowerCase() === selectedType);
+
+  // Define the relation map
+  const relationMap = {
+    "general": ["General", "Account", "Privacy", "Notifications"],
+    "sign-up": ["Subscription", "Account", "Privacy"],
+    "business": ["Legal", "Purchase", "SEO", "Analytics"],
+    "feedback": ["Support", "Account", "Notifications"],
+    "Subscription": ["Subscription", "Payments", "Account", "Community"],
+    "Support": ["Support", "Account", "Privacy"]
+  };
+
+  // Retrieve related topics from the relationMap based on selected message type
+  const relatedTopics = relationMap[selectedType];
+
+  // Assuming `faqData` is an array of FAQ objects, filter them by the related topics
+  const relatedFaqs = faqData.filter(faq => 
+    relatedTopics.includes(faq.topic)
+  );
+
+  // Function to display the filtered FAQs (this function needs to be implemented)
   displayFaqs(relatedFaqs);
+
+  console.log("relatedFaqs", relatedFaqs);
 });
 
 function displayFaqs(faqs) {
@@ -377,9 +398,12 @@ function displayFaqs(faqs) {
   const faqList = document.getElementById('faq-list');
   faqList.innerHTML = '';
 
-  if (faqs.length > 0) {
+  // Limit the number of FAQs to 15
+  const limitedFaqs = faqs.slice(0, 15);
+
+  if (limitedFaqs.length > 0) {
     faqContainer.classList.remove('hidden');
-    faqs.forEach(faq => {
+    limitedFaqs.forEach(faq => {
       const faqItem = document.createElement('li');
       faqItem.innerHTML = `<strong>${faq.question}</strong><p>${faq.answer}</p>`;
       faqList.appendChild(faqItem);
@@ -388,6 +412,7 @@ function displayFaqs(faqs) {
     faqContainer.classList.add('hidden');
   }
 }
+
 
  
 
