@@ -550,11 +550,12 @@ function displayFaqs(faqData, limit = displayedFaqs) {
         loadMore.style.display = "block";
         noResults.style.display = "none";
 
-        if(faqItems.length > 0){
-        faqItems.style.display = "none";
-        faqItems.className.add("seen");
 
-    }
+        if(faqItems.length > 0){
+            faqItems.forEach(faqItem => {
+                faqItem.classList.add("fade-in");
+                faqItem.style.display = "none";
+            });
 
         faqItems.forEach(faqItem => {
             let question = faqItem.querySelector(".faq-question");
