@@ -831,7 +831,10 @@ let ipAddress;
 window.userLocationService = (function() {
     const ipAPI = 'https://api.ipify.org?format=json';
     const locationAPI = 'https://ipapi.co';
-  
+    console.log("ipAPI   ",ipAPI);
+    console.log("locationAPI   ",locationAPI);
+
+
     // Fetch the user's IP address
     const getUserIP = async () => {
         try {
@@ -848,6 +851,9 @@ window.userLocationService = (function() {
     const getUserLocationByIP = async (ip) => {
         try {
             const response = await fetch(`${locationAPI}/${ip}/json/`);
+            console.log("response   ",response);
+
+           
             const data = await response.json();
             return {
                 city: data.city || 'N/A',
@@ -944,6 +950,7 @@ function getViewedByField() {
         console.error("Missing IP address. View data not recorded.");
         return;
     }
+    console.log(`${ipAddress} ipAddress ???????? .`);
 
     // Dynamically set the field for the viewed page
     const viewData = {
