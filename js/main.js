@@ -498,7 +498,7 @@ async function updateSW_Footer() {
   // ShutterWorx links and social data
   const shutterWorxLinks = {
       pages: {
-          home: { link: "https://shutterworx.co", title: "Home", status: "active", order: 1 },
+          home: { link: "https://shutterworx.co", title: "ShutterWorx", status: "active", order: 1 },
           about: { link: "https://shutterworx.co/about", title: "About Us", status: "inactive", order: 2 },
           contact: { link: "https://shutterworx.co/contact", title: "Contact", status: "active", order: 3 },
           faqs: { link: "https://shutterworx.co/FAQ", title: "FAQs", status: "active", order: 4 },
@@ -616,17 +616,27 @@ async function updateSW_Footer() {
 
   // Styling settings
   const defaultSettings = {
-      backgroundColor: "linear-gradient(135deg, #4e54c8, #8f94fb)",
-      linkColor: "#5bc0de",
-      linkHoverColor: "#333",
-      socialIcon: {
-          color: "#fff",
-          hoverBackgroundColor: "rgba(0, 0, 0, 0.2)",
-          hoverScale: "scale(1.1)",
-          transition: "color 0.3s ease, transform 0.2s ease, background-color 0.3s ease"
-      },
-      linkTransition: "color 0.3s ease"
-  };
+    backgroundColor: "linear-gradient(135deg, #4e54c8, #8f94fb)",
+    linkColor: "#5bc0de",
+    linkHoverColor: "#333",
+    fontSize: "14px",          // New: Set font size for footer text
+    fontName: "Arial, sans-serif", // New: Set font family for footer text
+    tagLinkColor: "#ff5733",    // New: Custom color for tag links
+    footerPadding: "20px",      // New: Padding for footer social icons
+    socialIcon: {
+        color: "#fff",
+        hoverBackgroundColor: "rgba(0, 0, 0, 0.2)",
+        hoverScale: "scale(1.1)",
+        transition: "color 0.3s ease, transform 0.2s ease, background-color 0.3s ease"
+    },
+    linkTransition: "color 0.3s ease"
+};
+
+// Apply footer background style
+footer.style.background = defaultSettings.backgroundColor;
+footer.style.padding = defaultSettings.footerPadding;  // Apply padding for social icons
+footer.style.fontSize = defaultSettings.fontSize;      // Apply font size
+footer.style.fontFamily = defaultSettings.fontName;    // Apply font family
 
   // Apply footer background style
   footer.style.background = defaultSettings.backgroundColor;
@@ -638,15 +648,15 @@ async function updateSW_Footer() {
 
   // Populate footer content with ordered and active links only
   footer.innerHTML = `
-      <div id="footer-Social-icons" class="social-icons"></div>
+      class="social-icons"></div>
       <p>&copy; ${currentYear} <a href="${shutterWorxLinks.pages.home.link}" class="footer-link">${shutterWorxLinks.pages.home.title}</a> / TechNoob. All Rights Reserved.</p>
-      <p><small>
+       <div id="footer-links"><small>
           ${Object.values(shutterWorxLinks.pages)
               .filter(linkData => linkData.status === "active") // Only active links
               .sort((a, b) => a.order - b.order) // Sort links by order
-              .map(linkData => `<a href="${linkData.link}" class="footer-link">${linkData.title}</a>`)
+              .map(linkData => `<a href="${linkData.link}" class="footer-link tag-link">${linkData.title}</a>`)
               .join(" | ")}
-      </small></p>
+      </small></div>
   `;
 
 
@@ -682,12 +692,27 @@ async function updateSW_Footer() {
   // Append social icons after processing
   socialIconsDiv.appendChild(socialFragment);
 
+// Footer link styling
+const footerLinksContainer = document.getElementById("footer-links");
+footerLinksContainer.style.display = "grid";
+footerLinksContainer.style.width = "80%";  // Centered grid layout
+footerLinksContainer.style.margin = "0 auto";
+footerLinksContainer.style.gridTemplateColumns = "repeat(auto-fit, minmax(100px, 1fr))";  // Responsive grid
+
+
   // Apply hover effect to footer links
   document.querySelectorAll('.footer-link').forEach(link => {
-      link.style.color = defaultSettings.linkColor;
-      addHoverEffect(link, defaultSettings.linkColor, defaultSettings.linkHoverColor);
+    link.style.color = defaultSettings.linkColor;
+    link.style.transition = defaultSettings.linkTransition;
+    
+    addHoverEffect(link, defaultSettings.linkColor, defaultSettings.linkHoverColor);
   });
 }
+// Tag link color
+const tagLinks = footer.querySelectorAll(".tag-link");
+tagLinks.forEach(tag => {
+    tag.style.color = defaultSettings.tagLinkColor;
+});
 
 // Helper function for adding hover effects
 const addHoverEffect = (element, originalColor, hoverColor, backgroundColor = "transparent", transform = "scale(1)") => {
