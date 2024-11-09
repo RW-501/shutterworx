@@ -537,21 +537,29 @@ async function updateSW_Footer() {
 
   // ShutterWorx links and social data
   const shutterWorxLinks = {
-      pages: {
-          home: { link: "https://shutterworx.co", title: "ShutterWorx", status: "active", order: 1 },
-          about: { link: "https://shutterworx.co/about", title: "About Us", status: "inactive", order: 2 },
-          contact: { link: "https://shutterworx.co/contact", title: "Contact", status: "active", order: 3 },
-          faqs: { link: "https://shutterworx.co/FAQ", title: "FAQs", status: "active", order: 4 },
-          join: { link: "https://shutterworx.co/join", title: "Join Us", status: "active", order: 5 },  
-          signup: { link: "https://shutterworx.co/signup", title: "Sign Up", status: "active", order: 6 },
-          terms: { link: "https://shutterworx.co/terms", title: "Terms of Service", status: "active", order: 7 },
-          community: { link: "https://shutterworx.co/views/", title: "Community", status: "inactive", order: 8 },
-          basic_membership: { link: "https://shutterworx.co/signup-basic", title: "Basic Membership", status: "active", order: 9 },
-          pro_membership: { link: "https://shutterworx.co/signup-pro", title: "Pro Membership", status: "active", order: 10 },
-          elite_membership: { link: "https://shutterworx.co/signup-elite", title: "Elite Membership", status: "active", order: 11 },
-          admin_login: { link: "https://shutterworx.co/views/admin-login", title: "Admin Login", status: "active", order: 12 },
-          privacy: { link: "https://shutterworx.co/privacy", title: "Privacy Policy", status: "active", order: 7 },
-
+    pages: {
+      general: {
+        home: { link: "https://shutterworx.co", title: "ShutterWorx", status: "active", order: 1 },
+        about: { link: "https://shutterworx.co/about", title: "About Us", status: "inactive", order: 2 },
+        contact: { link: "https://shutterworx.co/contact", title: "Contact", status: "active", order: 3 },
+        faqs: { link: "https://shutterworx.co/FAQ", title: "FAQs", status: "active", order: 4 },
+        join: { link: "https://shutterworx.co/join", title: "Join Us", status: "active", order: 5 },
+        signup: { link: "https://shutterworx.co/signup", title: "Sign Up", status: "active", order: 6 },
+      },
+      membership: {
+        basic: { link: "https://shutterworx.co/signup-basic", title: "Basic Membership", status: "active", order: 7 },
+        pro: { link: "https://shutterworx.co/signup-pro", title: "Pro Membership", status: "active", order: 8 },
+        elite: { link: "https://shutterworx.co/signup-elite", title: "Elite Membership", status: "active", order: 9 },
+      },
+      company: {
+        community: { link: "https://shutterworx.co/views/", title: "Community", status: "inactive", order: 10 },
+        admin_login: { link: "https://shutterworx.co/views/admin-login", title: "Admin Login", status: "active", order: 11 },
+      },
+      legal: {
+        terms: { link: "https://shutterworx.co/terms", title: "Terms of Service", status: "active", order: 12 },
+        privacy: { link: "https://shutterworx.co/privacy", title: "Privacy Policy", status: "active", order: 13 },
+      }
+      
       },
       socialLinks: {
           facebook: { 
@@ -656,20 +664,22 @@ async function updateSW_Footer() {
 
   // Styling settings
   const defaultSettings = {
-    backgroundColor: "linear-gradient(135deg, #4e54c8, #8f94fb)",
+    backgroundColor: "linear-gradient(180deg, rgb(0 14 255), rgb(22 25 94))",
     linkColor: "#5bc0de",
     linkHoverColor: "#333",
-    fontSize: "14px",          // New: Set font size for footer text
+    fontSize: "1rem",          // New: Set font size for footer text
     fontName: "Arial, sans-serif", // New: Set font family for footer text
-    tagLinkColor: "#ff5733",    // New: Custom color for tag links
-    footerPadding: "20px",      // New: Padding for footer social icons
+    tagLinkColor: "#fff",    // New: Custom color for tag links
+    footerPadding: "2% 10% 5%",      // New: Padding for footer social icons
     socialIcon: {
         color: "#fff",
         hoverBackgroundColor: "rgba(0, 0, 0, 0.2)",
         hoverScale: "scale(1.1)",
         transition: "color 0.3s ease, transform 0.2s ease, background-color 0.3s ease"
     },
-    linkTransition: "color 0.3s ease"
+    linkTransition: "color 0.3s ease",
+    borderTop: "rgb(99 99 253) solid",
+    borderRadius: "2% 2% 0 0"
 };
 
 // Apply footer background style
@@ -677,6 +687,9 @@ footer.style.background = defaultSettings.backgroundColor;
 footer.style.padding = defaultSettings.footerPadding;  // Apply padding for social icons
 footer.style.fontSize = defaultSettings.fontSize;      // Apply font size
 footer.style.fontFamily = defaultSettings.fontName;    // Apply font family
+footer.style.borderTop = defaultSettings.borderTop; 
+footer.style.borderRadius = defaultSettings.borderRadius; 
+
 
   // Apply footer background style
   footer.style.background = defaultSettings.backgroundColor;
@@ -687,19 +700,21 @@ footer.style.fontFamily = defaultSettings.fontName;    // Apply font family
 
 
   // Populate footer content with ordered and active links only
-  footer.innerHTML = `
-      class="social-icons"></div>
-      <p>&copy; ${currentYear} <a href="${shutterWorxLinks.pages.home.link}" class="footer-link">${shutterWorxLinks.pages.home.title}</a> / TechNoob. All Rights Reserved.</p>
-       <div id="footer-links"><small>
-          ${Object.values(shutterWorxLinks.pages)
-              .filter(linkData => linkData.status === "active") // Only active links
-              .sort((a, b) => a.order - b.order) // Sort links by order
-              .map(linkData => `<a href="${linkData.link}" class="footer-link tag-link">${linkData.title}</a>`)
-              .join(" | ")}
-      </small></div>
-  `;
-
-
+// HTML for footer links
+footer.innerHTML = `
+  <div class="social-icons"></div>
+  <p>&copy; ${currentYear} <a href="${shutterWorxLinks.pages.general.home.link}" class="footer-link">${shutterWorxLinks.pages.general.home.title}</a> / TechNoob. All Rights Reserved.</p>
+  <div id="footer-links">
+    <small>
+      ${Object.values(shutterWorxLinks.pages)
+        .flatMap(group => Object.values(group)) // Flatten groups to access individual link data
+        .filter(linkData => linkData.status === "active") // Only active links
+        .sort((a, b) => a.order - b.order) // Sort links by order
+        .map(linkData => `<a href="${linkData.link}" class="footer-link tag-link">${linkData.title}</a>`)
+        .join(" | ")}
+    </small>
+  </div>
+`;
 
 
     // Create social fragment for social media icons
