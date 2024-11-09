@@ -994,8 +994,12 @@ function getViewedByField() {
  function attachTrackingListeners() {
     window.addEventListener('beforeunload', setInternalPageSource);
     window.addEventListener('load', startViewTimer);
+    console.log("2 startViewTimer");
+
     document.addEventListener('visibilitychange', () => {
         if (document.visibilityState === 'hidden') {
+          console.log("3 updateViewData  last");
+
             updateViewData();
         }
     });
@@ -1032,6 +1036,8 @@ updateSW_Footer();
 
 // Initialize tracking
  async function initializeTracking() {
+  console.log("1 initializeLocation");
+
     await initializeLocation();
     attachTrackingListeners();
 }
