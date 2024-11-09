@@ -751,6 +751,7 @@ footer.innerHTML = `
 
 // Footer link styling
 const footerLinksContainer = document.getElementById("footer-links");
+footerLinksContainer.style.color = "#fff";
 footerLinksContainer.style.display = "grid";
 footerLinksContainer.style.width = "80%";  // Centered grid layout
 footerLinksContainer.style.margin = "0 auto";
