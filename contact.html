@@ -401,12 +401,12 @@ function getRelatedFaqs(selectedType, faqData) {
   const relatedFaqs = faqData
     .filter(faq => relatedTopics.includes(faq.topic))
     .sort(() => Math.random() - 0.5); // Shuffle the results randomly
-  
+  /*
     console.log("Selected Type:", selectedType);
  
     console.log("Related Topics:", relatedTopics);
   console.log("Related FAQs:", relatedFaqs);
-
+*/
 // Function to display the filtered FAQs (this function needs to be implemented)
 displayFaqs(relatedFaqs);
 }
