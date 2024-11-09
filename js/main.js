@@ -893,7 +893,7 @@ window.userLocationService = (function() {
             // If IP or location are not cached, fetch them
             if (!ipAddress || !location) {
                 ipAddress = await getUserIP();
-                locationData = await getUserLocationByIP(ip);
+                locationData = await getUserLocationByIP(ipAddress);
   
                 // Cache in session storage for the current session
                 if (ip && location) {
@@ -994,11 +994,11 @@ function getViewedByField() {
  function attachTrackingListeners() {
     window.addEventListener('beforeunload', setInternalPageSource);
     window.addEventListener('load', startViewTimer);
-    console.log("2 startViewTimer");
+   // console.log("2 startViewTimer");
 
     document.addEventListener('visibilitychange', () => {
         if (document.visibilityState === 'hidden') {
-          console.log("3 updateViewData  last");
+        //  console.log("3 updateViewData  last");
 
             updateViewData();
         }
