@@ -172,6 +172,17 @@
             text-decoration: none; /* Remove underline */
             cursor: pointer; /* Pointer cursor */
         }
+
+
+        .faq-suggestions {
+  margin-top: 20px;
+  padding: 15px;
+  border-top: 1px solid #ddd;
+}
+.faq-suggestions.hidden {
+  display: none;
+}
+
     </style>
 </head>
 <body>
@@ -240,7 +251,7 @@
         <div id="formResponse"></div>
     </section>
 
-    
+
     <section id="faq-suggestions" class="faq-suggestions hidden">
         <h2>Suggested FAQs</h2>
         <ul id="faq-list"></ul>
@@ -290,9 +301,41 @@
     where, getDocs, storage, collection, auth, analytics  } from 'https://shutterworx.co/js/firebaseConfig.js';
 
     
+let faqData = [];
+
+    // Fetch FAQ data from JSON file
+    fetch('faqs.json')
+        .then(response => response.json())
+        .then(FAQs => {
+            faqData = FAQs;
+        })
+        .catch(error => {
+            console.error("Error fetching FAQ data:", error);
+        });
 
 
+document.getElementById('messageType').addEventListener('change', function() {
+  const selectedType = this.value.toLowerCase();
+  const relatedFaqs = faqData.filter(faq => faq.topic.toLowerCase() === selectedType);
+  displayFaqs(relatedFaqs);
+});
 
+function displayFaqs(faqs) {
+  const faqContainer = document.getElementById('faq-suggestions');
+  const faqList = document.getElementById('faq-list');
+  faqList.innerHTML = '';
+
+  if (faqs.length > 0) {
+    faqContainer.classList.remove('hidden');
+    faqs.forEach(faq => {
+      const faqItem = document.createElement('li');
+      faqItem.innerHTML = `<strong>${faq.question}</strong><p>${faq.answer}</p>`;
+      faqList.appendChild(faqItem);
+    });
+  } else {
+    faqContainer.classList.add('hidden');
+  }
+}
 
  
 
