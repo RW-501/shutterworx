@@ -772,12 +772,11 @@ tagLinks.forEach(tag => {
     tag.style.color = defaultSettings.tagLinkColor;
 });
 
-}
-
 
 // Helper function for adding hover effects
 const addHoverEffect = (element, originalColor, hoverColor, backgroundColor = "transparent", transform = "scale(1)") => {
   element.style.transition = defaultSettings.linkTransition;
+
 
   // Desktop hover effects
   element.addEventListener("mouseover", () => {
@@ -809,7 +808,7 @@ const addHoverEffect = (element, originalColor, hoverColor, backgroundColor = "t
 
 
 
-
+}
 
 
 
