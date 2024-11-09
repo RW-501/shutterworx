@@ -476,7 +476,7 @@ document.getElementById("submitButton").innerHTML = "Sending..."; // Show loadin
 
     try {
         // Save to Firestore
-        const messagesCollectionRef = collection(db, 'messages');
+        const messagesCollectionRef = collection(db, 'Members_Contacts');
         await addDoc(messagesCollectionRef, formData);
 
         // Success feedback
