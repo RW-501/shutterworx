@@ -1,0 +1,21 @@
+User-agent: *
+# Allow search engines to crawl all main public pages
+Allow: /$
+Allow: /about
+Allow: /contact
+Allow: /FAQ
+Allow: /join
+Allow: /signup
+Allow: /terms
+Allow: /privacy
+Allow: /community
+Allow: /views
+Allow: /signup-basic
+Allow: /signup-pro
+Allow: /signup-elite
+
+# Block access to admin pages and any other sensitive areas
+Disallow: /admin-login
+
+# Specify the location of the XML sitemap for search engines
+Sitemap: https://shutterworx.co/sitemap.xml
