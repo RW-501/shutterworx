@@ -167,7 +167,8 @@
 
     
 
-    const locationData = sessionStorage.getItem('userLocation');
+    const locationDataString = sessionStorage.getItem('userLocation');
+    const locationData = JSON.parse(locationDataString);
     const ipAddress = sessionStorage.getItem('userIP');
 
 

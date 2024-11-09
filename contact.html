@@ -492,7 +492,9 @@ document.getElementById("submitButton").innerHTML = "Sending..."; // Show loadin
         window.hideLoadingSpinner();
         return;
     }
-    const locationData = sessionStorage.getItem('userLocation');
+    const locationDataString = sessionStorage.getItem('userLocation');
+    const locationData = JSON.parse(locationDataString);
+
     const ipAddress = sessionStorage.getItem('userIP');
 
     console.log("locationData   ",locationData.city);

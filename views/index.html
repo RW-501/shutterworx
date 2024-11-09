@@ -601,8 +601,10 @@ document.getElementById("send-message-btn").innerHTML = "Sending..."; // Show lo
         window.hideLoadingSpinner(); // Hide spinner on validation error
         return;
     }
-    const locationData = sessionStorage.getItem('userLocation');
+    const locationDataString = sessionStorage.getItem('userLocation');
+    const locationData = JSON.parse(locationDataString);
     const ipAddress = sessionStorage.getItem('userIP');
+
 
 
     // Prepare data for Firestore

@@ -399,19 +399,10 @@ function startViewTimer() {
 
 
 
-    let ipAddress;
-let locationData;
+    const locationDataString = sessionStorage.getItem('userLocation');
+    const locationData = JSON.parse(locationDataString);
+    const ipAddress = sessionStorage.getItem('userIP');
 
-document.addEventListener("DOMContentLoaded", async () => {
-    try {
-        const { ip, location } = await window.userLocationService.getUserIPAndLocation();
-
-        ipAddress = ip;
-        locationData = location;
-    } catch (error) {
-        console.error("Error fetching user IP and location:", error);
-    }
-});
 
 
 
