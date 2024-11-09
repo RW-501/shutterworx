@@ -1106,7 +1106,7 @@ function drawSingleWatermark(settings, textWidth) {
     previewCtx.save();
     previewCtx.translate(previewCanvas.width / 2, previewCanvas.height / 2);
     previewCtx.rotate(settings.rotation * RADIAN_FACTOR);
-    renderText(settings, textWidth);
+    renderText(previewCtx, settings, textWidth);
     if (settings.underline) drawUnderline(textWidth, settings.fontSize);
     previewCtx.restore();
 }
@@ -1150,7 +1150,7 @@ function drawRepeatedWatermarks(settings, ctx, width, height, gap) {
             ctx.save();
             ctx.translate(x, y);
             ctx.rotate(settings.rotation * RADIAN_FACTOR);
-            renderText(ctx, settings);
+            renderText(ctx, settings, width );
             ctx.restore();
         }
     }
@@ -1159,7 +1159,7 @@ function drawRepeatedWatermarks(settings, ctx, width, height, gap) {
 
 // Render text with stroke and fill
 // Render text with optional stroke and fill
-function renderText(ctx, settings) {
+function renderText(ctx, settings, textWidth) {
     if (settings.stroke) {
         ctx.lineWidth = settings.stroke;
         ctx.strokeStyle = settings.color;
