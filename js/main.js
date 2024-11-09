@@ -896,7 +896,7 @@ window.userLocationService = (function() {
                 locationData = await getUserLocationByIP(ipAddress);
   
                 // Cache in session storage for the current session
-                if (ip && location) {
+                if (ipAddress && locationData) {
                     sessionStorage.setItem('userIP', ipAddress);
                     sessionStorage.setItem('userLocation', JSON.stringify(locationData));
                 }
