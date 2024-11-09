@@ -383,7 +383,6 @@ function displayFaqs(faqs) {
  
 function getRelatedFaqs(selectedType, faqData) {
   // Convert selectedType to lowercase for consistency
-  const type = selectedType.toLowerCase();
 
   // Define the relation map
   const relationMap = {
@@ -396,12 +395,17 @@ function getRelatedFaqs(selectedType, faqData) {
   };
 
   // Retrieve related topics based on selected message type
-  const relatedTopics = relationMap[type] || [];
+  const relatedTopics = relationMap[selectedType] || [];
 
   // Filter faqData to include only those FAQs with a topic matching the related topics
   const relatedFaqs = faqData
     .filter(faq => relatedTopics.includes(faq.topic))
     .sort(() => Math.random() - 0.5); // Shuffle the results randomly
+  
+    console.log("Selected Type:", selectedType);
+ 
+    console.log("Related Topics:", relatedTopics);
+  console.log("Related FAQs:", relatedFaqs);
 
 // Function to display the filtered FAQs (this function needs to be implemented)
 displayFaqs(relatedFaqs);
@@ -414,6 +418,8 @@ displayFaqs(relatedFaqs);
         .then(response => response.json())
         .then(FAQs => {
             faqData = FAQs;
+            getRelatedFaqs("General", faqData);
+
         })
         .catch(error => {
             console.error("Error fetching FAQ data:", error);
@@ -427,7 +433,6 @@ displayFaqs(relatedFaqs);
   
 });
 
-getRelatedFaqs("General", faqData);
 
 
 
