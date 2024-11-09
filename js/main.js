@@ -665,8 +665,8 @@ async function updateSW_Footer() {
   // Styling settings
   const defaultSettings = {
     backgroundColor: "linear-gradient(180deg, rgb(0 14 255), rgb(22 25 94))",
-    linkColor: "#5bc0de",
-    linkHoverColor: "#333",
+    linkColor: "#fff",
+    linkHoverColor: "#5bc0de",
     fontSize: "1rem",          // New: Set font size for footer text
     fontName: "Arial, sans-serif", // New: Set font family for footer text
     tagLinkColor: "#fff",    // New: Custom color for tag links
