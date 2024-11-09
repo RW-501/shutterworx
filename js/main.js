@@ -944,7 +944,7 @@ window.userLocationService = (function() {
 // Function to initialize user IP and location data
  async function initializeLocation() {
     try {
-        const { ip, location } = await window.userLocationService.getUserIPAndLocation();
+        const { ip, location } = await getUserIPAndLocation();
         ipAddress = ip;
         locationData = location;
     } catch (error) {
@@ -968,11 +968,12 @@ function getViewedByField() {
     const durationOfView = (viewEndTime - viewStartTime) / 1000;
     const viewedByField = getViewedByField();
 
+    console.log(`${ipAddress} ipAddress ???????? .`);
+
     if (!ipAddress) {
         console.error("Missing IP address. View data not recorded.");
         return;
     }
-    console.log(`${ipAddress} ipAddress ???????? .`);
 
     // Dynamically set the field for the viewed page
     const viewData = {
