@@ -211,7 +211,7 @@ loadingContainer.style.display = 'none';
 async function applyLoadingSpinnerColors(data) {
   // Check if data is defined
   if (!data) {
-      console.error("Data is undefined or null, cannot apply loading spinner colors.");
+      console.log("User Data is not set");
       return; // Exit the function if data is not valid
   }
 
@@ -1018,8 +1018,10 @@ function getViewedByField() {
 // Run this after the DOM has loaded
 document.addEventListener("DOMContentLoaded", () => {
   // Check if either /admin/ OR shutterWorx exists in the URL
-  if (window.checkUrl("/views/")) {
+  if (window.checkUrl("/views/") || window.checkUrl("/views/") &&  !window.checkUrl("/admin-login/")) {
     console.log("User View");
+
+    
     // Apply fetched or default settings for user view
     applyLoadingSpinnerColors();
     applySettings();
