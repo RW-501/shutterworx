@@ -1014,11 +1014,22 @@ function resetWatermarkSettings() {
 
 
 // Fetch current settings with validation
-function getWatermarkSettings() {
+function getWatermarkSettings() { 
     const settings = {};
+
     Object.entries(watermarkElements).forEach(([key, element]) => {
-        settings[key] = element.type === "checkbox" ? element.checked : parseValue(element, defaultSettings[key]);
+        // Handle different input types
+        if (element.type === "checkbox") {
+            settings[key] = element.checked;
+        } else if (element.type === "text" || element.type === "color" || element.tagName.toLowerCase() === "select") {
+            // For text, color, and select elements, use their `value` directly
+            settings[key] = element.value || defaultSettings[key];
+        } else {
+            // Use parseValue for other element types
+            settings[key] = parseValue(element, defaultSettings[key]);
+        }
     });
+
     return settings;
 }
 
