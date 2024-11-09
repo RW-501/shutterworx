@@ -1003,7 +1003,7 @@ function getViewedByField() {
 
     document.addEventListener('visibilitychange', () => {
         if (document.visibilityState === 'hidden') {
-        //  console.log("3 updateViewData  last");
+          console.log("3 updateViewData  last");
 
             updateViewData();
         }
@@ -1043,7 +1043,6 @@ updateSW_Footer();
 
 // Initialize tracking
  async function initializeTracking() {
-  console.log("1 initializeLocation");
 
     await initializeLocation();
     attachTrackingListeners();
