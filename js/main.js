@@ -8,7 +8,7 @@ gtag('config', 'G-GNSPWFHKVN');
 import {  db, doc,getDoc, query, updateDoc,
   setDoc,     signInWithPopup,
   GoogleAuthProvider,
-  FacebookAuthProvider,
+  increment,
   OAuthProvider,
   signOut,
   onAuthStateChanged, 
