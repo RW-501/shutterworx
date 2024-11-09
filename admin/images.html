@@ -1012,15 +1012,15 @@ function resetWatermarkSettings() {
 */
 
 
+
+// Fetch current settings with validation
 function getWatermarkSettings() {
     const settings = {};
     Object.entries(watermarkElements).forEach(([key, element]) => {
-        // Make sure we handle all elements
-        settings[key] = parseValue(element, defaultSettings[key] || "");
+        settings[key] = element.type === "checkbox" ? element.checked : parseValue(element, defaultSettings[key]);
     });
     return settings;
 }
-
 
 // Helper to parse numeric values with fallback
 function parseValue(element, fallback) {
@@ -1138,8 +1138,10 @@ function setupEventListeners() {
 // Function to process image and apply watermark
 async function processImage(dataURL, file, fileSize, fileType, fileName) {
     try {
+        const waterMarkText = document.getElementById("watermarkText").value;
+
         // Check if watermark text is set properly before processing
-        if (defaultSettings.text === "Your Watermark") {
+        if (waterMarkText === "Your Watermark") {
             showToast("Create a Watermark");
             document.getElementById("watermarkSettingsModal").style.display = "block";
             return;
