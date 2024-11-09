@@ -355,6 +355,32 @@
     
 let faqData = [];
 
+
+function displayFaqs(faqs) {
+  const faqContainer = document.getElementById('faq-suggestions');
+  const faqList = document.getElementById('faq-list');
+  faqList.innerHTML = '';
+
+  // Limit the number of FAQs to 15
+  const limitedFaqs = faqs.slice(0, 15);
+
+  if (limitedFaqs.length > 0) {
+    faqContainer.classList.remove('hidden');
+    limitedFaqs.forEach(faq => {
+      const faqItem = document.createElement('li');
+      faqItem.innerHTML = `<strong>${faq.question}</strong><p>${faq.answer}</p>`;
+      faqList.appendChild(faqItem);
+    });
+  } else {
+    faqContainer.classList.add('hidden');
+  }
+}
+
+
+ 
+
+
+
     // Fetch FAQ data from JSON file
     fetch('https://shutterworx.co/faqs.json')
         .then(response => response.json())
@@ -396,28 +422,9 @@ let faqData = [];
   console.log("relatedFaqs", relatedFaqs);
 });
 
-function displayFaqs(faqs) {
-  const faqContainer = document.getElementById('faq-suggestions');
-  const faqList = document.getElementById('faq-list');
-  faqList.innerHTML = '';
-
-  // Limit the number of FAQs to 15
-  const limitedFaqs = faqs.slice(0, 15);
-
-  if (limitedFaqs.length > 0) {
-    faqContainer.classList.remove('hidden');
-    limitedFaqs.forEach(faq => {
-      const faqItem = document.createElement('li');
-      faqItem.innerHTML = `<strong>${faq.question}</strong><p>${faq.answer}</p>`;
-      faqList.appendChild(faqItem);
-    });
-  } else {
-    faqContainer.classList.add('hidden');
-  }
-}
+displayFaqs("General");
 
 
- 
 
 
 
