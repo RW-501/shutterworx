@@ -719,6 +719,9 @@ footer.innerHTML = `
 
     // Create social fragment for social media icons
     const socialFragment = document.createDocumentFragment();
+  // Helper function for adding hover effects
+const addHoverEffect = (element, originalColor, hoverColor, backgroundColor = "transparent", transform = "scale(1)") => {
+    element.style.transition = defaultSettings.linkTransition;
   
   
   // Populate social media icons
@@ -774,9 +777,6 @@ tagLinks.forEach(tag => {
 });
 
 
-// Helper function for adding hover effects
-const addHoverEffect = (element, originalColor, hoverColor, backgroundColor = "transparent", transform = "scale(1)") => {
-  element.style.transition = defaultSettings.linkTransition;
 
 
   // Desktop hover effects
