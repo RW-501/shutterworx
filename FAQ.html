@@ -550,7 +550,7 @@ function displayFaqs(faqData, limit = displayedFaqs) {
         loadMore.style.display = "block";
         noResults.style.display = "none";
 
-        if(faqItems){
+        if(faqItems.length > 0){
         faqItems.style.display = "none";
         faqItems.className.add("seen");
 
@@ -718,7 +718,15 @@ function cleanUp(){
     if(faqSearch){
         faqSearch = '';
     }
+    /*
+    const faqItems = document.querySelectorAll(".faq-item");
 
+        if(faqItems.length > 0){
+        faqItems.style.display = "none";
+        faqItems.className.add("seen");
+
+    }
+        */
 }
 
 
