@@ -286,11 +286,14 @@
                 <label for="messageType">Message Type:</label>
                 <select id="messageType" name="messageType" aria-label="Type of your message">
                     <option value="general">General Inquiry</option>
-                    <option value="website-bugs">Website Bugs</option>
                     <option value="sign-up">Sign-Up Questions</option>
                     <option value="business">Business Inquiries</option>
                      <option value="feedback">Feedback</option>
+                     <option value="subscription">Subscription</option>
+                     <option value="support">Support</option>
+
                 </select>
+      
                 
             </div>
             <div class="form-group">
@@ -362,7 +365,7 @@ function displayFaqs(faqs) {
   faqList.innerHTML = '';
 
   // Limit the number of FAQs to 15
-  const limitedFaqs = faqs.slice(0, 15);
+  const limitedFaqs = faqs.slice(0, 8);
 
   if (limitedFaqs.length > 0) {
     faqContainer.classList.remove('hidden');
@@ -378,6 +381,31 @@ function displayFaqs(faqs) {
 
 
  
+function getRelatedFaqs(selectedType, faqData) {
+  // Convert selectedType to lowercase for consistency
+  const type = selectedType.toLowerCase();
+
+  // Define the relation map
+  const relationMap = {
+    "general": ["General", "Account", "Privacy", "Notifications"],
+    "sign-up": ["Subscription", "Account", "Privacy"],
+    "business": ["Legal", "Purchase", "SEO", "Analytics"],
+    "feedback": ["Support", "Account", "Notifications"],
+    "subscription": ["Subscription", "Payments", "Account", "Community"],
+    "support": ["Support", "Account", "Privacy"]
+  };
+
+  // Retrieve related topics based on selected message type
+  const relatedTopics = relationMap[type] || [];
+
+  // Filter faqData to include only those FAQs with a topic matching the related topics
+  const relatedFaqs = faqData
+    .filter(faq => relatedTopics.includes(faq.topic))
+    .sort(() => Math.random() - 0.5); // Shuffle the results randomly
+
+// Function to display the filtered FAQs (this function needs to be implemented)
+displayFaqs(relatedFaqs);
+}
 
 
 
@@ -395,35 +423,11 @@ function displayFaqs(faqs) {
         document.getElementById('messageType').addEventListener('change', function() { 
   const selectedType = this.value.toLowerCase();
 
-  // Define the relation map
-  const relationMap = {
-    "general": ["General", "Account", "Privacy", "Notifications"],
-    "sign-up": ["Subscription", "Account", "Privacy"],
-    "business": ["Legal", "Purchase", "SEO", "Analytics"],
-    "feedback": ["Support", "Account", "Notifications"],
-    "Subscription": ["Subscription", "Payments", "Account", "Community"],
-    "Support": ["Support", "Account", "Privacy"]
-  };
-
-  // Retrieve related topics from the relationMap based on selected message type
-  const relatedTopics = relationMap[selectedType];
-
-  // Assuming `faqData` is an array of FAQ objects, filter them by the related topics
+  getRelatedFaqs(selectedType, faqData);
   
-  console.log("faqData:   ", faqData);
-
-  const relatedFaqs = faqData.filter(faq => 
-    relatedTopics.includes(faq.topic)
-  );
-
-  // Function to display the filtered FAQs (this function needs to be implemented)
-  displayFaqs(relatedFaqs);
-
-  console.log("relatedFaqs", relatedFaqs);
 });
 
-displayFaqs("General");
-
+getRelatedFaqs("General", faqData);
 
 
 
