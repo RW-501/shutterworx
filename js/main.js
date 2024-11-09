@@ -991,7 +991,7 @@ function getViewedByField() {
 }
 
 // Attach event listeners for tracking
-export function attachTrackingListeners() {
+ function attachTrackingListeners() {
     window.addEventListener('beforeunload', setInternalPageSource);
     window.addEventListener('load', startViewTimer);
     document.addEventListener('visibilitychange', () => {
