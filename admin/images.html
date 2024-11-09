@@ -993,24 +993,6 @@ function resetWatermarkSettings() {
 
         updateWatermarkPreview();
     }
-/*
-    function parseValue(element, defaultValue) {
-    // Handle different element types
-    if (element.type === "text") {
-        return element.value || defaultValue;
-    } else if (element.type === "color") {
-        return element.value || defaultValue;
-    } else if (element.type === "range" || element.type === "number") {
-        return element.value || defaultValue;
-    } else if (element.type === "select-one") {
-        return element.value || defaultValue;
-    } else if (element.type === "checkbox") {
-        return element.checked;
-    }
-    return defaultValue;
-}
-*/
-
 
 
 // Fetch current settings with validation
@@ -1422,12 +1404,13 @@ async function renderImages(imagesData) {
     });
 }
 
+
 // Event listener for "Save Selected Images" button with progress tracking
-document.getElementById("saveAllImagesBtn").addEventListener("click", async () => {
+imagePreviewContainer.getElementById("saveAllImagesBtn").addEventListener("click", async () => {
     const selectedImages = [];
 
     // Find checked checkboxes and gather corresponding images
-    document.querySelectorAll(".select-checkbox:checked").forEach(checkbox => {
+    imagePreviewContainer.querySelectorAll(".select-checkbox:checked").forEach(checkbox => {
         const refIndex = checkbox.dataset.setRef;
         const selectedImage = imagesData[refIndex];
         selectedImages.push(selectedImage);
