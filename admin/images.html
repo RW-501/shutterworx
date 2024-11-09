@@ -1919,7 +1919,7 @@ function saveEvent() {
             const eventIdArea = document.getElementById("currentEventID");
 
             if (title && date && description && !isNaN(price)) {
-    db.collection('events').add({
+    db.collection('Members_Events').add({
         title,
         date,
         description,
