@@ -292,8 +292,8 @@ select, input[type="range"], input[type="number"] {
 <style>
     .form-check {
     position: relative;
-    display: grid;
     padding-left: 1.25rem;
+    margin: 1rem;
 }
 
 </style>
@@ -412,6 +412,18 @@ select, input[type="range"], input[type="number"] {
                                 <input type="checkbox" id="multipleWaterMark" class="form-check-input">
 
                             </div>
+
+                            <div class="form-check">
+
+                            <select id="watermarkStyle">
+                                <option value="regular">Regular Watermark</option>
+                                <option value="diagonal-left">Diagonal Left Watermark</option>
+                                <option value="diagonal-right">Diagonal Right Watermark</option>
+                            </select>
+                        </div>
+
+
+
                         </div>
                     </div>
                 </div>
@@ -1067,7 +1079,7 @@ function updateWatermarkPreview() {
     const textWidth = previewCtx.measureText(settings.text).width;
     const gap = Math.max(textWidth, settings.fontSize) * 1.2;
 
-    settings.multipleWatermark ? drawRepeatedWatermarks(settings, gap) : drawSingleWatermark(settings, textWidth);
+    settings.multipleWatermark ? drawRepeatedWatermarks(settings, ctx, width, height, gap) : drawSingleWatermark(settings, textWidth);
     previewCtx.restore();
 }
 
@@ -1091,25 +1103,25 @@ function drawSingleWatermark(settings, textWidth) {
 
 let gapSize = 10;
 
-function drawDiagonalLeftWatermarks(settings, gap) {
+function drawDiagonalLeftWatermarks(settings, ctx, width, height, gap) {
     // Modify the settings to apply a -45 degree rotation for diagonal left
      gap = gapSize; // 150 pixels between each watermark
      settings.rotation = -45; // Rotate watermark to diagonal left
-     drawRepeatedWatermarks(settings, gap); // Call the common function to draw the watermarks
-}
+     drawRepeatedWatermarks(settings, ctx, width, height, gap); // Call the common function to draw the watermarks
+    }
 
-function drawDiagonalRightWatermarks(settings, gap) {
+function drawDiagonalRightWatermarks(settings, ctx, width, height, gap) {
     // Modify the settings to apply a 45 degree rotation for diagonal right
      gap = gapSize; // 150 pixels between each watermark 
     settings.rotation = 45; // Rotate watermark to diagonal right
-    drawRepeatedWatermarks(settings, gap); // Call the common function to draw the watermarks
+    drawRepeatedWatermarks(settings, ctx, width, height, gap); // Call the common function to draw the watermarks
 }
 
-function drawRegularWatermarks(settings, gap) {
+function drawRegularWatermarks(settings, ctx, width, height, gap) {
     // No rotation needed for regular watermarks
      gap = gapSize; // 150 pixels between each watermark
     settings.rotation = 0; // Set rotation to 0 for no rotation
-    drawRepeatedWatermarks(settings, gap); // Call the common function to draw the watermarks
+    drawRepeatedWatermarks(settings, ctx, width, height, gap); // Call the common function to draw the watermarks
 }
 
 
