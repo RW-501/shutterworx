@@ -1036,7 +1036,7 @@ updateSW_Footer();
     attachTrackingListeners();
 }
 
-
+initializeTracking();
 
 });
 
