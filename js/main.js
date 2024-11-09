@@ -484,7 +484,7 @@ function loadMenuToggleControls(){
   
 
 
-async function updateFooter() {
+async function updateSW_Footer() {
   const footer = document.getElementById("site-footer");
   const currentYear = new Date().getFullYear();
 
@@ -922,7 +922,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
       console.log("Admin/Member View");
 // Load the footer content
-updateFooter();
+updateSW_Footer();
   }
 
 
