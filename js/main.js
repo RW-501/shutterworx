@@ -849,13 +849,9 @@ let viewStartTime;
 let locationData;
 let ipAddress;
 
-
-window.userLocationService = (function() {
+window.userLocationService = (function () {
     const ipAPI = 'https://api.ipify.org?format=json';
     const locationAPI = 'https://ipapi.co';
-    console.log("ipAPI   ",ipAPI);
-    console.log("locationAPI   ",locationAPI);
-
 
     // Fetch the user's IP address
     const getUserIP = async () => {
@@ -868,14 +864,11 @@ window.userLocationService = (function() {
             return null;
         }
     };
-  
+
     // Fetch the user's location based on IP address
     const getUserLocationByIP = async (ip) => {
         try {
             const response = await fetch(`${locationAPI}/${ip}/json/`);
-            console.log("response   ",response);
-
-           
             const data = await response.json();
             return {
                 city: data.city || 'N/A',
@@ -888,52 +881,50 @@ window.userLocationService = (function() {
             return null;
         }
     };
-  
+
     // Main function to get IP and location together
     const getUserIPAndLocation = async () => {
         try {
-             ipAddress = sessionStorage.getItem('userIP');
-             locationData = JSON.parse(sessionStorage.getItem('userLocation'));
-  
+            ipAddress = sessionStorage.getItem('userIP');
+            locationData = JSON.parse(sessionStorage.getItem('userLocation'));
+
             // If IP or location are not cached, fetch them
-            if (!ipAddress || !location) {
+            if (!ipAddress || !locationData) { // Fixed condition here
                 ipAddress = await getUserIP();
                 locationData = await getUserLocationByIP(ipAddress);
-  
+
                 // Cache in session storage for the current session
                 if (ipAddress && locationData) {
                     sessionStorage.setItem('userIP', ipAddress);
                     sessionStorage.setItem('userLocation', JSON.stringify(locationData));
                 }
             }
-  
+
             return { ipAddress, locationData };
         } catch (error) {
             console.error('Error retrieving user IP and location:', error);
             return null;
         }
     };
-  
+
     // Expose only the main function
     return {
         getUserIPAndLocation
     };
-  })();
-  
-
+})();
 
 // Function to set the last internal page
- function setInternalPageSource() {
+function setInternalPageSource() {
     sessionStorage.setItem('lastInternalPage', window.location.href);
 }
 
 // Function to start tracking the view time
- function startViewTimer() {
+function startViewTimer() {
     viewStartTime = Date.now();
 }
 
 // Determine the source of the visit
- const getViewSource = () => {
+const getViewSource = () => {
     const externalSource = document.referrer && !document.referrer.includes(window.location.origin)
         ? document.referrer
         : null;
@@ -942,9 +933,9 @@ window.userLocationService = (function() {
 };
 
 // Function to initialize user IP and location data
- async function initializeLocation() {
+async function initializeLocation() {
     try {
-        const { ip, location } = await getUserIPAndLocation();
+        const { ipAddress: ip, locationData: location } = await userLocationService.getUserIPAndLocation(); // Fixed destructuring
         ipAddress = ip;
         locationData = location;
     } catch (error) {
