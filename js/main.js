@@ -710,6 +710,23 @@ const addHoverEffect = (element, originalColor, hoverColor, backgroundColor = "t
   });
 }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
  // Define the checkUrl function to check if a specific keyword is in the URL
 window.checkUrl = function(keyword) {
   // Get the current URL
@@ -720,6 +737,175 @@ window.checkUrl = function(keyword) {
   // Return true if the keyword is found in the URL, otherwise false
   return currentUrl.includes(keyword);
 };
+
+
+
+
+
+// Utility variables
+let viewStartTime;
+let locationData;
+let ipAddress;
+
+
+window.userLocationService = (function() {
+    const ipAPI = 'https://api.ipify.org?format=json';
+    const locationAPI = 'https://ipapi.co';
+  
+    // Fetch the user's IP address
+    const getUserIP = async () => {
+        try {
+            const response = await fetch(ipAPI);
+            const data = await response.json();
+            return data.ip;
+        } catch (error) {
+            console.error('Error fetching IP address:', error);
+            return null;
+        }
+    };
+  
+    // Fetch the user's location based on IP address
+    const getUserLocationByIP = async (ip) => {
+        try {
+            const response = await fetch(`${locationAPI}/${ip}/json/`);
+            const data = await response.json();
+            return {
+                city: data.city || 'N/A',
+                state: data.region || 'N/A',
+                zip: data.postal || 'N/A',
+                country: data.country_name || 'N/A'
+            };
+        } catch (error) {
+            console.error('Error fetching location by IP:', error);
+            return null;
+        }
+    };
+  
+    // Main function to get IP and location together
+    const getUserIPAndLocation = async () => {
+        try {
+            let ipAddress = sessionStorage.getItem('userIP');
+            let locationData = JSON.parse(sessionStorage.getItem('userLocation'));
+  
+            // If IP or location are not cached, fetch them
+            if (!ipAddress || !location) {
+                ipAddress = await getUserIP();
+                locationData = await getUserLocationByIP(ip);
+  
+                // Cache in session storage for the current session
+                if (ip && location) {
+                    sessionStorage.setItem('userIP', ipAddress);
+                    sessionStorage.setItem('userLocation', JSON.stringify(locationData));
+                }
+            }
+  
+            return { ipAddress, locationData };
+        } catch (error) {
+            console.error('Error retrieving user IP and location:', error);
+            return null;
+        }
+    };
+  
+    // Expose only the main function
+    return {
+        getUserIPAndLocation
+    };
+  })();
+  
+
+
+// Function to set the last internal page
+ function setInternalPageSource() {
+    sessionStorage.setItem('lastInternalPage', window.location.href);
+}
+
+// Function to start tracking the view time
+ function startViewTimer() {
+    viewStartTime = Date.now();
+}
+
+// Determine the source of the visit
+ const getViewSource = () => {
+    const externalSource = document.referrer && !document.referrer.includes(window.location.origin)
+        ? document.referrer
+        : null;
+    const internalSource = sessionStorage.getItem('lastInternalPage');
+    return externalSource || internalSource || 'Direct Visit';
+};
+
+// Function to initialize user IP and location data
+ async function initializeLocation() {
+    try {
+        const { ip, location } = await window.userLocationService.getUserIPAndLocation();
+        ipAddress = ip;
+        locationData = location;
+    } catch (error) {
+        console.error("Error fetching user IP and location:", error);
+    }
+}
+
+// Function to determine the correct `ViewedBy` field based on the URL
+// Function to determine the correct `ViewedBy` field based on the URL
+function getViewedByField() {
+    const path = window.location.pathname;
+    const page = path === '/' || path === '/index.html' ? 'home' : path.split('/').filter(Boolean).pop();
+    
+    return `${page}ViewedBy`;
+}
+
+
+// Function to update view data on unload or visibility change
+ async function updateViewData() {
+    const viewEndTime = Date.now();
+    const durationOfView = (viewEndTime - viewStartTime) / 1000;
+    const viewedByField = getViewedByField();
+
+    if (!ipAddress) {
+        console.error("Missing IP address. View data not recorded.");
+        return;
+    }
+
+    // Dynamically set the field for the viewed page
+    const viewData = {
+        [viewedByField]: {
+            viewDate: new Date().toISOString(),
+            viewMethod: navigator.userAgentData?.mobile ? "mobile" : "desktop",
+            durationOfView: durationOfView,
+            viewSource: getViewSource()
+        },
+        ipAddress,
+        ...locationData,
+        contactViews: increment(1)
+    };
+
+    try {
+        await setDoc(doc(db, 'SW_Analytics', ipAddress), viewData, { merge: true });
+        console.log(`${viewedByField} data updated successfully.`);
+    } catch (error) {
+        console.error(`Error updating ${viewedByField} data:`, error);
+    }
+}
+
+// Attach event listeners for tracking
+export function attachTrackingListeners() {
+    window.addEventListener('beforeunload', setInternalPageSource);
+    window.addEventListener('load', startViewTimer);
+    document.addEventListener('visibilitychange', () => {
+        if (document.visibilityState === 'hidden') {
+            updateViewData();
+        }
+    });
+}
+
+
+
+
+
+
+
+
+
+
 
 // Run this after the DOM has loaded
 document.addEventListener("DOMContentLoaded", () => {
@@ -738,6 +924,16 @@ document.addEventListener("DOMContentLoaded", () => {
 // Load the footer content
 updateFooter();
   }
+
+
+// Initialize tracking
+ async function initializeTracking() {
+    await initializeLocation();
+    attachTrackingListeners();
+}
+
+
+
 });
 
 
@@ -849,71 +1045,6 @@ updateFooter();
 // showToast('This is a warning message!', 'warning');
 
 
-
-
-window.userLocationService = (function() {
-  const ipAPI = 'https://api.ipify.org?format=json';
-  const locationAPI = 'https://ipapi.co';
-
-  // Fetch the user's IP address
-  const getUserIP = async () => {
-      try {
-          const response = await fetch(ipAPI);
-          const data = await response.json();
-          return data.ip;
-      } catch (error) {
-          console.error('Error fetching IP address:', error);
-          return null;
-      }
-  };
-
-  // Fetch the user's location based on IP address
-  const getUserLocationByIP = async (ip) => {
-      try {
-          const response = await fetch(`${locationAPI}/${ip}/json/`);
-          const data = await response.json();
-          return {
-              city: data.city || 'N/A',
-              state: data.region || 'N/A',
-              zip: data.postal || 'N/A',
-              country: data.country_name || 'N/A'
-          };
-      } catch (error) {
-          console.error('Error fetching location by IP:', error);
-          return null;
-      }
-  };
-
-  // Main function to get IP and location together
-  const getUserIPAndLocation = async () => {
-      try {
-          let ip = sessionStorage.getItem('userIP');
-          let location = JSON.parse(sessionStorage.getItem('userLocation'));
-
-          // If IP or location are not cached, fetch them
-          if (!ip || !location) {
-              ip = await getUserIP();
-              location = await getUserLocationByIP(ip);
-
-              // Cache in session storage for the current session
-              if (ip && location) {
-                  sessionStorage.setItem('userIP', ip);
-                  sessionStorage.setItem('userLocation', JSON.stringify(location));
-              }
-          }
-
-          return { ip, location };
-      } catch (error) {
-          console.error('Error retrieving user IP and location:', error);
-          return null;
-      }
-  };
-
-  // Expose only the main function
-  return {
-      getUserIPAndLocation
-  };
-})();
 
 function formatCurrency(value, options = {}) {  
   const { locale = "en-US", currency = "USD", decimals = 0 } = options;

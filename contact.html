@@ -240,6 +240,12 @@
         <div id="formResponse"></div>
     </section>
 
+    
+    <section id="faq-suggestions" class="faq-suggestions hidden">
+        <h2>Suggested FAQs</h2>
+        <ul id="faq-list"></ul>
+      </section>
+      
 
   
     <!-- Thank You Modal -->
@@ -384,7 +390,7 @@ document.getElementById("submitButton").innerHTML = "Sending..."; // Show loadin
 
     try {
         // Save to Firestore
-        const messagesCollectionRef = collection(db, 'Contact_ShutterWorx');
+        const messagesCollectionRef = collection(db, 'SW_Contacts');
         await addDoc(messagesCollectionRef, formData);
 
         // Success feedback
@@ -423,65 +429,6 @@ window.onclick = function(event) {
 }
 
     
-
- function updateViewData() {
-    // Calculate view duration in seconds
-    const viewEndTime = Date.now();
-    const durationOfView = (viewEndTime - viewStartTime) / 1000; // Convert ms to seconds
-
-    // Validate IP address before proceeding
-    if (!ipAddress) {
-        console.error("Missing IP address. View data not recorded.");
-        return;
-    }
-
-
-    // Prepare the data to be updated
-    const viewData = {
-        contactViewedBy: {
-            viewDate: new Date().toISOString(),
-            viewMethod: navigator.userAgentData?.mobile ? "mobile" : "desktop",
-            durationOfView: (Date.now() - viewStartTime) / 1000,
-            viewSource: viewSource
-        },
-        ipAddress: ipAddress,
-        city: locationData.city,
-        zipCode: locationData.zip,
-        state: locationData.state,
-        country: locationData.country,
-        contactViews: increment(1)
-    };
-
-    console.log("viewData   ",viewData);
-
-    // Update or create the job view data in the Jobs collection
-    setDoc(doc(db, 'guest-ShutterWorx', ipAddress), viewData, { merge: true });
-      //  console.log("Job view data updated successfully.");
- 
-}
-
-
-// Event listener to set last internal page before navigating away
-window.addEventListener('beforeunload', setInternalPageSource);
-
-// Event listener to start timing the view when the page loads
-window.addEventListener('load', startViewTimer);
-
-// Event listener to record data when the page is unloaded
-document.addEventListener('visibilitychange', () => {
-    if (document.visibilityState === 'hidden') {
-        updateViewData();
-    }
-});
-
-     
-  
-/*
-setTimeout(() => {
-    updateViewData();
-}, 5000); // Close modal after 5 seconds
-*/
-
 </script>
 
 </body>

@@ -124,7 +124,7 @@
 
         if (imageId) {
             // Fetch image details from Firestore
-            firebase.firestore().collection('images').doc(imageId).get()
+            firebase.firestore().collection('Members_Events').doc(imageId).get()
                 .then((doc) => {
                     if (doc.exists) {
                         const imageData = doc.data();

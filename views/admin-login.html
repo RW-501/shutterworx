@@ -146,7 +146,7 @@
 <script  type="module" src="https://shutterworx.co/js/main.js"></script>
       
 
-<script  type="module" src="./js/admin.js"></script>
+<script  type="module" src="https://shutterworx.co/js/admin.js"></script>
 
 
 
@@ -195,7 +195,7 @@ function handleSuccess(message) {
 
 // Update or add user to Firebase Firestore
 function updateUserCollection(uid, data) {
-    const userRef = doc(db, 'users', uid);
+    const userRef = doc(db, 'Members', uid);
     setDoc(userRef, data, { merge: true })
         .then(() => console.log("User added/updated in Firestore"))
         .catch(error => showError(`Firestore Error: ${error.message}`));
@@ -211,7 +211,7 @@ function handleAuth(authMethod,loginMethod) {
             const userData = {
                 email: user.email || '',
                 phone: user.phoneNumber || '',
-                displayName: user.displayName || 'Anonymous',
+                displayName: user.displayName ,
                 lastLogin: new Date(),
                 loginDevice: navigator.userAgentData?.mobile ? "mobile" : "desktop",
                 loginMethod: loginMethod,
