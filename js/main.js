@@ -954,7 +954,7 @@ function getViewedByField() {
 
 
 // Function to update view data on unload or visibility change
- async function updateViewData() {
+ async function updateViewData(userId) {
     const viewEndTime = Date.now();
     const durationOfView = (viewEndTime - viewStartTime) / 1000;
     const viewedByField = getViewedByField();
@@ -972,12 +972,15 @@ function getViewedByField() {
             viewDate: new Date().toISOString(),
             viewMethod: navigator.userAgentData?.mobile ? "mobile" : "desktop",
             durationOfView: durationOfView,
+            contactViews: increment(1),
             viewSource: getViewSource()
         },
         ipAddress,
         ...locationData,
         lastViewDate: new Date().toISOString(),
-        contactViews: increment(1)
+        userActivitiesCount: increment(1),
+        userBlocked: false,
+        userID: userId || ""
     };
 
     try {
@@ -989,7 +992,7 @@ function getViewedByField() {
 }
 
 // Attach event listeners for tracking
- function attachTrackingListeners() {
+ function attachTrackingListeners(userId) {
     window.addEventListener('beforeunload', setInternalPageSource);
     window.addEventListener('load', startViewTimer);
    // console.log("2 startViewTimer");
@@ -998,7 +1001,7 @@ function getViewedByField() {
         if (document.visibilityState === 'hidden') {
           console.log("3 updateViewData  last");
 
-            updateViewData();
+            updateViewData(userId);
         }
     });
 }
@@ -1019,7 +1022,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
 
-
+  let userId = "";
 // Function to check, store, and display user ID in a hidden div
 function checkAndStoreUserIdInSession() {
     // Check if user ID is already saved in session storage
@@ -1033,7 +1036,7 @@ function checkAndStoreUserIdInSession() {
     onAuthStateChanged(auth, (user) => {
         if (user) {
             // User is signed in, get the UID
-            const userId = user.uid;
+             userId = user.uid;
 
             // Store UID in session storage
             sessionStorage.setItem('userId', userId);
@@ -1091,7 +1094,7 @@ updateSW_Footer();
  async function initializeTracking() {
 
     await initializeLocation();
-    attachTrackingListeners();
+    attachTrackingListeners(userId);
 }
 
 initializeTracking();
