@@ -1015,6 +1015,59 @@ function getViewedByField() {
 
 // Run this after the DOM has loaded
 document.addEventListener("DOMContentLoaded", () => {
+
+
+
+
+
+// Function to check, store, and display user ID in a hidden div
+function checkAndStoreUserIdInSession() {
+    // Check if user ID is already saved in session storage
+    if (sessionStorage.getItem('userId')) {
+        console.log("User ID is already stored in session storage:", sessionStorage.getItem('userId'));
+        createHiddenUserIdDiv(sessionStorage.getItem('userId'));
+        return; // Exit the function if the user ID is already stored
+    }
+
+    // If not stored, listen for auth state and save user ID
+    onAuthStateChanged(auth, (user) => {
+        if (user) {
+            // User is signed in, get the UID
+            const userId = user.uid;
+
+            // Store UID in session storage
+            sessionStorage.setItem('userId', userId);
+
+            // Create and append the hidden div with user ID
+            createHiddenUserIdDiv(userId);
+
+            console.log("User ID saved to session storage and hidden div:", userId);
+        } else {
+            console.log("No user is signed in.");
+        }
+    });
+}
+
+// Function to create a hidden div with the user ID
+function createHiddenUserIdDiv(userId) {
+    // Check if the hidden div already exists to avoid duplicates
+    let hiddenDiv = document.getElementById('userIdDiv');
+    if (!hiddenDiv) {
+        // Create the hidden div
+        hiddenDiv = document.createElement('div');
+        hiddenDiv.id = 'userIdDiv';
+        hiddenDiv.style.display = 'none'; // Hide the div
+        document.body.appendChild(hiddenDiv);
+    }
+
+    // Set the div's content to the user ID
+    hiddenDiv.textContent = userId;
+}
+
+// Call the function to check, save, and create the hidden div with user ID
+checkAndStoreUserIdInSession();
+
+
   // Check if either /admin/ OR shutterWorx exists in the URL
   if (window.checkUrl("/views/") || window.checkUrl("/views/") &&  !window.checkUrl("/admin-login/")) {
     console.log("User View");

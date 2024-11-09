@@ -184,8 +184,8 @@ select, input[type="range"], input[type="number"] {
                         </div>
                         <div class="form-row">
                             <div class="form-group col-md-6">
-                                <label for="eventPrice">Base Price (USD)</label>
-                                <input type="number" class="form-control" id="eventPrice" placeholder="Event Price" required>
+                                <label for="collection_price">Collection Price (USD)</label>
+                                <input type="number" class="form-control" id="collection_price" placeholder="Event Price" required>
                             </div>
                             <div class="form-group col-md-6">
                                 <label for="accessCode">Access Code</label>
@@ -1524,17 +1524,26 @@ async function saveImageDetails(fileName, originalUrl, compressedUrl, fileSize, 
     const title = document.getElementById("eventTitle").value;
     const price = parseFloat(document.getElementById("eventPrice").value);
     const eventId = document.getElementById("currentEventID").innerText;
+    const userId = document.getElementById("userIdDiv").value;
 
     if (!eventId && title && !isNaN(price)) {
         try {
             await db.collection("images").add({
                 fileName,
                 title,
-                price,
+                price: price || "",
+                onSellPrice: "",
                 originalUrl,
                 compressedUrl,
                 fileSize, eventID: eventId,
                 fileType,  status: "active", isPublic: true,
+                userId,
+                timestamp: new Date(),
+                comments: [],
+                views: 0,
+                deactived: false,
+                
+
             });
             showToast("Image details saved successfully!", "success");
         } catch (error) {
@@ -1913,32 +1922,46 @@ function saveEvent() {
             const title = document.getElementById('eventTitle').value;
             const date = document.getElementById('eventDate').value;
             const description = document.getElementById('eventDescription').value;
-            const price = parseFloat(document.getElementById('eventPrice').value);
+            const collection_price = parseFloat(document.getElementById('collection_price').value);
             const location = document.getElementById("eventLocation").value;
             const accessCode = document.getElementById("accessCode").value;
+            const userId = document.getElementById("userIdDiv").value;
             const eventIdArea = document.getElementById("currentEventID");
 
             if (title && date && description && !isNaN(price)) {
-    db.collection('Members_Events').add({
-        title,
-        date,
-        description,
-        status: "active",
-        isPublic: true,
-        price,
-        accessCode,
-        location,
-    }).then((docRef) => { // Use docRef to get the ID
-        eventIdArea.innerText = docRef.id; // Retrieve the document ID
 
+// Function to save the event
+async function saveEvent() {
+    try {
+        // Add a new document to the "Members_Events" collection
+        const docRef = await addDoc(collection(db, 'Members_Events'), {
+            title,
+            date: date || new Date(),
+            description: description || "No Description",
+            status: "active",
+            isPublic: true,
+            collection_price: collection_price || "",
+            collection_OnSellPrice: "",
+            eventTags: [],
+            accessCode: accessCode || "",
+            location: location || "",
+            userID: userId,
+            timestamp: new Date(),
+                comments: [],
+                views: 0,
+                deactived: false,
+            deactived: false,
+        });
+
+        // Retrieve and display the document ID
+        eventIdArea.innerText = docRef.id;
         showToast("Event saved successfully!");
-    }).catch(error => {
+    } catch (error) {
         console.error("Error saving event:", error);
         showToast("An error occurred while saving the event. Please try again.");
-    });
-} else {
-    showToast("Please fill in all fields.");
+    }
 }
+            }
 
         }
 
