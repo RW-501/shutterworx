@@ -429,6 +429,7 @@ document.addEventListener("DOMContentLoaded", function () {
             faqs = FAQs;
             displayFaqs(faqs);
             displayRandomFaqs(faqs);
+            getTopics(faqs);
 
             // Filter FAQs by topic
             topicFilter.addEventListener("change", (e) => {
@@ -672,7 +673,7 @@ function scrollToFaq() {
     document.getElementById("faq-items").scrollIntoView({ behavior: 'smooth' });
 }
 
-
+function getTopics(faqs){
 console.log("Displaying FAQ:", faqs);
 
 //const topics = ["Account", "General", "Subscription", "Support"]; // This can be dynamic
@@ -697,12 +698,9 @@ topics.forEach(topic => {
 });
 
 }
-    // Filter by topic
-    function filterByTopic(topic) {
-         filteredFaqs = faqs.filter(faq => faq.topic === topic);
-        displayFaqs(filteredFaqs);
-    }
 
+}
+  
 
 
 
