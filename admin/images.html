@@ -1091,10 +1091,18 @@ function updateWatermarkPreview() {
     } else if (selectedStyle === "diagonal-right") {
         drawDiagonalRightWatermarks(settings, previewCtx, previewCanvas.width, previewCanvas.height, gap);
     } else {
-        drawRegularWatermarks(settings, previewCtx, previewCanvas.width, previewCanvas.height, gap);
+
+        console.log("previewCanvas.width  ",previewCanvas.width);
+        console.log("previewCtx.width  ",previewCtx.width);
+        console.log("gap  ",gap); 
+       // drawRegularWatermarks(settings, previewCtx, previewCanvas.width, previewCanvas.height, gap);
+        drawRepeatedWatermarks(settings, ctx, previewCtx.width, previewCtx.height, gap);
+
     }
 
     }else{
+        document.getElementById("watermarkStyle").style.display = "none";
+
         drawSingleWatermark(settings, textWidth);
     }
   
@@ -1120,12 +1128,14 @@ function drawSingleWatermark(settings, textWidth) {
 
 
 
-let gapSize = 10;
+let gapSize = 5;
 
 function drawDiagonalLeftWatermarks(settings, ctx, width, height, gap) {
     // Modify the settings to apply a -45 degree rotation for diagonal left
      gap = gapSize; // 150 pixels between each watermark
      settings.rotation = -45; // Rotate watermark to diagonal left
+     console.log("settings  ",settings)
+
      drawRepeatedWatermarks(settings, ctx, width, height, gap); // Call the common function to draw the watermarks
     }
 
@@ -1133,6 +1143,8 @@ function drawDiagonalRightWatermarks(settings, ctx, width, height, gap) {
     // Modify the settings to apply a 45 degree rotation for diagonal right
      gap = gapSize; // 150 pixels between each watermark 
     settings.rotation = 45; // Rotate watermark to diagonal right
+    console.log("settings  ",settings)
+
     drawRepeatedWatermarks(settings, ctx, width, height, gap); // Call the common function to draw the watermarks
 }
 
@@ -1153,6 +1165,8 @@ function drawRepeatedWatermarks(settings, ctx, width, height, gap) {
             ctx.rotate(settings.rotation * RADIAN_FACTOR);
             renderText(ctx, settings, width );
             ctx.restore();
+            console.log("drawRepeatedWatermarks settings  ",settings)
+
         }
     }
 }
@@ -1403,7 +1417,7 @@ function removeCardByRef(picCount) {
 }
 
 
-let picCount = 1;
+let picCount = 0;
 
 // Function to render images
 async function renderImages(imagesData) {
