@@ -585,12 +585,12 @@ function displayFaqs(faqData, limit = displayedFaqs) {
 
                 //console.log("question  ", question);
 
-               // console.log("question.textContent   ",question.textContent);
-// Remove any <div> elements with class "faq-icon" in question.innerHTML
+
+                // Remove any <div> elements with class "faq-icon" in question.innerHTML
     question.innerHTML = question.textContent.replace(/<div[^>]*>([\S\s]*?)<\/div>/g, '');
 
 // Replace "+" with a custom HTML element without the class "faq-icon"
-question.innerHTML = question.innerHTML.replace("+", match => `<div>+</div>`);
+question.innerHTML = question.innerHTML.replace("+", match => `<div class="faq-icon">+</div>`);
 
 
                 // Highlight the matched text
