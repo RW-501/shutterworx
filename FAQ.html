@@ -439,9 +439,8 @@ document.addEventListener("DOMContentLoaded", function () {
   
 // Function to display FAQs with a limit
 function displayFaqs(faqData, limit = displayedFaqs) {
-    faqItemsContainer.innerHTML = ""; // Clear existing FAQs
 
-    
+
    const faqItems = document.querySelectorAll(".faq-item");
         const noResults = document.getElementById("no-results");
         const loadMore = document.querySelector(".load-more");
