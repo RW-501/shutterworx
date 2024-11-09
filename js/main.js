@@ -655,9 +655,7 @@ async function updateSW_Footer() {
     // Create social fragment for social media icons
     const socialFragment = document.createDocumentFragment();
   
-    // Clear existing social icons
-    socialIconsDiv.innerHTML = '';
-
+  
   // Populate social media icons
   Object.values(shutterWorxLinks.socialLinks)
       .filter(linkData => linkData.status === "active") // Only active links
@@ -679,11 +677,11 @@ async function updateSW_Footer() {
           socialFragment.appendChild(iconElement);
       });
 
+  const socialIconsDiv = footer.querySelector("#footer-Social-icons");
+  
   // Append social icons after processing
   socialIconsDiv.appendChild(socialFragment);
 
-  const socialIconsDiv = footer.querySelector("#footer-Social-icons");
-  
   // Apply hover effect to footer links
   document.querySelectorAll('.footer-link').forEach(link => {
       link.style.color = defaultSettings.linkColor;
