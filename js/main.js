@@ -747,12 +747,16 @@ footerLinksContainer.style.gridTemplateColumns = "repeat(auto-fit, minmax(100px,
     
     addHoverEffect(link, defaultSettings.linkColor, defaultSettings.linkHoverColor);
   });
-}
+
+
 // Tag link color
 const tagLinks = footerLinksContainer.querySelectorAll(".tag-link");
 tagLinks.forEach(tag => {
     tag.style.color = defaultSettings.tagLinkColor;
 });
+
+}
+
 
 // Helper function for adding hover effects
 const addHoverEffect = (element, originalColor, hoverColor, backgroundColor = "transparent", transform = "scale(1)") => {
