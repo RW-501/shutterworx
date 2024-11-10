@@ -234,6 +234,26 @@ button {
 i {
   font-size: 1.2rem;
 }
+/* Initial state for `cwm-controls` to enable slide-down */
+#cwm-controls {
+    overflow: hidden;
+    max-height: 0;
+    transition: max-height 0.3s ease-out;
+}
+
+#cwm-controls.slide-down {
+    max-height: 500px; /* Adjust based on content height */
+}
+
+/* Initial state for `controls` to enable slide-right */
+#controls {
+    transition: transform 0.3s ease-out;
+    transform: translateX(-100%); /* Hidden off-screen to the left */
+}
+
+#controls.slide-right {
+    transform: translateX(0); /* Slide into view */
+}
 
 </style>
     <header class="admin-header">
@@ -2575,11 +2595,8 @@ function handleAddWatermarkImageClick() {
 // Toggle `cwm-controls` with a slide-down effect
 function handleControlsClick() {
     const cwmControls = document.getElementById("cwm-controls");
-    if (cwmControls.style.maxHeight) {
-        cwmControls.style.maxHeight = null;  // Close by removing max-height
-    } else {
-        cwmControls.style.maxHeight = cwmControls.scrollHeight + "px"; // Open by setting max-height
-    }
+    controls.classList.toggle("slide-down");
+
 }
 
 // Toggle `controls` with a slide-right effect
