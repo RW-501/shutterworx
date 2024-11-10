@@ -2290,7 +2290,6 @@ function updateProgressBar(progress) {
 function openImageEditor(image, compressedImage) {
     document.getElementById("imageEditorModal").style.display = "block";
   //  canvas = document.getElementById("imageCanvas");
-    ctx = canvas.getContext("2d");
     console.log("Working???   openImageEditor");
 
     loadImage(image, compressedImage);
@@ -2308,6 +2307,14 @@ function loadImage(image, compressedImage) {
         saveToHistory(); // Save the initial state
         redrawCanvas(img); // Redraw canvas with loaded image
     };
+
+ //  ctx = canvas.getContext("2d");
+/*
+    const imgPreview = document.createElement("img");
+imgPreview.src = e.target.result;
+imgPreview.style.width = "100px"; // adjust as needed
+imagePreviewContainer.appendChild(imgPreview);
+*/
    // console.log("image type... ",img);
 }
 
