@@ -1503,7 +1503,6 @@ async function createLowerQualityImage(mainImageDataURL,watermarkImageURL ) {
     img.src = mainImageDataURL;
     await img.decode();
 
-     canvas = document.createElement("canvas");
     const width = 800;
     const height = (img.height / img.width) * width;
     canvas.width = width;
