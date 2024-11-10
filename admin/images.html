@@ -236,23 +236,26 @@ i {
 }
 /* Initial state for `cwm-controls` to enable slide-down */
 #cwm-controls {
-    transition: transform 0.3s ease-out;
-    transform: translateY(100%); /* Hidden off-screen to the left */
+    transform: translateY(0); /* Slide into view */
+
 }
 
 #cwm-controls.slide-down {
-    transform: translateY(0); /* Slide into view */
+    transition: transform 0.3s ease-out;
+    transform: translateY(-100%); /* Hidden off-screen to the left */
 
 }
 
 /* Initial state for `controls` to enable slide-right */
 #controls {
-    transition: transform 0.3s ease-out;
-    transform: translateX(100%); /* Hidden off-screen to the left */
+    transform: translateX(0); /* Slide into view */
 }
 
 #controls.slide-right {
-    transform: translateX(0); /* Slide into view */
+
+    transition: transform 0.3s ease-out;
+    transform: translateX(100%); /* Hidden off-screen to the left */
+
 }
 
 </style>
