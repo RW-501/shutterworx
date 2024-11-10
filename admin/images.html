@@ -2570,12 +2570,10 @@ function saveImage() {
 
 function handleBasicClick() {
     console.log("Basic button clicked");
-    document.getElementById("cwm-controls").style.display = "none";
 }
 
 function handleAdvancedClick() {
     console.log("Advanced button clicked");
-    document.getElementById("cwm-controls").style.display = "block";
 }
 
 function handleTextModeClick() {
@@ -2593,7 +2591,6 @@ function handleImageWatermarkClick() {
     console.log("Watermark button clicked");
     document.getElementById("multipleWaterMark").checked = true;
     document.getElementById("watermarkStyle").value = "regular";
-    document.getElementById("cwm-controls").style.display = "none";
 }
 
 function handleDiagonalLeftClick() {
@@ -2644,6 +2641,7 @@ function collapseControlsButton() {
         canvasContainer.classList.add("flex");
     }
 }
+//document.getElementById("cwm-controls").style.display = "none";
 
 
 // Wait for the document to fully load
@@ -2770,7 +2768,7 @@ document.getElementById("watermarkSize").addEventListener("input", updateWaterma
 document.getElementById("watermarkColor").addEventListener("input", updateWatermarkPreview);
 document.getElementById("watermarkOpacity").addEventListener("input", updateWatermarkPreview);
 document.getElementById("watermarkRotation").addEventListener("input", updateWatermarkPreview);
-document.getElementById("watermark-x").addEventListener("input", updateWatermarkPreview);
+document.getElementById("watermark-y").addEventListener("input", updateWatermarkPreview);
 document.getElementById("watermark-x").addEventListener("input", updateWatermarkPreview);
 document.getElementById("multipleWaterMark").addEventListener("change", updateWatermarkPreview);
 
