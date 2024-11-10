@@ -1468,8 +1468,7 @@ display: none !important;transform: scale(1.05);
         import {  db, doc,getDoc, query, updateDoc,
     setDoc,     signInWithPopup,addDoc,
     OAuthProvider,
-    signOut, 
-    firebase , 
+    signOut, getStorage, ref, uploadBytesResumable, getDownloadURL,
     onAuthStateChanged,
     where, getDocs, storage, collection, auth, analytics } from 'https://shutterworx.co/js/firebaseConfig.js';
   
@@ -2224,25 +2223,25 @@ document.getElementById("saveImagesBtn").addEventListener("click", async () => {
 
 
 // Uploads both the original and compressed images to Firebase with metadata
-async function uploadToFirebase(originalDataURL, compressedDataURL, fileName, fileSize, fileType) {
+async function uploadToFirebase(originalDataURL, compressedDataURL, fileName, fileSize, fileType) { 
     try {
         const eventId = document.getElementById("currentEventID").innerText;
-if(!eventId){
-    showToast("Error saving images. Create Event First.", "error");
-return;
+        if(!eventId){
+            showToast("Error saving images. Create Event First.", "error");
+            return;
+        }
 
-}
         // Convert data URLs to Blobs
         const originalBlob = await (await fetch(originalDataURL)).blob();
         const compressedBlob = await (await fetch(compressedDataURL)).blob();
         const shortenedFileName = cleanAndShortenFileName(fileName, 15);
 
         // Set Firebase storage references for original and compressed images
-        const storageRefOriginal = firebase.storage().ref(`images/${eventId}/${shortenedFileName}`);
-        const storageRefCompressed = firebase.storage().ref(`images/${eventId}/${shortenedFileName}`);
+        const storageRefOriginal = ref(storage, `images/${eventId}/${shortenedFileName}`);
+        const storageRefCompressed = ref(storage, `images/${eventId}/${shortenedFileName}`);
 
         // Upload original image
-        const uploadTaskOriginal = storageRefOriginal.put(originalBlob);
+        const uploadTaskOriginal = uploadBytesResumable(storageRefOriginal, originalBlob);
         uploadTaskOriginal.on("state_changed", 
             (snapshot) => {
                 const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 50; // Show 0-50% for original
@@ -2253,10 +2252,10 @@ return;
                 showToast("Original image upload failed.", "error");
             },
             async () => {
-                const originalURL = await uploadTaskOriginal.snapshot.ref.getDownloadURL();
+                const originalURL = await getDownloadURL(uploadTaskOriginal.snapshot.ref);
                 
                 // Upload compressed image after original is uploaded
-                const uploadTaskCompressed = storageRefCompressed.put(compressedBlob);
+                const uploadTaskCompressed = uploadBytesResumable(storageRefCompressed, compressedBlob);
                 uploadTaskCompressed.on("state_changed", 
                     (snapshot) => {
                         const progress = 50 + (snapshot.bytesTransferred / snapshot.totalBytes) * 50; // Show 50-100% for compressed
@@ -2267,7 +2266,7 @@ return;
                         showToast("Compressed image upload failed.", "error");
                     },
                     async () => {
-                        const compressedURL = await uploadTaskCompressed.snapshot.ref.getDownloadURL();
+                        const compressedURL = await getDownloadURL(uploadTaskCompressed.snapshot.ref);
                         await saveImageDetails(fileName, originalURL, compressedURL, fileSize, fileType);
                         showToast("Images uploaded successfully!", "success");
                     }
@@ -2279,7 +2278,6 @@ return;
         showToast("Error uploading images. Please try again.", "error");
     }
 }
-
 // Function to update the progress bar
 function updateProgressBar(progress) { 
     const progressBar = document.getElementById("uploadProgress");
