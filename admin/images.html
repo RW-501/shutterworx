@@ -2225,10 +2225,6 @@ function updateProgressBar(progress) {
 }
 
 
-// Initialize canvas and context when the image editor is opened
-document.getElementById("openImageEditorBtn").addEventListener("click", () => {
-    openImageEditor();
-});
 
 function openImageEditor(image, compressedImage) {
     document.getElementById("imageEditorModal").style.display = "block";
@@ -2618,60 +2614,75 @@ imageUploadArea.addEventListener("drop", (e) => {
 
 
 
-
-document.getElementById("closeImageEditorX").addEventListener("click", closeImageEditor);
-
+// Assuming your HTML has an <input> element with id="imageInput"
+document.getElementById("imageInput").addEventListener("change", function () {
+  handleFiles(this.files);
+});
+document
+  .getElementById("imageInput-btn")
+  .addEventListener("change", function () {
+    document.getElementById("imageInput").click();
+  });
+  
 // Event Form Button Listener
 document.getElementById("saveEvent").addEventListener("click", saveEvent);
+// Image Upload Click Listener (to trigger file input)
+document
+  .getElementById("imageUploadArea")
+  .addEventListener("click", function () {
+    document.getElementById("imageInput").click();
+  });
 
 
-// Logo Upload and Size Update
+// Initialize canvas and context when the image editor is opened
+document.getElementById("openImageEditorBtn").addEventListener("click", () => {
+   
+   // Logo Upload and Size Update
 document.getElementById("uploadLogo").addEventListener("change", addLogo);
-document.getElementById("logoSize").addEventListener("input", updateLogoSize(event));
+document
+  .getElementById("logoSize")
+  .addEventListener("input", updateLogoSize(event));
 
 // Filter dropdown
 document.getElementById("filters").addEventListener("change", showSlider);
 
-
-
-
 // Bind undo/redo buttons
 document.getElementById("undoBtn").addEventListener("click", undo);
 document.getElementById("redoBtn").addEventListener("click", redo);
-
 
 document.getElementById("saveFilters").addEventListener("click", saveFilters);
 document.getElementById("resizeImage").addEventListener("click", resizeImage);
 document.getElementById("cropImage").addEventListener("click", cropImage);
 
 document.getElementById("saveImage").addEventListener("click", saveImage);
-document.getElementById("closeImageEditorX").addEventListener("click", closeImageEditor);
-document.getElementById("closeImageEditor").addEventListener("click", closeImageEditor);
+document
+  .getElementById("closeImageEditorX")
+  .addEventListener("click", closeImageEditor);
+document
+  .getElementById("closeImageEditor")
+  .addEventListener("click", closeImageEditor);
 
 document.getElementById("redoBtn").addEventListener("click", redo);
 
 
+document.getElementById("closeImageEditorX").addEventListener("click", closeImageEditor);
 
 
-// Image Upload Click Listener (to trigger file input)
-document.getElementById("imageUploadArea").addEventListener("click", function() {
-    document.getElementById("imageInput").click();
+document
+  .getElementById("collapseControlsButton")
+  .addEventListener("click", collapseControlsButton);
+
+   
+   
+    openImageEditor();
 });
 
 
-    // Assuming your HTML has an <input> element with id="imageInput"
-document.getElementById("imageInput").addEventListener("change", function() {
-    handleFiles(this.files);
-});
-document.getElementById("imageInput-btn").addEventListener("change", function() {
-    document.getElementById("imageInput").click();
-});
+// Show watermark settings modal
+document.getElementById("watermarkSettingsBtn").addEventListener("click", () => {
+    loadWatermarkSettings();
 
-document.getElementById("collapseControlsButton").addEventListener("click", collapseControlsButton);
-
-// Attach event listeners
-document.getElementById("wm-controls-btn").addEventListener("click", handleControlsClick);
-document.getElementById("wm-basic-btn").addEventListener("click", handleBasicClick);
+    document.getElementById("wm-basic-btn").addEventListener("click", handleBasicClick);
 document.getElementById("wm-advanced-btn").addEventListener("click", handleAdvancedClick);
 document.getElementById("wm-text-mode-btn").addEventListener("click", handleTextModeClick);
 document.getElementById("wm-image-mode-btn").addEventListener("click", handleImageModeClick);
@@ -2681,11 +2692,11 @@ document.getElementById("wm-diagonal-right-btn").addEventListener("click", handl
 document.getElementById("wm-zoom-in-btn").addEventListener("click", handleZoomInClick);
 document.getElementById("wm-zoom-out-btn").addEventListener("click", handleZoomOutClick);
 document.getElementById("addWatermarkImage").addEventListener("click", handleAddWatermarkImageClick);
+document.getElementById("wm-controls-btn").addEventListener("click", handleControlsClick);
 
 
-// Show watermark settings modal
-document.getElementById("watermarkSettingsBtn").addEventListener("click", () => {
-    loadWatermarkSettings();
+
+
     document.getElementById("watermarkSettingsModal").style.display = "block";
 });
 
