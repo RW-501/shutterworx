@@ -1362,11 +1362,11 @@ const watermarkElements = {
     color: document.getElementById("watermarkColor"),
     opacity: document.getElementById("watermarkOpacity"),
     rotation: document.getElementById("watermarkRotation"),
-  //  posX: document.getElementById("watermarkPositionX"),
-   // posY: document.getElementById("watermarkPositionY"),
+    posX: document.getElementById("watermark-x"),
+    posY: document.getElementById("watermark-x"),
     bold: document.getElementById("watermarkBold"),
     underline: document.getElementById("watermarkUnderline"),
-   // stroke: document.getElementById("watermarkStroke"),
+    zoomDisplay: document.getElementById("zoom-display"),
     scale: document.getElementById("watermarkScale"),
     multipleWatermark: document.getElementById("multipleWaterMark")
 };
@@ -1511,6 +1511,19 @@ function updateWatermarkPreview() {
 }
 
 
+    // Show the uploaded logo preview
+    function previewLogo(input) {
+                            const file = input.files[0];
+                            const reader = new FileReader();
+                            reader.onload = function(e) {
+                              const logoImage = document.getElementById('logoImage');
+                              logoImage.src = e.target.result;
+                              logoImage.classList.remove('d-none');
+                            };
+                            if (file) {
+                              reader.readAsDataURL(file);
+                            }
+                          }
 
 // Function to handle the watermark image upload
 document.getElementById('addWatermarkImage').addEventListener('click', () => {
@@ -1563,7 +1576,7 @@ function drawDiagonalLeftWatermarks(settings, ctx, width, height, gap) {
     // Modify the settings to apply a -45 degree rotation for diagonal left
 
     settings.rotation = -45; // Rotate watermark to diagonal left
-     console.log("settings  ",settings)
+//     console.log("settings  ",settings)
 
      drawRepeatedWatermarks(settings, ctx, width, height, gap); // Call the common function to draw the watermarks
     }
@@ -1572,7 +1585,6 @@ function drawDiagonalRightWatermarks(settings, ctx, width, height, gap) {
     // Modify the settings to apply a 45 degree rotation for diagonal right
 
     settings.rotation = 45; // Rotate watermark to diagonal right
-    console.log("settings  ",settings)
 
     drawRepeatedWatermarks(settings, ctx, width, height, gap); // Call the common function to draw the watermarks
 }
@@ -1686,13 +1698,13 @@ document.getElementById("watermarkSize").addEventListener("input", updateWaterma
 document.getElementById("watermarkColor").addEventListener("input", updateWatermarkPreview);
 document.getElementById("watermarkOpacity").addEventListener("input", updateWatermarkPreview);
 document.getElementById("watermarkRotation").addEventListener("input", updateWatermarkPreview);
-//document.getElementById("watermarkPositionY").addEventListener("input", updateWatermarkPreview);
-//document.getElementById("watermarkPositionX").addEventListener("input", updateWatermarkPreview);
+document.getElementById("watermark-x").addEventListener("input", updateWatermarkPreview);
+document.getElementById("watermark-x").addEventListener("input", updateWatermarkPreview);
 document.getElementById("multipleWaterMark").addEventListener("change", updateWatermarkPreview);
 
 //document.getElementById("watermarkStroke").addEventListener("change", updateWatermarkPreview);
 document.getElementById("watermarkBold").addEventListener("click", updateWatermarkPreview);
-//document.getElementById("watermarkUnderline").addEventListener("click", updateWatermarkPreview);
+document.getElementById("watermarkUnderline").addEventListener("click", updateWatermarkPreview);
 
 document.getElementById("watermarkScale").addEventListener("change", updateWatermarkPreview);
 // Attach event listener for the reset button
@@ -1736,8 +1748,8 @@ function startDrag(e) {
     const textWidth = previewCtx.measureText(text).width;
 
     // Update watermark position if defined
-    watermarkPosX = parseInt(document.getElementById("watermarkPositionX")?.value, 10) || watermarkPosX;
-    watermarkPosY = parseInt(document.getElementById("watermarkPositionY")?.value, 10) || watermarkPosY;
+    watermarkPosX = parseInt(document.getElementById("watermark-x")?.value, 10) || watermarkPosX;
+    watermarkPosY = parseInt(document.getElementById("watermark-y")?.value, 10) || watermarkPosY;
 
     // Check if click is within the text area bounds
     if (x >= watermarkPosX && x <= watermarkPosX + textWidth &&
@@ -1763,8 +1775,8 @@ function drag(e) {
     watermarkPosY = y - offsetY;
 
     // Update position inputs in real time
-    document.getElementById("watermarkPositionX").value = Math.round(watermarkPosX);
-    document.getElementById("watermarkPositionY").value = Math.round(watermarkPosY);
+    document.getElementById("watermark-x").value = Math.round(watermarkPosX);
+    document.getElementById("watermark-y").value = Math.round(watermarkPosY);
 
     // Update the watermark preview display
     updateWatermarkPreview();
@@ -2066,7 +2078,7 @@ document.getElementById("openImageEditorBtn").addEventListener("click", () => {
 
 function openImageEditor(image, compressedImage) {
     document.getElementById("imageEditorModal").style.display = "block";
-    canvas = document.getElementById("imageCanvas");
+  //  canvas = document.getElementById("imageCanvas");
     ctx = canvas.getContext("2d");
     console.log("Working???   openImageEditor");
 
@@ -2507,7 +2519,9 @@ function handleZoomOutClick() {
     document.getElementById("watermarkScale").value  -= 1;
 }
 
-
+function handleAddWatermarkImageClick(){
+    document.getElementById("watermarkImage").clicked;
+}
 
 
 // Attach event listeners to each button
@@ -2522,6 +2536,11 @@ document.getElementById("wm-diagonal-right-btn").addEventListener("click", handl
 
 document.getElementById("wm-zoom-in-btn").addEventListener("click", handleZoomInClick);
 document.getElementById("wm-zoom-out-btn").addEventListener("click", handleZoomOutClick);
+
+
+document.getElementById("addWatermarkImage").addEventListener("click", handleAddWatermarkImageClick);
+
+
 
 });
 
