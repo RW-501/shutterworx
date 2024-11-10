@@ -2832,11 +2832,11 @@ document.getElementById("resetWatermarkSettings").addEventListener("click", rese
 // Saves image details, including metadata, to Firebase Firestore
 async function saveImageDetails(fileName, originalUrl, compressedUrl, fileSize, fileType) {
     const title = document.getElementById("eventTitle").value;
-    const baseprice = parseFloat(document.getElementById('baseprice').value);
+    const baseprice = document.getElementById('baseprice').value;
     const eventId = document.getElementById("currentEventID").innerText;
     const userId = document.getElementById("userIdDiv").innerText;
 
-    if (!eventId && title && !isNaN(price)) {
+    if (!eventId && title && baseprice) {
         try {
             await db.collection("Members_Media").add({
                 fileName,
