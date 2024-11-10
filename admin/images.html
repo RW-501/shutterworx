@@ -2887,7 +2887,7 @@ async function saveEvent() {
             // Add a new document to the "Members_Events" collection
             const docRef = await addDoc(collection(db, 'Members_Events'), {
                 title,
-                date: date || new Date(),
+                eventDate: date || new Date(),
                 description: description || "No Description",
                 status: "active",
                 isPublic: true,

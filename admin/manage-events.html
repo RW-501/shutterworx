@@ -98,28 +98,108 @@
     signInWithEmailAndPassword,
     where, getDocs, storage, collection, auth, analytics } from 'https://shutterworx.co/js/firebaseConfig.js';
        
-    
-        // JavaScript to handle event form submission and management
-        document.getElementById('eventForm').addEventListener('submit', function(event) {
-            event.preventDefault();
-            const eventName = document.getElementById('eventName').value;
-            const eventDate = document.getElementById('eventDate').value;
-            const eventDescription = document.getElementById('eventDescription').value;
+    const userId = document.getElementById("userIdDiv").innerText;
 
-            // Code to add the event to the database and update the table
-            // This part is a placeholder and should be replaced with your implementation
-            
+// Function to fetch and display user events
+async function fetchUserEvents() {
+    try {
+        const eventsSnapshot = await db.collection("Members_Events")
+            .where("userID", "==", userId)
+            .get();
+
+        if (!eventsSnapshot.empty) {
             const tableBody = document.getElementById('eventTableBody');
-            const newRow = tableBody.insertRow();
-            newRow.innerHTML = `<td>${tableBody.rows.length}</td>
-                                <td>${eventName}</td>
-                                <td>${eventDate}</td>
-                                <td>${eventDescription}</td>
-                                <td><button class="btn btn-danger btn-sm">Delete</button></td>`;
-            
-            // Clear form fields
-            this.reset();
+            tableBody.innerHTML = ""; // Clear any existing rows
+
+            eventsSnapshot.forEach((doc) => {
+                const eventData = doc.data();
+                const newRow = tableBody.insertRow();
+                newRow.innerHTML = `
+                    <td>${tableBody.rows.length + 1}</td>
+                    <td>${eventData.eventName || "N/A"}</td>
+                    <td>${eventData.eventDate || "N/A"}</td>
+                    <td>${eventData.eventDescription || "N/A"}</td>
+                    <td><button class="btn btn-danger btn-sm" onclick="deleteEvent('${doc.id}', this)">Delete</button></td>
+                `;
+            });
+        } else {
+            console.log("No events found for this user.");
+        }
+    } catch (error) {
+        console.error("Error fetching user events:", error);
+    }
+}
+
+// Function to handle event form submission
+document.getElementById('eventForm').addEventListener('submit', async function(event) {
+    event.preventDefault();
+    const title = document.getElementById('eventName').value;
+    const eventDate = document.getElementById('eventDate').value;
+    const eventDescription = document.getElementById('eventDescription').value;
+
+    if (!title || !eventDate || !eventDescription) {
+        alert("Please fill out all fields.");
+        return;
+    }
+
+    try {
+        // Add the event to the database
+        const newEventRef = await db.collection("Members_Events").add({
+            userID: userId,
+            title,
+            eventDate: eventDate || new Date(),
+            eventDescription: eventDescription || "No Description",
+                status: "active",
+                isPublic: true,
+                collection_price: collection_price || "",
+                collection_OnSellPrice: "",
+                eventTags: [],
+                accessCode: accessCode || "",
+                location: location || "",
+                timestamp: new Date(),
+                comments: [],
+                views: 0,
+                deactived: false,
         });
+
+        // Add the new event to the table
+        const tableBody = document.getElementById('eventTableBody');
+        const newRow = tableBody.insertRow();
+        newRow.innerHTML = `
+            <td>${tableBody.rows.length + 1}</td>
+            <td>${eventName}</td>
+            <td>${eventDate}</td>
+            <td>${eventDescription}</td>
+            <td><button class="btn btn-danger btn-sm" onclick="deleteEvent('${newEventRef.id}', this)">Delete</button></td>
+        `;
+
+        showToast("Event added successfully!", "success");
+
+        // Clear form fields
+        this.reset();
+    } catch (error) {
+        console.error("Error adding event:", error);
+        showToast("Error adding event. Please try again.", "error");
+    }
+});
+
+// Function to delete an event
+async function deleteEvent(eventId, btn) {
+    try {
+        await db.collection("Members_Events").doc(eventId).delete();
+        // Remove the event row from the table
+        const row = btn.closest("tr");
+        row.remove();
+        showToast("Event deleted successfully!", "success");
+    } catch (error) {
+        console.error("Error deleting event:", error);
+        showToast("Error deleting event. Please try again.", "error");
+    }
+}
+
+// Call fetchUserEvents when the page loads to display existing events
+fetchUserEvents();
+
     </script>
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-GNSPWFHKVN"></script>
 

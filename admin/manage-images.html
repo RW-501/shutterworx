@@ -81,30 +81,100 @@
     where, getDocs, storage, collection, auth, analytics } from 'https://shutterworx.co/js/firebaseConfig.js';
    
         
-        // JavaScript to handle image upload and display
-        document.getElementById('imageForm').addEventListener('submit', function(event) {
-            event.preventDefault();
-            const imageUpload = document.getElementById('imageUpload').files[0];
+    const userId = document.getElementById("userIdDiv").innerText;
 
-            // Create a new FileReader to display the image
-            const reader = new FileReader();
-            reader.onload = function(e) {
-                const gallery = document.getElementById('imageGallery');
-                const newCol = document.createElement('div');
-                newCol.className = 'col-md-4 mb-4';
-                newCol.innerHTML = `<div class="card">
-                                        <img src="${e.target.result}" class="card-img-top" alt="Uploaded Image">
-                                        <div class="card-body">
-                                            <button class="btn btn-danger btn-sm" onclick="this.parentElement.parentElement.parentElement.remove();">Delete</button>
-                                        </div>
-                                    </div>`;
-                gallery.appendChild(newCol);
-            };
-            reader.readAsDataURL(imageUpload);
+// Step 1: Get events for the user
+async function getUserEvents() {
+    try {
+        const eventsSnapshot = await db.collection("Members_Events")
+            .where("userID", "==", userId)  // Filter by userId
+            .get();
 
-            // Clear the file input
-            this.reset();
-        });
+        if (!eventsSnapshot.empty) {
+            // Loop through each event
+            eventsSnapshot.forEach(async (eventDoc) => {
+                const eventId = eventDoc.id; // The event ID
+
+                // Step 2: Get media for each event
+                await getEventMedia(eventId);
+            });
+        } else {
+            console.log("No events found for this user.");
+        }
+    } catch (error) {
+        console.error("Error getting user events:", error);
+    }
+}
+
+// Step 2: Get media for each event based on eventId
+async function getEventMedia(eventId) {
+    try {
+        const mediaSnapshot = await db.collection("Members_Media")
+            .where("eventID", "==", eventId)  // Filter by eventId
+            .get();
+
+        if (!mediaSnapshot.empty) {
+            mediaSnapshot.forEach((mediaDoc) => {
+                const mediaData = mediaDoc.data();
+                const originalUrl = mediaData.originalUrl;
+
+                // Display the image in the gallery
+                displayImageInGallery(originalUrl);
+            });
+        } else {
+            console.log("No media found for event:", eventId);
+        }
+    } catch (error) {
+        console.error("Error getting event media:", error);
+    }
+}
+
+// Step 3: Display the image in the gallery
+function displayImageInGallery(imageUrl) {
+    const gallery = document.getElementById('imageGallery');
+    const newCol = document.createElement('div');
+    newCol.className = 'col-md-4 mb-4';
+    newCol.innerHTML = `
+        <div class="card">
+            <img src="${imageUrl}" class="card-img-top" alt="Uploaded Image">
+            <div class="card-body">
+                <button class="btn btn-danger btn-sm" onclick="this.parentElement.parentElement.parentElement.remove();">Delete</button>
+            </div>
+        </div>
+    `;
+    gallery.appendChild(newCol);
+}
+
+// Step 4: Handle the image upload and display
+document.getElementById('imageForm').addEventListener('submit', function(event) {
+    event.preventDefault();
+    const imageUpload = document.getElementById('imageUpload').files[0];
+
+    // Create a new FileReader to display the image
+    const reader = new FileReader();
+    reader.onload = function(e) {
+        const gallery = document.getElementById('imageGallery');
+        const newCol = document.createElement('div');
+        newCol.className = 'col-md-4 mb-4';
+        newCol.innerHTML = `
+            <div class="card">
+                <img src="${e.target.result}" class="card-img-top" alt="Uploaded Image">
+                <div class="card-body">
+                    <button class="btn btn-danger btn-sm" onclick="this.parentElement.parentElement.parentElement.remove();">Delete</button>
+                </div>
+            </div>
+        `;
+        gallery.appendChild(newCol);
+    };
+    reader.readAsDataURL(imageUpload);
+
+    // Clear the file input
+    this.reset();
+});
+
+// Call to start the process of fetching events and media
+getUserEvents();
+
     </script>
 
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-GNSPWFHKVN"></script>
