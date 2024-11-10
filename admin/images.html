@@ -608,6 +608,7 @@ i {
       position: relative;
       cursor: pointer;
       transition: all 0.3s ease;
+      margin: auto;
     }
   
     /* Checkbox checked state */
@@ -2039,8 +2040,8 @@ function applyWatermarkSettings() {
     const color = document.getElementById("watermarkColor").value;
     const opacity = document.getElementById("watermarkOpacity").value;
     const rotation = document.getElementById("watermarkRotation").value || 0;
-//    const posX = document.getElementById("watermarkPositionX").value || 160;
- //   const posY = document.getElementById("watermarkPositionY").value || 95;
+    const posX = document.getElementById("watermark-x").value || 160;
+  const posY = document.getElementById("watermark-x").value || 95;
 
     // Save settings for use in addWatermark
     watermarkSettings = {
@@ -2072,7 +2073,6 @@ function removeCardByRef(picCount) {
     });
 }
 
-
 let picCount = 0;
 
 // Function to render images
@@ -2080,72 +2080,70 @@ async function renderImages(imagesData) {
     const imagePreviewContainer = document.getElementById("imagePreviewContainer");
 
     // Clear previous content
-   // imagePreviewContainer.innerHTML = "";
-
-    // Assuming imagesData is an array of image objects
     const imageGalleryContainer = document.getElementById("imageGallery");
 
     // Create a header for the image count
     const imageCountHeader = document.createElement("h5");
-    imageCountHeader.innerText = `Total Images: ${picCount += 1}`;
+    imageCountHeader.innerText = `Total Images: ${imagesData.length}`;
     imageCountHeader.classList.add("mb-3", "text-left");
 
     // Clear and add the image count header to the gallery container
     imageGalleryContainer.innerHTML = "";
     imageGalleryContainer.appendChild(imageCountHeader);
 
-    imagesData.forEach((image, index) => {
-    const { compressedImage, originalUrl, fileType, fileName, fileSize } = image;
+    imagesData.forEach((image) => {
+        const { compressedImage, originalUrl, fileType, fileName, fileSize } = image;
 
-    // Create a new div element for each image card
-    const imgDiv = document.createElement("div");
-    imgDiv.classList.add("col-md-4", "mt-3");
+        // Increment picCount for each new card to ensure unique references
+        picCount += 1;
 
-    // Set the inner HTML with the image details
-    imgDiv.innerHTML = `
-        <div class="card mb-3" aria-label="Image card for ${fileName}" data-set-ref="${picCount}">
-            <img src="${compressedImage}" class="card-img-top img-thumbnail" alt="Compressed version of ${fileName}" loading="lazy">
-            <div class="card-body">
-                <input type="checkbox" class="select-checkbox" data-set-ref="${picCount}" aria-label="Select image ${fileName}">
-                <h6 class="card-title">${truncateText(fileName, 20)}</h6>
-                <p class="card-text">
-                    Type: ${fileType} <br>
-                    Size: ${(fileSize / 1024).toFixed(2)} KB <br>
-                    <strong>Image #${picCount}</strong>
-                </p>
-                <button class="btn btn-primary Edit-Image btn-sm mt-2" aria-label="View full image of ${fileName}" data-original-url="${originalUrl}">
-                    Edit Image
-                </button>                
-                <button class="btn btn-primary Edit-Water-Mark btn-sm mt-2" aria-label="View full image of ${fileName}" data-original-url="${originalUrl}">
-                    Remove Card
-                </button>
+        // Create a new div element for each image card
+        const imgDiv = document.createElement("div");
+        imgDiv.classList.add("col-md-4", "mt-3");
+
+        // Set the inner HTML with the image details
+        imgDiv.innerHTML = `
+            <div class="card mb-3" aria-label="Image card for ${fileName}" data-set-ref="${picCount}">
+                <img src="${compressedImage}" class="card-img-top img-thumbnail" alt="Compressed version of ${fileName}" loading="lazy">
+                <div class="card-body">
+                    <input type="checkbox" class="select-checkbox" data-set-ref="${picCount}" aria-label="Select image ${fileName}">
+                    <h6 class="card-title">${truncateText(fileName, 20)}</h6>
+                    <p class="card-text">
+                        Type: ${fileType} <br>
+                        Size: ${(fileSize / 1024).toFixed(2)} KB <br>
+                        <strong>Image #${picCount}</strong>
+                    </p>
+                    <button class="btn btn-primary edit-image-btn btn-sm mt-2" aria-label="Edit image of ${fileName}" data-original-url="${originalUrl}">
+                        Edit Image
+                    </button>                
+                    <button class="btn btn-danger remove-card-btn btn-sm mt-2" aria-label="Remove card of ${fileName}" data-set-ref="${picCount}">
+                        Remove Card
+                    </button>
+                </div>
             </div>
-        </div>
-    `;
+        `;
 
-    // Append the new image card div to the container without replacing it
-    imagePreviewContainer.appendChild(imgDiv);
+        // Append the new image card div to the container
+        imagePreviewContainer.appendChild(imgDiv);
 
-
-
-        // Add an event listener to view the full image on button click
-        imgDiv.querySelector("Edit-Image").addEventListener("click", (event) => {
+        // Add event listeners to buttons
+        imgDiv.querySelector(".edit-image-btn").addEventListener("click", (event) => {
             openImageEditor(event.target.getAttribute("data-original-url"));
         });
-        imgDiv.querySelector("Edit-Water-Mark").addEventListener("click", (event) => {
-            removeCardByRef(event.target.getAttribute(`data-set-ref`));
+        
+        imgDiv.querySelector(".remove-card-btn").addEventListener("click", (event) => {
+            removeCardByRef(event.target.getAttribute("data-set-ref"));
         });
     });
 }
-
 
 // Event listener for "Save Selected Images" button with progress tracking
 document.getElementById("saveAllImagesBtn").addEventListener("click", async () => {
     const selectedImages = [];
 
     // Find checked checkboxes and gather corresponding images
-    imagePreviewContainer.querySelectorAll(".select-checkbox:checked").forEach(checkbox => {
-        const refIndex = checkbox.dataset.setRef;
+    document.querySelectorAll(".select-checkbox:checked").forEach(checkbox => {
+        const refIndex = checkbox.dataset.setRef - 1; // Adjust index for array access
         const selectedImage = imagesData[refIndex];
         selectedImages.push(selectedImage);
     });
@@ -2162,6 +2160,22 @@ document.getElementById("saveAllImagesBtn").addEventListener("click", async () =
         updateProgressBar(progress);
     }
     console.log("Selected images saved successfully.");
+});
+
+// Event listener for "Save All Images" button with progress tracking
+document.getElementById("saveImagesBtn").addEventListener("click", async () => {
+    console.log("Saving all images:", imagesData);
+
+    // Loop through all imagesData and upload to Firebase with progress tracking
+    for (let i = 0; i < imagesData.length; i++) {
+        const { originalUrl, compressedImage, fileName, fileSize, fileType } = imagesData[i];
+        await uploadToFirebase(originalUrl, compressedImage, fileName, fileSize, fileType);
+
+        // Update progress bar
+        const progress = ((i + 1) / imagesData.length) * 100;
+        updateProgressBar(progress);
+    }
+    console.log("All images saved successfully.");
 });
 
 // Event listener for "Save All Images" button with progress tracking
