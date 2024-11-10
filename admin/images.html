@@ -1141,7 +1141,9 @@ i {
                             grid-template-columns: 1fr 2fr;
                             gap: 20px;
                             padding: 1.5rem;
-                            overflow-y: scroll;
+                            overflow: hidden;
+                            max-height: 700px;
+
                         }
                       
                         /* Canvas Area */
@@ -1163,14 +1165,19 @@ i {
                         }
                       
                         /* Controls Sidebar */
-                        #controls {
-                            display: flex;
-                            flex-direction: column;
-                            gap: 15px;
+                        #controlsArea {
                             background-color: #2a2a2a;
+                            flex-direction: column;
+
+                        }
+                            #controls {
+
+                            display: flex;
+                            gap: 15px;
                             padding: 1rem;
                             border-radius: 8px;
                             overflow-y: auto;
+                            max-height: 700px;
                         }
                       
                         #controls label {
@@ -1320,14 +1327,15 @@ i {
                           </div>
                       
                           <!-- Controls Sidebar -->
-                          <div id="controls">
+                          <div id="controlsArea">
                             <!-- Collapse Button -->
                             
                                 <div class="collapseBtnArea">
                       
                             <button id="collapseControlsButton">&#9654;</button>
                             </div>
-                            
+                            <div id="controls">
+
                             <!-- Logo Upload -->
                             <label for="uploadLogo">Upload Logo</label>
                             <input type="file" id="uploadLogo">
@@ -1377,6 +1385,7 @@ i {
                           </div>
                         </div>
                     </div>
+                </div>
                 </div>
                       
                
@@ -2754,7 +2763,22 @@ function handleZoomOutClick() {
 function handleAddWatermarkImageClick(){
     document.getElementById("watermarkImage").clicked;
 }
+function handlecollapseControlsButtonClick() {
+    const controls = document.getElementById("controls");
 
+    // Check if the 'show' class is currently applied
+    if (controls.classList.contains("show")) {
+        // Remove the 'show' class to hide the controls
+        controls.classList.remove("show");
+    } else {
+        // Add the 'show' class to reveal the controls
+        controls.classList.add("show");
+    }
+}
+
+
+
+document.getElementById("collapseControlsButton").addEventListener("click", handlecollapseControlsButtonClick);
 
 // Attach event listeners to each button
 document.getElementById("wm-controls-btn").addEventListener("click", handleControlsClick);
