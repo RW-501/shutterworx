@@ -1510,7 +1510,6 @@ async function createLowerQualityImage(mainImageDataURL,watermarkImageURL ) {
 
      ctx = canvas.getContext("2d");
      ctx.drawImage(img, 0, 0, width, height);
-     console.log("settings  ",settings);
 
      if (watermarkImg) {
         // Placeholder image for the background (if needed)
@@ -1531,6 +1530,7 @@ async function createLowerQualityImage(mainImageDataURL,watermarkImageURL ) {
 
 function addWatermark(ctx, width, height,watermarkImg ) {
     const settings = getWatermarkSettings();  // Get current watermark settings
+    console.log("settings  ",settings);
 
     // Set watermark style properties
     ctx.save();
