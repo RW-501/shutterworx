@@ -2733,17 +2733,19 @@ document
 document.getElementById("watermarkSettingsBtn").addEventListener("click", () => {
     loadModalSettings("watermarkSettingsModal", "watermarkSettings");
 
+    const watermarkSettingsBtn = document.getElementById("watermarkSettingsBtn");
+
     document.getElementById("wm-basic-btn").addEventListener("click", handleBasicClick);
 document.getElementById("wm-advanced-btn").addEventListener("click", handleAdvancedClick);
 document.getElementById("wm-text-mode-btn").addEventListener("click", handleTextModeClick);
 document.getElementById("wm-image-mode-btn").addEventListener("click", handleImageModeClick);
 document.getElementById("wm-watermark-btn").addEventListener("click", handleImageWatermarkClick);
 document.getElementById("wm-diagonal-left-btn").addEventListener("click", handleDiagonalLeftClick);
-document.getElementById("wm-diagonal-right-btn").addEventListener("click", handleDiagonalRightClick);
-document.getElementById("wm-zoom-in-btn").addEventListener("click", handleZoomInClick);
-document.getElementById("wm-zoom-out-btn").addEventListener("click", handleZoomOutClick);
-document.getElementById("addWatermarkImage").addEventListener("click", handleAddWatermarkImageClick);
-document.getElementById("wm-controls-btn").addEventListener("click", handleControlsClick);
+watermarkSettingsBtn.getElementById("wm-diagonal-right-btn").addEventListener("click", handleDiagonalRightClick);
+watermarkSettingsBtn.getElementById("wm-zoom-in-btn").addEventListener("click", handleZoomInClick);
+watermarkSettingsBtn.getElementById("wm-zoom-out-btn").addEventListener("click", handleZoomOutClick);
+watermarkSettingsBtn.getElementById("addWatermarkImage").addEventListener("click", handleAddWatermarkImageClick);
+watermarkSettingsBtn.getElementById("wm-controls-btn").addEventListener("click", handleControlsClick);
 
 
 
