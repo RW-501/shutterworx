@@ -308,7 +308,7 @@ i {
                             </div>
                             <div class="event-form-group col-md-6">
                                 <label for="eventDate">Event Date</label>
-                                <input type="date" class="event-form-control" id="eventDate" required>
+                                <input type="date" class="event-form-control" id="eventDate" >
                             </div>
                         </div>
                         <div class="event-form-group">
@@ -318,7 +318,11 @@ i {
                         <div class="form-row">
                             <div class="event-form-group col-md-6">
                                 <label for="collection_price">Collection Price (USD)</label>
-                                <input type="number" class="event-form-control" id="collection_price" placeholder="Event Price" required>
+                                <input type="text" class="event-form-control" id="collection_price" placeholder="Collection Price" required>
+                            </div>
+                            <div class="event-form-group col-md-6">
+                                <label for="baseprice">Base Price (USD) Per Photo</label>
+                                <input type="text" class="event-form-control" id="baseprice" placeholder="Base Price" required>
                             </div>
                             <div class="event-form-group col-md-6">
                                 <label for="accessCode">Access Code</label>
@@ -2770,7 +2774,7 @@ document.getElementById("resetWatermarkSettings").addEventListener("click", rese
 // Saves image details, including metadata, to Firebase Firestore
 async function saveImageDetails(fileName, originalUrl, compressedUrl, fileSize, fileType) {
     const title = document.getElementById("eventTitle").value;
-    const price = parseFloat(document.getElementById("eventPrice").value);
+    const baseprice = parseFloat(document.getElementById('baseprice').value);
     const eventId = document.getElementById("currentEventID").innerText;
     const userId = document.getElementById("userIdDiv").value;
 
@@ -2779,7 +2783,7 @@ async function saveImageDetails(fileName, originalUrl, compressedUrl, fileSize, 
             await db.collection("Members_Media").add({
                 fileName,
                 title,
-                price: price || "",
+                price: baseprice || "",
                 onSellPrice: "",
                 originalUrl,
                 compressedUrl,
