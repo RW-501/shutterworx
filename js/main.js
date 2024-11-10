@@ -922,7 +922,8 @@ function removeDropdown() {
 }
 
 // Enhanced autoSuggest function
-function autoSuggest(input, suggestionsArray) {
+window.autoSuggest = function(input, suggestionsArray) {
+
     const inputValue = input.value.toLowerCase().trim().split(" ").pop();
     
     if (inputValue.length < 2) return (input.placeholder = "");
