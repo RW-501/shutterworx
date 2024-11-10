@@ -1034,7 +1034,7 @@ i {
           </div>
   
           <!-- Bottom Bar -->
-          <div class="bottom-bar">
+          <div  id="cwm-controls" class="bottom-bar">
             <div class="zoom-controls">
               <div class="flex">
                 <label for="wm-zoom-in-btn">Zoom in:</label>
@@ -1048,7 +1048,7 @@ i {
               </div>
             </div>
   
-            <div id="cwm-controls" class="bottom-properties-panel">
+            <div class="bottom-properties-panel">
   
               <div class="flex">
                 <label for="watermark-x">X Position:</label>
@@ -2521,10 +2521,7 @@ function saveImage() {
 
 
 // Define functions for each button's action
-function handleControlsClick() {
-    console.log("Controls button clicked");
-    document.getElementById("cwm-controls").style.display = "none";
-}
+
 
 function handleBasicClick() {
     console.log("Basic button clicked");
@@ -2579,10 +2576,20 @@ function handleZoomOutClick() {
 function handleAddWatermarkImageClick() {
     document.getElementById("watermarkImage").click();
 }
+// Toggle `cwm-controls` with a slide-down effect
+function handleControlsClick() {
+    const cwmControls = document.getElementById("cwm-controls");
+    if (cwmControls.style.maxHeight) {
+        cwmControls.style.maxHeight = null;  // Close by removing max-height
+    } else {
+        cwmControls.style.maxHeight = cwmControls.scrollHeight + "px"; // Open by setting max-height
+    }
+}
 
-function handlecollapseControlsButtonClick() {
+// Toggle `controls` with a slide-right effect
+function handleCollapseControlsButtonClick() {
     const controls = document.getElementById("controls");
-    controls.classList.toggle("show");
+    controls.classList.toggle("slide-right");
 }
 
 // Wait for the document to fully load
