@@ -2628,12 +2628,12 @@ function collapseControlsButton() {
     const canvasContainer = document.getElementById("canvasContainer");
     
     // Toggle between col-lg-6 and col-lg-12 for responsive width adjustment
-    if (canvasContainer.classList.contains("col-lg-12")) {
-        canvasContainer.classList.remove("col-lg-12");
-        canvasContainer.classList.add("col-lg-6");
+    if (canvasContainer.classList.contains("col-xl-12")) {
+        canvasContainer.classList.remove("col-xl-12");
+        canvasContainer.classList.add("col-xl-6");
     } else {
-        canvasContainer.classList.remove("col-lg-6");
-        canvasContainer.classList.add("col-lg-12");
+        canvasContainer.classList.remove("col-xl-6");
+        canvasContainer.classList.add("col-xl-12");
     }
 }
 
