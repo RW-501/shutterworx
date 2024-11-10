@@ -2624,7 +2624,19 @@ function handleControlsClick() {
 function collapseControlsButton() {
     const controls = document.getElementById("controls");
     controls.classList.toggle("slide-right");
+
+    const canvasContainer = document.getElementById("canvasContainer");
+    
+    // Toggle between col-lg-6 and col-lg-12 for responsive width adjustment
+    if (canvasContainer.classList.contains("col-lg-6")) {
+        canvasContainer.classList.remove("col-lg-6");
+        canvasContainer.classList.add("col-lg-12");
+    } else {
+        canvasContainer.classList.remove("col-lg-12");
+        canvasContainer.classList.add("col-lg-6");
+    }
 }
+
 
 // Wait for the document to fully load
 document.addEventListener("DOMContentLoaded", function () {
