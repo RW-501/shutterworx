@@ -2310,7 +2310,7 @@ function loadImage(image, compressedImage) {
     img.src = image; // Replace with dynamic image source
     img.onload = () => {
         saveToHistory(); // Save the initial state
-        redrawCanvas(); // Redraw canvas with loaded image
+        redrawCanvas(img); // Redraw canvas with loaded image
     };
    // console.log("image type... ",img);
 }
