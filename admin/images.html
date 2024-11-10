@@ -2649,10 +2649,10 @@ imageUploadArea.addEventListener("drop", (e) => {
     handleFiles(e.dataTransfer.files);
 });
 
-// Event Listener for the Image Editor Close Button
-document.querySelector("#imageEditorModal .modal-header .close").addEventListener("click", closeImageEditor);
 
-//document.getElementById("openImageEditorBtn").addEventListener("click", openImageEditor);
+
+
+document.getElementById("closeImageEditorX").addEventListener("click", closeImageEditor);
 
 // Event Form Button Listener
 document.getElementById("saveEvent").addEventListener("click", saveEvent);
@@ -2684,7 +2684,6 @@ document.getElementById("closeImageEditor").addEventListener("click", closeImage
 document.getElementById("redoBtn").addEventListener("click", redo);
 
 
-imageInput-btn
 
 
 // Image Upload Click Listener (to trigger file input)
