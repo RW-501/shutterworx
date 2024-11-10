@@ -7,8 +7,8 @@ import {
     getDoc, 
     query, 
     updateDoc, 
-    setDoc, getStorage, ref, uploadBytesResumable,
-    addDoc, getDownloadURL,
+    setDoc,
+    addDoc, 
     getDocs, increment,
     where, arrayUnion,
     collection 
@@ -28,7 +28,7 @@ import {
 } from 'https://www.gstatic.com/firebasejs/9.17.2/firebase-auth.js';
 
 // Storage import
-import { getStorage } from 'https://www.gstatic.com/firebasejs/9.17.2/firebase-storage.js';
+import { getDownloadURL,uploadBytesResumable, ref, getStorage } from 'https://www.gstatic.com/firebasejs/9.17.2/firebase-storage.js';
 
 // Analytics import
 import { initializeAnalytics } from 'https://www.gstatic.com/firebasejs/9.17.2/firebase-analytics.js';
