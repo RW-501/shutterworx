@@ -319,7 +319,7 @@ i {
                     <div id="imageUploadArea" class="border border-primary p-4 text-center mb-3 rounded bg-light">
                         <p class="mb-2">Drag and drop images here or click to upload</p>
                         <input type="file" id="imageInput" multiple accept="image/*" style="display: none;">
-                        <button class="btn btn-info" onclick="document.getElementById('imageInput').click();">Choose Files</button>
+                        <button class="btn btn-info" id="imageInput-btn">Choose Files</button>
                     </div>
     
                     <!-- Button to open watermark settings -->
@@ -2684,7 +2684,7 @@ document.getElementById("closeImageEditor").addEventListener("click", closeImage
 document.getElementById("redoBtn").addEventListener("click", redo);
 
 
-
+imageInput-btn
 
 
 // Image Upload Click Listener (to trigger file input)
@@ -2697,7 +2697,9 @@ document.getElementById("imageUploadArea").addEventListener("click", function() 
 document.getElementById("imageInput").addEventListener("change", function() {
     handleFiles(this.files);
 });
-
+document.getElementById("imageInput-btn").addEventListener("change", function() {
+    document.getElementById("imageInput").click();
+});
 
 
 // Attach event listeners
