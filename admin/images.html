@@ -256,13 +256,14 @@ i {
 <!-- Watermark Settings Modal Section -->
 <style>
     /* Global Styling */
-    body {
+    .watermarkEditor {
       font-family: 'Roboto', sans-serif;
       background-color: #181818;
       color: #e0e0e0;
-      margin: 0;
+      margin: auto;
       padding: 0;
       box-sizing: border-box;
+      width: 95%;
     }
   
     #image-editor {
@@ -760,7 +761,7 @@ i {
   
     <section id="watermarkSettingsModal" class=" modal " tabindex="-1" role="dialog" aria-labelledby="watermarkSettingsLabel">
       <div class="modal-dialog modal-lg" role="document">
-        <div class="modal-content">
+        <div id="watermarkEditor" class="modal-content">
           <div class="modal-header">
             <h5 id="watermarkSettingsLabel" class="modal-title">Watermark Settings</h5>
             <button id="closeWatermarkX" type="button" class="close btn-close" data-bs-dismiss="modal" aria-label="Close">X</button>
