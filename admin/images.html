@@ -2882,7 +2882,7 @@ async function saveEvent() {
     const eventIdArea = document.getElementById("currentEventID");
 
     // Check if all fields are valid
-    if (title && date && description && !isNaN(collection_price)) {
+    if (title && date && description && collection_price) {
         try {
             // Add a new document to the "Members_Events" collection
             const docRef = await addDoc(collection(db, 'Members_Events'), {
