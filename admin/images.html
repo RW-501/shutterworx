@@ -1510,8 +1510,9 @@ async function createLowerQualityImage(mainImageDataURL,watermarkImageURL ) {
 
      ctx = canvas.getContext("2d");
      ctx.drawImage(img, 0, 0, width, height);
+     console.log("settings  ",settings);
 
-     if (settings.watermarkImg) {
+     if (watermarkImg) {
         // Placeholder image for the background (if needed)
     const wmImg = new Image();
     wmImg.src = watermarkImageURL;
@@ -1809,7 +1810,7 @@ function drawDiagonalLeftWatermarks(settings, ctx, width, height, gap) {
     // Modify the settings to apply a -45 degree rotation for diagonal left
 
     settings.rotation = -45; // Rotate watermark to diagonal left
-//     console.log("settings  ",settings)
+//   
 
      drawRepeatedWatermarks(settings, ctx, width, height, gap); // Call the common function to draw the watermarks
     }
@@ -2623,7 +2624,7 @@ document
   .addEventListener("change", function () {
     document.getElementById("imageInput").click();
   });
-  
+
 // Event Form Button Listener
 document.getElementById("saveEvent").addEventListener("click", saveEvent);
 // Image Upload Click Listener (to trigger file input)
