@@ -1465,7 +1465,7 @@ display: none !important;transform: scale(1.05);
 </body>
     <!-- Include your firebaseConfig.js as a module -->
     <script type="module" defer>
-        import {  db, doc,getDoc, query, updateDoc,
+        import {  db, doc, getDoc, query, updateDoc,
     setDoc,     signInWithPopup,addDoc,
     OAuthProvider,
     signOut, getStorage, ref, uploadBytesResumable, getDownloadURL,
@@ -2835,35 +2835,39 @@ async function saveImageDetails(fileName, originalUrl, compressedUrl, fileSize, 
     const eventId = document.getElementById("currentEventID").innerText;
     const userId = document.getElementById("userIdDiv").innerText;
 
-    if (!eventId && title && baseprice) {
+    if (eventId && title && baseprice) {  // Changed condition to check if eventId exists
         try {
-            await db.collection("Members_Media").add({
+            // Create a reference to the Members_Media collection using eventId as docId
+            const docRef = db.collection("Members_Media").doc(eventId);
+
+            await docRef.set({
                 fileName,
                 title,
                 price: baseprice || "",
                 onSellPrice: "",
                 originalUrl,
                 compressedUrl,
-                fileSize, eventID: eventId,
-                fileType,  status: "active", isPublic: true,
+                fileSize,
+                eventID: eventId,
+                fileType,
+                status: "active",
+                isPublic: true,
                 userId,
                 timestamp: new Date(),
                 comments: [],
                 views: 0,
-                deactived: false,
-                
-
+                deactived: false
             });
+
             showToast("Image details saved successfully!", "success");
         } catch (error) {
             console.error("Error saving image details:", error);
             showToast("Error saving image details. Please try again.", "error");
         }
     } else {
-        showToast("Please provide a valid Event ID, title and price.", "warning");
+        showToast("Please provide a valid Event ID, title, and price.", "warning");
     }
 }
-
 
 
 async function saveEvent() {
