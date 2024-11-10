@@ -1072,325 +1072,318 @@ i {
           
             <!-- Image Editor Modal -->
 
-                    <style>
-                        /* Modal Container */
-                        #imageEditorModal {
-                            margin: 0;
-                            padding: 0;
-                            background-color: #cacaca;
-
-                            width: 100%;
-  overflow: hidden;
-                            display: none;
-                        }
-                      .imageModal-dialog{
-                        font-family: Arial, sans-serif;
-                        background-color: #2a2a2a;
-                            border-radius: 12px;
-                            box-shadow: 0px 8px 24px rgba(0, 0, 0, 0.3);
-                            width: 95%;
-                            margin:auto ;
-                            border-radius: 1rem;
-
-                            color: #e0e0e0;
-                            display: flex;
-                            flex-direction: column;
-                      }
-
-
-                        /* Header */
-                        #imageEditorModal ed_header {
-                            display: flex;
-                            justify-content: space-between;
-                            align-items: center;
-                            padding: 1rem;
-                            background-color: #333;
-                            border-bottom: 1px solid #444;
-                        }
-                      
-                        #imageEditorModal ed_header h2 {
-                            margin: 0;
-                            font-size: 1.25rem;
-                            color: #42a5f5;
-                        }
-                      
-                      #closeImageEditorX {
-                          background-color: #009cfa;
-                          appearance: none;
-                          border-radius: 50%;
-                          border: 2px solid #555;
-                          color: white;
-                          position: relative;
-                          font-size: 20px;
-                          padding: 20px;
-                          cursor: pointer;
-                          border: none;
-                          transition: background-color 0.3s ease;
-                          width: 40px;
-                          height: 40px;
-                          box-sizing: border-box;
-                      }
-                      
-                        #closeImageEditorX:hover {
-                            color: #e0e0e0;
-                        }
-                      
-                        /* Main Content */
-                        #editorContent {
-                            display: grid;
-                            grid-template-columns: 1fr 2fr;
-                            gap: 20px;
-                            padding: 1.5rem;
-                            overflow: hidden;
-                            max-height: 700px;
-
-                        }
-                      
-                        /* Canvas Area */
-                        #canvasContainer {
-                            display: flex;
-                            flex-direction: column;
-                            align-items: center;
-                            background-color: #252525;
-                            padding: 1rem;
-                            border-radius: 8px;
-                            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-                        }
-                      
-                        #imageCanvas {
-                            width: 100%;
-                            max-width: 100%;
-                            border: 1px solid #444;
-                            background-color: #1e1e1e;
-                        }
-                      
-                        /* Controls Sidebar */
-                        #controlsArea {
-                            background-color: #2a2a2a;
-                            flex-direction: column;
-
-                        }
-                            #controls {
-
-                            display: flex;
-                            gap: 15px;
-                            padding: 1rem;
-                            border-radius: 8px;
-                            overflow-y: auto;
-                            max-height: 700px;
-                        }
-                      
-                        #controls label {
-                            color: #9e9e9e;
-                            font-weight: bold;
-                            margin-bottom: 5px;
-                        }
-                      
-                        input[type="file"],
-                        input[type="range"],
-                        select,
-                        button {
-                            width: 100%;
-                            padding: 10px;
-                            border: none;
-                            border-radius: 6px;
-                            background-color: #333;
-                            color: #e0e0e0;
-                            transition: background-color 0.2s, box-shadow 0.2s, border-color 0.2s;
-                        }
-                      
-                        /* Range Input */
-                        input[type="range"] {
-                            appearance: none;
-                            background-color: #555;
-                            cursor: pointer;
-                        }
-                      
-                        input[type="range"]::-webkit-slider-thumb {
-                            -webkit-appearance: none;
-                            appearance: none;
-                            width: 12px;
-                            height: 12px;
-                            border-radius: 50%;
-                            background: #42a5f5;
-                            cursor: pointer;
-                        }
-                      
-                        /* Buttons */
-                        #applyChangesButton, #resetButton {
-                            font-weight: bold;
-                            cursor: pointer;
-                            transition: background-color 0.2s, box-shadow 0.2s, border-color 0.2s;
-                        }
-                      
-                        #applyChangesButton:hover {
-                            background-color: #42a5f5;
-                            border-color: #009cfa;
-                            box-shadow: 0 0 5px rgba(0, 156, 250, 0.7);
-                        }
-                      
-                        #resetButton {
-                            background-color: #ff4081;
-                        }
-                      
-                        #resetButton:hover {
-                            background-color: #e57373;
-                            border-color: #ff6090;
-                            box-shadow: 0 0 5px rgba(255, 96, 144, 0.7);
-                        }
-                      
-                        /* Logo Preview */
-                        #logoPreviewContainer {
-                            display: flex;
-                            flex-direction: column;
-                            align-items: center;
-                        }
-                      
-                        #logoImage {
-                            width: 100px;
-                            height: 100px;
-                            border-radius: 8px;
-                            object-fit: cover;
-                            border: 1px solid #444;
-                        }
-                      
-                        /* Hover Effect for Inputs */
-                        input[type="file"]:hover,
-                        input[type="range"]:hover,
-                        select:hover,
-                        button:hover {
-                            border-color: #009cfa;
-                            box-shadow: 0 0 5px rgba(0, 156, 250, 0.7);
-                        }
-                      
-                        /* Collapse Button */
-                        #collapseControlsButton {
-                            background-color: #333;
-                            color: #42a5f5;
-                            border: none;
-                            font-size: 1.25rem;
-                            cursor: pointer;
-                            padding: 8px;
-                          /*  border-radius: 50%; */
-                            transition: background-color 0.2s, color 0.2s;
-                          width: 5vw;
-                        }
-                      
-                        #collapseControlsButton:hover {
-                            background-color: #42a5f5;
-                            color: #1e1e1e;
-                        }
-                      
-                        /* Close Button Styling */
-                        #closeImageEditorX {
-                            background-color: #009cfa;
-                            appearance: none;
-                            width: 28px;
-                            height: 28px;
-                            border-radius: 50%;
-                            border: 2px solid #555;
-                            color: white;
-                            position: relative;
-                            font-size: 18px;
-                            padding: 8px;
-                            cursor: pointer;
-                            border: none;
-                            transition: background-color 0.3s ease;
-                        }
-                      
-                        #closeImageEditorX:hover {
-                            background-color: #ff4081;
-                        }
-                       .collapseBtnArea {
-                          width: 100%;
-                          text-align: right;
-                      }
-                        
-                      </style>
-                     
-                        <section id="imageEditorModal"  class=" modal " tabindex="-1" role="dialog" aria-labelledby="imageEditorModal">
-                            <div class="imageModal-dialog ">
-                                <div class="imagemodal-content">
-                            <!-- Header -->
-                        <ed_header>
-                          <h2>Image Editor</h2>
-
-                          <button id="closeImageEditorX" type="button" aria-label="Close" class="close btn-close">&times;</button>
-                       
-                        </ed_header>
-                      
-                        <!-- Main Content -->
-                        <div id="editorContent"  class="content">
-                          <!-- Canvas Area -->
-                          <div id="canvasContainer">
-                            <canvas id="imageCanvas" width="500" height="500"></canvas>
-                          </div>
-                      
-                          <!-- Controls Sidebar -->
-                          <div id="controlsArea">
-                            <!-- Collapse Button -->
-                            
-                                <div class="collapseBtnArea">
-                      
-                            <button id="collapseControlsButton">&#9654;</button>
-                            </div>
-                            <div id="controls">
-
-                            <!-- Logo Upload -->
-                            <label for="uploadLogo">Upload Logo</label>
-                            <input type="file" id="uploadLogo">
-                      
-                            <!-- Logo Preview -->
-                            <div id="logoPreviewContainer">
-                              <img id="logoImage" src="#" alt="Logo Preview">
-                            </div>
-                      
-                            <!-- Logo Size Slider -->
-                            <label for="logoSize">Logo Size</label>
-                            <input type="range" id="logoSize" min="1" max="100" value="50">
-                      
-                            <!-- Filter Selection -->
-                            <label for="filters">Filters</label>
-                            <select id="filters">
-                              <option value="none">None</option>
-                              <option value="grayscale">Grayscale</option>
-                              <option value="sepia">Sepia</option>
-                              <option value="invert">Invert</option>
-                            </select>
-                      
-                            <!-- Adjustments -->
-                            <label for="brightnessValue">Brightness</label>
-                            <input type="range" id="brightnessValue" min="0" max="200" value="100">
-                      
-                            <label for="contrastValue">Contrast</label>
-                            <input type="range" id="contrastValue" min="0" max="200" value="100">
-                      
-                            <label for="saturateValue">Saturation</label>
-                            <input type="range" id="saturateValue" min="0" max="200" value="100">
-                      
-                            <button id="undoBtn">undoBtn</button>
-                            <button id="redoBtn">redoBtn</button>
-
-                            <button id="saveFilters">saveFilters</button>
-                            <button id="resizeImage">resizeImage</button>
-
-                            <button id="cropImage">cropImage</button>
-                            <button id="saveImage">saveImage</button>
-
-
-
-                            <!-- Action Buttons -->
-                            <button id="resetButton">Reset</button>
-                            <button id="applyChangesButton">Apply Changes</button>
-                          </div>
+            <style>
+                /* Modal Container */
+                #imageEditorModal {
+                  margin: 0;
+                  padding: 0;
+                  background-color: #cacaca;
+                  width: 100%;
+                  overflow: hidden;
+                }
+              
+                .imageModal-dialog {
+                  font-family: Arial, sans-serif;
+                  background-color: #2a2a2a;
+                  border-radius: 12px;
+                  box-shadow: 0px 8px 24px rgba(0, 0, 0, 0.3);
+                  width: 95%;
+                  margin: auto;
+                  border-radius: 1rem;
+                  color: #e0e0e0;
+                  display: flex;
+                  flex-direction: column;
+                }
+              
+                /* Header */
+                #imageEditorModal ed_header {
+                  display: flex;
+                  justify-content: space-between;
+                  align-items: center;
+                  padding: 1rem;
+                  background-color: #333;
+                  border-bottom: 1px solid #444;
+                }
+              
+                #imageEditorModal ed_header h2 {
+                  margin: 0;
+                  font-size: 1.25rem;
+                  color: #42a5f5;
+                }
+              
+                #closeImageEditorX {
+                  background-color: #009cfa;
+                  appearance: none;
+                  border-radius: 50%;
+                  border: 2px solid #555;
+                  color: white;
+                  position: relative;
+                  font-size: 20px;
+                  padding: 20px;
+                  cursor: pointer;
+                  border: none;
+                  transition: background-color 0.3s ease;
+                  width: 40px;
+                  height: 40px;
+                  box-sizing: border-box;
+                }
+              
+                #closeImageEditorX:hover {
+                  color: #e0e0e0;
+                }
+              
+                /* Main Content */
+                #editorContent {
+                  display: grid;
+                  grid-template-columns: 1fr 2fr;
+                  gap: 20px;
+                  padding: 1.5rem;
+                  overflow: hidden;
+                  max-height: 700px;
+                }
+              
+                /* Canvas Area */
+                #canvasContainer {
+                  display: flex;
+                  flex-direction: column;
+                  align-items: center;
+                  background-color: #252525;
+                  padding: 1rem;
+                  border-radius: 8px;
+                  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+                }
+              
+                #imageCanvas {
+                  width: 100%;
+                  max-width: 100%;
+                  border: 1px solid #444;
+                  background-color: #1e1e1e;
+                }
+              
+                /* Controls Sidebar */
+                #controlsArea {
+                  background-color: #2a2a2a;
+                }
+              
+                #controls {
+                      flex-direction: column;
+              
+                  display: flex;
+                  gap: 15px;
+                  padding: 1rem;
+                  border-radius: 8px;
+                  overflow-y: auto;
+                  max-height: 700px;
+                }
+              
+                #controls label {
+                  color: #9e9e9e;
+                  font-weight: bold;
+                  margin-bottom: 5px;
+                }
+              
+                input[type="file"],
+                input[type="range"],
+                select,
+                button {
+                  width: 100%;
+                  padding: 10px;
+                  border: none;
+                  border-radius: 6px;
+                  background-color: #333;
+                  color: #e0e0e0;
+                  transition: background-color 0.2s, box-shadow 0.2s, border-color 0.2s;
+                }
+              
+                /* Range Input */
+                input[type="range"] {
+                  appearance: none;
+                  background-color: #555;
+                  cursor: pointer;
+                }
+              
+                input[type="range"]::-webkit-slider-thumb {
+                  -webkit-appearance: none;
+                  appearance: none;
+                  width: 12px;
+                  height: 12px;
+                  border-radius: 50%;
+                  background: #42a5f5;
+                  cursor: pointer;
+                }
+              
+                /* Buttons */
+                #applyChangesButton,
+                #resetButton {
+                  font-weight: bold;
+                  cursor: pointer;
+                  transition: background-color 0.2s, box-shadow 0.2s, border-color 0.2s;
+                }
+              
+                #applyChangesButton:hover {
+                  background-color: #42a5f5;
+                  border-color: #009cfa;
+                  box-shadow: 0 0 5px rgba(0, 156, 250, 0.7);
+                }
+              
+                #resetButton {
+                  background-color: #ff4081;
+                }
+              
+                #resetButton:hover {
+                  background-color: #e57373;
+                  border-color: #ff6090;
+                  box-shadow: 0 0 5px rgba(255, 96, 144, 0.7);
+                }
+              
+                /* Logo Preview */
+                #logoPreviewContainer {
+                  display: flex;
+                  flex-direction: column;
+                  align-items: center;
+                }
+              
+                #logoImage {
+                  width: 100px;
+                  height: 100px;
+                  border-radius: 8px;
+                  object-fit: cover;
+                  border: 1px solid #444;
+                }
+              
+                /* Hover Effect for Inputs */
+                input[type="file"]:hover,
+                input[type="range"]:hover,
+                select:hover,
+                button:hover {
+                  border-color: #009cfa;
+                  box-shadow: 0 0 5px rgba(0, 156, 250, 0.7);
+                }
+              
+                /* Collapse Button */
+                #collapseControlsButton {
+                  background-color: #333;
+                  color: #42a5f5;
+                  border: none;
+                  font-size: 1.25rem;
+                  cursor: pointer;
+                  padding: 8px;
+                  /*  border-radius: 50%; */
+                  transition: background-color 0.2s, color 0.2s;
+                  width: 5vw;
+                }
+              
+                #collapseControlsButton:hover {
+                  background-color: #42a5f5;
+                  color: #1e1e1e;
+                }
+              
+                /* Close Button Styling */
+                #closeImageEditorX {
+                  background-color: #009cfa;
+                  appearance: none;
+                  width: 28px;
+                  height: 28px;
+                  border-radius: 50%;
+                  border: 2px solid #555;
+                  color: white;
+                  position: relative;
+                  font-size: 18px;
+                  padding: 8px;
+                  cursor: pointer;
+                  border: none;
+                  transition: background-color 0.3s ease;
+                }
+              
+                #closeImageEditorX:hover {
+                  background-color: #ff4081;
+                }
+              
+                .collapseBtnArea {
+                  width: 100%;
+                  text-align: right;
+                }
+              </style>
+              
+              <section id="imageEditorModal" class=" modal " tabindex="-1" role="dialog" aria-labelledby="imageEditorModal">
+                <div class="imageModal-dialog ">
+                  <div class="imagemodal-content">
+                    <!-- Header -->
+                    <ed_header>
+                      <h2>Image Editor</h2>
+              
+                      <button id="closeImageEditorX" type="button" aria-label="Close" class="close btn-close">&times;</button>
+              
+                    </ed_header>
+              
+                    <!-- Main Content -->
+                    <div id="editorContent" class="content">
+                      <!-- Canvas Area -->
+                      <div id="canvasContainer">
+                        <canvas id="imageCanvas" width="500" height="500"></canvas>
+                      </div>
+              
+                      <!-- Controls Sidebar -->
+                      <div id="controlsArea">
+                        <!-- Collapse Button -->
+              
+                        <div class="collapseBtnArea">
+              
+                          <button id="collapseControlsButton">&#9654;</button>
                         </div>
+                        <div id="controls">
+              
+                          <!-- Logo Upload -->
+                          <label for="uploadLogo">Upload Logo</label>
+                          <input type="file" id="uploadLogo">
+              
+                          <!-- Logo Preview -->
+                          <div id="logoPreviewContainer">
+                            <img id="logoImage" src="#" alt="Logo Preview">
+                          </div>
+              
+                          <!-- Logo Size Slider -->
+                          <label for="logoSize">Logo Size</label>
+                          <input type="range" id="logoSize" min="1" max="100" value="50">
+              
+                          <!-- Filter Selection -->
+                          <label for="filters">Filters</label>
+                          <select id="filters">
+                            <option value="none">None</option>
+                            <option value="grayscale">Grayscale</option>
+                            <option value="sepia">Sepia</option>
+                            <option value="invert">Invert</option>
+                          </select>
+              
+                          <!-- Adjustments -->
+                          <label for="brightnessValue">Brightness</label>
+                          <input type="range" id="brightnessValue" min="0" max="200" value="100">
+              
+                          <label for="contrastValue">Contrast</label>
+                          <input type="range" id="contrastValue" min="0" max="200" value="100">
+              
+                          <label for="saturateValue">Saturation</label>
+                          <input type="range" id="saturateValue" min="0" max="200" value="100">
+              
+                          <button id="undoBtn">undoBtn</button>
+                          <button id="redoBtn">redoBtn</button>
+              
+                          <button id="saveFilters">saveFilters</button>
+                          <button id="resizeImage">resizeImage</button>
+              
+                          <button id="cropImage">cropImage</button>
+                          <button id="saveImage">saveImage</button>
+              
+                          <!-- Action Buttons -->
+                          <button id="resetButton">Reset</button>
+                          <button id="applyChangesButton">Apply Changes</button>
+                        </div>
+                      </div>
                     </div>
+                  </div>
                 </div>
-                </div>
-                      
-               
-                        
-            </section>
+              
+              </section>
           
           </main>
 
