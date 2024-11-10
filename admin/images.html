@@ -236,13 +236,13 @@ i {
 }
 /* Initial state for `cwm-controls` to enable slide-down */
 #cwm-controls {
-    overflow: hidden;
-    max-height: 0;
-    transition: max-height 0.3s ease-out;
+    transition: transform 0.3s ease-out;
+    transform: translateY(-100%); /* Hidden off-screen to the left */
 }
 
 #cwm-controls.slide-down {
-    max-height: 500px; /* Adjust based on content height */
+    transform: translateY(0); /* Slide into view */
+
 }
 
 /* Initial state for `controls` to enable slide-right */
