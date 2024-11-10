@@ -782,11 +782,14 @@ i {
   
             <div class="sidebar" id="tools-sidebar">
               <h2>Tools</h2>
-              <div class="tool-icon">Selection</div>
-              <div class="tool-icon">Text Watermark</div>
-              <div class="tool-icon">Image Watermark</div>
-              <div class="tool-icon">Diagonal Left Watermark</div>
-              <div class="tool-icon">Diagonal Right Watermark</div>
+              <div id="wm-controls-btn" class="tool-icon">Controls</div>
+              <div id="wm-basic-btn"  class="tool-icon">Basic</div>
+              <div id="wm-advanced-btn"  class="tool-icon">Advanced</div>
+              <div id="wm-text-mode-btn"  class="tool-icon">Text Watermark</div>
+              <div id="wm-image-mode-btn"  class="tool-icon">Image Watermark</div>
+              <div id="wm-watermark-btn"  class="tool-icon">Watermark</div>
+              <div id="wm-diagonal-left-btn"  class="tool-icon">Diagonal Left Watermark</div>
+              <div id="wm-diagonal-right-btn"  class="tool-icon">Diagonal Right Watermark</div>
             </div>
   
             <div class="main-canvas">
@@ -864,18 +867,18 @@ i {
           <div class="bottom-bar">
             <div class="zoom-controls">
               <div class="flex">
-                <label for="zoom-in">Zoom in:</label>
+                <label for="wm-zoom-in-btn">Zoom in:</label>
   
-                <button class="button" id="zoom-in">+</button>
+                <button class="button" id="wm-zoom-in-btn">+</button>
               </div>
               <div class="zoom-display" id="zoom-display">100%</div>
               <div class="flex">
-                <label for="zoom-out">Zoom out:</label>
-                <button class="button" id="zoom-out">-</button>
+                <label for="wm-zoom-out-btn">Zoom out:</label>
+                <button class="button" id="wm-zoom-out-btn">-</button>
               </div>
             </div>
   
-            <div class="bottom-properties-panel">
+            <div id="cwm-controls" class="bottom-properties-panel">
   
               <div class="flex">
                 <label for="watermark-x">X Position:</label>
@@ -2426,7 +2429,99 @@ document.getElementById("filters").addEventListener("change", showSlider);
 
 
 
+// Define functions for each button's action
+function handleControlsClick() {
+    console.log("Controls button clicked");
+    // Add additional actions for the Controls button here
+    document.getElementById("cwm-controls").style.display = "none";
+}
 
+function handleBasicClick() {
+    console.log("Basic button clicked");
+    // Add additional actions for the Basic button here
+    document.getElementById("cwm-controls").style.display = "none";
+    document.getElementById("cwm-controls").style.display = "none";
+    document.getElementById("cwm-controls").style.display = "none";
+
+}
+
+function handleAdvancedClick() {
+    console.log("Advanced button clicked");
+    // Add additional actions for the Advanced button here
+    document.getElementById("cwm-controls").style.display = "block";
+    document.getElementById("cwm-controls").style.display = "block";
+    document.getElementById("cwm-controls").style.display = "block";
+
+}
+
+function handleTextModeClick() {
+    console.log("Text Watermark button clicked");
+    // Add additional actions for the Text Watermark button here
+    document.getElementById("cwm-controls").style.display = "none";
+    document.getElementById("multipleWaterMark").checked = true;
+
+}
+
+function handleImageModeClick() {
+    console.log("Image Watermark button clicked");
+    // Add additional actions for the Image Watermark button here
+    document.getElementById("multipleWaterMark").checked = false;
+
+}
+
+function handleImageWatermarkClick() {
+    console.log("Watermark button clicked");
+    // Add additional actions for the Watermark button here
+    document.getElementById("multipleWaterMark").checked;
+    document.getElementById("watermarkStyle").value = "regular";
+
+    document.getElementById("cwm-controls").style.display = "none";
+    document.getElementById("cwm-controls").style.display = "none";
+    document.getElementById("cwm-controls").style.display = "none";
+    document.getElementById("cwm-controls").style.display = "none";
+
+}
+
+function handleDiagonalLeftClick() {
+    console.log("Diagonal Left Watermark button clicked");
+    handleImageWatermarkClick();
+    // Add additional actions for the Diagonal Left Watermark button here
+    document.getElementById("multipleWaterMark").checked = true;
+    document.getElementById("watermarkStyle").value = "diagonal-left";
+
+}
+
+function handleDiagonalRightClick() {
+    console.log("Diagonal Right Watermark button clicked");
+    handleImageWatermarkClick();
+    // Add additional actions for the Diagonal Right Watermark button here
+    document.getElementById("multipleWaterMark").checked = true;
+    document.getElementById("watermarkStyle").value = "diagonal-right";
+}
+
+function handleZoomInClick() {
+    document.getElementById("watermarkScale").value  += 1;
+}
+
+function handleZoomOutClick() {
+    document.getElementById("watermarkScale").value  -= 1;
+}
+
+
+
+
+// Attach event listeners to each button
+document.getElementById("wm-controls-btn").addEventListener("click", handleControlsClick);
+document.getElementById("wm-basic-btn").addEventListener("click", handleBasicClick);
+document.getElementById("wm-advanced-btn").addEventListener("click", handleAdvancedClick);
+document.getElementById("wm-text-mode-btn").addEventListener("click", handleTextModeClick);
+document.getElementById("wm-image-mode-btn").addEventListener("click", handleImageModeClick);
+document.getElementById("wm-watermark-btn").addEventListener("click", handleImageWatermarkClick);
+document.getElementById("wm-diagonal-left-btn").addEventListener("click", handleDiagonalLeftClick);
+document.getElementById("wm-diagonal-right-btn").addEventListener("click", handleDiagonalRightClick);
+
+document.getElementById("wm-zoom-in-btn").addEventListener("click", handleZoomInClick);
+document.getElementById("wm-zoom-out-btn").addEventListener("click", handleZoomOutClick);
 
 });
 
