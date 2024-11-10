@@ -2681,106 +2681,73 @@ document.getElementById("logoSize").addEventListener("input", updateLogoSize(eve
 document.getElementById("filters").addEventListener("change", showSlider);
 
 
-
 // Define functions for each button's action
 function handleControlsClick() {
     console.log("Controls button clicked");
-    // Add additional actions for the Controls button here
     document.getElementById("cwm-controls").style.display = "none";
 }
 
 function handleBasicClick() {
     console.log("Basic button clicked");
-    // Add additional actions for the Basic button here
     document.getElementById("cwm-controls").style.display = "none";
-    document.getElementById("cwm-controls").style.display = "none";
-    document.getElementById("cwm-controls").style.display = "none";
-
 }
 
 function handleAdvancedClick() {
     console.log("Advanced button clicked");
-    // Add additional actions for the Advanced button here
     document.getElementById("cwm-controls").style.display = "block";
-    document.getElementById("cwm-controls").style.display = "block";
-    document.getElementById("cwm-controls").style.display = "block";
-
 }
 
 function handleTextModeClick() {
     console.log("Text Watermark button clicked");
-    // Add additional actions for the Text Watermark button here
     document.getElementById("cwm-controls").style.display = "none";
     document.getElementById("multipleWaterMark").checked = true;
-
 }
 
 function handleImageModeClick() {
     console.log("Image Watermark button clicked");
-    // Add additional actions for the Image Watermark button here
     document.getElementById("multipleWaterMark").checked = false;
-
 }
 
 function handleImageWatermarkClick() {
     console.log("Watermark button clicked");
-    // Add additional actions for the Watermark button here
-    document.getElementById("multipleWaterMark").checked;
+    document.getElementById("multipleWaterMark").checked = true;
     document.getElementById("watermarkStyle").value = "regular";
-
     document.getElementById("cwm-controls").style.display = "none";
-    document.getElementById("cwm-controls").style.display = "none";
-    document.getElementById("cwm-controls").style.display = "none";
-    document.getElementById("cwm-controls").style.display = "none";
-
 }
 
 function handleDiagonalLeftClick() {
     console.log("Diagonal Left Watermark button clicked");
     handleImageWatermarkClick();
-    // Add additional actions for the Diagonal Left Watermark button here
-    document.getElementById("multipleWaterMark").checked = true;
     document.getElementById("watermarkStyle").value = "diagonal-left";
-
 }
 
 function handleDiagonalRightClick() {
     console.log("Diagonal Right Watermark button clicked");
     handleImageWatermarkClick();
-    // Add additional actions for the Diagonal Right Watermark button here
-    document.getElementById("multipleWaterMark").checked = true;
     document.getElementById("watermarkStyle").value = "diagonal-right";
 }
 
 function handleZoomInClick() {
-    document.getElementById("watermarkScale").value  += 1;
+    const scaleElement = document.getElementById("watermarkScale");
+    scaleElement.value = parseInt(scaleElement.value) + 1;
 }
 
 function handleZoomOutClick() {
-    document.getElementById("watermarkScale").value  -= 1;
+    const scaleElement = document.getElementById("watermarkScale");
+    scaleElement.value = Math.max(0, parseInt(scaleElement.value) - 1);
 }
 
-function handleAddWatermarkImageClick(){
-    document.getElementById("watermarkImage").clicked;
+function handleAddWatermarkImageClick() {
+    document.getElementById("watermarkImage").click();
 }
+
 function handlecollapseControlsButtonClick() {
     const controls = document.getElementById("controls");
-
-    // Check if the 'show' class is currently applied
-    if (controls.classList.contains("show")) {
-        // Remove the 'show' class to hide the controls
-        controls.classList.remove("show");
-    } else {
-        // Add the 'show' class to reveal the controls
-        controls.classList.add("show");
-    }
+    controls.classList.toggle("show");
 }
 
-
-
+// Attach event listeners
 document.getElementById("collapseControlsButton").addEventListener("click", handlecollapseControlsButtonClick);
-
-// Attach event listeners to each button
 document.getElementById("wm-controls-btn").addEventListener("click", handleControlsClick);
 document.getElementById("wm-basic-btn").addEventListener("click", handleBasicClick);
 document.getElementById("wm-advanced-btn").addEventListener("click", handleAdvancedClick);
@@ -2789,14 +2756,9 @@ document.getElementById("wm-image-mode-btn").addEventListener("click", handleIma
 document.getElementById("wm-watermark-btn").addEventListener("click", handleImageWatermarkClick);
 document.getElementById("wm-diagonal-left-btn").addEventListener("click", handleDiagonalLeftClick);
 document.getElementById("wm-diagonal-right-btn").addEventListener("click", handleDiagonalRightClick);
-
 document.getElementById("wm-zoom-in-btn").addEventListener("click", handleZoomInClick);
 document.getElementById("wm-zoom-out-btn").addEventListener("click", handleZoomOutClick);
-
-
 document.getElementById("addWatermarkImage").addEventListener("click", handleAddWatermarkImageClick);
-
-
 
 });
 
