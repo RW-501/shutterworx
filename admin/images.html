@@ -1458,7 +1458,6 @@ let selectedImages = [];
 
     const imagePreviewContainer = document.getElementById("imagePreviewContainer");
     
-    const imageUploadArea = document.getElementById("imageUploadArea");
 
 
 
@@ -2592,6 +2591,7 @@ document.addEventListener("DOMContentLoaded", function () {
 setupEventListeners();
 updateWatermarkPreview();
 
+const imageUploadArea = document.getElementById("imageUploadArea");
 
 // Enable drag-and-drop functionality
 imageUploadArea.addEventListener("dragover", (e) => {
