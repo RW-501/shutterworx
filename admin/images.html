@@ -1916,45 +1916,6 @@ async function processImage(dataURL, file, fileSize, fileType, fileName) {
 }
 
 
-// Show watermark settings modal
-document.getElementById("watermarkSettingsBtn").addEventListener("click", () => {
-    loadWatermarkSettings();
-    document.getElementById("watermarkSettingsModal").style.display = "block";
-});
-
-
-
-
-// Add real-time listeners for all options
-document.getElementById("watermarkText").addEventListener("input", updateWatermarkPreview);
-document.getElementById("watermarkFont").addEventListener("change", updateWatermarkPreview);
-document.getElementById("watermarkSize").addEventListener("input", updateWatermarkPreview);
-document.getElementById("watermarkColor").addEventListener("input", updateWatermarkPreview);
-document.getElementById("watermarkOpacity").addEventListener("input", updateWatermarkPreview);
-document.getElementById("watermarkRotation").addEventListener("input", updateWatermarkPreview);
-document.getElementById("watermark-x").addEventListener("input", updateWatermarkPreview);
-document.getElementById("watermark-x").addEventListener("input", updateWatermarkPreview);
-document.getElementById("multipleWaterMark").addEventListener("change", updateWatermarkPreview);
-
-//document.getElementById("watermarkStroke").addEventListener("change", updateWatermarkPreview);
-document.getElementById("watermarkBold").addEventListener("click", updateWatermarkPreview);
-document.getElementById("watermarkUnderline").addEventListener("click", updateWatermarkPreview);
-
-document.getElementById("watermarkScale").addEventListener("change", updateWatermarkPreview);
-// Attach event listener for the reset button
-document.getElementById("resetWatermarkSettings").addEventListener("click", resetWatermarkSettings);
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 // Start dragging on mousedown or touchstart
@@ -2599,81 +2560,6 @@ function saveImage() {
 
 
 
-// Wait for the document to fully load
-document.addEventListener("DOMContentLoaded", function () {
-// Initialize preview on load
-// Initialize setup
-setupEventListeners();
-updateWatermarkPreview();
-
-
-// Bind undo/redo buttons
-document.getElementById("undoBtn").addEventListener("click", undo);
-document.getElementById("redoBtn").addEventListener("click", redo);
-
-
-document.getElementById("saveFilters").addEventListener("click", saveFilters);
-document.getElementById("resizeImage").addEventListener("click", resizeImage);
-document.getElementById("cropImage").addEventListener("click", cropImage);
-
-document.getElementById("saveImage").addEventListener("click", saveImage);
-document.getElementById("closeImageEditorX").addEventListener("click", closeImageEditor);
-document.getElementById("closeImageEditor").addEventListener("click", closeImageEditor);
-
-document.getElementById("redoBtn").addEventListener("click", redo);
-
-
-
-
-
-// Image Upload Click Listener (to trigger file input)
-document.getElementById("imageUploadArea").addEventListener("click", function() {
-    document.getElementById("imageInput").click();
-});
-
-
-    // Assuming your HTML has an <input> element with id="imageInput"
-document.getElementById("imageInput").addEventListener("change", function() {
-    handleFiles(this.files);
-});
-
-
-// Enable drag-and-drop functionality
-imageUploadArea.addEventListener("dragover", (e) => {
-    e.preventDefault();
-    imageUploadArea.classList.add("dragging");
-});
-
-imageUploadArea.addEventListener("dragleave", () => {
-    imageUploadArea.classList.remove("dragging");
-});
-
-imageUploadArea.addEventListener("drop", (e) => {
-    e.preventDefault();
-    imageUploadArea.classList.remove("dragging");
-    handleFiles(e.dataTransfer.files);
-});
-
-//document.getElementById("openImageEditorBtn").addEventListener("click", openImageEditor);
-
-// Event Form Button Listener
-document.getElementById("saveEvent").addEventListener("click", saveEvent);
-
-
-// Event Listener for the Image Editor Close Button
-document.querySelector("#imageEditorModal .modal-header .close").addEventListener("click", closeImageEditor);
-
-
-
-
-// Logo Upload and Size Update
-document.getElementById("uploadLogo").addEventListener("change", addLogo);
-document.getElementById("logoSize").addEventListener("input", updateLogoSize(event));
-
-// Filter dropdown
-document.getElementById("filters").addEventListener("change", showSlider);
-
-
 // Define functions for each button's action
 function handleControlsClick() {
     console.log("Controls button clicked");
@@ -2739,6 +2625,81 @@ function handlecollapseControlsButtonClick() {
     controls.classList.toggle("show");
 }
 
+// Wait for the document to fully load
+document.addEventListener("DOMContentLoaded", function () {
+// Initialize preview on load
+// Initialize setup
+setupEventListeners();
+updateWatermarkPreview();
+
+
+// Enable drag-and-drop functionality
+imageUploadArea.addEventListener("dragover", (e) => {
+    e.preventDefault();
+    imageUploadArea.classList.add("dragging");
+});
+
+imageUploadArea.addEventListener("dragleave", () => {
+    imageUploadArea.classList.remove("dragging");
+});
+
+imageUploadArea.addEventListener("drop", (e) => {
+    e.preventDefault();
+    imageUploadArea.classList.remove("dragging");
+    handleFiles(e.dataTransfer.files);
+});
+
+// Event Listener for the Image Editor Close Button
+document.querySelector("#imageEditorModal .modal-header .close").addEventListener("click", closeImageEditor);
+
+//document.getElementById("openImageEditorBtn").addEventListener("click", openImageEditor);
+
+// Event Form Button Listener
+document.getElementById("saveEvent").addEventListener("click", saveEvent);
+
+
+// Logo Upload and Size Update
+document.getElementById("uploadLogo").addEventListener("change", addLogo);
+document.getElementById("logoSize").addEventListener("input", updateLogoSize(event));
+
+// Filter dropdown
+document.getElementById("filters").addEventListener("change", showSlider);
+
+
+
+
+// Bind undo/redo buttons
+document.getElementById("undoBtn").addEventListener("click", undo);
+document.getElementById("redoBtn").addEventListener("click", redo);
+
+
+document.getElementById("saveFilters").addEventListener("click", saveFilters);
+document.getElementById("resizeImage").addEventListener("click", resizeImage);
+document.getElementById("cropImage").addEventListener("click", cropImage);
+
+document.getElementById("saveImage").addEventListener("click", saveImage);
+document.getElementById("closeImageEditorX").addEventListener("click", closeImageEditor);
+document.getElementById("closeImageEditor").addEventListener("click", closeImageEditor);
+
+document.getElementById("redoBtn").addEventListener("click", redo);
+
+
+
+
+
+// Image Upload Click Listener (to trigger file input)
+document.getElementById("imageUploadArea").addEventListener("click", function() {
+    document.getElementById("imageInput").click();
+});
+
+
+    // Assuming your HTML has an <input> element with id="imageInput"
+document.getElementById("imageInput").addEventListener("change", function() {
+    handleFiles(this.files);
+});
+
+
+
 // Attach event listeners
 document.getElementById("collapseControlsButton").addEventListener("click", handlecollapseControlsButtonClick);
 document.getElementById("wm-controls-btn").addEventListener("click", handleControlsClick);
@@ -2752,6 +2713,45 @@ document.getElementById("wm-diagonal-right-btn").addEventListener("click", handl
 document.getElementById("wm-zoom-in-btn").addEventListener("click", handleZoomInClick);
 document.getElementById("wm-zoom-out-btn").addEventListener("click", handleZoomOutClick);
 document.getElementById("addWatermarkImage").addEventListener("click", handleAddWatermarkImageClick);
+
+
+// Show watermark settings modal
+document.getElementById("watermarkSettingsBtn").addEventListener("click", () => {
+    loadWatermarkSettings();
+    document.getElementById("watermarkSettingsModal").style.display = "block";
+});
+
+
+
+
+// Add real-time listeners for all options
+document.getElementById("watermarkText").addEventListener("input", updateWatermarkPreview);
+document.getElementById("watermarkFont").addEventListener("change", updateWatermarkPreview);
+document.getElementById("watermarkSize").addEventListener("input", updateWatermarkPreview);
+document.getElementById("watermarkColor").addEventListener("input", updateWatermarkPreview);
+document.getElementById("watermarkOpacity").addEventListener("input", updateWatermarkPreview);
+document.getElementById("watermarkRotation").addEventListener("input", updateWatermarkPreview);
+document.getElementById("watermark-x").addEventListener("input", updateWatermarkPreview);
+document.getElementById("watermark-x").addEventListener("input", updateWatermarkPreview);
+document.getElementById("multipleWaterMark").addEventListener("change", updateWatermarkPreview);
+
+//document.getElementById("watermarkStroke").addEventListener("change", updateWatermarkPreview);
+document.getElementById("watermarkBold").addEventListener("click", updateWatermarkPreview);
+document.getElementById("watermarkUnderline").addEventListener("click", updateWatermarkPreview);
+
+document.getElementById("watermarkScale").addEventListener("change", updateWatermarkPreview);
+// Attach event listener for the reset button
+document.getElementById("resetWatermarkSettings").addEventListener("click", resetWatermarkSettings);
+
+
+
+
+
+
+
+
+
+
 
 });
 
