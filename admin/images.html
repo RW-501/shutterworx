@@ -318,11 +318,11 @@ i {
                         <div class="form-row">
                             <div class="event-form-group col-md-6">
                                 <label for="collection_price">Collection Price (USD)</label>
-                                <input type="text" class="event-form-control" id="collection_price" placeholder="Collection Price" required>
+                                <input type="text"  onkeydown="restrictKeys(event)" aria-label="Collection Price" oninput="updateCurrency(this)" class="event-form-control" id="collection_price" placeholder="Collection Price" required>
                             </div>
                             <div class="event-form-group col-md-6">
                                 <label for="baseprice">Base Price (USD) Per Photo</label>
-                                <input type="text" class="event-form-control" id="baseprice" placeholder="Base Price" required>
+                                <input type="text"  onkeydown="restrictKeys(event)" aria-label="Base Price" oninput="updateCurrency(this)" class="event-form-control" id="baseprice" placeholder="Base Price" required>
                             </div>
                             <div class="event-form-group col-md-6">
                                 <label for="accessCode">Access Code</label>
@@ -331,7 +331,7 @@ i {
                         </div>
                         <div class="event-form-group">
                             <label for="eventLocation">Event Location</label>
-                            <input type="text" class="event-form-control" id="eventLocation" placeholder="Event Location" required>
+                            <input type="text"  oninput="autoSuggest(this.value,'locationSuggestions')" class="form-control keywordInput location-input" class="event-form-control" id="eventLocation" placeholder="Event Location" required>
                         </div>
                         <button id="saveEvent" type="button" class="btn btn-success btn-lg">Save Event</button>
                     </form>
