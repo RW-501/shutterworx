@@ -1190,6 +1190,7 @@ function createHiddenUserIdDiv(userId) {
         hiddenDiv.style.display = 'none'; // Hide the div
         document.body.appendChild(hiddenDiv);
     }
+   // console.log("hiddenDiv userId   ",userId);
 
     // Set the div's content to the user ID
     hiddenDiv.textContent = userId;

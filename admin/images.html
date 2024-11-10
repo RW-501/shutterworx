@@ -2834,7 +2834,7 @@ async function saveImageDetails(fileName, originalUrl, compressedUrl, fileSize, 
     const title = document.getElementById("eventTitle").value;
     const baseprice = parseFloat(document.getElementById('baseprice').value);
     const eventId = document.getElementById("currentEventID").innerText;
-    const userId = document.getElementById("userIdDiv").value;
+    const userId = document.getElementById("userIdDiv").innerText;
 
     if (!eventId && title && !isNaN(price)) {
         try {
@@ -2874,7 +2874,7 @@ async function saveEvent() {
     const collection_price = document.getElementById('collection_price').value;
     const location = document.getElementById("eventLocation").value;
     const accessCode = document.getElementById("accessCode").value;
-    const userId = document.getElementById("userIdDiv").value;
+    const userId = document.getElementById("userIdDiv").innerText;
     const eventIdArea = document.getElementById("currentEventID");
     console.log("userId   ",userId);
 
