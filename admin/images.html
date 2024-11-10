@@ -1901,6 +1901,7 @@ function setupEventListeners() {
 
 
 
+const imagesData = [];
 
 // Function to process image and apply watermark
 async function processImage(dataURL, file, fileSize, fileType, fileName) {
@@ -1917,7 +1918,7 @@ async function processImage(dataURL, file, fileSize, fileType, fileName) {
         // Create a compressed image with a watermark
         const compressedImage = await createLowerQualityImage(dataURL);
 
-        const imagesData = [
+         imagesData = [
             {
                 compressedImage: compressedImage,
                 originalUrl: dataURL,
