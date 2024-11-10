@@ -2876,6 +2876,7 @@ async function saveEvent() {
     const accessCode = document.getElementById("accessCode").value;
     const userId = document.getElementById("userIdDiv").value;
     const eventIdArea = document.getElementById("currentEventID");
+    console.log("userId   ",userId);
 
     // Check if all fields are valid
     if (title && date && description && collection_price) {
@@ -2898,6 +2899,7 @@ async function saveEvent() {
                 views: 0,
                 deactived: false,
             });
+            console.log("userId   ",userId);
 
             // Retrieve and display the document ID
             if (eventIdArea) {
