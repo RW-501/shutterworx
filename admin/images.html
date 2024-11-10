@@ -331,7 +331,7 @@ i {
                         </div>
                         <div class="event-form-group">
                             <label for="eventLocation">Event Location</label>
-                            <input type="text"  onkeydown="autoSuggest(this.value,'locationSuggestions')" class="form-control keywordInput location-input" class="event-form-control" id="eventLocation" placeholder="Event Location" required>
+                            <input type="text"  oninput="autoSuggest(this.value,'locationSuggestions')" class="form-control keywordInput location-input" class="event-form-control" id="eventLocation" placeholder="Event Location" required>
                         </div>
                         <button id="saveEvent" type="button" class="btn btn-success btn-lg">Save Event</button>
                     </form>
