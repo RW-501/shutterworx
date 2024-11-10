@@ -2623,6 +2623,16 @@ function handleControlsClick() {
     const cwmControls = document.getElementById("cwm-controls");
     controls.classList.toggle("slide-down");
 
+    
+    // Toggle between col-lg-6 and col-lg-12 for responsive width adjustment
+    if (cwmControls.classList.contains("flex")) {
+        cwmControls.classList.remove("flex");
+        cwmControls.classList.add("hide");
+    } else {
+        cwmControls.classList.remove("hide");
+        cwmControls.classList.add("flex");
+    }
+
 }
 
 // Toggle `controls` with a slide-right effect
@@ -2637,8 +2647,8 @@ function collapseControlsButton() {
         canvasContainer.classList.remove("grid");
         canvasContainer.classList.add("flex");
     } else {
-        canvasContainer.classList.remove("grid");
-        canvasContainer.classList.add("flex");
+        canvasContainer.classList.remove("flex");
+        canvasContainer.classList.add("grid");
     }
 }
 //document.getElementById("cwm-controls").style.display = "none";
