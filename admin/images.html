@@ -120,6 +120,102 @@ select, input[type="range"], input[type="number"] {
     padding: 8px !important;
 }
 
+
+
+.btn-outline-primary {
+  transition: 0.3s ease;
+}
+    .form-check {
+      position: relative;
+      padding-left: 1.25rem;
+      margin: 1rem;
+    }
+.btn-outline-primary:hover {
+  background-color: #0d6efd;
+  color: #fff;
+  transform: translateY(-2px);
+}
+
+.custom-slider {
+  appearance: none; /* Standard property for broader compatibility */
+  width: 100%;
+  height: 6px;
+  border-radius: 5px;
+  outline: none;
+  transition: background 0.3s ease;
+}
+
+.custom-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: #044cb8;
+  cursor: pointer;
+  box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.2);
+}
+
+.custom-slider::-moz-range-thumb {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: #044cb8;
+  cursor: pointer;
+  box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.2);
+}
+
+#logoImage {
+  max-width: 200px;
+  height: auto;
+  display: block;
+  margin: 0 auto;
+}
+
+.modal-header {
+  background: linear-gradient(45deg, #3f51b5, #1a237e);
+  color: white;
+}
+
+.modal-body {
+  background-color: #f8f9fa;
+}
+
+.modal-footer {
+  background: linear-gradient(45deg, #495057, #3f51b5);
+}
+
+.btn-lg {
+  font-size: 1rem;
+  padding: 0.8rem 1.5rem;
+}
+
+.btn-outline-secondary {
+  border: 2px solid #6c757d;
+}
+
+.btn-outline-light {
+  color: white;
+  border-color: white;
+}
+
+.btn-close-white {
+  filter: invert(100%);
+}
+
+.rounded-pill {
+  border-radius: 50rem;
+}
+
+.rounded-circle {
+  border-radius: 50%;
+  width: 3rem;
+  height: 3rem;
+}
+
+i {
+  font-size: 1.2rem;
+}
+
 </style>
     <header class="admin-header">
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
@@ -158,688 +254,547 @@ select, input[type="range"], input[type="number"] {
     <div class="container-fluid admin-container">
 
 
+
         <main class="dashboard-content">
             <p class="text-muted">Use this panel to manage images and events. Upload images, set prices, and save details. Please ensure all information is correct before saving.</p>
-        
+          
             <div class="container mt-5">
-                <h1 class="text-center">Manage Images and Events</h1>
-        
-                <!-- Event Information Section -->
-                <section class="my-4">
-                    <h2>Add Event Details</h2>
-                    <form id="eventForm">
-                        <div class="form-row">
-                            <div class="form-group col-md-6">
-                                <label for="eventTitle">Event Title</label>
-                                <input type="text" class="form-control" id="eventTitle" placeholder="Event Title" required>
-                            </div>
-                            <div class="form-group col-md-6">
-                                <label for="eventDate">Event Date</label>
-                                <input type="date" class="form-control" id="eventDate" required>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="eventDescription">Event Description</label>
-                            <textarea class="form-control" id="eventDescription" rows="3" placeholder="Event Description"></textarea>
-                        </div>
-                        <div class="form-row">
-                            <div class="form-group col-md-6">
-                                <label for="collection_price">Collection Price (USD)</label>
-                                <input type="number" class="form-control" id="collection_price" placeholder="Event Price" required>
-                            </div>
-                            <div class="form-group col-md-6">
-                                <label for="accessCode">Access Code</label>
-                                <input type="text" class="form-control" id="accessCode" placeholder="Enter Access Code">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="eventLocation">Event Location</label>
-                            <input type="text" class="form-control" id="eventLocation" placeholder="Event Location" required>
-                        </div>
-                        <button id="saveEvent" type="button" class="btn btn-primary" >Save Event</button>
-                    </form>
-                </section>
-        
-                <!-- Image Upload Section -->
-                <section class="my-4">
-                    <h2>Upload Images</h2>
-                    <div id="imageUploadArea" class="border border-primary p-4 text-center" >
-                        <p>Drag and drop images here or click to upload</p>
-                        <input type="file" id="imageInput" multiple accept="image/*" style="display: none;" >
+              <h1 class="text-center">Manage Images and Events</h1>
+          
+              <!-- Event Information Section -->
+              <section class="my-4">
+                <h2>Add Event Details</h2>
+                <form id="eventForm">
+                  <div class="form-row">
+                    <div class="form-group col-md-6">
+                      <label for="eventTitle">Event Title</label>
+                      <input type="text" class="form-control" id="eventTitle" placeholder="Event Title" required>
                     </div>
-
-        <!-- Button to open watermark settings -->
-<button id="watermarkSettingsBtn" class="btn btn-primary">Edit Watermark</button>
-<!-- Button to open the image editor --> 
-<button id="openImageEditorBtn" class="btn btn-primary">Open Image Editor</button>
-                    
-<style>
-/* Responsive Styles */
-@media (min-width:  700px) {
-    .watermarkSettingsFooter  {
-        display: grid;
-    }
-}
-
-@media (max-width:  700px) {
-    .watermarkSettingsFooter  {
-        display: flex;
-    }
-}
-    /* Progress Bar Styles */
-.progress {
-    height: 30px; /* Adjust height */
-    border-radius: 5px; /* Rounded corners */
-    background: linear-gradient(45deg, #1a237e, #3f51b5); /* Light background */
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Subtle shadow */
-    overflow: hidden; /* Prevents overflow */
-}
-
-.progress-bar {
-    background-color: #007bff; /* Primary color for progress */
-    transition: width 0.4s ease; /* Smooth transition effect */
-    color: white; /* Text color inside the progress bar */
-    font-weight: bold; /* Make text bold */
-    text-align: center; /* Center the text */
-    line-height: 30px; /* Center the text vertically */
-}
-
-#watermarkPreviewCanvas {
-    border: 1px solid #ccc;
-    display: block;
-    margin: auto;
-
-}
-
-#imageCanvas {
-    border: 1px solid #ccc;
-    display: block;
-    margin: auto;
-    background-color: #ffffffa2;
-
-}
-
-#uploadLogo {
-    display: none;
-}
-
-</style>
-
-
-<!-- Progress Bar -->
-                    <div class="progress mt-3" id="uploadProgressBar" style="display: none;">
-                        <div class="progress-bar" id="uploadProgress" role="progressbar" style="width: 0%;" aria-valuemin="0" aria-valuemax="100">0%</div>
+                    <div class="form-group col-md-6">
+                      <label for="eventDate">Event Date</label>
+                      <input type="date" class="form-control" id="eventDate" required>
                     </div>
-                    
-                    <!-- imagePreviewContainer -->
-
-                    <div id="imageGallery" class="row mt-3"></div>
-                    <div id="imagePreviewContainer" class="row mt-3"></div>
-                    <button id="saveImagesBtn" type="button" class="btn btn-success mt-3" >Save Images</button>
-                    <button id="saveAllImagesBtn" type="button" class="btn btn-success mt-1" >Save All Images</button>
-                </section>
+                  </div>
+                  <div class="form-group">
+                    <label for="eventDescription">Event Description</label>
+                    <textarea class="form-control" id="eventDescription" rows="3" placeholder="Event Description"></textarea>
+                  </div>
+                  <div class="form-row">
+                    <div class="form-group col-md-6">
+                      <label for="collection_price">Collection Price (USD)</label>
+                      <input type="number" class="form-control" id="collection_price" placeholder="Event Price" required>
+                    </div>
+                    <div class="form-group col-md-6">
+                      <label for="accessCode">Access Code</label>
+                      <input type="text" class="form-control" id="accessCode" placeholder="Enter Access Code">
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label for="eventLocation">Event Location</label>
+                    <input type="text" class="form-control" id="eventLocation" placeholder="Event Location" required>
+                  </div>
+                  <button id="saveEvent" type="button" class="btn btn-primary">Save Event</button>
+                </form>
+              </section>
+          
+              <!-- Image Upload Section -->
+              <section class="my-4">
+                <h2>Upload Images</h2>
+                <div id="imageUploadArea" class="border border-primary p-4 text-center">
+                  <p>Drag and drop images here or click to upload</p>
+                  <input type="file" id="imageInput" multiple accept="image/*" style="display: none;">
+                </div>
+          
+                <!-- Button to open watermark settings -->
+                <button id="watermarkSettingsBtn" class="btn btn-primary">Edit Watermark</button>
+                <!-- Button to open the image editor -->
+                <button id="openImageEditorBtn" class="btn btn-primary">Open Image Editor</button>
+          
+                <style>
+                  /* Responsive Styles */
+                  @media (min-width: 700px) {
+                    .watermarkSettingsFooter {
+                      display: grid;
+                    }
+                  }
+          
+                  @media (max-width: 700px) {
+                    .watermarkSettingsFooter {
+                      display: flex;
+                    }
+                  }
+          
+                  /* Progress Bar Styles */
+                  .progress {
+                    height: 30px;
+                    /* Adjust height */
+                    border-radius: 5px;
+                    /* Rounded corners */
+                    background: linear-gradient(45deg, #1a237e, #3f51b5);
+                    /* Light background */
+                    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+                    /* Subtle shadow */
+                    overflow: hidden;
+                    /* Prevents overflow */
+                  }
+          
+                  .progress-bar {
+                    background-color: #007bff;
+                    /* Primary color for progress */
+                    transition: width 0.4s ease;
+                    /* Smooth transition effect */
+                    color: white;
+                    /* Text color inside the progress bar */
+                    font-weight: bold;
+                    /* Make text bold */
+                    text-align: center;
+                    /* Center the text */
+                    line-height: 30px;
+                    /* Center the text vertically */
+                  }
+          
+                  #watermarkPreviewCanvas {
+                    border: 1px solid #ccc;
+                    display: block;
+                    margin: auto;
+                  }
+          
+                  #imageCanvas {
+                    border: 1px solid #ccc;
+                    display: block;
+                    margin: auto;
+                    background-color: #ffffffa2;
+                  }
+          
+                  #uploadLogo {
+                    display: none;
+                  }
+                </style>
+          
+                <!-- Progress Bar -->
+                <div class="progress mt-3" id="uploadProgressBar" style="display: none;">
+                  <div class="progress-bar" id="uploadProgress" role="progressbar" style="width: 0%;" aria-valuemin="0" aria-valuemax="100">0%</div>
+                </div>
+          
+                <!-- imagePreviewContainer -->
+          
+                <div id="imageGallery" class="row mt-3"></div>
+                <div id="imagePreviewContainer" class="row mt-3"></div>
+                <button id="saveImagesBtn" type="button" class="btn btn-success mt-3">Save Images</button>
+                <button id="saveAllImagesBtn" type="button" class="btn btn-success mt-1">Save All Images</button>
+              </section>
             </div>
-        
+          
             <!-- Loading Spinner -->
             <div class="loading-spinner text-center" style="display: none;">
-                <div class="spinner-border" role="status">
-                    <span class="sr-only">Loading...</span>
-                </div>
+              <div class="spinner-border" role="status">
+                <span class="sr-only">Loading...</span>
+              </div>
             </div>
-
-
-
-<style>
-    .form-check {
-    position: relative;
-    padding-left: 1.25rem;
-    margin: 1rem;
-}
-
-</style>
-
-             
-<!-- Watermark Settings Modal Section -->
-<section id="watermarkSettingsModal" class=" modal " tabindex="-1" role="dialog" aria-labelledby="watermarkSettingsLabel" >
-    <div class="modal-dialog modal-lg" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 id="watermarkSettingsLabel" class="modal-title">Watermark Settings</h5>
-                <button id="closeWatermarkX" type="button" class="close btn-close" data-bs-dismiss="modal" aria-label="Close">X</button>
-            </div>
- 
-            <div class="modal-body">
-                <!-- Watermark Preview Canvas -->
-                <div class="container-fluid d-flex mb-4">
-                    <!-- Watermark preview canvas -->
-    
-                    <div id="watermark-holder">
-                    <div id="watermarkCanvas-holder">
-                    <canvas id="watermarkPreviewCanvas" width="400" height="200" style="border:1px solid #ccc;"></canvas>
-                </div>
-    
-                <div id="watermarkZoom-holder">
-                        <input  class="ml-1 custom-slider"
-                            type="range" 
-                            id="watermarkScale" 
-                            min="1" 
-                            max="5" 
-                            step="1" 
-                            value="1"
-                            style=" width: 200px !important;" >
-                    
+          
+            <!-- Watermark Settings Modal Section -->
+            <section id="watermarkSettingsModal" class=" modal " tabindex="-1" role="dialog" aria-labelledby="watermarkSettingsLabel">
+              <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 id="watermarkSettingsLabel" class="modal-title">Watermark Settings</h5>
+                    <button id="closeWatermarkX" type="button" class="close btn-close" data-bs-dismiss="modal" aria-label="Close">X</button>
+                  </div>
+          
+                  <div class="modal-body">
+                    <!-- Watermark Preview Canvas -->
+                    <div class="container-fluid d-flex mb-4">
+                      <!-- Watermark preview canvas -->
+          
+                      <div id="watermark-holder">
+                        <div id="watermarkCanvas-holder">
+                          <canvas id="watermarkPreviewCanvas" width="400" height="200" style="border:1px solid #ccc;"></canvas>
+                        </div>
+          
+                        <div id="watermarkZoom-holder">
+                          <input class="ml-1 custom-slider" type="range" id="watermarkScale" min="1" max="5" step="1" value="1" style=" width: 200px !important;">
+          
+                        </div>
+                      </div>
                     </div>
-                </div>
-            </div>
-    
-
-                <!-- Watermark Controls -->
-                <div class="container-fluid">
-                    <div class="row g-3">
+          
+                    <!-- Watermark Controls -->
+                    <div class="container-fluid">
+                      <div class="row g-3">
                         <!-- Text and Font Selection -->
                         <div class="col-md-4">
-                            <label for="watermarkText" class="form-label">Watermark Text</label>
-                            <input type="text" id="watermarkText" class="form-control" placeholder="Enter watermark text">
+                          <label for="watermarkText" class="form-label">Watermark Text</label>
+                          <input type="text" id="watermarkText" class="form-control" placeholder="Enter watermark text">
                         </div>
-
-
+          
                         <div class="col-md-4">
-
-                        <label for="startX">Start X Position:</label>
-                        <input type="number" id="startX" value="50" step="5">
-                        <div>
+          
+                          <label for="startX">Start X Position:</label>
+                          <input type="number" id="startX" value="50" step="5">
+                        </div>
                         <div class="col-md-4">
-
-                        <label for="startY">Start Y Position:</label>
-                        <input type="number" id="startY" value="50" step="5">
-                        <div>
+          
+                          <label for="startY">Start Y Position:</label>
+                          <input type="number" id="startY" value="50" step="5">
+                        </div>
                         <div class="col-md-4">
- 
-                        <label for="gapSize">Gap Size (spacing between watermarks):</label>
-                        <input type="number" id="gapSize" value="30" step="5">
-                        <div>
-                        
-
-
-
-
-
-
+          
+                          <label for="gapSize">Gap Size (spacing between watermarks):</label>
+                          <input type="number" id="gapSize" value="30" step="5">
+                        </div>
+          
                         <div class="col-12 d-flex justify-content-around">
-
-                        <div class="col-md-6">
+          
+                          <div class="col-md-6">
                             <label for="watermarkFont" class="form-label">Font</label>
                             <select id="watermarkFont" class="form-select">
-                                <option>Arial Black</option>
-                                <option>Arial</option>
-                                <option>Verdana</option>
-                                <option>Times New Roman</option>
-                                <option>Courier New</option>
-                                <option>Georgia</option>
-                                <option>Trebuchet MS</option>
-                                <option>Comic Sans MS</option>
-                                <option>Impact</option>
-                                <option>Lucida Console</option>
-                                <option>Tahoma</option>
-                                <option>Open Sans</option>
-                                <option>Roboto</option>
-                                <option>Montserrat</option>
-                                <option>Playfair Display</option>
+                              <option>Arial Black</option>
+                              <option>Arial</option>
+                              <option>Verdana</option>
+                              <option>Times New Roman</option>
+                              <option>Courier New</option>
+                              <option>Georgia</option>
+                              <option>Trebuchet MS</option>
+                              <option>Comic Sans MS</option>
+                              <option>Impact</option>
+                              <option>Lucida Console</option>
+                              <option>Tahoma</option>
+                              <option>Open Sans</option>
+                              <option>Roboto</option>
+                              <option>Montserrat</option>
+                              <option>Playfair Display</option>
                             </select>
-                            
-                        </div>
-
-                        <!-- Size, Color, Opacity, and Scale -->
-                        <div class="col-md-3">
+          
+                          </div>
+          
+                          <!-- Size, Color, Opacity, and Scale -->
+                          <div class="col-md-3">
                             <label for="watermarkSize" class="form-label">Font Size</label>
                             <input type="number" id="watermarkSize" class="form-control" value="240">
-                        </div>
-
-                        <div class="col-md-3">
+                          </div>
+          
+                          <div class="col-md-3">
                             <label for="watermarkColor" class="form-label">Color</label>
                             <input type="color" id="watermarkColor" class="form-control" value="#000000">
+                          </div>
                         </div>
-</div>
-
-
-<div class="col-12 d-flex justify-content-around">
-
-                        <div class="col-md-3">
+          
+                        <div class="col-12 d-flex justify-content-around">
+          
+                          <div class="col-md-3">
                             <label for="watermarkOpacity" class="form-label">Opacity</label>
                             <input type="range" id="watermarkOpacity" class="form-range" min="0" max="1" step="0.1" value="0.5">
-                        </div>
-
-                        <div class="col-md-3">
+                          </div>
+          
+                          <div class="col-md-3">
                             <label for="watermarkRotation" class="form-label">Rotation</label>
                             <input type="range" id="watermarkRotation" class="form-range" min="0" max="360" step="1" value="0">
-                        </div>
-                        <div class="col-md-3">
-
-                        <!-- File input for watermark image -->
-<label for="watermarkImage">Choose Watermark Image (SVG, PNG, GIF):</label>
-<input type="file" id="watermarkImage" accept=".svg,.png,.gif,.Svg,.Png,.Gif">
-<div>
-
-
-</div>
-
-
-                        <!-- Style Toggles -->
-                        <div class="col-12 d-flex justify-content-around">
+                          </div>
+                          <div class="col-md-3">
+          
+                            <!-- File input for watermark image -->
+                            <label for="watermarkImage">Choose Watermark Image (SVG, PNG, GIF):</label>
+                            <input type="file" id="watermarkImage" accept=".svg,.png,.gif,.Svg,.Png,.Gif">
+          
+                          </div>
+          
+                          <!-- Style Toggles -->
+                          <div class="col-12 d-flex justify-content-around">
                             <div class="form-check">
-                                <label for="watermarkBold" class="form-check-label">Bold</label>
-                                <input type="checkbox" id="watermarkBold" class="form-check-input">
+                              <label for="watermarkBold" class="form-check-label">Bold</label>
+                              <input type="checkbox" id="watermarkBold" class="form-check-input">
                             </div>
-
+          
                             <div class="form-check">
-                                <label for="watermarkUnderline" class="form-check-label">Underline</label>
-                                <input type="checkbox" id="watermarkUnderline" class="form-check-input">
+                              <label for="watermarkUnderline" class="form-check-label">Underline</label>
+                              <input type="checkbox" id="watermarkUnderline" class="form-check-input">
                             </div>
-
+          
                             <div class="form-check">
-                                <label for="multipleWaterMark" class="form-check-label">Multiple Watermarks</label>
-                                <input type="checkbox" id="multipleWaterMark" class="form-check-input">
-
+                              <label for="multipleWaterMark" class="form-check-label">Multiple Watermarks</label>
+                              <input type="checkbox" id="multipleWaterMark" class="form-check-input">
+          
                             </div>
-
+          
                             <div class="form-check">
-
-                            <select id="watermarkStyle">
+          
+                              <select id="watermarkStyle">
                                 <option value="regular">Regular Watermark</option>
                                 <option value="diagonal-left">Diagonal Left Watermark</option>
                                 <option value="diagonal-right">Diagonal Right Watermark</option>
-                            </select>
+                              </select>
+                            </div>
+          
+                          </div>
                         </div>
-
-
-
-                        </div>
+                      </div>
                     </div>
-                </div>
-            </div>
-
-            <!-- Modal Footer -->
-            <div class="modal-footer">
-                <button type="button" id="resetWatermarkSettings" class="btn btn-secondary">Reset</button>
-                <button type="button" id="closeWatermarkModal" class="btn btn-primary" data-bs-dismiss="modal">Close</button>
-            </div>
-        </div>
-    </div>
-
-</section>
-
-
-
-
-
-
-<style>
-
-  .btn-outline-primary {
-    transition: 0.3s ease;
-  }
-  
-  .btn-outline-primary:hover {
-    background-color: #0d6efd;
-    color: #fff;
-    transform: translateY(-2px);
-  }
-
-  .custom-slider {
-    appearance: none; /* Standard property for broader compatibility */
-    width: 100%;
-    height: 6px;
-    border-radius: 5px;
-    outline: none;
-    transition: background 0.3s ease;
-}
-
-
-  .custom-slider::-webkit-slider-thumb {
-    -webkit-appearance: none;
-    width: 16px;
-    height: 16px;
-    border-radius: 50%;
-    background: #044cb8;
-    cursor: pointer;
-    box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.2);
-  }
-
-  .custom-slider::-moz-range-thumb {
-    width: 16px;
-    height: 16px;
-    border-radius: 50%;
-    background: #044cb8;
-    cursor: pointer;
-    box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.2);
-  }
-
-  #logoImage {
-    max-width: 200px;
-    height: auto;
-    display: block;
-    margin: 0 auto;
-  }
-</style>
-<!-- Image Editor Modal -->
-<section id="imageEditorModal" class="modal">
-    <div class="modal-dialog modal-lg">
-      <div class="modal-content">
-        <div class="modal-header bg-light border-bottom">
-          <h5 class="modal-title text-primary">Image Editor</h5>
-          <button id="closeImageEditorX" type="button" aria-label="Close" class="close btn-close">×</button>
-        </div>
-  
-        <!-- Editor Controls Section -->
-        <div class="modal-body">
-  
-          <!-- Canvas to display and edit the image -->
-          <canvas id="imageCanvas" width="500" height="500"></canvas>
-  
-          <div class="container-fluid d-flex">
-  
-            <!-- Logo Upload Section -->
-            <div class="card shadow-lg p-4 mb-5 border-0">
-                <div class="card-body text-center">
-                  <!-- Logo Upload Section -->
-                  <label for="uploadLogo" class="form-label fw-bold fs-5">Upload Logo</label>
-                  <div class="d-flex justify-content-center mt-3">
-                    <input type="file" id="uploadLogo" accept="image/*" class="form-control-file visually-hidden" onchange="previewLogo(this)" />
-                    <label for="uploadLogo" class="btn btn-outline-primary px-4 py-2 shadow-sm rounded-pill">
-                      <i class="bi bi-upload me-2"></i>Choose Logo
-                    </label>
-                  </div>
-                  <!-- Logo Preview -->
-                  <div id="logoPreview" class="mt-4">
-                    <img id="logoImage" src="#" alt="Logo Preview" class="img-fluid rounded shadow-sm d-none" />
-                  </div>
-                  <!-- Logo Size Slider -->
-                  <div class="mt-5">
-                    <label for="logoSize" class="form-label fw-bold fs-5">Adjust Logo Size</label>
-                    <div class="d-flex align-items-center">
-                      <span class="small me-2">Small</span>
-                      <input type="range" id="logoSize" min="0.1" max="1" step="0.1" value="0.5" class="form-range custom-slider mx-2" />
-                      <span class="small ms-2">Large</span>
+          
+                    <!-- Modal Footer -->
+                    <div class="modal-footer">
+                      <button type="button" id="resetWatermarkSettings" class="btn btn-secondary">Reset</button>
+                      <button type="button" id="closeWatermarkModal" class="btn btn-primary" data-bs-dismiss="modal">Close</button>
                     </div>
                   </div>
-                </div>
-              
-  
-<script>
-    // Show the uploaded logo preview
-    function previewLogo(input) {
-      const file = input.files[0];
-      const reader = new FileReader();
-      
-      reader.onload = function (e) {
-        const logoImage = document.getElementById('logoImage');
-        logoImage.src = e.target.result;
-        logoImage.classList.remove('d-none');
-      };
-      
-      if (file) {
-        reader.readAsDataURL(file);
-      }
-    }
-  </script>
-            <!-- Filter Options -->
-              <div class="card-body">
-                <h5 class="text-secondary fw-bold">Image Filter Adjustments</h5>
-                <label for="filters" class="form-label">Select Filter:</label>
-                <select id="filters" class="form-select" aria-label="Image filters">
-                  <option value="none">None</option>
-                  <optgroup label="Color Adjustments">
-                    <option value="grayscale">Grayscale</option>
-                    <option value="sepia">Sepia</option>
-                    <option value="invert">Invert</option>
-                    <option value="brightness">Brightness</option>
-                    <option value="contrast">Contrast</option>
-                    <option value="saturate">Saturation</option>
-                    <option value="hue-rotate">Hue Rotate</option>
-                  </optgroup>
-                  <optgroup label="Effects">
-                    <option value="blur">Blur</option>
-                    <option value="opacity">Opacity</option>
-                    <option value="drop-shadow">Drop Shadow</option>
-                  </optgroup>
-                  <optgroup label="Transformations">
-                    <option value="scale">Scale</option>
-                    <option value="skewX">Skew X</option>
-                    <option value="skewY">Skew Y</option>
-                  </optgroup>
-                </select>
-              </div>
-  
-            <!-- Sliders for Adjusting Filters -->
-              <div class="card-body">
-                <h5 class="text-secondary fw-bold">Adjust Filter Intensity</h5>
-                <div id="sliders" class="d-grid gap-3">
-                  <!-- Individual filter sliders -->
-
-
-
-<div class="d-flex align-items-center">
-    <div id="grayscale" class="slider_editor">
-        <label for="grayscaleValue" class="me-2">Grayscale:</label>
-        <input type="range" id="grayscaleValue" min="0" max="100" value="100">
-        <span id="grayscaleOutput" class="ms-2">100%</span>
-    </div>
-</div>
-
-<div class="d-flex align-items-center">
-    <div id="sepia"  class="slider_editor">
-        <label for="sepiaValue" class="me-2">Sepia:</label>
-        <input type="range" id="sepiaValue" min="0" max="100" value="100">
-        <span id="sepiaOutput" class="ms-2">100%</span>
-    </div>
-</div>
-
-
-    <div class="d-flex align-items-center">
-    <div id="invert"  class="slider_editor">
-        <label for="invertValue" class="me-2">Invert:</label>
-        <input type="range" id="invertValue" min="0" max="100" value="100">
-        <span id="invertOutput" class="ms-2">100%</span>
-    </div>
-</div>
-
-
-
-
-                  <div class="d-flex align-items-center">
-                    <div id="brightness"  class="slider_editor">
-                    <label for="brightnessValue" class="me-2">Brightness:</label>
-                    <input type="range" id="brightnessValue" min="0" max="200" value="100" class="form-range" />
-                    <span id="brightnessOutput" class="ms-2">100%</span>
-                </div>
-            </div>
-
-
-                  <div class="d-flex align-items-center">
-                    <div id="contrast"  class="slider_editor">
-                    <label for="contrastValue" class="me-2">Contrast:</label>
-                    <input type="range" id="contrastValue" min="0" max="200" value="100" class="form-range" />
-                    <span id="contrastOutput" class="ms-2">100%</span>
-                </div>
-            </div>
-                  
-                  <div class="d-flex align-items-center">
-                    <div id="saturate"  class="slider_editor">
-                    <label for="saturateValue" class="me-2">Saturation:</label>
-                    <input type="range" id="saturateValue" min="0" max="200" value="100" class="form-range" />
-                    <span id="saturateOutput" class="ms-2">100%</span>
-                </div>
-            </div>
-
-
-
-
-                <div class="d-flex align-items-center">
-                  <div id="hue-rotate"  class="slider_editor">
-                    <label for="hueRotateValue" class="me-2">Hue Rotate:</label>
-                    <input type="range" id="hueRotateValue" min="0" max="360" value="0">
-                    <span id="hueRotateOutput" class="ms-2">0°</span>
-                  </div>
-                </div>
-                <div class="d-flex align-items-center">
-                  <div id="blur"  class="slider_editor">
-                    <label for="blurValue" class="me-2">Blur:</label>
-                    <input type="range" id="blurValue" min="0" max="20" value="0">
-                    <span id="blurOutput" class="ms-2">0px</span>
-                  </div>
-                </div>
-                <div class="d-flex align-items-center">
-                  <div id="opacity"  class="slider_editor">
-                    <label for="opacityValue" class="me-2">Opacity:</label>
-                    <input type="range" id="opacityValue" min="0" max="100" value="100">
-                    <span id="opacityOutput" class="ms-2">100%</span>
-                  </div>
-                </div>
-                <div class="d-flex align-items-center">
-                  <div id="drop-shadow"  class="slider_editor">
-                    <label for="dropShadowValue" class="me-2">Drop Shadow (px):</label>
-                    <input type="number" id="dropShadowValue" min="0" value="5">
-                    <span id="dropShadowOutput" class="ms-2">5px</span>
-                  </div>
-                </div>
-                <div class="d-flex align-items-center">
-                  <div id="scale"  class="slider_editor">
-                    <label for="scaleValue" class="me-2">Scale:</label>
-                    <input type="range" id="scaleValue" min="0.1" max="3" step="0.1" value="1">
-                    <span id="scaleOutput" class="ms-2">100%</span>
-                  </div>
-                </div>
-                <div class="d-flex align-items-center">
-                  <div id="skewX"  class="slider_editor">
-                    <label for="skewXValue" class="me-2">Skew X:</label>
-                    <input type="range" id="skewXValue" min="-90" max="90" value="0">
-                    <span id="skewXOutput" class="ms-2">0°</span>
-                  </div>
-                </div>
-                <div class="d-flex align-items-center">
-                  <div id="skewY"  class="slider_editor">
-                    <label for="skewYValue" class="me-2">Skew Y:</label>
-                    <input type="range" id="skewYValue" min="-90" max="90" value="0">
-                    <span id="skewYOutput" class="ms-2">0°</span>
-                  </div>
-</div>
-
                 </div>
               </div>
-            </div>
-  
-         
-              <div class="d-flex flex-column gap-3 p-3">
-  
-                <style>
-                  .modal-header {
-                    background: linear-gradient(45deg, #3f51b5, #1a237e);
-                    color: white;
-                  }
-  
-                  .modal-body {
-                    background-color: #f8f9fa;
-                  }
-  
-                  .modal-footer {
-                    background: linear-gradient(45deg, #495057, #3f51b5);
-                  }
-  
-                  .btn-lg {
-                    font-size: 1rem;
-                    padding: 0.8rem 1.5rem;
-                  }
-  
-                  .btn-outline-secondary {
-                    border: 2px solid #6c757d;
-                  }
-  
-                  .btn-outline-light {
-                    color: white;
-                    border-color: white;
-                  }
-  
-                  .btn-close-white {
-                    filter: invert(100%);
-                  }
-  
-                  .rounded-pill {
-                    border-radius: 50rem;
-                  }
-  
-                  .rounded-circle {
-                    border-radius: 50%;
-                    width: 3rem;
-                    height: 3rem;
-                  }
-  
-                  i {
-                    font-size: 1.2rem;
-                  }
-                </style>
-         
-                  <!-- Filter Buttons Section -->
-                  <div class="d-flex justify-content-center mb-4">
-                    <button id="saveFilters" class="btn btn-primary btn-lg rounded-pill px-4 me-3" data-bs-toggle="tooltip" data-bs-placement="top" title="Save your current filter settings">
-                      <i class="fas fa-save me-2"></i> Save Filters
-                    </button>
-                    <button id="resetFilters" class="btn btn-danger btn-lg rounded-pill px-4" data-bs-toggle="tooltip" data-bs-placement="top" title="Reset all filters to default">
-                      <i class="fas fa-undo-alt me-2"></i> Reset Filters
-                    </button>
+          
+            </section>
+          
+            <!-- Image Editor Modal -->
+            <section id="imageEditorModal" class="modal">
+              <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                  <div class="modal-header bg-light border-bottom">
+                    <h5 class="modal-title text-primary">Image Editor</h5>
+                    <button id="closeImageEditorX" type="button" aria-label="Close" class="close btn-close">×</button>
                   </div>
-  
-                  <!-- Image Editing Options -->
-                  <div class="d-flex justify-content-around align-items-center my-4">
-                    <div class="d-flex flex-column align-items-center">
-                      <label for="crop" class="fw-semibold mb-2 text-secondary">Crop</label>
-                      <button id="cropImage" class="btn btn-outline-secondary rounded-circle p-3" data-bs-toggle="tooltip" data-bs-placement="top" title="Crop the image to your selected dimensions">
-                        <i class="fas fa-crop-alt"></i>
-                      </button>
+          
+                  <!-- Editor Controls Section -->
+                  <div class="modal-body">
+          
+                    <!-- Canvas to display and edit the image -->
+                    <canvas id="imageCanvas" width="500" height="500"></canvas>
+          
+                    <div class="container-fluid d-flex">
+          
+                      <!-- Logo Upload Section -->
+                      <div class="card shadow-lg p-4 mb-5 border-0">
+                        <div class="card-body text-center">
+                          <!-- Logo Upload Section -->
+                          <label for="uploadLogo" class="form-label fw-bold fs-5">Upload Logo</label>
+                          <div class="d-flex justify-content-center mt-3">
+                            <input type="file" id="uploadLogo" accept="image/*" class="form-control-file visually-hidden" onchange="previewLogo(this)" />
+                            <label for="uploadLogo" class="btn btn-outline-primary px-4 py-2 shadow-sm rounded-pill">
+                              <i class="bi bi-upload me-2"></i>Choose Logo
+                            </label>
+                          </div>
+                          <!-- Logo Preview -->
+                          <div id="logoPreview" class="mt-4">
+                            <img id="logoImage" src="#" alt="Logo Preview" class="img-fluid rounded shadow-sm d-none" />
+                          </div>
+                          <!-- Logo Size Slider -->
+                          <div class="mt-5">
+                            <label for="logoSize" class="form-label fw-bold fs-5">Adjust Logo Size</label>
+                            <div class="d-flex align-items-center">
+                              <span class="small me-2">Small</span>
+                              <input type="range" id="logoSize" min="0.1" max="1" step="0.1" value="0.5" class="form-range custom-slider mx-2" />
+                              <span class="small ms-2">Large</span>
+                            </div>
+                          </div>
+                        </div>
+          
+                        <script>
+                          // Show the uploaded logo preview
+                          function previewLogo(input) {
+                            const file = input.files[0];
+                            const reader = new FileReader();
+                            reader.onload = function(e) {
+                              const logoImage = document.getElementById('logoImage');
+                              logoImage.src = e.target.result;
+                              logoImage.classList.remove('d-none');
+                            };
+                            if (file) {
+                              reader.readAsDataURL(file);
+                            }
+                          }
+                        </script>
+                        <!-- Filter Options -->
+                        <div class="card-body">
+                          <h5 class="text-secondary fw-bold">Image Filter Adjustments</h5>
+                          <label for="filters" class="form-label">Select Filter:</label>
+                          <select id="filters" class="form-select" aria-label="Image filters">
+                            <option value="none">None</option>
+                            <optgroup label="Color Adjustments">
+                              <option value="grayscale">Grayscale</option>
+                              <option value="sepia">Sepia</option>
+                              <option value="invert">Invert</option>
+                              <option value="brightness">Brightness</option>
+                              <option value="contrast">Contrast</option>
+                              <option value="saturate">Saturation</option>
+                              <option value="hue-rotate">Hue Rotate</option>
+                            </optgroup>
+                            <optgroup label="Effects">
+                              <option value="blur">Blur</option>
+                              <option value="opacity">Opacity</option>
+                              <option value="drop-shadow">Drop Shadow</option>
+                            </optgroup>
+                            <optgroup label="Transformations">
+                              <option value="scale">Scale</option>
+                              <option value="skewX">Skew X</option>
+                              <option value="skewY">Skew Y</option>
+                            </optgroup>
+                          </select>
+                        </div>
+          
+                        <!-- Sliders for Adjusting Filters -->
+                        <div class="card-body">
+                          <h5 class="text-secondary fw-bold">Adjust Filter Intensity</h5>
+                          <div id="sliders" class="d-grid gap-3">
+                            <!-- Individual filter sliders -->
+          
+                            <div class="d-flex align-items-center">
+                              <div id="grayscale" class="slider_editor">
+                                <label for="grayscaleValue" class="me-2">Grayscale:</label>
+                                <input type="range" id="grayscaleValue" min="0" max="100" value="100">
+                                <span id="grayscaleOutput" class="ms-2">100%</span>
+                              </div>
+                            </div>
+          
+                            <div class="d-flex align-items-center">
+                              <div id="sepia" class="slider_editor">
+                                <label for="sepiaValue" class="me-2">Sepia:</label>
+                                <input type="range" id="sepiaValue" min="0" max="100" value="100">
+                                <span id="sepiaOutput" class="ms-2">100%</span>
+                              </div>
+                            </div>
+          
+                            <div class="d-flex align-items-center">
+                              <div id="invert" class="slider_editor">
+                                <label for="invertValue" class="me-2">Invert:</label>
+                                <input type="range" id="invertValue" min="0" max="100" value="100">
+                                <span id="invertOutput" class="ms-2">100%</span>
+                              </div>
+                            </div>
+          
+                            <div class="d-flex align-items-center">
+                              <div id="brightness" class="slider_editor">
+                                <label for="brightnessValue" class="me-2">Brightness:</label>
+                                <input type="range" id="brightnessValue" min="0" max="200" value="100" class="form-range" />
+                                <span id="brightnessOutput" class="ms-2">100%</span>
+                              </div>
+                            </div>
+          
+                            <div class="d-flex align-items-center">
+                              <div id="contrast" class="slider_editor">
+                                <label for="contrastValue" class="me-2">Contrast:</label>
+                                <input type="range" id="contrastValue" min="0" max="200" value="100" class="form-range" />
+                                <span id="contrastOutput" class="ms-2">100%</span>
+                              </div>
+                            </div>
+          
+                            <div class="d-flex align-items-center">
+                              <div id="saturate" class="slider_editor">
+                                <label for="saturateValue" class="me-2">Saturation:</label>
+                                <input type="range" id="saturateValue" min="0" max="200" value="100" class="form-range" />
+                                <span id="saturateOutput" class="ms-2">100%</span>
+                              </div>
+                            </div>
+          
+                            <div class="d-flex align-items-center">
+                              <div id="hue-rotate" class="slider_editor">
+                                <label for="hueRotateValue" class="me-2">Hue Rotate:</label>
+                                <input type="range" id="hueRotateValue" min="0" max="360" value="0">
+                                <span id="hueRotateOutput" class="ms-2">0°</span>
+                              </div>
+                            </div>
+                            <div class="d-flex align-items-center">
+                              <div id="blur" class="slider_editor">
+                                <label for="blurValue" class="me-2">Blur:</label>
+                                <input type="range" id="blurValue" min="0" max="20" value="0">
+                                <span id="blurOutput" class="ms-2">0px</span>
+                              </div>
+                            </div>
+                            <div class="d-flex align-items-center">
+                              <div id="opacity" class="slider_editor">
+                                <label for="opacityValue" class="me-2">Opacity:</label>
+                                <input type="range" id="opacityValue" min="0" max="100" value="100">
+                                <span id="opacityOutput" class="ms-2">100%</span>
+                              </div>
+                            </div>
+                            <div class="d-flex align-items-center">
+                              <div id="drop-shadow" class="slider_editor">
+                                <label for="dropShadowValue" class="me-2">Drop Shadow (px):</label>
+                                <input type="number" id="dropShadowValue" min="0" value="5">
+                                <span id="dropShadowOutput" class="ms-2">5px</span>
+                              </div>
+                            </div>
+                            <div class="d-flex align-items-center">
+                              <div id="scale" class="slider_editor">
+                                <label for="scaleValue" class="me-2">Scale:</label>
+                                <input type="range" id="scaleValue" min="0.1" max="3" step="0.1" value="1">
+                                <span id="scaleOutput" class="ms-2">100%</span>
+                              </div>
+                            </div>
+                            <div class="d-flex align-items-center">
+                              <div id="skewX" class="slider_editor">
+                                <label for="skewXValue" class="me-2">Skew X:</label>
+                                <input type="range" id="skewXValue" min="-90" max="90" value="0">
+                                <span id="skewXOutput" class="ms-2">0°</span>
+                              </div>
+                            </div>
+                            <div class="d-flex align-items-center">
+                              <div id="skewY" class="slider_editor">
+                                <label for="skewYValue" class="me-2">Skew Y:</label>
+                                <input type="range" id="skewYValue" min="-90" max="90" value="0">
+                                <span id="skewYOutput" class="ms-2">0°</span>
+                              </div>
+                            </div>
+          
+                          </div>
+                        </div>
+                      </div>
+          
+                      <div class="d-flex flex-column gap-3 p-3">
+          
+                        <!-- Filter Buttons Section -->
+                        <div class="d-flex justify-content-center mb-4">
+                          <button id="saveFilters" class="btn btn-primary btn-lg rounded-pill px-4 me-3" data-bs-toggle="tooltip" data-bs-placement="top" title="Save your current filter settings">
+                            <i class="fas fa-save me-2"></i> Save Filters
+                          </button>
+                          <button id="resetFilters" class="btn btn-danger btn-lg rounded-pill px-4" data-bs-toggle="tooltip" data-bs-placement="top" title="Reset all filters to default">
+                            <i class="fas fa-undo-alt me-2"></i> Reset Filters
+                          </button>
+                        </div>
+          
+                        <!-- Image Editing Options -->
+                        <div class="d-flex justify-content-around align-items-center my-4">
+                          <div class="d-flex flex-column align-items-center">
+                            <label for="crop" class="fw-semibold mb-2 text-secondary">Crop</label>
+                            <button id="cropImage" class="btn btn-outline-secondary rounded-circle p-3" data-bs-toggle="tooltip" data-bs-placement="top" title="Crop the image to your selected dimensions">
+                              <i class="fas fa-crop-alt"></i>
+                            </button>
+                          </div>
+                          <div class="d-flex flex-column align-items-center">
+                            <label for="resize" class="fw-semibold mb-2 text-secondary">Resize</label>
+                            <button id="resizeImage" class="btn btn-outline-secondary rounded-circle p-3" data-bs-toggle="tooltip" data-bs-placement="top" title="Resize the image dimensions">
+                              <i class="fas fa-expand-arrows-alt"></i>
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+          
                     </div>
-                    <div class="d-flex flex-column align-items-center">
-                      <label for="resize" class="fw-semibold mb-2 text-secondary">Resize</label>
-                      <button id="resizeImage" class="btn btn-outline-secondary rounded-circle p-3" data-bs-toggle="tooltip" data-bs-placement="top" title="Resize the image dimensions">
-                        <i class="fas fa-expand-arrows-alt"></i>
-                      </button>
+                    <!-- End of Flex-->
+          
+                    <div class="modal-footer d-flex justify-content-between px-4 py-3 bg-gradient-secondary">
+                      <div class="d-flex gap-3">
+                        <button type="button" class="btn btn-outline-light" id="undoBtn" data-bs-toggle="tooltip" data-bs-placement="top" title="Undo the last action">
+                          <i class="fas fa-undo"></i> Undo
+                        </button>
+                        <button type="button" class="btn btn-outline-light" id="redoBtn" data-bs-toggle="tooltip" data-bs-placement="top" title="Redo the last undone action">
+                          <i class="fas fa-redo"></i> Redo
+                        </button>
+                      </div>
+                      <div class="d-flex gap-3">
+                        <button id="saveImage" type="button" class="btn btn-primary btn-lg rounded-pill px-4" data-bs-toggle="tooltip" data-bs-placement="top" title="Save your edited image">
+                          <i class="fas fa-check-circle me-2"></i> Save
+                        </button>
+                        <button id="closeImageEditor" type="button" class="btn btn-outline-light" data-bs-toggle="tooltip" data-bs-placement="top" title="Close the image editor">
+                          <i class="fas fa-times"></i> Close
+                        </button>
+                      </div>
                     </div>
                   </div>
                 </div>
+              </div>
+          
+            </section>
+          
+          </main>
 
 
 
-  
-            
-          </div>
-<!-- End of Flex-->
-
-
-<div class="modal-footer d-flex justify-content-between px-4 py-3 bg-gradient-secondary">
-    <div class="d-flex gap-3">
-      <button type="button" class="btn btn-outline-light" id="undoBtn" data-bs-toggle="tooltip" data-bs-placement="top" title="Undo the last action">
-        <i class="fas fa-undo"></i> Undo
-      </button>
-      <button type="button" class="btn btn-outline-light" id="redoBtn" data-bs-toggle="tooltip" data-bs-placement="top" title="Redo the last undone action">
-        <i class="fas fa-redo"></i> Redo
-      </button>
-    </div>
-    <div class="d-flex gap-3">
-      <button id="saveImage" type="button" class="btn btn-primary btn-lg rounded-pill px-4" data-bs-toggle="tooltip" data-bs-placement="top" title="Save your edited image">
-        <i class="fas fa-check-circle me-2"></i> Save
-      </button>
-      <button id="closeImageEditor" type="button" class="btn btn-outline-light" data-bs-toggle="tooltip" data-bs-placement="top" title="Close the image editor">
-        <i class="fas fa-times"></i> Close
-      </button>
-    </div>
-</section>
-
-
-        </div>
-  
-      </div>
-    </div>
-  </div>
-
-        </main>
 </div>
 <div id="currentEventID" class="Hidden" style="display: none;"></div>
 
@@ -896,13 +851,13 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 
+let selectedImages = [];
+
     const previewCanvas = document.getElementById("watermarkPreviewCanvas");
     const previewCtx = previewCanvas.getContext("2d");
 
     console.log(previewCanvas);
 
-
-        let selectedImages = [];
 
     const imageInput = document.getElementById("imageInput");
     const canvas = document.createElement("canvas");
