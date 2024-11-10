@@ -2226,46 +2226,6 @@ function updateProgressBar(progress) {
 }
 
 
-
-// Saves image details, including metadata, to Firebase Firestore
-async function saveImageDetails(fileName, originalUrl, compressedUrl, fileSize, fileType) {
-    const title = document.getElementById("eventTitle").value;
-    const price = parseFloat(document.getElementById("eventPrice").value);
-    const eventId = document.getElementById("currentEventID").innerText;
-    const userId = document.getElementById("userIdDiv").value;
-
-    if (!eventId && title && !isNaN(price)) {
-        try {
-            await db.collection("images").add({
-                fileName,
-                title,
-                price: price || "",
-                onSellPrice: "",
-                originalUrl,
-                compressedUrl,
-                fileSize, eventID: eventId,
-                fileType,  status: "active", isPublic: true,
-                userId,
-                timestamp: new Date(),
-                comments: [],
-                views: 0,
-                deactived: false,
-                
-
-            });
-            showToast("Image details saved successfully!", "success");
-        } catch (error) {
-            console.error("Error saving image details:", error);
-            showToast("Error saving image details. Please try again.", "error");
-        }
-    } else {
-        showToast("Please provide a valid Event ID, title and price.", "warning");
-    }
-}
-
-
-
-
 // Initialize canvas and context when the image editor is opened
 document.getElementById("openImageEditorBtn").addEventListener("click", () => {
     openImageEditor();
@@ -2755,6 +2715,46 @@ document.getElementById("resetWatermarkSettings").addEventListener("click", rese
 
 
 });
+
+
+// Saves image details, including metadata, to Firebase Firestore
+async function saveImageDetails(fileName, originalUrl, compressedUrl, fileSize, fileType) {
+    const title = document.getElementById("eventTitle").value;
+    const price = parseFloat(document.getElementById("eventPrice").value);
+    const eventId = document.getElementById("currentEventID").innerText;
+    const userId = document.getElementById("userIdDiv").value;
+
+    if (!eventId && title && !isNaN(price)) {
+        try {
+            await db.collection("Members_Media").add({
+                fileName,
+                title,
+                price: price || "",
+                onSellPrice: "",
+                originalUrl,
+                compressedUrl,
+                fileSize, eventID: eventId,
+                fileType,  status: "active", isPublic: true,
+                userId,
+                timestamp: new Date(),
+                comments: [],
+                views: 0,
+                deactived: false,
+                
+
+            });
+            showToast("Image details saved successfully!", "success");
+        } catch (error) {
+            console.error("Error saving image details:", error);
+            showToast("Error saving image details. Please try again.", "error");
+        }
+    } else {
+        showToast("Please provide a valid Event ID, title and price.", "warning");
+    }
+}
+
+
+
 
 
 function saveEvent() {
