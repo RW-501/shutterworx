@@ -2715,9 +2715,7 @@ document
   });
 
 
-// Initialize canvas and context when the image editor is opened
-document.getElementById("openImageEditorBtn").addEventListener("click", () => {
-   
+
    // Logo Upload and Size Update
 document.getElementById("uploadLogo").addEventListener("change", addLogo);
 document
@@ -2748,14 +2746,31 @@ document.getElementById("redoBtn").addEventListener("click", redo);
 
 document.getElementById("closeImageEditorX").addEventListener("click", closeImageEditor);
 
-
+// Initialize canvas and context when the image editor is opened
+document.getElementById("openImageEditorBtn").addEventListener("click", () => {
+   
 document
   .getElementById("collapseControlsButton")
   .addEventListener("click", collapseControlsButton);
 
-   
-   
-    openImageEditor();
+const getImages = document.querySelectorAll(".select-checkbox:checked"); // Get checked checkboxes
+
+if (getImages.length === 0) {
+    const getImages2 = document.querySelectorAll(".select-checkbox"); // Get all checkboxes
+    if (getImages2.length === 0) {
+        showToast("No image to edit", "info");
+    } else {
+
+        openImageEditor(getImages2[0]);
+
+        // You can add a message or logic here for when there are checkboxes but none selected.
+        showToast("Please select an image to edit", "info");
+    }
+} else {
+    // Open the image editor with the first selected image (or the specific one you need)
+    openImageEditor(getImages[0]);
+}
+
 });
 
 
