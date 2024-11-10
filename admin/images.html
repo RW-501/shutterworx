@@ -337,10 +337,31 @@ select, input[type="range"], input[type="number"] {
                 <div class="container-fluid">
                     <div class="row g-3">
                         <!-- Text and Font Selection -->
-                        <div class="col-md-6">
+                        <div class="col-md-4">
                             <label for="watermarkText" class="form-label">Watermark Text</label>
                             <input type="text" id="watermarkText" class="form-control" placeholder="Enter watermark text">
                         </div>
+
+
+                        <div class="col-md-4">
+
+                        <label for="startX">Start X Position:</label>
+                        <input type="number" id="startX" value="50" step="5">
+                        <div>
+                        <div class="col-md-4">
+
+                        <label for="startY">Start Y Position:</label>
+                        <input type="number" id="startY" value="50" step="5">
+                        <div>
+                        <div class="col-md-4">
+ 
+                        <label for="gapSize">Gap Size (spacing between watermarks):</label>
+                        <input type="number" id="gapSize" value="30" step="5">
+                        <div>
+                        
+
+
+
 
 
 
@@ -392,6 +413,14 @@ select, input[type="range"], input[type="number"] {
                             <label for="watermarkRotation" class="form-label">Rotation</label>
                             <input type="range" id="watermarkRotation" class="form-range" min="0" max="360" step="1" value="0">
                         </div>
+                        <div class="col-md-3">
+
+                        <!-- File input for watermark image -->
+<label for="watermarkImage">Choose Watermark Image (SVG, PNG, GIF):</label>
+<input type="file" id="watermarkImage" accept=".svg,.png,.gif">
+<div>
+
+
 </div>
 
 
@@ -1116,7 +1145,13 @@ function updateWatermarkPreview() {
         document.getElementById("watermarkStyle").style.display = "block";
 
         let selectedStyle = document.getElementById("watermarkStyle").value;  // Get selected style
+        let gap = Math.max(textWidth, settings.fontSize) * 1.5; // Adjust gap dynamically
+        const maxWidth = width * 0.8; // Maximum width to prevent overflow
+if (textWidth > maxWidth) {
+    settings.fontSize = Math.floor(settings.fontSize * (maxWidth / textWidth)); // Scale down text
+}
 
+       
         // Draw watermarks based on the selected style
         switch (selectedStyle) {
             case "diagonal-left":
@@ -1162,12 +1197,11 @@ function drawSingleWatermark(settings, textWidth) {
 
 
 
-let gapSize = 5;
 
 function drawDiagonalLeftWatermarks(settings, ctx, width, height, gap) {
     // Modify the settings to apply a -45 degree rotation for diagonal left
-     gap = gapSize; // 150 pixels between each watermark
-     settings.rotation = -45; // Rotate watermark to diagonal left
+
+    settings.rotation = -45; // Rotate watermark to diagonal left
      console.log("settings  ",settings)
 
      drawRepeatedWatermarks(settings, ctx, width, height, gap); // Call the common function to draw the watermarks
@@ -1175,7 +1209,7 @@ function drawDiagonalLeftWatermarks(settings, ctx, width, height, gap) {
 
 function drawDiagonalRightWatermarks(settings, ctx, width, height, gap) {
     // Modify the settings to apply a 45 degree rotation for diagonal right
-     gap = gapSize; // 150 pixels between each watermark 
+
     settings.rotation = 45; // Rotate watermark to diagonal right
     console.log("settings  ",settings)
 
@@ -1184,23 +1218,22 @@ function drawDiagonalRightWatermarks(settings, ctx, width, height, gap) {
 
 function drawRegularWatermarks(settings, ctx, width, height, gap) {
     // No rotation needed for regular watermarks
-     gap = gapSize; // 150 pixels between each watermark
+
     settings.rotation = 0; // Set rotation to 0 for no rotation
     drawRepeatedWatermarks(settings, ctx, width, height, gap); // Call the common function to draw the watermarks
 }
 
 
-// Draw multiple watermarks
 function drawRepeatedWatermarks(settings, ctx, width, height, gap) {
-    for (let x = 0; x < width + gap; x += gap) {
-        for (let y = 0; y < height + gap; y += gap) {
+    const maxX = width;
+    const maxY = height;
+    for (let x = startX; x < maxX; x += gap) {
+        for (let y = startY; y < maxY; y += gap) {
             ctx.save();
             ctx.translate(x, y);
             ctx.rotate(settings.rotation * RADIAN_FACTOR);
-            renderText(ctx, settings, width );
+            renderText(ctx, settings, width);
             ctx.restore();
-            console.log("drawRepeatedWatermarks settings  ",settings)
-
         }
     }
 }
@@ -1214,6 +1247,7 @@ function renderText(ctx, settings, textWidth) {
         ctx.strokeStyle = settings.color;
         ctx.strokeText(settings.text, 0, 0);
     }
+    ctx.scale(settings.scale, settings.scale); // Apply scaling factor
     ctx.fillText(settings.text, 0, 0);
 }
 
