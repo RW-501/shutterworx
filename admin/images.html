@@ -2903,7 +2903,7 @@ function loadModalSettings(modalId, storageKey) {
 //document.getElementById("applyWatermarkSettings").addEventListener("click", () => saveModalSettings("watermarkSettingsModal", "watermarkSettings"));
 
 // Load settings when the document is ready or when the modal opens
-document.addEventListener("DOMContentLoaded", () => loadModalSettings("event-dashboard-content", "event-content"));
+document.addEventListener("DOMContentLoaded", () => loadModalSettings("eventForm", "event-content"));
 
 
 
@@ -2914,13 +2914,13 @@ document.addEventListener("DOMContentLoaded", () => loadModalSettings("watermark
 
 
 document.addEventListener("DOMContentLoaded", () => {
-    const eventDashboardContent = document.getElementById("event-dashboard-content");
+    const eventDashboardContent = document.getElementById("eventForm");
     
     // Check if the element exists to avoid potential errors
     if (eventDashboardContent) {
-        eventDashboardContent.addEventListener("click", () => saveModalSettings("event-dashboard-content", "event-content"));
+        eventDashboardContent.addEventListener("click", () => saveModalSettings("eventForm", "event-content"));
     } else {
-        console.error("Element with ID 'event-dashboard-content' not found.");
+        console.error("Element with ID 'eventForm' not found.");
     }
 });
 
