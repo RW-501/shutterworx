@@ -417,7 +417,7 @@ select, input[type="range"], input[type="number"] {
 
                         <!-- File input for watermark image -->
 <label for="watermarkImage">Choose Watermark Image (SVG, PNG, GIF):</label>
-<input type="file" id="watermarkImage" accept=".svg,.png,.gif">
+<input type="file" id="watermarkImage" accept=".svg,.png,.gif,.Svg,.Png,.Gif">
 <div>
 
 
@@ -886,21 +886,7 @@ select, input[type="range"], input[type="number"] {
 });
 */
 
-
-
-    const previewCanvas = document.getElementById("watermarkPreviewCanvas");
-    const previewCtx = previewCanvas.getContext("2d");
-
-    console.log(previewCanvas);
-
-
-        let selectedImages = [];
-
-    const imageUploadArea = document.getElementById("imageUploadArea");
-    const imageInput = document.getElementById("imageInput");
-    let canvas = document.createElement("canvas");
-
-    const imagePreviewContainer = document.getElementById("imagePreviewContainer");
+const imageUploadArea = document.getElementById("imageUploadArea");
 
     // Enable drag-and-drop functionality
     imageUploadArea.addEventListener("dragover", (e) => {
@@ -929,6 +915,20 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 
+    const previewCanvas = document.getElementById("watermarkPreviewCanvas");
+    const previewCtx = previewCanvas.getContext("2d");
+
+    console.log(previewCanvas);
+
+
+        let selectedImages = [];
+
+    const imageInput = document.getElementById("imageInput");
+    const canvas = document.createElement("canvas");
+
+    const imagePreviewContainer = document.getElementById("imagePreviewContainer");
+    
+
 // Main function to handle file uploads
 function handleFiles(files) {
     Array.from(files).forEach(file => {
@@ -950,7 +950,11 @@ let filterEffect = "none";
 let history = []; // Stack for undo/redo functionality
 let redoStack = [];
 
-
+let startX = 50; // Default startX value
+    let startY = 50; // Default startY value
+    let gapSize = 30; // Default gapSize
+    let fontSize = 20; // Default font size for watermark
+    let watermarkImg = null; // Placeholder for watermark image
 
 // Variables for tracking drag status
 let isDragging = false;
@@ -960,9 +964,9 @@ let watermarkPosX = 20; // Default position X
 let watermarkPosY = 20; // Default position Y
 
 // Function to create lower-quality image with watermark
-async function createLowerQualityImage(dataURL) {
+async function createLowerQualityImage(mainImageDataURL,watermarkImageURL ) {
     const img = new Image();
-    img.src = dataURL;
+    img.src = mainImageDataURL;
     await img.decode();
 
      canvas = document.createElement("canvas");
@@ -972,16 +976,26 @@ async function createLowerQualityImage(dataURL) {
     canvas.height = height;
 
      ctx = canvas.getContext("2d");
-    ctx.drawImage(img, 0, 0, width, height);
+     ctx.drawImage(img, 0, 0, width, height);
 
-    // Add watermark to canvas
-    addWatermark(ctx, width, height);
+     if (settings.watermarkImg) {
+        // Placeholder image for the background (if needed)
+    const wmImg = new Image();
+    wmImg.src = watermarkImageURL;
+        await wmImg.decode();
+
+        // Add watermark image
+        addWatermark(ctx, width, height, wmImg);
+    } else {
+        // Add text watermark or default behavior
+        addWatermark(ctx, width, height);
+    } 
 
     return canvas.toDataURL("image/jpeg", 0.7); // Compression quality
 }
 
 
-function addWatermark(ctx, width, height) {
+function addWatermark(ctx, width, height,watermarkImg ) {
     const settings = getWatermarkSettings();  // Get current watermark settings
 
     // Set watermark style properties
@@ -989,6 +1003,11 @@ function addWatermark(ctx, width, height) {
     ctx.globalAlpha = settings.opacity;
     ctx.font = `${settings.bold ? "bold" : "normal"} ${settings.fontSize}px ${settings.font}`;
     ctx.fillStyle = settings.color;
+
+    if (watermarkImg) {
+            // Draw the image watermark at the specified position
+            ctx.drawImage(watermarkImg, startX, startY, width, height); // Size of the watermark image
+        }
 
     // Handle multiple vs. single watermark mode
     if(settings.multipleWatermark){
@@ -1125,7 +1144,8 @@ function parseValue(element, fallback) {
 
 // Update preview with current settings
 function updateWatermarkPreview() {
-    previewCtx.clearRect(0, 0, previewCanvas.width, previewCanvas.height);  // Clear canvas before redrawing
+    // Clear canvas before redrawing
+    previewCtx.clearRect(0, 0, previewCanvas.width, previewCanvas.height);  
     const settings = getWatermarkSettings();  // Get current watermark settings
     
     previewCtx.save();
@@ -1137,47 +1157,88 @@ function updateWatermarkPreview() {
     previewCtx.scale(settings.scale, settings.scale);  // Apply scale to the watermark
 
     const textWidth = previewCtx.measureText(settings.text).width;
-    const gap = Math.max(textWidth, settings.fontSize) * 1.2;  // Calculate the gap for repeated watermarks
+    const gap = Math.max(textWidth, settings.fontSize) * 1.2;  // Calculate gap for repeated watermarks
 
-    // Handle multiple watermark vs single watermark mode
-    if (settings.multipleWatermark) {
-        // Show the watermark style selector when in multiple watermark mode
-        document.getElementById("watermarkStyle").style.display = "block";
+    if (settings.watermarkImg) {
+        // Draw watermark image if available
+        const watermarkImg = new Image();
+        watermarkImg.src = settings.watermarkImg;
+        watermarkImg.onload = function() {
+            const startX = parseInt(settings.startX, 10) || 0;
+            const startY = parseInt(settings.startY, 10) || 0;
+            const gapSize = parseInt(settings.gapSize, 10) || gap;
 
-        let selectedStyle = document.getElementById("watermarkStyle").value;  // Get selected style
-        let gap = Math.max(textWidth, settings.fontSize) * 1.5; // Adjust gap dynamically
-        const maxWidth = width * 0.8; // Maximum width to prevent overflow
-if (textWidth > maxWidth) {
-    settings.fontSize = Math.floor(settings.fontSize * (maxWidth / textWidth)); // Scale down text
-}
-
-       
-        // Draw watermarks based on the selected style
-        switch (selectedStyle) {
-            case "diagonal-left":
-                drawDiagonalLeftWatermarks(settings, previewCtx, previewCanvas.width, previewCanvas.height, gap);
-                break;
-            case "diagonal-right":
-                drawDiagonalRightWatermarks(settings, previewCtx, previewCanvas.width, previewCanvas.height, gap);
-                break;
-            default:
-                // Default behavior: draw regular repeated watermarks
-                drawRepeatedWatermarks(settings, previewCtx, previewCanvas.width, previewCanvas.height, gap);
-                break;
-        }
-
+            previewCtx.drawImage(watermarkImg, startX, startY, previewCanvas.width, previewCanvas.height);  
+            addWatermark(previewCtx, previewCanvas.width, previewCanvas.height, watermarkImg);
+        };
     } else {
-        // Hide watermark style selector in single watermark mode
-        document.getElementById("watermarkStyle").style.display = "none";
+        // Handle text watermark
+        if (settings.multipleWatermark) {
+            document.getElementById("watermarkStyle").style.display = "block";
 
-        // Draw single watermark in the center
-        previewCtx.textAlign = "center";
-        previewCtx.textBaseline = "middle";
-        drawSingleWatermark(settings, previewCtx, textWidth);
+            // Dynamic adjustment for text size if too wide
+            const maxWidth = previewCanvas.width * 0.8;
+            if (textWidth > maxWidth) {
+                settings.fontSize = Math.floor(settings.fontSize * (maxWidth / textWidth));
+                previewCtx.font = `${settings.bold ? "bold" : "normal"} ${settings.fontSize}px ${settings.font}`;
+            }
+
+            const selectedStyle = document.getElementById("watermarkStyle").value;
+            const adjustedGap = Math.max(textWidth, settings.fontSize) * 1.5;
+
+            // Draw watermarks based on the selected style
+            switch (selectedStyle) {
+                case "diagonal-left":
+                    drawDiagonalLeftWatermarks(settings, previewCtx, previewCanvas.width, previewCanvas.height, adjustedGap);
+                    break;
+                case "diagonal-right":
+                    drawDiagonalRightWatermarks(settings, previewCtx, previewCanvas.width, previewCanvas.height, adjustedGap);
+                    break;
+                default:
+                    drawRepeatedWatermarks(settings, previewCtx, previewCanvas.width, previewCanvas.height, adjustedGap);
+                    break;
+            }
+        } else {
+            // Single watermark mode
+            document.getElementById("watermarkStyle").style.display = "none";
+            previewCtx.textAlign = "center";
+            previewCtx.textBaseline = "middle";
+            drawSingleWatermark(settings, previewCtx, previewCanvas.width / 2, previewCanvas.height / 2);
+        }
     }
 
     previewCtx.restore();
 }
+
+
+
+// Function to handle the watermark image upload
+document.getElementById('addWatermarkImage').addEventListener('click', () => {
+        const fileInput = document.getElementById('watermarkImage');
+        const file = fileInput.files[0];
+
+        if (file) {
+            const fileType = file.type;
+            if (fileType === 'image/svg+xml' || fileType === 'image/png' || fileType === 'image/gif') {
+                const reader = new FileReader();
+                reader.onload = function(event) {
+                    watermarkImg = new Image();
+                    watermarkImg.src = event.target.result;
+                    watermarkImg.onload = function() {
+                        ctx.clearRect(0, 0, canvas.width, canvas.height); // Clear the canvas
+
+                        ctx.drawImage(img, 0, 0, width, height);
+                        addWatermark(ctx, width, height, watermarkImg);                    }
+                };
+                reader.readAsDataURL(file);
+            } else {
+                alert('Please upload an SVG, PNG, or GIF image only.');
+            }
+        } else {
+            alert('Please choose a watermark image first.');
+        }
+    });
+
 
 // Draw a single watermark
 function drawSingleWatermark(settings, textWidth) {
