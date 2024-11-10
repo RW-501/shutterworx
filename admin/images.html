@@ -2833,6 +2833,44 @@ document.getElementById("resetWatermarkSettings").addEventListener("click", rese
 });
 
 
+// Saves image details, including metadata, to Firebase Firestore
+async function saveImageDetails(fileName, originalUrl, compressedUrl, fileSize, fileType) {
+    const title = document.getElementById("eventTitle").value;
+    const baseprice = parseFloat(document.getElementById('baseprice').value);
+    const eventId = document.getElementById("currentEventID").innerText;
+    const userId = document.getElementById("userIdDiv").value;
+
+    if (!eventId && title && !isNaN(price)) {
+        try {
+            await db.collection("Members_Media").add({
+                fileName,
+                title,
+                price: baseprice || "",
+                onSellPrice: "",
+                originalUrl,
+                compressedUrl,
+                fileSize, eventID: eventId,
+                fileType,  status: "active", isPublic: true,
+                userId,
+                timestamp: new Date(),
+                comments: [],
+                views: 0,
+                deactived: false,
+                
+
+            });
+            showToast("Image details saved successfully!", "success");
+        } catch (error) {
+            console.error("Error saving image details:", error);
+            showToast("Error saving image details. Please try again.", "error");
+        }
+    } else {
+        showToast("Please provide a valid Event ID, title and price.", "warning");
+    }
+}
+
+
+
 async function saveEvent() {
     const title = document.getElementById('eventTitle').value;
     const date = document.getElementById('eventDate').value;
@@ -2881,56 +2919,6 @@ async function saveEvent() {
         showToast("Please fill in all required fields.");
     }
 }
-
-
-
-
-function saveEvent() {
-            const title = document.getElementById('eventTitle').value;
-            const date = document.getElementById('eventDate').value;
-            const description = document.getElementById('eventDescription').value;
-            const collection_price = parseFloat(document.getElementById('collection_price').value);
-            const location = document.getElementById("eventLocation").value;
-            const accessCode = document.getElementById("accessCode").value;
-            const userId = document.getElementById("userIdDiv").value;
-            const eventIdArea = document.getElementById("currentEventID");
-
-            if (title && date && description && !isNaN(collection_price)) {
-
-// Function to save the event
-async function saveEvent() {
-    try {
-        // Add a new document to the "Members_Events" collection
-        const docRef = await addDoc(collection(db, 'Members_Events'), {
-            title,
-            date: date || new Date(),
-            description: description || "No Description",
-            status: "active",
-            isPublic: true,
-            collection_price: collection_price || "",
-            collection_OnSellPrice: "",
-            eventTags: [],
-            accessCode: accessCode || "",
-            location: location || "",
-            userID: userId,
-            timestamp: new Date(),
-                comments: [],
-                views: 0,
-                deactived: false,
-            deactived: false,
-        });
-
-        // Retrieve and display the document ID
-        eventIdArea.innerText = docRef.id;
-        showToast("Event saved successfully!");
-    } catch (error) {
-        console.error("Error saving event:", error);
-        showToast("An error occurred while saving the event. Please try again.");
-    }
-}
-            }
-
-        }
 
 
       // Utility function to save settings from a modal to localStorage
