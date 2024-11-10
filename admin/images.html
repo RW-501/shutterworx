@@ -1931,6 +1931,7 @@ function setupEventListeners() {
 
 
 
+let   imagesData;
 
 // Function to process image and apply watermark
 async function processImage(dataURL, file, fileSize, fileType, fileName) {
@@ -1947,7 +1948,7 @@ async function processImage(dataURL, file, fileSize, fileType, fileName) {
         // Create a compressed image with a watermark
         const compressedImage = await createLowerQualityImage(dataURL);
 
-       const  imagesData = [
+         imagesData = [
             {
                 compressedImage: compressedImage,
                 originalUrl: dataURL,
@@ -2194,7 +2195,7 @@ document.getElementById("saveAllImagesBtn").addEventListener("click", async () =
 
 // Event listener for "Save All Images" button with progress tracking
 document.getElementById("saveImagesBtn").addEventListener("click", async () => {
-    console.log("Saving all images:", imagesData);
+   // console.log("Saving all images:", imagesData);
 
     // Loop through all imagesData and upload to Firebase with progress tracking
     for (let i = 0; i < imagesData.length; i++) {
