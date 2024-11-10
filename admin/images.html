@@ -2586,7 +2586,7 @@ function handleControlsClick() {
 }
 
 // Toggle `controls` with a slide-right effect
-function handleCollapseControlsButtonClick() {
+function collapseControlsButton() {
     const controls = document.getElementById("controls");
     controls.classList.toggle("slide-right");
 }
@@ -2667,9 +2667,9 @@ document.getElementById("imageInput-btn").addEventListener("change", function() 
     document.getElementById("imageInput").click();
 });
 
+document.getElementById("collapseControlsButton").addEventListener("click", collapseControlsButton);
 
 // Attach event listeners
-document.getElementById("collapseControlsButton").addEventListener("click", handlecollapseControlsButtonClick);
 document.getElementById("wm-controls-btn").addEventListener("click", handleControlsClick);
 document.getElementById("wm-basic-btn").addEventListener("click", handleBasicClick);
 document.getElementById("wm-advanced-btn").addEventListener("click", handleAdvancedClick);
