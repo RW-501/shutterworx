@@ -26,143 +26,14 @@
         transition: width 0.4s ease;
     }
 
-    /* Basic modal styling */
-.modal {
-    display: none;
-    position: fixed;
-    z-index: 1000;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
-}
-
-.modal-dialog {
-    max-width: 90%;
-    margin: auto;
-    overflow-y: auto;
-    height: 100%;
-}
-#imageCanvas {
-    width: 100%; /* Make canvas responsive */
-    height: auto;
-}
-
-.editor-controls {
-    display: flex;
-    flex-direction: column;
-}
-/* Styles specifically for input elements of type range and number inside watermarkSettingsModal */
-#watermarkSettingsModal input[type="range"], 
-#watermarkSettingsModal input[type="number"], 
-
-/* Styles specifically for input elements of type range and number inside imageEditorModal */
-#imageEditorModal input[type="range"], 
-#imageEditorModal input[type="number"] {
-    max-width: 75px;      /* Limits the maximum width of the input */
-    min-width: 50px;      /* Prevents the input from shrinking smaller than 50px */
-    width: 100%;          /* Makes the input take up the full width of its container */
-    box-sizing: border-box; /* Includes padding and border in the width calculation */
-}
-
-select, input[type="range"], input[type="number"] {
-            margin-bottom: 10px;
-        }
-        .slider_editor {
-            display: none; /* Start hidden */
-            margin-bottom: 20px;
-        }
-        .visible {
-            display: block; /* Show when needed */
-        }
-        .close {
-   max-width: 20%;
-    font-size: 2rem;
-}
-
-#watermark-holder {
-    /* display: flex; */
-    margin: auto;
-    position: relative;
-}
-
-#watermarkCanvas-holder {
-    display: block;
-    width: auto;
-    position: relative;
-    margin: auto;
-    width: 400px;
-    height: 200px;
-
-}
-
-#watermarkZoom-holder {
-    display: block;
-    width: 200px;
-    transform: rotate(270deg);
-    position: absolute;
-    /* bottom: 0; */
-    /* left: 0; */
-    /* top: 0; */
-    height: 20px;
-    top: 95px;
-    left: 325px;
-}
-
-#watermarkScale {
-    display: block;
-    position: relative;
-    width: 200px !important;
-    min-width: 200px !important;
-    height: 10px !important;
-    min-height: 10px !important;
-    padding: 8px !important;
-}
-
-
-
-.btn-outline-primary {
-  transition: 0.3s ease;
-}
+    
+    
     .form-check {
       position: relative;
       padding-left: 1.25rem;
       margin: 1rem;
     }
-.btn-outline-primary:hover {
-  background-color: #0d6efd;
-  color: #fff;
-  transform: translateY(-2px);
-}
 
-.custom-slider {
-  appearance: none; /* Standard property for broader compatibility */
-  width: 100%;
-  height: 6px;
-  border-radius: 5px;
-  outline: none;
-  transition: background 0.3s ease;
-}
-
-.custom-slider::-webkit-slider-thumb {
-  -webkit-appearance: none;
-  width: 16px;
-  height: 16px;
-  border-radius: 50%;
-  background: #044cb8;
-  cursor: pointer;
-  box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.2);
-}
-
-.custom-slider::-moz-range-thumb {
-  width: 16px;
-  height: 16px;
-  border-radius: 50%;
-  background: #044cb8;
-  cursor: pointer;
-  box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.2);
-}
 
 #logoImage {
   max-width: 200px;
@@ -352,19 +223,7 @@ i {
                     line-height: 30px;
                     /* Center the text vertically */
                   }
-          
-                  #watermarkPreviewCanvas {
-                    border: 1px solid #ccc;
-                    display: block;
-                    margin: auto;
-                  }
-          
-                  #imageCanvas {
-                    border: 1px solid #ccc;
-                    display: block;
-                    margin: auto;
-                    background-color: #ffffffa2;
-                  }
+       
           
                   #uploadLogo {
                     display: none;
@@ -393,161 +252,638 @@ i {
             </div>
           
             <!-- Watermark Settings Modal Section -->
-            <section id="watermarkSettingsModal" class=" modal " tabindex="-1" role="dialog" aria-labelledby="watermarkSettingsLabel">
-              <div class="modal-dialog modal-lg" role="document">
-                <div class="modal-content">
-                  <div class="modal-header">
-                    <h5 id="watermarkSettingsLabel" class="modal-title">Watermark Settings</h5>
-                    <button id="closeWatermarkX" type="button" class="close btn-close" data-bs-dismiss="modal" aria-label="Close">X</button>
-                  </div>
-          
-                  <div class="modal-body">
-                    <!-- Watermark Preview Canvas -->
-                    <div class="container-fluid d-flex mb-4">
-                      <!-- Watermark preview canvas -->
-          
-                      <div id="watermark-holder">
-                        <div id="watermarkCanvas-holder">
-                          <canvas id="watermarkPreviewCanvas" width="400" height="200" style="border:1px solid #ccc;"></canvas>
-                        </div>
-          
-                        <div id="watermarkZoom-holder">
-                          <input class="ml-1 custom-slider" type="range" id="watermarkScale" min="1" max="5" step="1" value="1" style=" width: 200px !important;">
-          
-                        </div>
-                      </div>
-                    </div>
-          
-                    <!-- Watermark Controls -->
-                    <div class="container-fluid">
-                      <div class="row g-3">
-                        <!-- Text and Font Selection -->
-                        <div class="col-md-4">
-                          <label for="watermarkText" class="form-label">Watermark Text</label>
-                          <input type="text" id="watermarkText" class="form-control" placeholder="Enter watermark text">
-                        </div>
-          
-
-                        <div class="col-md-4">
-                            <label for="addWatermarkImage" class="form-label">Add Watermark Image</label>
-                            <button  id="addWatermarkImage" class="form-control">Add Watermark Image </button>
-                          </div>
-
-
-                        
-                        <div class="col-md-4">
-          
-                          <label for="startX">Start X Position:</label>
-                          <input type="number" id="startX" value="50" step="5">
-                        </div>
-                        <div class="col-md-4">
-          
-                          <label for="startY">Start Y Position:</label>
-                          <input type="number" id="startY" value="50" step="5">
-                        </div>
-                        <div class="col-md-4">
-          
-                          <label for="gapSize">Gap Size (spacing between watermarks):</label>
-                          <input type="number" id="gapSize" value="30" step="5">
-                        </div>
-          
-                        <div class="col-12 d-flex justify-content-around">
-          
-                          <div class="col-md-6">
-                            <label for="watermarkFont" class="form-label">Font</label>
-                            <select id="watermarkFont" class="form-select">
-                              <option>Arial Black</option>
-                              <option>Arial</option>
-                              <option>Verdana</option>
-                              <option>Times New Roman</option>
-                              <option>Courier New</option>
-                              <option>Georgia</option>
-                              <option>Trebuchet MS</option>
-                              <option>Comic Sans MS</option>
-                              <option>Impact</option>
-                              <option>Lucida Console</option>
-                              <option>Tahoma</option>
-                              <option>Open Sans</option>
-                              <option>Roboto</option>
-                              <option>Montserrat</option>
-                              <option>Playfair Display</option>
-                            </select>
-          
-                          </div>
-          
-                          <!-- Size, Color, Opacity, and Scale -->
-                          <div class="col-md-3">
-                            <label for="watermarkSize" class="form-label">Font Size</label>
-                            <input type="number" id="watermarkSize" class="form-control" value="240">
-                          </div>
-          
-                          <div class="col-md-3">
-                            <label for="watermarkColor" class="form-label">Color</label>
-                            <input type="color" id="watermarkColor" class="form-control" value="#000000">
-                          </div>
-                        </div>
-          
-                        <div class="col-12 d-flex justify-content-around">
-          
-                          <div class="col-md-3">
-                            <label for="watermarkOpacity" class="form-label">Opacity</label>
-                            <input type="range" id="watermarkOpacity" class="form-range" min="0" max="1" step="0.1" value="0.5">
-                          </div>
-          
-                          <div class="col-md-3">
-                            <label for="watermarkRotation" class="form-label">Rotation</label>
-                            <input type="range" id="watermarkRotation" class="form-range" min="0" max="360" step="1" value="0">
-                          </div>
-                          <div class="col-md-3">
-          
-                            <!-- File input for watermark image -->
-                            <label for="watermarkImage">Choose Watermark Image (SVG, PNG, GIF):</label>
-                            <input type="file" id="watermarkImage" accept=".svg,.png,.gif,.Svg,.Png,.Gif">
-                            
-                          </div>
-          
-                          <!-- Style Toggles -->
-                          <div class="col-12 d-flex justify-content-around">
-                            <div class="form-check">
-                              <label for="watermarkBold" class="form-check-label">Bold</label>
-                              <input type="checkbox" id="watermarkBold" class="form-check-input">
-                            </div>
-          
-                            <div class="form-check">
-                              <label for="watermarkUnderline" class="form-check-label">Underline</label>
-                              <input type="checkbox" id="watermarkUnderline" class="form-check-input">
-                            </div>
-          
-                            <div class="form-check">
-                              <label for="multipleWaterMark" class="form-check-label">Multiple Watermarks</label>
-                              <input type="checkbox" id="multipleWaterMark" class="form-check-input">
-          
-                            </div>
-          
-                            <div class="form-check">
-          
-                              <select id="watermarkStyle">
-                                <option value="regular">Regular Watermark</option>
-                                <option value="diagonal-left">Diagonal Left Watermark</option>
-                                <option value="diagonal-right">Diagonal Right Watermark</option>
-                              </select>
-                            </div>
-          
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-          
-                    <!-- Modal Footer -->
-                    <div class="modal-footer">
-                      <button type="button" id="resetWatermarkSettings" class="btn btn-secondary">Reset</button>
-                      <button type="button" id="closeWatermarkModal" class="btn btn-primary" data-bs-dismiss="modal">Close</button>
-                    </div>
-                  </div>
-                </div>
+      
+<!-- Watermark Settings Modal Section -->
+<style>
+    /* Global Styling */
+    body {
+      font-family: 'Roboto', sans-serif;
+      background-color: #181818;
+      color: #e0e0e0;
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+  
+    #image-editor {
+      display: flex;
+      height: 100vh;
+      width: 100%;
+      overflow: hidden;
+    }
+  
+    /* Sidebar Styles */
+    .sidebar {
+      background-color: #2e2e3a;
+      width: 250px;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      border-right: 1px solid #444;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      transition: all 0.3s ease;
+    }
+  
+    .sidebar:hover {
+      box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+    }
+  
+    .sidebar h2 {
+      color: #009cfa;
+      font-size: 22px;
+      margin-bottom: 20px;
+      text-align: center;
+      text-transform: uppercase;
+      transition: color 0.3s ease;
+    }
+  
+    .sidebar:hover h2 {
+      color: #007bb5;
+    }
+  
+    .tool-icon {
+      background-color: #333;
+      padding: 12px;
+      border-radius: 12px;
+      color: #b0b0b0;
+      font-size: 16px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-align: center;
+    }
+  
+    .tool-icon:hover {
+      background-color: #009cfa;
+      color: #ffffff;
+      transform: scale(1.05);
+    }
+  
+    .tool-icon:active {
+      transform: scale(0.95);
+    }
+  
+    /* Main Canvas Area */
+    .canvas-grid {
+      position: relative;
+      border: 1px solid #555;
+      background: #1f1f2e;
+      box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.5);
+      border-radius: 10px;
+      transition: all 0.3s ease;
+    }
+  
+    .canvas-grid:focus-within {
+      box-shadow: 0px 0px 20px rgba(0, 156, 250, 0.7);
+      border-color: #009cfa;
+    }
+  
+    .canvas-grid {
+      position: relative;
+      border: 1px solid #555;
+      background: #1f1f2e;
+      box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.5);
+      border-radius: 10px;
+      transition: all 0.3s ease;
+      height: auto;
+    }
+  
+    .canvas-grid:focus-within {
+      box-shadow: 0px 0px 20px rgba(0, 156, 250, 0.7);
+      border-color: #009cfa;
+      display: block;
+    }
+  
+    /* Properties Panel */
+    .properties-panel {
+      width: 350px;
+      background-color: #252542;
+      padding: 20px;
+      border-left: 1px solid #444;
+      display: flex;
+      flex-direction: column;
+      box-shadow: 4px 0px 8px rgba(0, 0, 0, 0.2);
+      overflow-y: scroll;
+    }
+  
+    .properties-panel h2 {
+      color: #009cfa;
+      font-size: 20px;
+      margin-bottom: 20px;
+      text-align: center;
+      text-transform: uppercase;
+    }
+  
+    .properties-panel label {
+      color: #b0b0b0;
+      font-size: 14px;
+      margin: 10px 0 5px;
+    }
+  
+    .properties-panel input,
+    .properties-panel select {
+      width: 100%;
+      padding: 12px;
+      border-radius: 8px;
+      background-color: #333;
+      border: 1px solid #555;
+      color: #e0e0e0;
+      margin-bottom: 15px;
+      transition: background-color 0.3s ease, border-color 0.3s ease;
+      font-size: 14px;
+    }
+  
+    .properties-panel input:focus,
+    .properties-panel select:focus {
+      background-color: #444;
+      border-color: #009cfa;
+    }
+  
+    /* Custom checkbox styling */
+    .properties-panel input[type="checkbox"] {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      border: 2px solid #555;
+      background-color: #181818;
+      position: relative;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+  
+    /* Checkbox checked state */
+    .properties-panel input[type="checkbox"]:checked {
+      background-color: #009cfa;
+      border-color: #009cfa;
+    }
+  
+    /* Inner checkmark styling when checked */
+    .properties-panel input[type="checkbox"]:checked::before {
+      content: "";
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) rotate(45deg);
+      width: 10px;
+      height: 18px;
+      border: solid #fff;
+      border-width: 0 4px 4px 0;
+      transition: all 0.2s ease;
+    }
+  
+    /* Hover effect */
+    .properties-panel input[type="checkbox"]:hover {
+      border-color: #009cfa;
+      box-shadow: 0 0 5px rgba(0, 156, 250, 0.7);
+    }
+  
+    /* Focus effect */
+    .properties-panel input[type="checkbox"]:focus {
+      outline: none;
+      border-color: #009cfa;
+      box-shadow: 0 0 10px rgba(0, 156, 250, 0.7);
+    }
+  
+    .properties-panel input[type="range"] {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 100%;
+      height: 6px;
+      background: #555;
+      outline: none;
+      border-radius: 10px;
+      margin-bottom: 20px;
+      transition: background-color 0.3s ease;
+    }
+  
+    .properties-panel input[type="range"]:hover {
+      background-color: #444;
+      border-color: #009cfa;
+      box-shadow: 0 0 5px rgba(0, 156, 250, 0.7);
+    }
+  
+    .properties-panel input[type="range"]::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background: #009cfa;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+  
+    .properties-panel input[type="range"]:hover::-webkit-slider-thumb {
+      background: #007bb5;
+    }
+  
+    .properties-panel input[type="range"]::-moz-range-thumb {
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background: #009cfa;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+  
+    /* Buttons */
+    .properties-panel button,
+    .zoom-controls button {
+      background-color: #009cfa;
+      color: white;
+      border: none;
+      padding: 12px;
+      border-radius: 8px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: background-color 0.3s ease, transform 0.2s ease;
+    }
+  
+    .properties-panel button:hover,
+    .zoom-controls button:hover {
+      background-color: #007bb5;
+      transform: scale(1.05);
+      border-color: #009cfa;
+      box-shadow: 0 0 5px rgba(0, 156, 250, 0.7);
+    }
+  
+    .properties-panel button:active,
+    .zoom-controls button:active {
+      transform: scale(0.95);
+    }
+  
+    /* Zoom Controls */
+    .zoom-controls {
+      display: flex;
+      align-items: center;
+      gap: 1vh;
+    }
+  
+    .zoom-controls div {
+      text-align: center;
+    }
+  
+    .zoom-controls button {
+      background-color: #009cfa;
+      color: white;
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      font-size: 20px;
+      padding: 0;
+      border: none;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+  
+    .zoom-controls button:hover {
+      background-color: #007bb5;
+    }
+  
+    .zoom-display {
+      font-size: 18px;
+      color: #e0e0e0;
+      margin: 0 10px;
+    }
+  
+    /* Top Bar Styling */
+    .modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background-color: #2e2e3a;
+      padding: 15px;
+      border-bottom: 1px solid #444;
+    }
+  
+    .modal-header h5 {
+      color: #009cfa;
+      margin: 0;
+      transition: color 0.3s ease;
+    }
+  
+    .modal-header:hover h5 {
+      color: #007bb5;
+    }
+  
+    #closeWatermarkX {
+      background-color: #009cfa;
+      appearance: none;
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      border: 2px solid #555;
+      color: white;
+      position: relative;
+      font-size: 18px;
+      padding: 8px;
+      cursor: pointer;
+      border: none;
+      transition: background-color 0.3s ease;
+    }
+  
+    #closeWatermarkX:hover {
+      border-color: #009cfa;
+      box-shadow: 0 0 5px rgba(0, 156, 250, 0.7);
+    }
+  
+    .bottom-properties-panel label,
+    .bottom-properties-panel input {
+      color: #e0e0e0;
+      margin-right: 10px;
+    }
+  
+    .bottom-properties-panel input {
+      width: 60px;
+    }
+  
+    .button {
+      background-color: #009cfa;
+      color: white;
+      border: none;
+      padding: 8px 16px;
+      border-radius: 8px;
+      font-size: 14px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+  
+    .button:hover {
+      background-color: #007bb5;
+    }
+  
+    /* Tooltip */
+    .tool-icon {
+      background-color: #333;
+      padding: 12px;
+      border-radius: 12px;
+      color: #b0b0b0;
+      font-size: 16px;
+      cursor: pointer;
+      transition: background-color 0.3s ease, transform 0.2s ease, color 0.3s ease;
+      text-align: center;
+    }
+  
+    .tool-icon:hover {
+      background-color: #009cfa;
+      color: #ffffff;
+      transform: scale(1.05);
+      border-color: #009cfa;
+      box-shadow: 0 0 5px rgba(0, 156, 250, 0.7);
+    }
+  
+    .tool-icon:active {
+      transform: scale(0.95);
+    }
+  
+    .bottom-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background-color: #2e2e3a;
+      padding: 12px 20px;
+      border-top: 1px solid #444;
+      gap: 1vh;
+      transition: box-shadow 0.3s ease;
+    }
+  
+    .bottom-bar:hover {
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
+  
+    /* Position Controls */
+    .bottom-properties-panel {
+      display: flex;
+      flex-direction: row;
+      width: 320px;
+      background-color: #252542;
+      padding: 20px;
+      border-left: 1px solid #444;
+    }
+  
+    .bottom-properties-panel div {
+      text-align: center;
+    }
+  
+    .bottom-properties-panel label {
+      color: #b0b0b0;
+      font-size: 14px;
+    }
+  
+    .bottom-properties-panel input {
+      background-color: #333;
+      padding: 12px;
+      border-radius: 8px;
+      border: 1px solid #555;
+      color: #e0e0e0;
+      margin-bottom: 10px;
+    }
+  
+    .bottom-properties-panel input:hover {
+      border-color: #009cfa;
+      box-shadow: 0 0 5px rgba(0, 156, 250, 0.7);
+    }
+  
+    .properties-panel input:hover,
+    .properties-panel select:hover {
+      border-color: #009cfa;
+      box-shadow: 0 0 5px rgba(0, 156, 250, 0.7);
+    }
+  
+    .bottom-properties-panel input:hover {
+      border-color: #009cfa;
+      box-shadow: 0 0 5px rgba(0, 156, 250, 0.7);
+    }
+  
+    /* Hover Effects */
+    .tool-icon:hover,
+    .properties-panel button:hover {
+      background-color: #007bb5;
+      transform: scale(1.05);
+      border-color: #009cfa;
+      box-shadow: 0 0 5px rgba(0, 156, 250, 0.7);
+    }
+  
+    .tool-icon:hover::after {
+      content: attr(data-tooltip);
+      position: absolute;
+      top: -30px;
+      background-color: #333;
+      color: #e0e0e0;
+      padding: 5px;
+      border-radius: 5px;
+      font-size: 12px;
+      text-align: center;
+      opacity: 1;
+      visibility: visible;
+      z-index: 10;
+      transition: opacity 0.3s ease;
+    }
+  
+    /* Floating Shadows */
+    .tool-icon,
+    .canvas-grid,
+    .sidebar,
+    .properties-panel {
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+    }
+  
+    /* Responsive Layout */
+    @media (max-width: 768px) {
+      #image-editor {
+        flex-direction: column;
+      }
+  
+      .sidebar,
+      .properties-panel {
+        width: 100%;
+        max-width: 100%;
+      }
+  
+      .canvas-grid {
+        width: 100%;
+      }
+  
+      .bottom-bar {
+        flex-direction: column;
+      }
+  
+      .tool-icon,
+      .properties-panel button {
+        font-size: 14px;
+        padding: 10px;
+      }
+    }
+  </style>
+  
+    <section id="watermarkSettingsModal" class=" modal " tabindex="-1" role="dialog" aria-labelledby="watermarkSettingsLabel">
+      <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 id="watermarkSettingsLabel" class="modal-title">Watermark Settings</h5>
+            <button id="closeWatermarkX" type="button" class="close btn-close" data-bs-dismiss="modal" aria-label="Close">X</button>
+          </div>
+          <div id="image-editor">
+  
+            <div class="sidebar" id="tools-sidebar">
+              <h2>Tools</h2>
+              <div class="tool-icon">Selection</div>
+              <div class="tool-icon">Text Watermark</div>
+              <div class="tool-icon">Image Watermark</div>
+              <div class="tool-icon">Diagonal Left Watermark</div>
+              <div class="tool-icon">Diagonal Right Watermark</div>
+            </div>
+  
+            <div class="main-canvas">
+              <div class="canvas-grid">
+                <canvas id="watermarkPreviewCanvas" width="400" height="200" style="border:1px solid #ccc;"></canvas>
               </div>
+            </div>
+  
+            <div class="properties-panel">
+  
+              <label for="watermarkText">Watermark Text:</label>
+              <input type="text" id="watermarkText" placeholder="Enter watermark text" />
+  
+              <label for="addWatermarkImage">Add Watermark Image:</label>
+              <button id="addWatermarkImage" class="button">Add Image Watermark</button>
+  
+              <input type="file" id="watermarkImage" accept=".svg,.png,.gif,.Svg,.Png,.Gif" hidden />
+  
+              <label for="watermarkFont">Font:</label>
+              <select id="watermarkFont">
+                <option>Arial Black</option>
+                <option>Arial</option>
+                <option>Verdana</option>
+                <option>Times New Roman</option>
+                <option>Courier New</option>
+                <option>Georgia</option>
+                <option>Trebuchet MS</option>
+                <option>Comic Sans MS</option>
+                <option>Impact</option>
+                <option>Lucida Console</option>
+                <option>Tahoma</option>
+                <option>Open Sans</option>
+                <option>Roboto</option>
+                <option>Montserrat</option>
+                <option>Playfair Display</option>
+              </select>
+  
+              <label for="watermarkSize">Text Size:</label>
+              <input type="number" id="watermarkSize" placeholder="Text size" />
+  
+              <label for="watermarkColor">Text Color:</label>
+              <input type="color" id="watermarkColor" value="#000000" />
+  
+              <label for="watermarkOpacity">Opacity:</label>
+              <input type="range" id="watermarkOpacity" min="0" max="5" value="0.5" />
+  
+              <label for="watermarkRotation">Rotation:</label>
+              <input type="range" id="watermarkRotation" min="0" max="360" step="1" value="0" />
+  
+              <label for="watermarkBold" class="form-check-label">Bold</label>
+              <input type="checkbox" id="watermarkBold" class="form-check-input">
+  
+              <label for="watermarkUnderline" class="form-check-label">Underline</label>
+              <input type="checkbox" id="watermarkUnderline" class="form-check-input">
+              <div class="hidden">
+                <label for="watermarkScale">Canvas Zoom:</label>
+                <input type="range" id="watermarkScale" min="1" max="5" step="1" value="1"  />
+                <label for="multipleWaterMark" class="form-check-label">Multiple Watermarks</label>
+                <input type="checkbox" id="multipleWaterMark" class="form-check-input">
+  
+                <select id="watermarkStyle" style="display: block;">
+                  <option value="regular">Regular Watermark</option>
+                  <option value="diagonal-left">Diagonal Left Watermark</option>
+                  <option value="diagonal-right">Diagonal Right Watermark</option>
+                </select>
+                <label for="gapSize">Gap Size (spacing between watermarks):</label>
+                <input type="number" id="gapSize" value="30" step="5">
+  
+              </div>
+  
+            </div>
+          </div>
+  
+          <!-- Bottom Bar -->
+          <div class="bottom-bar">
+            <div class="zoom-controls">
+              <div class="flex">
+                <label for="zoom-in">Zoom in:</label>
+  
+                <button class="button" id="zoom-in">+</button>
+              </div>
+              <div class="zoom-display" id="zoom-display">100%</div>
+              <div class="flex">
+                <label for="zoom-out">Zoom out:</label>
+                <button class="button" id="zoom-out">-</button>
+              </div>
+            </div>
+  
+            <div class="bottom-properties-panel">
+  
+              <div class="flex">
+                <label for="watermark-x">X Position:</label>
+                <input type="number" id="watermark-x" value="0" />
+              </div>
+              <div class="flex">
+  
+                <label for="watermark-y">Y Position:</label>
+                <input type="number" id="watermark-y" value="0" />
+              </div>
+  
+            </div>
+  
+            <button id="reset" class="button">Reset</button>
+            <button id="apply-watermark" class="button">Apply Watermark</button>
+          </div>
+  
+        </div>
+      </div>
+    </section>
           
-            </section>
           
             <!-- Image Editor Modal -->
             <section id="imageEditorModal" class="modal">
