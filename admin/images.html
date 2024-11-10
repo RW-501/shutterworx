@@ -886,26 +886,7 @@ select, input[type="range"], input[type="number"] {
 });
 */
 
-const imageUploadArea = document.getElementById("imageUploadArea");
 
-    // Enable drag-and-drop functionality
-    imageUploadArea.addEventListener("dragover", (e) => {
-        e.preventDefault();
-        imageUploadArea.classList.add("dragging");
-    });
-
-    imageUploadArea.addEventListener("dragleave", () => {
-        imageUploadArea.classList.remove("dragging");
-    });
-
-    imageUploadArea.addEventListener("drop", (e) => {
-        e.preventDefault();
-        imageUploadArea.classList.remove("dragging");
-        handleFiles(e.dataTransfer.files);
-    });
-
-
-    
 
 document.addEventListener("DOMContentLoaded", function () {
     const tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
@@ -928,6 +909,10 @@ document.addEventListener("DOMContentLoaded", function () {
 
     const imagePreviewContainer = document.getElementById("imagePreviewContainer");
     
+    const imageUploadArea = document.getElementById("imageUploadArea");
+
+
+
 
 // Main function to handle file uploads
 function handleFiles(files) {
@@ -2092,6 +2077,21 @@ document.getElementById("imageInput").addEventListener("change", function() {
 });
 
 
+// Enable drag-and-drop functionality
+imageUploadArea.addEventListener("dragover", (e) => {
+    e.preventDefault();
+    imageUploadArea.classList.add("dragging");
+});
+
+imageUploadArea.addEventListener("dragleave", () => {
+    imageUploadArea.classList.remove("dragging");
+});
+
+imageUploadArea.addEventListener("drop", (e) => {
+    e.preventDefault();
+    imageUploadArea.classList.remove("dragging");
+    handleFiles(e.dataTransfer.files);
+});
 
 //document.getElementById("openImageEditorBtn").addEventListener("click", openImageEditor);
 
