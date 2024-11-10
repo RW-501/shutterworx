@@ -905,247 +905,288 @@ i {
             <section id="imageEditorModal" class="modal">
               <div class="modal-dialog modal-lg">
                 <div class="modal-content">
-                  <div class="modal-header bg-light border-bottom">
-                    <h5 class="modal-title text-primary">Image Editor</h5>
-                    <button id="closeImageEditorX" type="button" aria-label="Close" class="close btn-close">×</button>
-                  </div>
-          
-                  <!-- Editor Controls Section -->
-                  <div class="modal-body">
-          
-                    <!-- Canvas to display and edit the image -->
-                    <canvas id="imageCanvas" width="500" height="500"></canvas>
-          
-                    <div class="container-fluid d-flex">
-          
-                      <!-- Logo Upload Section -->
-                      <div class="card shadow-lg p-4 mb-5 border-0">
-                        <div class="card-body text-center">
-                          <!-- Logo Upload Section -->
-                          <label for="uploadLogo" class="form-label fw-bold fs-5">Upload Logo</label>
-                          <div class="d-flex justify-content-center mt-3">
-                            <input type="file" id="uploadLogo" accept="image/*" class="form-control-file visually-hidden" onchange="previewLogo(this)" />
-                            <label for="uploadLogo" class="btn btn-outline-primary px-4 py-2 shadow-sm rounded-pill">
-                              <i class="bi bi-upload me-2"></i>Choose Logo
-                            </label>
+                    <style>
+                        /* Modal Container */
+                        #imageEditorModal {
+                            margin: 0;
+                            padding: 0;
+                            font-family: Arial, sans-serif;
+                            background-color: #1e1e1e;
+                            color: #e0e0e0;
+                            display: flex;
+                            flex-direction: column;
+                            width: 100%;
+                            background-color: #2a2a2a;
+                            border-radius: 12px;
+                            box-shadow: 0px 8px 24px rgba(0, 0, 0, 0.3);
+                            overflow: hidden;
+                        }
+                      
+                        /* Header */
+                        #imageEditorModal header {
+                            display: flex;
+                            justify-content: space-between;
+                            align-items: center;
+                            padding: 1rem;
+                            background-color: #333;
+                            border-bottom: 1px solid #444;
+                        }
+                      
+                        #imageEditorModal header h2 {
+                            margin: 0;
+                            font-size: 1.25rem;
+                            color: #42a5f5;
+                        }
+                      
+                      #closeImageEditorX {
+                          background-color: #009cfa;
+                          appearance: none;
+                          border-radius: 50%;
+                          border: 2px solid #555;
+                          color: white;
+                          position: relative;
+                          font-size: 20px;
+                          padding: 20px;
+                          cursor: pointer;
+                          border: none;
+                          transition: background-color 0.3s ease;
+                          width: 40px;
+                          height: 40px;
+                          box-sizing: border-box;
+                      }
+                      
+                        #closeImageEditorX:hover {
+                            color: #e0e0e0;
+                        }
+                      
+                        /* Main Content */
+                        #editorContent {
+                            display: grid;
+                            grid-template-columns: 1fr 2fr;
+                            gap: 20px;
+                            padding: 1.5rem;
+                        }
+                      
+                        /* Canvas Area */
+                        #canvasContainer {
+                            display: flex;
+                            flex-direction: column;
+                            align-items: center;
+                            background-color: #252525;
+                            padding: 1rem;
+                            border-radius: 8px;
+                            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+                        }
+                      
+                        #imageCanvas {
+                            width: 100%;
+                            max-width: 100%;
+                            border: 1px solid #444;
+                            background-color: #1e1e1e;
+                        }
+                      
+                        /* Controls Sidebar */
+                        #controls {
+                            display: flex;
+                            flex-direction: column;
+                            gap: 15px;
+                            background-color: #2a2a2a;
+                            padding: 1rem;
+                            border-radius: 8px;
+                            overflow-y: auto;
+                        }
+                      
+                        #controls label {
+                            color: #9e9e9e;
+                            font-weight: bold;
+                            margin-bottom: 5px;
+                        }
+                      
+                        input[type="file"],
+                        input[type="range"],
+                        select,
+                        button {
+                            width: 100%;
+                            padding: 10px;
+                            border: none;
+                            border-radius: 6px;
+                            background-color: #333;
+                            color: #e0e0e0;
+                            transition: background-color 0.2s, box-shadow 0.2s, border-color 0.2s;
+                        }
+                      
+                        /* Range Input */
+                        input[type="range"] {
+                            appearance: none;
+                            background-color: #555;
+                            cursor: pointer;
+                        }
+                      
+                        input[type="range"]::-webkit-slider-thumb {
+                            -webkit-appearance: none;
+                            appearance: none;
+                            width: 12px;
+                            height: 12px;
+                            border-radius: 50%;
+                            background: #42a5f5;
+                            cursor: pointer;
+                        }
+                      
+                        /* Buttons */
+                        #applyChangesButton, #resetButton {
+                            font-weight: bold;
+                            cursor: pointer;
+                            transition: background-color 0.2s, box-shadow 0.2s, border-color 0.2s;
+                        }
+                      
+                        #applyChangesButton:hover {
+                            background-color: #42a5f5;
+                            border-color: #009cfa;
+                            box-shadow: 0 0 5px rgba(0, 156, 250, 0.7);
+                        }
+                      
+                        #resetButton {
+                            background-color: #ff4081;
+                        }
+                      
+                        #resetButton:hover {
+                            background-color: #e57373;
+                            border-color: #ff6090;
+                            box-shadow: 0 0 5px rgba(255, 96, 144, 0.7);
+                        }
+                      
+                        /* Logo Preview */
+                        #logoPreviewContainer {
+                            display: flex;
+                            flex-direction: column;
+                            align-items: center;
+                        }
+                      
+                        #logoImage {
+                            width: 100px;
+                            height: 100px;
+                            border-radius: 8px;
+                            object-fit: cover;
+                            border: 1px solid #444;
+                        }
+                      
+                        /* Hover Effect for Inputs */
+                        input[type="file"]:hover,
+                        input[type="range"]:hover,
+                        select:hover,
+                        button:hover {
+                            border-color: #009cfa;
+                            box-shadow: 0 0 5px rgba(0, 156, 250, 0.7);
+                        }
+                      
+                        /* Collapse Button */
+                        #collapseControlsButton {
+                            background-color: #333;
+                            color: #42a5f5;
+                            border: none;
+                            font-size: 1.25rem;
+                            cursor: pointer;
+                            padding: 8px;
+                          /*  border-radius: 50%; */
+                            transition: background-color 0.2s, color 0.2s;
+                          width: 5vw;
+                        }
+                      
+                        #collapseControlsButton:hover {
+                            background-color: #42a5f5;
+                            color: #1e1e1e;
+                        }
+                      
+                        /* Close Button Styling */
+                        #closeImageEditorX {
+                            background-color: #009cfa;
+                            appearance: none;
+                            width: 28px;
+                            height: 28px;
+                            border-radius: 50%;
+                            border: 2px solid #555;
+                            color: white;
+                            position: relative;
+                            font-size: 18px;
+                            padding: 8px;
+                            cursor: pointer;
+                            border: none;
+                            transition: background-color 0.3s ease;
+                        }
+                      
+                        #closeImageEditorX:hover {
+                            background-color: #ff4081;
+                        }
+                       .collapseBtnArea {
+                          width: 100%;
+                          text-align: right;
+                      }
+                        
+                      </style>
+                      </head>
+                      <body>
+                      
+                      <section id="imageEditorModal">
+                        <!-- Header -->
+                        <header>
+                          <h2>Image Editor</h2>
+                          <button id="closeImageEditorX">&times;</button>
+                        </header>
+                      
+                        <!-- Main Content -->
+                        <div id="editorContent">
+                          <!-- Canvas Area -->
+                          <div id="canvasContainer">
+                            <canvas id="imageCanvas" width="500" height="500"></canvas>
                           </div>
-                          <!-- Logo Preview -->
-                          <div id="logoPreview" class="mt-4">
-                            <img id="logoImage" src="#" alt="Logo Preview" class="img-fluid rounded shadow-sm d-none" />
-                          </div>
-                          <!-- Logo Size Slider -->
-                          <div class="mt-5">
-                            <label for="logoSize" class="form-label fw-bold fs-5">Adjust Logo Size</label>
-                            <div class="d-flex align-items-center">
-                              <span class="small me-2">Small</span>
-                              <input type="range" id="logoSize" min="0.1" max="1" step="0.1" value="0.5" class="form-range custom-slider mx-2" />
-                              <span class="small ms-2">Large</span>
+                      
+                          <!-- Controls Sidebar -->
+                          <div id="controls">
+                            <!-- Collapse Button -->
+                            
+                                <div class="collapseBtnArea">
+                      
+                            <button id="collapseControlsButton">&#9654;</button>
                             </div>
-                          </div>
-                        </div>
-          
-                        <script>
-                          // Show the uploaded logo preview
-                          function previewLogo(input) {
-                            const file = input.files[0];
-                            const reader = new FileReader();
-                            reader.onload = function(e) {
-                              const logoImage = document.getElementById('logoImage');
-                              logoImage.src = e.target.result;
-                              logoImage.classList.remove('d-none');
-                            };
-                            if (file) {
-                              reader.readAsDataURL(file);
-                            }
-                          }
-                        </script>
-                        <!-- Filter Options -->
-                        <div class="card-body">
-                          <h5 class="text-secondary fw-bold">Image Filter Adjustments</h5>
-                          <label for="filters" class="form-label">Select Filter:</label>
-                          <select id="filters" class="form-select" aria-label="Image filters">
-                            <option value="none">None</option>
-                            <optgroup label="Color Adjustments">
+                            
+                            <!-- Logo Upload -->
+                            <label for="uploadLogo">Upload Logo</label>
+                            <input type="file" id="uploadLogo">
+                      
+                            <!-- Logo Preview -->
+                            <div id="logoPreviewContainer">
+                              <img id="logoImage" src="#" alt="Logo Preview">
+                            </div>
+                      
+                            <!-- Logo Size Slider -->
+                            <label for="logoSize">Logo Size</label>
+                            <input type="range" id="logoSize" min="1" max="100" value="50">
+                      
+                            <!-- Filter Selection -->
+                            <label for="filters">Filters</label>
+                            <select id="filters">
+                              <option value="none">None</option>
                               <option value="grayscale">Grayscale</option>
                               <option value="sepia">Sepia</option>
                               <option value="invert">Invert</option>
-                              <option value="brightness">Brightness</option>
-                              <option value="contrast">Contrast</option>
-                              <option value="saturate">Saturation</option>
-                              <option value="hue-rotate">Hue Rotate</option>
-                            </optgroup>
-                            <optgroup label="Effects">
-                              <option value="blur">Blur</option>
-                              <option value="opacity">Opacity</option>
-                              <option value="drop-shadow">Drop Shadow</option>
-                            </optgroup>
-                            <optgroup label="Transformations">
-                              <option value="scale">Scale</option>
-                              <option value="skewX">Skew X</option>
-                              <option value="skewY">Skew Y</option>
-                            </optgroup>
-                          </select>
-                        </div>
-          
-                        <!-- Sliders for Adjusting Filters -->
-                        <div class="card-body">
-                          <h5 class="text-secondary fw-bold">Adjust Filter Intensity</h5>
-                          <div id="sliders" class="d-grid gap-3">
-                            <!-- Individual filter sliders -->
-          
-                            <div class="d-flex align-items-center">
-                              <div id="grayscale" class="slider_editor">
-                                <label for="grayscaleValue" class="me-2">Grayscale:</label>
-                                <input type="range" id="grayscaleValue" min="0" max="100" value="100">
-                                <span id="grayscaleOutput" class="ms-2">100%</span>
-                              </div>
-                            </div>
-          
-                            <div class="d-flex align-items-center">
-                              <div id="sepia" class="slider_editor">
-                                <label for="sepiaValue" class="me-2">Sepia:</label>
-                                <input type="range" id="sepiaValue" min="0" max="100" value="100">
-                                <span id="sepiaOutput" class="ms-2">100%</span>
-                              </div>
-                            </div>
-          
-                            <div class="d-flex align-items-center">
-                              <div id="invert" class="slider_editor">
-                                <label for="invertValue" class="me-2">Invert:</label>
-                                <input type="range" id="invertValue" min="0" max="100" value="100">
-                                <span id="invertOutput" class="ms-2">100%</span>
-                              </div>
-                            </div>
-          
-                            <div class="d-flex align-items-center">
-                              <div id="brightness" class="slider_editor">
-                                <label for="brightnessValue" class="me-2">Brightness:</label>
-                                <input type="range" id="brightnessValue" min="0" max="200" value="100" class="form-range" />
-                                <span id="brightnessOutput" class="ms-2">100%</span>
-                              </div>
-                            </div>
-          
-                            <div class="d-flex align-items-center">
-                              <div id="contrast" class="slider_editor">
-                                <label for="contrastValue" class="me-2">Contrast:</label>
-                                <input type="range" id="contrastValue" min="0" max="200" value="100" class="form-range" />
-                                <span id="contrastOutput" class="ms-2">100%</span>
-                              </div>
-                            </div>
-          
-                            <div class="d-flex align-items-center">
-                              <div id="saturate" class="slider_editor">
-                                <label for="saturateValue" class="me-2">Saturation:</label>
-                                <input type="range" id="saturateValue" min="0" max="200" value="100" class="form-range" />
-                                <span id="saturateOutput" class="ms-2">100%</span>
-                              </div>
-                            </div>
-          
-                            <div class="d-flex align-items-center">
-                              <div id="hue-rotate" class="slider_editor">
-                                <label for="hueRotateValue" class="me-2">Hue Rotate:</label>
-                                <input type="range" id="hueRotateValue" min="0" max="360" value="0">
-                                <span id="hueRotateOutput" class="ms-2">0°</span>
-                              </div>
-                            </div>
-                            <div class="d-flex align-items-center">
-                              <div id="blur" class="slider_editor">
-                                <label for="blurValue" class="me-2">Blur:</label>
-                                <input type="range" id="blurValue" min="0" max="20" value="0">
-                                <span id="blurOutput" class="ms-2">0px</span>
-                              </div>
-                            </div>
-                            <div class="d-flex align-items-center">
-                              <div id="opacity" class="slider_editor">
-                                <label for="opacityValue" class="me-2">Opacity:</label>
-                                <input type="range" id="opacityValue" min="0" max="100" value="100">
-                                <span id="opacityOutput" class="ms-2">100%</span>
-                              </div>
-                            </div>
-                            <div class="d-flex align-items-center">
-                              <div id="drop-shadow" class="slider_editor">
-                                <label for="dropShadowValue" class="me-2">Drop Shadow (px):</label>
-                                <input type="number" id="dropShadowValue" min="0" value="5">
-                                <span id="dropShadowOutput" class="ms-2">5px</span>
-                              </div>
-                            </div>
-                            <div class="d-flex align-items-center">
-                              <div id="scale" class="slider_editor">
-                                <label for="scaleValue" class="me-2">Scale:</label>
-                                <input type="range" id="scaleValue" min="0.1" max="3" step="0.1" value="1">
-                                <span id="scaleOutput" class="ms-2">100%</span>
-                              </div>
-                            </div>
-                            <div class="d-flex align-items-center">
-                              <div id="skewX" class="slider_editor">
-                                <label for="skewXValue" class="me-2">Skew X:</label>
-                                <input type="range" id="skewXValue" min="-90" max="90" value="0">
-                                <span id="skewXOutput" class="ms-2">0°</span>
-                              </div>
-                            </div>
-                            <div class="d-flex align-items-center">
-                              <div id="skewY" class="slider_editor">
-                                <label for="skewYValue" class="me-2">Skew Y:</label>
-                                <input type="range" id="skewYValue" min="-90" max="90" value="0">
-                                <span id="skewYOutput" class="ms-2">0°</span>
-                              </div>
-                            </div>
-          
+                            </select>
+                      
+                            <!-- Adjustments -->
+                            <label for="brightnessValue">Brightness</label>
+                            <input type="range" id="brightnessValue" min="0" max="200" value="100">
+                      
+                            <label for="contrastValue">Contrast</label>
+                            <input type="range" id="contrastValue" min="0" max="200" value="100">
+                      
+                            <label for="saturateValue">Saturation</label>
+                            <input type="range" id="saturateValue" min="0" max="200" value="100">
+                      
+                            <!-- Action Buttons -->
+                            <button id="resetButton">Reset</button>
+                            <button id="applyChangesButton">Apply Changes</button>
                           </div>
                         </div>
-                      </div>
-          
-                      <div class="d-flex flex-column gap-3 p-3">
-          
-                        <!-- Filter Buttons Section -->
-                        <div class="d-flex justify-content-center mb-4">
-                          <button id="saveFilters" class="btn btn-primary btn-lg rounded-pill px-4 me-3" data-bs-toggle="tooltip" data-bs-placement="top" title="Save your current filter settings">
-                            <i class="fas fa-save me-2"></i> Save Filters
-                          </button>
-                          <button id="resetFilters" class="btn btn-danger btn-lg rounded-pill px-4" data-bs-toggle="tooltip" data-bs-placement="top" title="Reset all filters to default">
-                            <i class="fas fa-undo-alt me-2"></i> Reset Filters
-                          </button>
-                        </div>
-          
-                        <!-- Image Editing Options -->
-                        <div class="d-flex justify-content-around align-items-center my-4">
-                          <div class="d-flex flex-column align-items-center">
-                            <label for="crop" class="fw-semibold mb-2 text-secondary">Crop</label>
-                            <button id="cropImage" class="btn btn-outline-secondary rounded-circle p-3" data-bs-toggle="tooltip" data-bs-placement="top" title="Crop the image to your selected dimensions">
-                              <i class="fas fa-crop-alt"></i>
-                            </button>
-                          </div>
-                          <div class="d-flex flex-column align-items-center">
-                            <label for="resize" class="fw-semibold mb-2 text-secondary">Resize</label>
-                            <button id="resizeImage" class="btn btn-outline-secondary rounded-circle p-3" data-bs-toggle="tooltip" data-bs-placement="top" title="Resize the image dimensions">
-                              <i class="fas fa-expand-arrows-alt"></i>
-                            </button>
-                          </div>
-                        </div>
-                      </div>
-          
-                    </div>
-                    <!-- End of Flex-->
-          
-                    <div class="modal-footer d-flex justify-content-between px-4 py-3 bg-gradient-secondary">
-                      <div class="d-flex gap-3">
-                        <button type="button" class="btn btn-outline-light" id="undoBtn" data-bs-toggle="tooltip" data-bs-placement="top" title="Undo the last action">
-                          <i class="fas fa-undo"></i> Undo
-                        </button>
-                        <button type="button" class="btn btn-outline-light" id="redoBtn" data-bs-toggle="tooltip" data-bs-placement="top" title="Redo the last undone action">
-                          <i class="fas fa-redo"></i> Redo
-                        </button>
-                      </div>
-                      <div class="d-flex gap-3">
-                        <button id="saveImage" type="button" class="btn btn-primary btn-lg rounded-pill px-4" data-bs-toggle="tooltip" data-bs-placement="top" title="Save your edited image">
-                          <i class="fas fa-check-circle me-2"></i> Save
-                        </button>
-                        <button id="closeImageEditor" type="button" class="btn btn-outline-light" data-bs-toggle="tooltip" data-bs-placement="top" title="Close the image editor">
-                          <i class="fas fa-times"></i> Close
-                        </button>
-                      </div>
-                    </div>
-                  </div>
+                      
                 </div>
               </div>
           
