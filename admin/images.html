@@ -2575,8 +2575,8 @@ const filterConfig = {
   saturate: { label: "Saturation", min: 0, max: 200, defaultValue: 100, unit: "%" },
   opacity: { label: "Opacity", min: 0, max: 100, defaultValue: 100, unit: "%" },
   "drop-shadow": { label: "Drop Shadow", min: 0, max: 10, defaultValue: 0, unit: "px" },
-  "shadow-opacity": { label: "Shadow Opacity", min: 0, max: 100, defaultValue: 50, unit: "%" },
-  "shadow-blur": { label: "Shadow Blur", min: 0, max: 20, defaultValue: 5, unit: "px" }
+ "shadow-blur": { label: "Shadow Blur", min: 0, max: 20, defaultValue: 5, unit: "px" },
+"shadow-opacity": { label: "Shadow Opacity", min: 0, max: 100, defaultValue: 50, unit: "%" }
 };
 
 const filterGroups = {
@@ -2639,17 +2639,6 @@ function populateFilterDropdown() {
 
 
 
-function applyPreset(preset) {
-  const slidersContainer = document.querySelector(".slider-container");
-  slidersContainer.innerHTML = ""; // Clear any existing sliders
-
-  const presetValues = filterPresets[preset];
-  Object.keys(presetValues).forEach(filter => {
-    createSlider(filter); // Create sliders for each filter in the preset
-    updateValue(filter, presetValues[filter]); // Set slider to the preset value
-  });
-}
-
 // Add event listener to filter dropdown
 document.getElementById("filters").addEventListener("change", function(event) {
   const selectedFilter = event.target.value;
@@ -2706,24 +2695,63 @@ function createSlider(filter) {
 // This function updates the displayed value and applies the filter to the image
 const filterValues = {};
 
+// This function will update the filter's value and apply it to the image
 function updateValue(filter, value) {
-  filterValues[filter] = value; // Store the current value for each filter
-  const outputId = `${filter}Output`;
-
-  const { unit } = filterConfig[filter] || { unit: "%" };
-  const outputElement = document.getElementById(outputId);
-  if (outputElement) {
-    outputElement.textContent = `${value}${unit}`;
+  // Assuming you're applying the filter to an image
+  const image = document.getElementById("imageCanvas");
+  const filterDetails = filterConfig[filter];
+  if (filterDetails) {
+    const filterString = `${filter}(${value}${filterDetails.unit})`;
+    image.style.filter = filterString;
   }
-  applyAllFilters();
 }
+
+
 
 function applyAllFilters() {
   const image = document.getElementById("imageCanvas");
-  const filters = Object.keys(filterValues).map(
-    filter => `${filter}(${filterValues[filter]}${filterConfig[filter].unit})`
-  );
-  image.style.filter = filters.join(" ");
+  const filters = Object.keys(filterValues).map((filter) => {
+    const filterConfigForFilter = filterConfig[filter];
+    if (filterConfigForFilter) {
+      // Only proceed if the filter exists in filterConfig
+      return `${filter}(${filterValues[filter]}${filterConfigForFilter.unit})`;
+    } else {
+      // If the filter doesn't exist in filterConfig, return an empty string (or handle differently)
+      console.warn(`No config found for filter: ${filter}`);
+      return '';
+    }
+  });
+  image.style.filter = filters.filter(f => f !== '').join(" "); // Remove empty filters
+}
+
+
+// Apply preset filters and generate sliders dynamically
+function applyPreset(presetName) {
+  const preset = filterPresets[presetName];
+  const sliderContainer = document.querySelector(".slider-container");
+
+  // Loop through each filter in the preset and create sliders
+  for (const filter in preset) {
+    if (preset.hasOwnProperty(filter)) {
+      // Ensure the filter exists in the config
+      const filterDetails = filterConfig[filter];
+      if (filterDetails) {
+        // Create slider for this filter if not already created
+        if (!document.getElementById(`${filter}SliderContainer`)) {
+          createSlider(filter);
+        }
+
+        // Set the value based on the preset
+        const slider = document.getElementById(`${filter}Value`);
+        const output = document.getElementById(`${filter}Output`);
+        slider.value = preset[filter];
+        output.textContent = `${preset[filter]}${filterDetails.unit}`;
+        
+        // Apply the filter immediately
+        updateValue(filter, preset[filter]);
+      }
+    }
+  }
 }
 
 
@@ -2740,10 +2768,10 @@ function loadFilters() {
     alert("Filters loaded!");
   }
 }
-
-window.onload = loadFilters;
-
-window.onload = populateFilterDropdown;
+window.onload = function() {
+  populateFilterDropdown();
+  loadFilters();
+};
 
 
 
