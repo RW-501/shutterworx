@@ -2641,8 +2641,9 @@ function redrawCanvas(img) {
 
   // Clear the canvas and apply the filter and image
   ctx.clearRect(0, 0, canvas.width, canvas.height);
-  ctx.filter = filterEffect || "none"; // Apply filter if defined
+  //ctx.filter = filterEffect || "none"; // Apply filter if defined
   ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+  console.log(ctx, "   <  ctx   filterEffect ",filterEffect,"   canvas ",canvas);
 
   // Draw logo on top, if necessary
   drawLogo(ctx, canvas); // Assuming `drawLogo` takes ctx as a parameter
