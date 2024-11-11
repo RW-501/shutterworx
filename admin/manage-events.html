@@ -394,7 +394,7 @@ window.onload = function() {
             const target = event.target;
             const eventId = target.dataset.id;
 
-            console.log(eventId,"   eventId   Button clicked", target); // Check what button is clicked
+            console.log(eventId,"   eventId ",target.classList,"  Button clicked", target); // Check what button is clicked
 
             if (target.classList.contains("main-edit-btn")) openEditModal(eventId);
             else if (target.classList.contains("main-delete-btn")) deleteEvent(eventId);
