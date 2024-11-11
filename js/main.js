@@ -1164,7 +1164,7 @@ function checkAndStoreUserIdInSession() {
     onAuthStateChanged(auth, (user) => {
         if (user) {
             // User is signed in, get the UID
-             userId = user.uid;
+            const userId = user.uid;
 
             // Store UID in session storage
             sessionStorage.setItem('userId', userId);
@@ -1178,6 +1178,7 @@ function checkAndStoreUserIdInSession() {
         }
     });
 }
+
 
 // Function to create a hidden div with the user ID
 function createHiddenUserIdDiv(userId) {

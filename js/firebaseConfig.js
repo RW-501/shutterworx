@@ -58,12 +58,7 @@ const firebaseConfig = {
          db = getFirestore(app); // Initialize Firestore
          storage = getStorage(app); // Initialize Storage
          analytics = initializeAnalytics(app);
-         const user = auth.currentUser;  // Access currentUser directly from 'auth'
-         if (user) {
-            console.log("User is authenticated: ", user);
-          } else {
-            console.log("No user is authenticated");
-          }
+
         
           // You can now use `auth`, `db`, `storage`, and `analytics` as needed in your app.
         
