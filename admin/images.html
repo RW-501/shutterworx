@@ -2466,7 +2466,7 @@ function clearAllFilters() {
   const sliders = document.querySelectorAll(".slider_editor");
   sliders.forEach(slider => slider.remove()); // Remove all sliders
 
-  const image = document.getElementById("targetImage");
+  const image = document.getElementById("imageCanvas");
   image.style.filter = ""; // Clear all image filters
 
   document.getElementById("filters").value = "none"; // Reset dropdown to 'None'
@@ -2519,7 +2519,7 @@ document.querySelectorAll(".slider input[type='range']").forEach((slider) => {
 });
 
 function saveFilters() {
-  const image = document.getElementById("targetImage");
+  const image = document.getElementById("imageCanvas");
   localStorage.setItem("imageFilters", image.style.filter);
   showToast("Filters saved!");
 }
@@ -2531,7 +2531,7 @@ function resetFilters() {
   });
 
   document.getElementById("filters").value = "none"; // Reset filter selection
-  const image = document.getElementById("targetImage");
+  const image = document.getElementById("imageCanvas");
   image.style.filter = ""; // Clear all filters
   showToast("Filters reset to default!");
 }
@@ -2631,7 +2631,7 @@ function populateFilterDropdown() {
   });
 }
 
-window.onload = populateFilterDropdown;
+
 
 function applyPreset(preset) {
   const slidersContainer = document.querySelector(".slider-container");
@@ -2713,7 +2713,7 @@ function updateValue(filter, value) {
 }
 
 function applyAllFilters() {
-  const image = document.getElementById("targetImage");
+  const image = document.getElementById("imageCanvas");
   const filters = Object.keys(filterValues).map(
     filter => `${filter}(${filterValues[filter]}${filterConfig[filter].unit})`
   );
@@ -2737,7 +2737,7 @@ function loadFilters() {
 
 window.onload = loadFilters;
 
-
+window.onload = populateFilterDropdown;
 
 
 
