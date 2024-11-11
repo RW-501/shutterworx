@@ -195,23 +195,26 @@ function displayImageInGallery(mediaData, imageUrl, eventId) {
         eventGroup.className = 'col-md-12 mb-4';
         gallery.appendChild(eventGroup);
     }
-
     const newCard = document.createElement('div');
-    newCard.className = 'col-md-4 mb-4';
-    newCard.innerHTML = `
-        <div class="card">
-            <img src="${imageUrl}" class="card-img-top" alt="Event Image">
-            <div class="card-body">
-                <h5 class="card-title">${mediaData.title || "Untitled"}</h5>
-                <p class="card-text">Price: ${mediaData.price || "N/A"}</p>
-                <button class="btn btn-danger btn-sm main-delete-btn" )">Delete</button>
-                <button class="btn btn-primary btn-sm main-update-btn" )">Update</button>
-                <button class="btn btn-info btn-sm main-view-btn" >View</button>
-                <button class="btn btn-primary btn-sm main-edit-btn" )">Edit</button>
-
-            </div>
+newCard.className = 'col-md-4 mb-4';
+newCard.innerHTML = `
+    <div class="card">
+        <img src="${imageUrl}" class="card-img-top" alt="Event Image">
+        <div class="card-body">
+            <h5 class="card-title">${mediaData.title || "Untitled"}</h5>
+            <p class="card-text">Price: ${mediaData.price || "N/A"}</p>
+            <button class="btn btn-danger btn-sm main-delete-btn" 
+                    data-event-id="${mediaData.id}" data-image-url="${imageUrl}">Delete</button>
+            <button class="btn btn-primary btn-sm main-update-btn" 
+                    data-event-id="${mediaData.id}" data-image-url="${imageUrl}">Update</button>
+            <button class="btn btn-info btn-sm main-view-btn" data-event-id="${mediaData.id}" 
+                    data-image-url="${imageUrl}">View</button> 
+            <button class="btn btn-primary btn-sm main-edit-btn" 
+                    data-event-id="${mediaData.id}" data-image-url="${imageUrl}">Edit</button>
         </div>
-    `;
+    </div>
+`;
+
     eventGroup.appendChild(newCard);
 }
 
@@ -226,6 +229,7 @@ function filterEvents() {
 function displayFilteredEvents(filteredEvents) {
     const gallery = document.getElementById('eventGallery');
     gallery.innerHTML = ''; // Clear existing gallery
+    console.log("filteredEvents  ",filteredEvents);
     filteredEvents.forEach(event => {
         getEventMedia(event.eventId);
     });
