@@ -1564,6 +1564,7 @@ let picCount = 0;
 let imagesData;
 
 // Main function to handle file uploads
+// Handle image files with error handling in place
 function handleFiles(files) {
   Array.from(files).forEach((file) => {
     const fileSize = file.size;
@@ -1571,14 +1572,26 @@ function handleFiles(files) {
     const fileName = file.name;
 
     const reader = new FileReader();
+    
+    // Add error handling to detect read errors
+    reader.onerror = (e) => {
+      console.error(`Error reading file ${fileName}:`, e);
+      alert(`Could not read file ${fileName}. Please try a different file.`);
+    };
+
     reader.onload = (e) => {
       e.preventDefault();
-      processImage(e.target.result, file, fileSize, fileType, fileName);
+      try {
+        processImage(e.target.result, file, fileSize, fileType, fileName);
+      } catch (error) {
+        console.error(`Error processing image ${fileName}:`, error);
+        alert(`Could not process image ${fileName}. It may be an unsupported format or corrupted.`);
+      }
     };
+
     reader.readAsDataURL(file);
   });
 }
-
 /*  WATER MARK FUNCTIONS  /////////////////////////////////////////////
 //////////////////////////////////////////////// ////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////
@@ -1590,32 +1603,37 @@ function handleFiles(files) {
 
 // Function to create lower-quality image with watermark
 async function createLowerQualityImage(mainImageDataURL, watermarkImageURL) {
-  const img = new Image();
-  img.src = mainImageDataURL;
-  await img.decode();
+  try {
+    const img = new Image();
+    img.src = mainImageDataURL;
+    await img.decode();
 
-  const width = 800;
-  const height = (img.height / img.width) * width;
-  canvas.width = width;
-  canvas.height = height;
+    const width = 800;
+    const height = (img.height / img.width) * width;
+    const canvas = document.createElement('canvas');
+    canvas.width = width;
+    canvas.height = height;
 
-  ctx = canvas.getContext("2d");
-  ctx.drawImage(img, 0, 0, width, height);
+    const ctx = canvas.getContext("2d");
+    ctx.drawImage(img, 0, 0, width, height);
 
-  if (watermarkImg) {
-    // Placeholder image for the background (if needed)
-    const wmImg = new Image();
-    wmImg.src = watermarkImageURL;
-    await wmImg.decode();
+    if (watermarkImageURL) {
+      const wmImg = new Image();
+      wmImg.src = watermarkImageURL;
+      await wmImg.decode();
 
-    // Add watermark image
-    addWatermark(ctx, width, height, wmImg);
-  } else {
-    // Add text watermark or default behavior
-    addWatermark(ctx, width, height);
+      // Add watermark image
+      addWatermark(ctx, width, height, wmImg);
+    } else {
+      addWatermark(ctx, width, height);
+    }
+
+    return canvas.toDataURL("image/jpeg", 0.7);
+  } catch (error) {
+    console.error("Error creating lower-quality image:", error);
+    alert("Failed to create a lower-quality image. Please check the image format or try another image.");
+    return null;
   }
-
-  return canvas.toDataURL("image/jpeg", 0.7); // Compression quality
 }
 
 function addWatermark(ctx, width, height, watermarkImg) {
@@ -2220,6 +2238,19 @@ function loadImage(image, canvas) {
     console.log("Error loading image:", image);
   };
 }
+
+
+
+// Function to update the progress bar
+function updateProgressBar(progress) {
+  const progressBar = document.getElementById('uploadProgress');
+  
+  // Set the width and text of the progress bar
+  progressBar.style.width = progress + '%';
+  progressBar.textContent = Math.floor(progress) + '%';
+}
+
+
 
 // Function to process image and apply watermark
 async function processImage(dataURL, file, fileSize, fileType, fileName) {
