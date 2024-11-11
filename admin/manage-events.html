@@ -100,7 +100,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="imageModalLabel">Update Event Image</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <button type="button" class="btn-close close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
                 <input type="file" id="eventImage" />
@@ -276,12 +276,19 @@ document.getElementById('eventForm').addEventListener('submit', async function(e
 
 
 // Function to delete an event
-async function deleteEvent(eventId, btn) {
+
+async function deleteEvent(eventId, btn) { 
     try {
-        await db.collection("Members_Events").doc(eventId).delete();
+        // Reference to the document in the collection
+        const eventDocRef = doc(db, "Members_Events", eventId);
+        
+        // Delete the document
+        await deleteDoc(eventDocRef);
+
         // Remove the event row from the table
         const row = btn.closest("tr");
-        row.remove();
+        if (row) row.remove();
+
         showToast("Event deleted successfully!", "success");
     } catch (error) {
         console.error("Error deleting event:", error);
