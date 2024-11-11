@@ -158,7 +158,8 @@
         <td>${eventData.eventDate || "N/A"}</td>
         <td>${eventData.eventDescription || "N/A"}</td>
         <td>
-            <button class="btn btn-info btn-sm main-btn-info" data-bs-toggle="collapse" data-bs-target="${docId}">Details</button>
+            <button class="btn btn-info btn-sm main-info-btn" data-bs-toggle="collapse" 
+    data-bs-target="#collapse${docId}" data-id="${docId}">
             <button class="btn btn-primary btn-sm main-edit-btn" >Edit</button>
             <button class="btn btn-secondary btn-sm main-image-btn" >Add Images</button>
             <button class="btn btn-success btn-sm main-view-btn" >View</button>
@@ -392,13 +393,15 @@ window.onload = function() {
             const target = event.target;
             const eventId = target.dataset.id;
 
-            console.log("Button clicked", target); // Check what button is clicked
+            console.log(eventId,"   eventId   Button clicked", target); // Check what button is clicked
 
             if (target.classList.contains("main-edit-btn")) openEditModal(eventId);
             else if (target.classList.contains("main-delete-btn")) deleteEvent(eventId);
             else if (target.classList.contains("main-image-btn")) openImageModal(eventId);
             else if (target.classList.contains("main-view-btn")) viewEvent(eventId);
             else if (target.classList.contains("main-info-btn")) viewEventDetails(eventId);
+
+
         });
     };
     
