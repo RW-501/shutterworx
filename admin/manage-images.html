@@ -357,7 +357,7 @@ document.getElementById('imageForm').addEventListener('submit', function(event) 
 
 
 // This will be triggered on page load
-window.onload = function() {
+document.addEventListener("DOMContentLoaded", function () {
     const urlParams = new URLSearchParams(window.location.search);
     const eventId = urlParams.get('eventId');  // Get the 'eventId' from the URL query string
     const userId = document.getElementById("userIdDiv").innerText;
@@ -388,7 +388,7 @@ document.querySelectorAll('.btn-primary').forEach(button => {
     });
 });
 
-};
+});
 
     </script>
 
