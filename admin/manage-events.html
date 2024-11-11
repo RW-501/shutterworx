@@ -152,11 +152,11 @@
         <td>${eventData.eventDate || "N/A"}</td>
         <td>${eventData.eventDescription || "N/A"}</td>
         <td>
-            <button class="btn btn-info btn-sm" data-bs-toggle="collapse" data-bs-target="#collapse${docId}">Details</button>
-            <button class="btn btn-primary btn-sm" >Edit</button>
-            <button class="btn btn-secondary btn-sm" >Change Image</button>
-            <button class="btn btn-success btn-sm" >View</button>
-            <button class="btn btn-danger btn-sm">Delete</button>
+            <button class="btn btn-info btn-sm main-btn-info" data-bs-toggle="collapse" data-bs-target="#collapse${docId}">Details</button>
+            <button class="btn btn-primary btn-sm main-edit-btn" >Edit</button>
+            <button class="btn btn-secondary btn-sm main-image-btn" >Change Image</button>
+            <button class="btn btn-success btn-sm main-view-btn" >View</button>
+            <button class="btn btn-danger btn-sm main-delete-btn">Delete</button>
         </td>
     `;
 
@@ -356,16 +356,16 @@ window.onload = function() {
             const target = event.target;
             const eventId = target.dataset.id;
 
-            if (target.classList.contains("edit-btn")) openEditModal(eventId);
-            else if (target.classList.contains("delete-btn")) deleteEvent(eventId);
-            else if (target.classList.contains("image-btn")) openImageModal(eventId);
-            else if (target.classList.contains("view-btn")) viewEvent(eventId);
+            if (target.classList.contains("main-edit-btn")) openEditModal(eventId);
+            else if (target.classList.contains("main-delete-btn")) deleteEvent(eventId);
+            else if (target.classList.contains("main-image-btn")) openImageModal(eventId);
+            else if (target.classList.contains("main-view-btn")) viewEvent(eventId);
         });
     };
     
     document.addEventListener('DOMContentLoaded', function () {
     // Select all buttons with the class .btn-info
-    const detailButtons = document.querySelectorAll('.btn-info');
+    const detailButtons = document.querySelectorAll('.main-btn-info');
 
     detailButtons.forEach(button => {
         // Add an event listener to each button
