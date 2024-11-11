@@ -360,14 +360,17 @@ document.getElementById('imageForm').addEventListener('submit', function(event) 
 window.onload = function() {
     const urlParams = new URLSearchParams(window.location.search);
     const eventId = urlParams.get('eventId');  // Get the 'eventId' from the URL query string
-
-    // Get userId from the DOM
     const userId = document.getElementById("userIdDiv").innerText;
+
+if(eventId){
+   // Call getEventMedia, passing the eventId (if available)
+   getEventMedia(eventId);
+}else{
+    // Get userId from the DOM
     console.log("userId:", userId);
+    getUserEvents(userId)
 
-    // Call getEventMedia, passing the eventId (if available)
-    getEventMedia(eventId);
-
+}
 
     document.querySelectorAll('.btn-danger').forEach(button => {
     button.addEventListener('click', function() {
