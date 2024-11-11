@@ -2872,15 +2872,15 @@ document.addEventListener("DOMContentLoaded", function () {
   document
     .getElementById("closeImageEditorX")
     .addEventListener("click", closeImageEditor);
+    document
+        .getElementById("collapseControlsButton")
+        .addEventListener("click", collapseControlsButton);
 
   // Initialize canvas and context when the image editor is opened
   document
     .getElementById("openImageEditorBtn")
     .addEventListener("click", () => {
-      document
-        .getElementById("collapseControlsButton")
-        .addEventListener("click", collapseControlsButton);
-
+ 
       const getImages = document.querySelectorAll(".select-checkbox:checked"); // Get checked checkboxes
 
       if (getImages.length === 0) {
