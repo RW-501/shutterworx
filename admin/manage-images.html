@@ -41,9 +41,75 @@
         </form>
 
         <h2>Uploaded Images</h2>
-        <div class="row" id="imageGallery">
-            <!-- Uploaded images will be displayed here -->
+
+
+        <div class="search-filter-area">
+            <input type="text" id="searchInput" placeholder="Search events..." class="form-control" onkeyup="filterEvents()">
+            
+            <div class="dropdown">
+                <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    Sort By
+                </button>
+                <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="#" onclick="sortEvents('eventDate')">Event Date</a></li>
+                    <li><a class="dropdown-item" href="#" onclick="sortEvents('lastUpdated')">Last Updated</a></li>
+                    <li><a class="dropdown-item" href="#" onclick="sortEvents('eventName')">Event Name</a></li>
+                </ul>
+            </div>
         </div>
+        
+        <div id="eventGallery" class="row">
+            <!-- Event cards will be inserted here dynamically -->
+        </div>
+        
+        <!-- Modal for updating media info -->
+        <div class="modal fade" id="updateMediaModal" tabindex="-1" aria-labelledby="updateMediaModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="updateMediaModalLabel">Update Media Information</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form id="updateMediaForm">
+                            <div class="mb-3">
+                                <label for="mediaTitle" class="form-label">Title</label>
+                                <input type="text" class="form-control" id="mediaTitle" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="mediaPrice" class="form-label">Price</label>
+                                <input type="text" class="form-control" id="mediaPrice" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="mediaFile" class="form-label">Choose New Image</label>
+                                <input type="file" class="form-control" id="mediaFile">
+                            </div>
+                            <button type="submit" class="btn btn-primary">Update</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Modal for viewing image and thumbnail -->
+        <div class="modal fade" id="viewImageModal" tabindex="-1" aria-labelledby="viewImageModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="viewImageModalLabel">View Image</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <img id="viewImage" src="" alt="Event Image" class="img-fluid">
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+
+
+
+
     </div>
 </main>
 </div>
@@ -83,23 +149,154 @@
         
     const userId = document.getElementById("userIdDiv").innerText;
 
-// Step 1: Get events for the user
-async function getUserEvents() {
+// Step 1: Fetch event media or user's events based on eventId
+async function getEventMedia(eventId) {
     try {
-        // Reference the "Members_Events" collection and filter by userId
+        const mediaSnapshot = await db.collection("Members_Media")
+            .where("eventID", "==", eventId) // Fetch all media for the given eventId
+            .get();
+
+        if (!mediaSnapshot.empty) {
+            mediaSnapshot.forEach((mediaDoc) => {
+                const mediaData = mediaDoc.data();
+                const originalUrl = mediaData.originalUrl;
+                const eventId = mediaData.eventID;
+
+                // Display the image in the gallery grouped by event
+                displayImageInGallery(mediaData, originalUrl, eventId);
+            });
+        } else {
+            const gallery = document.getElementById('eventGallery');
+    
+    // Check if the event ID already exists in the gallery
+    let eventGroup = document.getElementById(`event-${eventId}`);
+    
+    // If event group does not exist, create it
+    if (!eventGroup) {
+        eventGroup = document.createElement('div');
+        eventGroup.id = `event-${eventId}`;
+        eventGroup.className = 'col-md-12 mb-4';
+        gallery.appendChild(eventGroup);
+    }
+}
+    } catch (error) {
+        console.error("Error getting event media:", error);
+    }
+}
+
+// Step 2: Display image in the gallery, grouped by event
+function displayImageInGallery(mediaData, imageUrl, eventId) {
+    const gallery = document.getElementById('eventGallery');
+    
+    // Check if the event ID already exists in the gallery
+    let eventGroup = document.getElementById(`event-${eventId}`);
+    if (!eventGroup) {
+        eventGroup = document.createElement('div');
+        eventGroup.id = `event-${eventId}`;
+        eventGroup.className = 'col-md-12 mb-4';
+        gallery.appendChild(eventGroup);
+    }
+
+    const newCard = document.createElement('div');
+    newCard.className = 'col-md-4 mb-4';
+    newCard.innerHTML = `
+        <div class="card">
+            <img src="${imageUrl}" class="card-img-top" alt="Event Image">
+            <div class="card-body">
+                <h5 class="card-title">${mediaData.title || "Untitled"}</h5>
+                <p class="card-text">Price: ${mediaData.price || "N/A"}</p>
+                <button class="btn btn-danger btn-sm" onclick="deleteMedia('${mediaData.eventID}', '${mediaData.originalUrl}')">Delete</button>
+                <button class="btn btn-primary btn-sm" onclick="openUpdateMediaModal('${mediaData.eventID}', '${mediaData.originalUrl}')">Edit</button>
+                <button class="btn btn-info btn-sm" onclick="viewImage('${imageUrl}')">View</button>
+            </div>
+        </div>
+    `;
+    eventGroup.appendChild(newCard);
+}
+
+// Step 3: Filter events based on the search input
+function filterEvents() {
+    const searchInput = document.getElementById('searchInput').value.toLowerCase();
+    const filteredEvents = eventsData.filter(event => event.eventName.toLowerCase().includes(searchInput));
+    displayFilteredEvents(filteredEvents);
+}
+
+// Step 4: Display filtered events
+function displayFilteredEvents(filteredEvents) {
+    const gallery = document.getElementById('eventGallery');
+    gallery.innerHTML = ''; // Clear existing gallery
+    filteredEvents.forEach(event => {
+        getEventMedia(event.eventId);
+    });
+}
+
+// Step 5: Sort events based on the selected criteria
+function sortEvents(criteria) {
+    const sortedEvents = [...eventsData];
+    sortedEvents.sort((a, b) => {
+        if (criteria === 'eventDate') {
+            return new Date(b.eventDate) - new Date(a.eventDate);
+        } else if (criteria === 'lastUpdated') {
+            return new Date(b.timestamp) - new Date(a.timestamp);
+        } else if (criteria === 'eventName') {
+            return a.eventName.localeCompare(b.eventName);
+        }
+    });
+
+    displayFilteredEvents(sortedEvents);
+}
+
+// Step 6: Open modal for editing media info
+function openUpdateMediaModal(eventId, imageUrl) {
+    const modal = new bootstrap.Modal(document.getElementById('updateMediaModal'));
+    const mediaTitle = document.getElementById('mediaTitle');
+    const mediaPrice = document.getElementById('mediaPrice');
+
+    // Fetch media details based on eventId (you can also fetch image by URL)
+    db.collection("Members_Media").doc(eventId).get().then(doc => {
+        const mediaData = doc.data();
+        mediaTitle.value = mediaData.title || '';
+        mediaPrice.value = mediaData.price || '';
+    });
+
+    modal.show();
+}
+
+// Step 7: View image in modal
+function viewImage(imageUrl) {
+    const modal = new bootstrap.Modal(document.getElementById('viewImageModal'));
+    document.getElementById('viewImage').src = imageUrl;
+    modal.show();
+}
+
+// Step 8: Delete media
+function deleteMedia(eventId, imageUrl) {
+    db.collection("Members_Media").doc(eventId).delete()
+        .then(() => {
+            showToast("Media deleted successfully.");
+            location.reload(); // Refresh page to reflect the changes
+        })
+        .catch((error) => {
+            console.error("Error deleting media:", error);
+        });
+}
+
+// Fetch user events (assuming userId is available)
+async function getUserEvents(userId) {
+    try {
         const eventsRef = collection(db, "Members_Events");
         const eventsQuery = query(eventsRef, where("userID", "==", userId));
         const eventsSnapshot = await getDocs(eventsQuery);
 
-
         if (!eventsSnapshot.empty) {
-            // Loop through each event
-            eventsSnapshot.forEach(async (eventDoc) => {
-                const eventId = eventDoc.id; // The event ID
-
-                // Step 2: Get media for each event
-                await getEventMedia(eventId);
+            const mediaPromises = [];
+            eventsSnapshot.forEach((eventDoc) => {
+                const eventId = eventDoc.id;
+                mediaPromises.push(getEventMedia(eventId)); // Store all promises
             });
+            
+            // Wait for all media to be fetched in parallel
+            await Promise.all(mediaPromises);
         } else {
             console.log("No events found for this user.");
         }
@@ -108,45 +305,30 @@ async function getUserEvents() {
     }
 }
 
-// Step 2: Get media for each event based on eventId
-async function getEventMedia(eventId) {
-    try {
-        const mediaSnapshot = await db.collection("Members_Media")
-    .doc(eventId) // Fetch document by its ID (eventId)
-    .get();
 
 
-        if (!mediaSnapshot.empty) {
-            mediaSnapshot.forEach((mediaDoc) => {
-                const mediaData = mediaDoc.data();
-                const originalUrl = mediaData.originalUrl;
 
-                // Display the image in the gallery
-                displayImageInGallery(originalUrl);
-            });
-        } else {
-            console.log("No media found for event:", eventId);
-        }
-    } catch (error) {
-        console.error("Error getting event media:", error);
-    }
-}
 
-// Step 3: Display the image in the gallery
-function displayImageInGallery(imageUrl) {
-    const gallery = document.getElementById('imageGallery');
-    const newCol = document.createElement('div');
-    newCol.className = 'col-md-4 mb-4';
-    newCol.innerHTML = `
-        <div class="card">
-            <img src="${imageUrl}" class="card-img-top" alt="Uploaded Image">
-            <div class="card-body">
-                <button class="btn btn-danger btn-sm" onclick="this.parentElement.parentElement.parentElement.remove();">Delete</button>
-            </div>
-        </div>
-    `;
-    gallery.appendChild(newCol);
-}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 // Step 4: Handle the image upload and display
 document.getElementById('imageForm').addEventListener('submit', function(event) {
@@ -177,12 +359,17 @@ document.getElementById('imageForm').addEventListener('submit', function(event) 
 
 
 
+// This will be triggered on page load
 window.onload = function() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const eventId = urlParams.get('eventId');  // Get the 'eventId' from the URL query string
+
+    // Get userId from the DOM
     const userId = document.getElementById("userIdDiv").innerText;
     console.log("userId:", userId);
 
-// Call to start the process of fetching events and media
-getUserEvents(userId);
+    // Call getEventMedia, passing the eventId (if available)
+    getEventMedia(eventId);
 };
 
     </script>

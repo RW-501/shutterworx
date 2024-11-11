@@ -66,6 +66,47 @@
 
         </main>
     </div>
+<!-- Edit Event Modal -->
+<div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editModalLabel">Edit Event</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <!-- Form fields for editing event details -->
+                <input type="text" id="editEventName" placeholder="Event Name" />
+                <input type="date" id="editEventDate" placeholder="Event Date" />
+                <textarea id="editEventDescription" placeholder="Event Description"></textarea>
+                <!-- More fields as needed -->
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" onclick="updateEvent(eventId, {eventName: document.getElementById('editEventName').value, eventDate: document.getElementById('editEventDate').value, eventDescription: document.getElementById('editEventDescription').value })">Save Changes</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Image Upload Modal -->
+<div class="modal fade" id="imageModal" tabindex="-1" aria-labelledby="imageModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="imageModalLabel">Update Event Image</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <input type="file" id="eventImage" />
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" onclick="updateEventImage(eventId, document.getElementById('eventImage').files[0])">Upload Image</button>
+            </div>
+        </div>
+    </div>
+</div>
 
 
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
@@ -99,6 +140,53 @@
     where, getDocs, storage, collection, auth, analytics } from 'https://shutterworx.co/js/firebaseConfig.js';
        
 
+
+
+
+    function createEventRow(tableBody, eventData, docId, index) {
+    const newRow = tableBody.insertRow();
+    newRow.innerHTML = `
+        <td>${index + 1}</td>
+        <td>${eventData.eventName || "N/A"}</td>
+        <td>${eventData.eventDate || "N/A"}</td>
+        <td>${eventData.eventDescription || "N/A"}</td>
+        <td>
+            <button class="btn btn-info btn-sm" data-bs-toggle="collapse" data-bs-target="#collapse${docId}">Details</button>
+            <button class="btn btn-primary btn-sm" onclick="openEditModal('${docId}')">Edit</button>
+            <button class="btn btn-secondary btn-sm" onclick="openImageModal('${docId}')">Change Image</button>
+            <button class="btn btn-success btn-sm" onclick="viewEvent('${docId}')">View</button>
+            <button class="btn btn-danger btn-sm" onclick="deleteEvent('${docId}', this)">Delete</button>
+        </td>
+    `;
+
+    // Insert collapsible row with additional details
+    const collapsibleRow = tableBody.insertRow();
+    collapsibleRow.innerHTML = `
+        <td colspan="5">
+            <div id="collapse${docId}" class="collapse">
+                <strong>Additional Details:</strong>
+                <ul>
+                    <li>Access Code: ${eventData.accessCode || "N/A"}</li>
+                    <li>On-Sell Price: ${eventData.collection_OnSellPrice || "N/A"}</li>
+                    <li>Collection Price: ${eventData.collection_price || "N/A"}</li>
+                    <li>Comments: ${eventData.comments ? eventData.comments.join(", ") : "N/A"}</li>
+                    <li>Event Tags: ${eventData.eventTags ? eventData.eventTags.join(", ") : "N/A"}</li>
+                    <li>Is Public: ${eventData.isPublic ? "Yes" : "No"}</li>
+                    <li>Location: ${eventData.location || "N/A"}</li>
+                    <li>Status: ${eventData.status || "N/A"}</li>
+                    <li>Timestamp: ${eventData.timestamp || "N/A"}</li>
+                    <li>User ID: ${eventData.userID || "N/A"}</li>
+                    <li>Views: ${eventData.views || 0}</li>
+                </ul>
+            </div>
+        </td>
+    `;
+}
+
+
+
+
+    
 // Function to fetch and display user events
 async function fetchUserEvents(userId) {
     try {
@@ -108,55 +196,13 @@ async function fetchUserEvents(userId) {
         const eventsSnapshot = await getDocs(eventsQuery);
 
         if (!eventsSnapshot.empty) {
-    const tableBody = document.getElementById('eventTableBody');
-    tableBody.innerHTML = ""; // Clear any existing rows
-
-    eventsSnapshot.forEach((doc, index) => {
-        const eventData = doc.data();
-
-        // Insert the main row with summary details
-        const newRow = tableBody.insertRow();
-        newRow.innerHTML = `
-            <td>${index + 1}</td>
-            <td>${eventData.eventName || "N/A"}</td>
-            <td>${eventData.eventDate || "N/A"}</td>
-            <td>${eventData.eventDescription || "N/A"}</td>
-            <td>
-                <button class="btn btn-info btn-sm" data-bs-toggle="collapse" data-bs-target="#collapse${doc.id}">Details</button>
-                <button class="btn btn-primary btn-sm" onclick="openEditModal('${doc.id}')">Edit</button>
-                <button class="btn btn-secondary btn-sm" onclick="openImageModal('${doc.id}')">Change Image</button>
-                <button class="btn btn-success btn-sm" onclick="viewEvent('${doc.id}')">View</button>
-                <button class="btn btn-danger btn-sm" onclick="deleteEvent('${doc.id}', this)">Delete</button>
-            </td>
-        `;
-
-        // Insert collapsible row with additional details
-        const collapsibleRow = tableBody.insertRow();
-        collapsibleRow.innerHTML = `
-            <td colspan="5">
-                <div id="collapse${doc.id}" class="collapse">
-                    <strong>Additional Details:</strong>
-                    <ul>
-                        <li>Access Code: ${eventData.accessCode || "N/A"}</li>
-                        <li>On-Sell Price: ${eventData.collection_OnSellPrice || "N/A"}</li>
-                        <li>Collection Price: ${eventData.collection_price || "N/A"}</li>
-                        <li>Comments: ${eventData.comments ? eventData.comments.join(", ") : "N/A"}</li>
-                        <li>Event Tags: ${eventData.eventTags ? eventData.eventTags.join(", ") : "N/A"}</li>
-                        <li>Is Public: ${eventData.isPublic ? "Yes" : "No"}</li>
-                        <li>Location: ${eventData.location || "N/A"}</li>
-                        <li>Status: ${eventData.status || "N/A"}</li>
-                        <li>Timestamp: ${eventData.timestamp || "N/A"}</li>
-                        <li>User ID: ${eventData.userID || "N/A"}</li>
-                        <li>Views: ${eventData.views || 0}</li>
-                    </ul>
-                </div>
-            </td>
-        `;
-    });
-} else {
-            newRow.innerHTML = "<td>No events found for this user.</td>";
-}
-
+            eventsSnapshot.forEach((doc, index) => {
+                const eventData = doc.data();
+                createEventRow(tableBody, eventData, doc.id, index); // Pass doc.id to createEventRow
+            });
+        } else {
+            tableBody.innerHTML = "<tr><td colspan='5'>No events found for this user.</td></tr>";
+        }
     } catch (error) {
         console.error("Error fetching user events:", error);
     }
@@ -165,45 +211,43 @@ async function fetchUserEvents(userId) {
 // Function to handle event form submission
 document.getElementById('eventForm').addEventListener('submit', async function(event) {
     event.preventDefault();
+
     const title = document.getElementById('eventName').value;
     const eventDate = document.getElementById('eventDate').value;
     const eventDescription = document.getElementById('eventDescription').value;
+    const collection_price = document.getElementById('collectionPrice').value || "";  // Example field
+    const accessCode = document.getElementById('accessCode').value || "";  // Example field
+    const location = document.getElementById('location').value || "";  // Example field
 
     if (!title || !eventDate || !eventDescription) {
-        alert("Please fill out all fields.");
+        showToast("Please fill out all fields.");
         return;
     }
 
     try {
         // Add the event to the database
         const newEventRef = await db.collection("Members_Events").add({
-            userID: userId,
+            userID: userId, // Ensure userId is defined in your context
             title,
             eventDate: eventDate || new Date(),
             eventDescription: eventDescription || "No Description",
-                status: "active",
-                isPublic: true,
-                collection_price: collection_price || "",
-                collection_OnSellPrice: "",
-                eventTags: [],
-                accessCode: accessCode || "",
-                location: location || "",
-                timestamp: new Date(),
-                comments: [],
-                views: 0,
-                deactived: false,
+            status: "active",
+            isPublic: true,
+            collection_price,
+            collection_OnSellPrice: "", // Default value can be set here
+            eventTags: [],
+            accessCode,
+            location,
+            timestamp: new Date(),
+            comments: [],
+            views: 0,
+            deactived: false
         });
 
-        // Add the new event to the table
+        // Insert the new event into the table
         const tableBody = document.getElementById('eventTableBody');
-        const newRow = tableBody.insertRow();
-        newRow.innerHTML = `
-            <td>${tableBody.rows.length + 1}</td>
-            <td>${eventName}</td>
-            <td>${eventDate}</td>
-            <td>${eventDescription}</td>
-            <td><button class="btn btn-danger btn-sm" onclick="deleteEvent('${newEventRef.id}', this)">Delete</button></td>
-        `;
+        const index = tableBody.rows.length;  // Use the current row length for the index
+        createEventRow(tableBody, newEventRef.data(), newEventRef.id, index); // Use the event data and document ID
 
         showToast("Event added successfully!", "success");
 
@@ -214,6 +258,7 @@ document.getElementById('eventForm').addEventListener('submit', async function(e
         showToast("Error adding event. Please try again.", "error");
     }
 });
+
 
 // Function to delete an event
 async function deleteEvent(eventId, btn) {
@@ -236,6 +281,116 @@ window.onload = function() {
     // Call fetchUserEvents when the page loads to display existing events
     fetchUserEvents(userId);
 };
+
+
+// Function to open the Edit Modal and populate it with event data
+function openEditModal(eventId) {
+    // Retrieve the event data from the database using eventId (you can modify this to fit your data structure)
+    const eventRef = db.collection("Members_Events").doc(eventId);
+    eventRef.get().then((doc) => {
+        if (doc.exists) {
+            const eventData = doc.data();
+
+            // Populate the modal fields with event data
+            document.getElementById('editEventName').value = eventData.eventName || "";
+            document.getElementById('editEventDate').value = eventData.eventDate || "";
+            document.getElementById('editEventDescription').value = eventData.eventDescription || "";
+            document.getElementById('editAccessCode').value = eventData.accessCode || "";
+            document.getElementById('editLocation').value = eventData.location || "";
+            document.getElementById('editCollectionPrice').value = eventData.collection_price || "";
+            document.getElementById('editCollectionOnSellPrice').value = eventData.collection_OnSellPrice || "";
+
+            // Show the modal
+            $('#editModal').modal('show');
+        } else {
+            console.log("Event not found");
+        }
+    }).catch((error) => {
+        console.error("Error retrieving event:", error);
+    });
+}
+
+async function updateEvent(eventId, updatedData) {
+    try {
+        await db.collection("Members_Events").doc(eventId).update(updatedData);
+        showToast("Event updated successfully!");
+        location.reload(); // Reload to reflect updated data
+    } catch (error) {
+        console.error("Error updating event:", error);
+    }
+}
+
+function openImageModal(eventId) {
+    // Show the image upload modal for the event
+    $('#imageModal').modal('show');
+}
+
+
+async function updateEventImage(eventId, imageFile) {
+    try {
+
+        const shortenedFileName = cleanAndShortenFileName(imageFile, 15);
+
+// Set Firebase storage references for original and compressed images
+const storageRef = ref(
+  storage,
+  `images/${eventId}`);
+
+        // Reference to the storage location where the image will be uploaded
+      //  const storageRef = firebase.storage().ref(`eventImages/${eventId}`);
+
+        // Start uploading the image
+        const uploadTask = storageRef.put(shortenedFileName);
+
+        // Monitor the upload progress
+        uploadTask.on('state_changed', 
+            (snapshot) => {
+                // You can display progress here if needed
+                const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+                showToast(`Upload is ${progress}% done`);
+                // Optionally update a progress bar or something similar here
+            },
+            (error) => {
+                // Handle upload error
+                console.error("Error uploading image:", error);
+                showToast("Error uploading image. Please try again.");
+            }
+        );
+
+        // Wait for the upload to complete
+        await uploadTask;
+
+        // After successful upload, get the download URL
+        const downloadURL = await storageRef.getDownloadURL();
+
+        // Update the event document in Firestore with the new image URL
+        await db.collection("Members_Events").doc(eventId).update({
+            watermarkImage: downloadURL
+        });
+
+        // Inform the user that the image has been successfully updated
+        showToast("Image updated successfully!");
+        
+        // Optionally, you can update the UI without reloading the page
+        // For example, you could display the new image immediately
+        // document.getElementById('imageElement').src = downloadURL;
+    } catch (error) {
+        // General error handling
+        console.error("Error updating event image:", error);
+        showToast("Error updating event image. Please try again.");
+    }
+}
+
+function viewEvent(eventId) {
+    window.location.href = `/manage-images.html?eventId=${eventId}`;
+}
+
+
+
+
+
+
+
 
     </script>
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-GNSPWFHKVN"></script>
