@@ -1508,7 +1508,7 @@ const previewCtx = previewCanvas.getContext("2d");
 console.log(previewCanvas);
 
 const imageInput = document.getElementById("imageInput");
-const canvas = document.createElement("canvas");
+const canvas = document.getElementById("imageCanvas");
 
 const imagePreviewContainer = document.getElementById("imagePreviewContainer");
 
@@ -2164,7 +2164,7 @@ if (previewCanvas && previewCtx) {
 function openImageEditor(image) { 
   document.getElementById("imageEditorModal").style.display = "block"; // Show the modal
   const canvas = document.getElementById("imageCanvas"); // Target the existing canvas
-  console.log("Working???   openImageEditor");
+  console.log("Working???   openImageEditor   ",image);
 
   if (!canvas) {
     console.log("Canvas element not found");
@@ -2230,77 +2230,61 @@ async function processImage(dataURL, file, fileSize, fileType, fileName) {
 
 // Function to render images
 async function renderImages(imagesData) {
-  const imagePreviewContainer = document.getElementById(
-    "imagePreviewContainer"
-  );
+  const imagePreviewContainer = document.getElementById("imagePreviewContainer");
+  const imageGalleryContainer = document.getElementById("imageGallery");
 
   // Clear previous content
-  const imageGalleryContainer = document.getElementById("imageGallery");
+  imageGalleryContainer.innerHTML = "";
 
   // Create a header for the image count
   const imageCountHeader = document.createElement("h5");
   imageCountHeader.innerText = `Total Images: ${imagesData.length}`;
   imageCountHeader.classList.add("mb-3", "text-left");
-
-  // Clear and add the image count header to the gallery container
-  imageGalleryContainer.innerHTML = "";
   imageGalleryContainer.appendChild(imageCountHeader);
 
   imagesData.forEach((image) => {
-    const {
-      compressedImage,
-      originalUrl,
-      fileType,
-      fileName,
-      fileSize
-    } = image;
-
-    // Increment picCount for each new card to ensure unique references
+    const { compressedImage, originalUrl, fileType, fileName, fileSize } = image;
     picCount += 1;
 
-    // Create a new div element for each image card
     const imgDiv = document.createElement("div");
     imgDiv.classList.add("col-md-4", "mt-3", "watermark-thumbnail");
 
-    // Set the inner HTML with the image details
     imgDiv.innerHTML = `
-            <div class="card mb-3" aria-label="Image card for ${fileName}" data-set-ref="${picCount}">
-                <img src="${compressedImage}" class="card-img-top img-thumbnail" alt="Compressed version of ${fileName}" loading="lazy">
-                <div class="card-body">
-                    <input type="checkbox" class="select-checkbox" data-set-ref="${picCount}" aria-label="Select image ${fileName}">
-                    <h6 class="card-title">${truncateText(fileName, 20)}</h6>
-                    <p class="card-text">
-                        Type: ${fileType} <br>
-                        Size: ${(fileSize / 1024).toFixed(2)} KB <br>
-                        <strong>Image #${picCount}</strong>
-                    </p>
-                    <button class="btn btn-primary edit-image-btn btn-sm mt-2" aria-label="Edit image of ${fileName}" data-original-url="${originalUrl}">
-                        Edit Image
-                    </button>                
-                    <button class="btn btn-danger remove-card-btn btn-sm mt-2" aria-label="Remove card of ${fileName}" data-set-ref="${picCount}">
-                        Remove Card
-                    </button>
-                </div>
-            </div>
-        `;
+      <div class="card mb-3" aria-label="Image card for ${fileName}" data-set-ref="${picCount}">
+        <img src="${compressedImage}" class="card-img-top img-thumbnail" alt="Compressed version of ${fileName}" loading="lazy">
+        <div class="card-body">
+          <input type="checkbox" class="select-checkbox" data-set-ref="${picCount}" aria-label="Select image ${fileName}">
+          <h6 class="card-title">${truncateText(fileName, 20)}</h6>
+          <p class="card-text">
+            Type: ${fileType} <br>
+            Size: ${(fileSize / 1024).toFixed(2)} KB <br>
+            <strong>Image #${picCount}</strong>
+          </p>
+          <button class="btn btn-primary edit-image-btn btn-sm mt-2" aria-label="Edit image of ${fileName}" data-original-url="${originalUrl}">
+            Edit Image
+          </button>                
+          <button class="btn btn-danger remove-card-btn btn-sm mt-2" aria-label="Remove card of ${fileName}" data-set-ref="${picCount}">
+            Remove Card
+          </button>
+        </div>
+      </div>
+    `;
 
-    // Append the new image card div to the container
     imagePreviewContainer.appendChild(imgDiv);
+  });
 
-    // Add event listeners to buttons
-    imgDiv
-      .querySelector(".edit-image-btn")
-      .addEventListener("click", (event) => {
-        openImageEditor(event.target.getAttribute("data-original-url"));
-      });
-
-    imgDiv
-      .querySelector(".remove-card-btn")
-      .addEventListener("click", (event) => {
-        removeCardByRef(event.target.getAttribute("data-set-ref"));
-      });
+  // Add event delegation for remove and edit buttons
+  imagePreviewContainer.addEventListener("click", (event) => {
+    if (event.target.classList.contains("remove-card-btn")) {
+      const ref = event.target.getAttribute("data-set-ref");
+      removeCardByRef(ref);
+    } else if (event.target.classList.contains("edit-image-btn")) {
+      const originalUrl = event.target.getAttribute("data-original-url");
+      openImageEditor(originalUrl);
+    }
   });
 }
+
 
 // Event listener for "Save Selected Images" button with progress tracking
 document
@@ -2401,23 +2385,18 @@ document.getElementById("saveImagesBtn").addEventListener("click", async () => {
 
 // Function to remove .card div with a specific data-set-ref value
 function removeCardByRef(picCount) {
-  // Convert picCount to a string to ensure matching with attribute value
   const picCountStr = picCount.toString();
 
-  // Select all .watermark-thumbnail elements (cards)
+  // Select all cards and find the one with matching data-set-ref
   const cards = document.querySelectorAll(".watermark-thumbnail");
-
-  // Loop through the cards to find the one with the matching data-set-ref attribute
   cards.forEach((card) => {
-    if (card.getAttribute("data-set-ref") === picCountStr) {
-      // Remove the card if the data-set-ref matches picCount
+    if (card.querySelector(".card").getAttribute("data-set-ref") === picCountStr) {
       card.remove();
-      
-      // Provide feedback to the user
       showToast(`Image card #${picCount} removed successfully.`);
     }
   });
 }
+
 
 
 /*  IMAGE EDITOR FUNCTIONS   /////////////////////////////////////////////
@@ -2828,7 +2807,7 @@ function redrawCanvas(img) {
   console.log(ctx, "   <  ctx   filterEffect ",filterEffect,"   canvas ",canvas);
 
   // Draw logo on top, if necessary
-  drawLogo(ctx, canvas); // Assuming `drawLogo` takes ctx as a parameter
+ // drawLogo(ctx, canvas); // Assuming `drawLogo` takes ctx as a parameter
 
   // Reset the filter after drawing
   ctx.filter = "none";
