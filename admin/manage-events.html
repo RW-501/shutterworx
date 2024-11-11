@@ -163,6 +163,9 @@
 
     // Insert collapsible row with additional details
     const collapsibleRow = tableBody.insertRow();
+    collapsibleRow.id = `collapse${docId}`;
+    collapsibleRow.classList.add('collapse');
+
     collapsibleRow.innerHTML = `
         <td colspan="5">
             <div id="collapse${docId}" class="collapse">
@@ -383,6 +386,8 @@ window.onload = function() {
         tableBody.addEventListener("click", (event) => {
             const target = event.target;
             const eventId = target.dataset.id;
+
+            console.log("Button clicked", target); // Check what button is clicked
 
             if (target.classList.contains("main-edit-btn")) openEditModal(eventId);
             else if (target.classList.contains("main-delete-btn")) deleteEvent(eventId);
