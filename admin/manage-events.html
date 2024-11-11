@@ -274,41 +274,7 @@ async function deleteEvent(eventId, btn) {
     }
 }
 
-window.onload = function() {
-    const userId = document.getElementById("userIdDiv").innerText;
-    console.log("userId:", userId);
 
-    // Call fetchUserEvents when the page loads to display existing events
-    fetchUserEvents(userId);
-};
-
-
-// Function to open the Edit Modal and populate it with event data
-function openEditModal(eventId) {
-    // Retrieve the event data from the database using eventId (you can modify this to fit your data structure)
-    const eventRef = db.collection("Members_Events").doc(eventId);
-    eventRef.get().then((doc) => {
-        if (doc.exists) {
-            const eventData = doc.data();
-
-            // Populate the modal fields with event data
-            document.getElementById('editEventName').value = eventData.eventName || "";
-            document.getElementById('editEventDate').value = eventData.eventDate || "";
-            document.getElementById('editEventDescription').value = eventData.eventDescription || "";
-            document.getElementById('editAccessCode').value = eventData.accessCode || "";
-            document.getElementById('editLocation').value = eventData.location || "";
-            document.getElementById('editCollectionPrice').value = eventData.collection_price || "";
-            document.getElementById('editCollectionOnSellPrice').value = eventData.collection_OnSellPrice || "";
-
-            // Show the modal
-            $('#editModal').modal('show');
-        } else {
-            console.log("Event not found");
-        }
-    }).catch((error) => {
-        console.error("Error retrieving event:", error);
-    });
-}
 
 async function updateEvent(eventId, updatedData) {
     try {
@@ -320,30 +286,7 @@ async function updateEvent(eventId, updatedData) {
     }
 }
 
-
-
-
-
-
-
-window.onload = function() {
-        const userId = document.getElementById("userIdDiv").innerText;
-        fetchUserEvents(userId);
-
-       // document.getElementById('eventForm').addEventListener('submit', handleEventFormSubmit);
-
-        tableBody.addEventListener("click", (event) => {
-            const target = event.target;
-            const eventId = target.dataset.id;
-
-            if (target.classList.contains("edit-btn")) openEditModal(eventId);
-            else if (target.classList.contains("delete-btn")) deleteEvent(eventId);
-            else if (target.classList.contains("image-btn")) openImageModal(eventId);
-            else if (target.classList.contains("view-btn")) viewEvent(eventId);
-        });
-    };
-
-    function viewEvent(eventId) {
+function viewEvent(eventId) {
         window.location.href = `/manage-images.html?eventId=${eventId}`;
     }
 
@@ -374,6 +317,53 @@ window.onload = function() {
 
 
 
+
+
+// Function to open the Edit Modal and populate it with event data
+function openEditModal(eventId) {
+    const eventRef = db.collection("Members_Events").doc(eventId);
+    eventRef.get().then((doc) => {
+        if (doc.exists) {
+            const eventData = doc.data();
+
+            document.getElementById('editEventName').value = eventData.eventName || "";
+            document.getElementById('editEventDate').value = eventData.eventDate || "";
+            document.getElementById('editEventDescription').value = eventData.eventDescription || "";
+            document.getElementById('editAccessCode').value = eventData.accessCode || "";
+            document.getElementById('editLocation').value = eventData.location || "";
+            document.getElementById('editCollectionPrice').value = eventData.collection_price || "";
+            document.getElementById('editCollectionOnSellPrice').value = eventData.collection_OnSellPrice || "";
+
+            // Show the modal
+            $('#editModal').modal('show');
+        } else {
+            console.log("Event not found");
+        }
+    }).catch((error) => {
+        console.error("Error retrieving event:", error);
+    });
+}
+
+// Then proceed with your existing event listeners or function calls
+window.onload = function() {
+    const userId = document.getElementById("userIdDiv").innerText;
+    console.log("userId:", userId);
+    fetchUserEvents(userId);
+
+       // document.getElementById('eventForm').addEventListener('submit', handleEventFormSubmit);
+
+        tableBody.addEventListener("click", (event) => {
+            const target = event.target;
+            const eventId = target.dataset.id;
+
+            if (target.classList.contains("edit-btn")) openEditModal(eventId);
+            else if (target.classList.contains("delete-btn")) deleteEvent(eventId);
+            else if (target.classList.contains("image-btn")) openImageModal(eventId);
+            else if (target.classList.contains("view-btn")) viewEvent(eventId);
+        });
+    };
+
+ 
     </script>
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-GNSPWFHKVN"></script>
 
