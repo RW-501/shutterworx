@@ -153,7 +153,7 @@
         <td>${eventData.eventDate || "N/A"}</td>
         <td>${eventData.eventDescription || "N/A"}</td>
         <td>
-            <button class="btn btn-info btn-sm main-btn-info" data-bs-toggle="collapse" data-bs-target="#collapse${docId}">Details</button>
+            <button class="btn btn-info btn-sm main-btn-info" data-bs-toggle="collapse" data-bs-target="${docId}">Details</button>
             <button class="btn btn-primary btn-sm main-edit-btn" >Edit</button>
             <button class="btn btn-secondary btn-sm main-image-btn" >Add Images</button>
             <button class="btn btn-success btn-sm main-view-btn" >View</button>
@@ -291,7 +291,7 @@ async function updateEvent(eventId, updatedData) {
 }
 
 function viewEvent(eventId) {
-        window.location.href = `/manage-images.html?eventId=${eventId}`;
+        window.location.href = `https://shutterworx.co/manage-images.html?eventId=${eventId}`;
     }
 
     function openImageModal(eventId) {
