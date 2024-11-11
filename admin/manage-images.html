@@ -387,24 +387,30 @@ if(eventId){
 
     document.querySelectorAll('.main-delete-btn').forEach(button => {
     button.addEventListener('click', function() {
-        const eventId = this.dataset.eventId;
+        const eventId = this.dataset.eventID;
         const imageUrl = this.dataset.imageUrl;
-        deleteMedia(eventId, imageUrl);
+        console.log(eventId,"   eventId ",this.dataset.eventID,"  Button clicked", this.dataset); // Check what button is clicked
+
+        //deleteMedia(eventId, imageUrl);
     });
 });
 
 document.querySelectorAll('.main-update-btn').forEach(button => {
     button.addEventListener('click', function() {
-        const eventId = this.dataset.eventId;
+        const eventId = this.dataset.eventID;
         const imageUrl = this.dataset.imageUrl;
-        openUpdateMediaModal(eventId, imageUrl);
+        console.log(eventId,"   eventId ",this.dataset.eventID,"  Button clicked", this.dataset); // Check what button is clicked
+
+        //openUpdateMediaModal(eventId, imageUrl);
     });
 });
 document.querySelectorAll('.main-view-btn').forEach(button => {
     button.addEventListener('click', function() {
-        const eventId = this.dataset.eventId;
+        const eventId = this.dataset.eventID;
         const imageUrl = this.dataset.imageUrl;
-        viewImage(eventId, imageUrl);
+        console.log(eventId,"   eventId ",this.dataset.eventID,"  Button clicked", this.dataset); // Check what button is clicked
+
+       // viewImage(eventId, imageUrl);
     });
 });
 
