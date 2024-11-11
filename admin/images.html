@@ -2173,35 +2173,38 @@ if (previewCanvas && previewCtx) {
 ///////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////*/
 
-function openImageEditor(image, compressedImage) {
-  document.getElementById("imageEditorModal").style.display = "block";
-  //  canvas = document.getElementById("imageCanvas");
+function openImageEditor(image) { 
+  document.getElementById("imageEditorModal").style.display = "block"; // Show the modal
+  const canvas = document.getElementById("imageCanvas"); // Target the existing canvas
   console.log("Working???   openImageEditor");
 
-  loadImage(image, compressedImage);
+  if (!canvas) {
+    console.log("Canvas element not found");
+    return;
+  }
+
+  // Call the loadImage function, passing the image URL
+  loadImage(image, canvas);
 }
+
 
 function closeImageEditor() {
   document.getElementById("imageEditorModal").style.display = "none";
 }
 
 // Load and draw the original image onto the canvas
-function loadImage(image, compressedImage) {
-  img = new Image();
-  img.src = image; // Replace with dynamic image source
+function loadImage(image, canvas) {
+  const img = new Image();
+  img.src = image; // Load the image dynamically
   img.onload = () => {
-    saveToHistory(); // Save the initial state
-    redrawCanvas(img); // Redraw canvas with loaded image
+    saveToHistory(); // Save initial state (if needed)
+    redrawCanvas(img, canvas); // Redraw canvas with loaded image
   };
 
-  //  ctx = canvas.getContext("2d");
-  /*
-    const imgPreview = document.createElement("img");
-imgPreview.src = e.target.result;
-imgPreview.style.width = "100px"; // adjust as needed
-imagePreviewContainer.appendChild(imgPreview);
-*/
-  // console.log("image type... ",img);
+  // Log any errors during image loading
+  img.onerror = () => {
+    console.log("Error loading image:", image);
+  };
 }
 
 // Function to process image and apply watermark
@@ -2626,19 +2629,15 @@ function redo() {
 function redrawCanvas(img) {
   // Check if img is defined and is an Image object
   if (!img || !(img instanceof HTMLImageElement)) {
-    console.log("Image element is not defined. redrawCanvas");
+    console.log("Invalid image object", img);
     return;
   }
 
-  // Create a new canvas and get its context
-  const canvas = document.createElement("canvas");
   const ctx = canvas.getContext("2d");
-
   if (!ctx) {
-    console.log("Canvas context is not available. redrawCanvas");
+    console.log("Canvas context not available");
     return;
   }
-
   // Set the canvas size based on the image dimensions
   canvas.width = img.width;
   canvas.height = img.height;
