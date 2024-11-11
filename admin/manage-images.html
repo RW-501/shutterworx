@@ -205,7 +205,7 @@ function displayImageInGallery(mediaData, imageUrl, eventId) {
     const newCard = document.createElement('div');
 newCard.className = 'col-md-4 mb-4';
 newCard.innerHTML = `
-    <div class="card">
+    <div class="card" data-id="${mediaData.eventID}">
         <img src="${imageUrl}" class="card-img-top" alt="Event Image">
         <div class="card-body">
             <h5 class="card-title">${mediaData.title || "Untitled"}</h5>
