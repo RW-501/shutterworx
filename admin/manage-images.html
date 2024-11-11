@@ -245,12 +245,12 @@ function sortEvents(criteria) {
 }
 
 // Step 6: Open modal for editing media info
-function openUpdateMediaModal(eventId, imageUrl) {
+function openUpdateMediaModal(eventId) {
     const modal = new bootstrap.Modal(document.getElementById('updateMediaModal'));
     const mediaTitle = document.getElementById('mediaTitle');
     const mediaPrice = document.getElementById('mediaPrice');
 
-    // Fetch media details based on eventId (you can also fetch image by URL)
+    const eventDocRef = doc(db, "Members_Media", eventId); // Correctly set the reference here
     getDoc(eventDocRef).then(docSnap => {
         if (docSnap.exists()) {
             const mediaData = docSnap.data();
@@ -288,24 +288,23 @@ function deleteMedia(eventId, imageUrl) {
 }
 
 
-
 async function getUserEvents(userId) {
     try {
         const eventsRef = collection(db, "Members_Events");
         const eventsQuery = query(eventsRef, where("userID", "==", userId));
         const eventsSnapshot = await getDocs(eventsQuery);
-
+        
+        let eventsData = [];
         if (!eventsSnapshot.empty) {
-            const mediaPromises = [];
             eventsSnapshot.forEach((eventDoc) => {
+                const eventData = eventDoc.data();
+                eventsData.push(eventData);
                 const eventId = eventDoc.id;
                 mediaPromises.push(getEventMedia(eventId)); // Store all promises
             });
-            
-            // Wait for all media to be fetched in parallel
-            const mediaResults = await Promise.all(mediaPromises);
-            console.log("All media fetched for user:", mediaResults); // Log all fetched media
 
+            // Now you can filter and sort based on the eventsData
+            displayFilteredEvents(eventsData);
         } else {
             console.log("No events found for this user.");
         }
@@ -313,9 +312,6 @@ async function getUserEvents(userId) {
         console.error("Error getting user events:", error);
     }
 }
-
-
-
 
 
 
@@ -370,6 +366,24 @@ window.onload = function() {
 
     // Call getEventMedia, passing the eventId (if available)
     getEventMedia(eventId);
+
+
+    document.querySelectorAll('.btn-danger').forEach(button => {
+    button.addEventListener('click', function() {
+        const eventId = this.dataset.eventId;
+        const imageUrl = this.dataset.imageUrl;
+        deleteMedia(eventId, imageUrl);
+    });
+});
+
+document.querySelectorAll('.btn-primary').forEach(button => {
+    button.addEventListener('click', function() {
+        const eventId = this.dataset.eventId;
+        const imageUrl = this.dataset.imageUrl;
+        openUpdateMediaModal(eventId, imageUrl);
+    });
+});
+
 };
 
     </script>
