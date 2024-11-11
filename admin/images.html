@@ -3450,12 +3450,12 @@ async function saveImageDetails(fileName, originalUrl, compressedUrl, fileSize, 
     const eventId = document.getElementById("currentEventID").innerText;
     const userId = document.getElementById("userIdDiv").innerText;
 
-    if (eventId && title && baseprice) {  // Changed condition to check if eventId exists
+    if (eventId && title && baseprice) {
         try {
-            // Create a reference to the Members_Media collection using eventId as docId
-            const docRef = db.collection("Members_Media").doc(eventId);
+            // Get reference to Members_Media document using eventId
+            const docRef = doc(db, "Members_Media", eventId);
 
-            await docRef.set({
+            await setDoc(docRef, {
                 fileName,
                 title,
                 price: baseprice || "",
@@ -3482,11 +3482,7 @@ async function saveImageDetails(fileName, originalUrl, compressedUrl, fileSize, 
     } else {
         showToast("Please provide a valid Event ID, title, and price.", "warning");
     }
-}
-
-
-
-async function saveEvent() {
+}async function saveEvent() {
   const title = document.getElementById("eventTitle").value;
   const date = document.getElementById("eventDate").value;
   const description = document.getElementById("eventDescription").value;
