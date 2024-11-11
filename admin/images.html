@@ -1659,10 +1659,7 @@ function addWatermark(ctx, width, height, watermarkImg) {
   // Restore the context to its previous state
   ctx.restore();
 
-  // Load settings when the document is ready or when the modal opens
-document.addEventListener("DOMContentLoaded", () =>
-  loadModalSettings("watermarkSettingsModal", "watermarkSettings")
-);
+
 
 }
 
@@ -3244,7 +3241,10 @@ document.addEventListener("DOMContentLoaded", () =>
   loadModalSettings("eventForm", "event-content")
 );
 
-
+  // Load settings when the document is ready or when the modal opens
+  document.addEventListener("DOMContentLoaded", () =>
+  loadModalSettings("watermarkSettingsModal", "watermarkSettings")
+);
 
 document.addEventListener("DOMContentLoaded", () => {
   const eventDashboardContent = document.getElementById("eventForm");
