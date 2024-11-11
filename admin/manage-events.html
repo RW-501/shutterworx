@@ -345,7 +345,7 @@ function openEditModal(eventId) {
 }
 
 // Then proceed with your existing event listeners or function calls
-window.onload = function() {
+document.addEventListener("DOMContentLoaded", function () {
     const userId = document.getElementById("userIdDiv").innerText;
     console.log("userId:", userId);
     fetchUserEvents(userId);
@@ -361,7 +361,10 @@ window.onload = function() {
             else if (target.classList.contains("image-btn")) openImageModal(eventId);
             else if (target.classList.contains("view-btn")) viewEvent(eventId);
         });
-    };document.addEventListener('DOMContentLoaded', function () {
+    });
+
+    
+    document.addEventListener('DOMContentLoaded', function () {
     // Select all buttons with the class .btn-info
     const detailButtons = document.querySelectorAll('.btn-info');
 
