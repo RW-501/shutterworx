@@ -1658,12 +1658,12 @@ function addWatermark(ctx, width, height, watermarkImg) {
 
   // Restore the context to its previous state
   ctx.restore();
-
+/*
   // Load settings when the document is ready or when the modal opens
 document.addEventListener("DOMContentLoaded", () =>
   loadModalSettings("watermarkSettingsModal", "watermarkSettings")
 );
-
+*/
 }
 
 // Element selectors and default settings
@@ -2878,6 +2878,7 @@ document.addEventListener("DOMContentLoaded", function () {
     .getElementById("watermarkSettingsBtn")
     .addEventListener("click", () => {
       loadModalSettings("watermarkSettingsModal", "watermarkSettings");
+      updateWatermarkPreview();
 
       document
         .getElementById("wm-basic-btn")
