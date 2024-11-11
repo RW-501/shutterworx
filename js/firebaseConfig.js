@@ -8,7 +8,7 @@ import {
     query, 
     updateDoc, 
     setDoc,
-    addDoc, 
+    addDoc, deleteDoc,
     getDocs, increment,
     where, arrayUnion,
     collection 
@@ -82,6 +82,6 @@ export { db,getStorage, ref, uploadBytesResumable, getDownloadURL,
      doc,arrayUnion, RecaptchaVerifier ,increment, getDoc,
       query, updateDoc, setDoc, addDoc,signInAnonymously ,
        signInWithPopup,FacebookAuthProvider, GoogleAuthProvider,
-        OAuthProvider, signOut, onAuthStateChanged,
+        OAuthProvider, signOut, onAuthStateChanged, deleteDoc,
          createUserWithEmailAndPassword, signInWithEmailAndPassword,
           where, getDocs, storage, collection, auth, analytics };

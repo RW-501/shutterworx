@@ -142,7 +142,7 @@
     OAuthProvider,
     signOut,
     onAuthStateChanged,
-    createUserWithEmailAndPassword,
+    createUserWithEmailAndPassword,deleteDoc,
     signInWithEmailAndPassword,
     where, getDocs, storage, collection, auth, analytics } from 'https://shutterworx.co/js/firebaseConfig.js';
    
@@ -251,10 +251,16 @@ function openUpdateMediaModal(eventId, imageUrl) {
     const mediaPrice = document.getElementById('mediaPrice');
 
     // Fetch media details based on eventId (you can also fetch image by URL)
-    db.collection("Members_Media").doc(eventId).get().then(doc => {
-        const mediaData = doc.data();
-        mediaTitle.value = mediaData.title || '';
-        mediaPrice.value = mediaData.price || '';
+    getDoc(eventDocRef).then(docSnap => {
+        if (docSnap.exists()) {
+            const mediaData = docSnap.data();
+            mediaTitle.value = mediaData.title || '';
+            mediaPrice.value = mediaData.price || '';
+        } else {
+            console.error("No such document!");
+        }
+    }).catch((error) => {
+        console.error("Error getting document:", error);
     });
 
     modal.show();
@@ -268,8 +274,10 @@ function viewImage(imageUrl) {
 }
 
 // Step 8: Delete media
+
 function deleteMedia(eventId, imageUrl) {
-    db.collection("Members_Media").doc(eventId).delete()
+    const eventDocRef = doc(db, "Members_Media", eventId);
+    deleteDoc(eventDocRef)
         .then(() => {
             showToast("Media deleted successfully.");
             location.reload(); // Refresh page to reflect the changes
@@ -279,7 +287,8 @@ function deleteMedia(eventId, imageUrl) {
         });
 }
 
-// Fetch user events (assuming userId is available)
+
+
 async function getUserEvents(userId) {
     try {
         const eventsRef = collection(db, "Members_Events");
@@ -294,7 +303,9 @@ async function getUserEvents(userId) {
             });
             
             // Wait for all media to be fetched in parallel
-            await Promise.all(mediaPromises);
+            const mediaResults = await Promise.all(mediaPromises);
+            console.log("All media fetched for user:", mediaResults); // Log all fetched media
+
         } else {
             console.log("No events found for this user.");
         }
@@ -302,15 +313,6 @@ async function getUserEvents(userId) {
         console.error("Error getting user events:", error);
     }
 }
-
-
-
-
-
-
-
-
-
 
 
 
