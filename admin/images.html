@@ -2924,14 +2924,27 @@ function saveImage() {
   link.click();
 }
 
-// Define functions for each button's action
+let USER_MEMBERSHIP = "basic"; // Example membership; can be "basic", "advanced", etc.
+
+const basic_membership = document.getElementById("wm-basic-btn");
+const advanced_membership = document.getElementById("wm-advanced-btn");
+const text_mode_btn = document.getElementById("wm-text-mode-btn");
+const image_mode_btn = document.getElementById("wm-image-mode-btn");
+
 // Function to handle Basic button click
 function handleBasicClick() {
   console.log("Basic button clicked");
 
-  // Show Basic content and hide others
-  toggleVisibility('Basic-WM');
-  hideSections(['Advanced-WM', 'Text-WM', 'Image-WM']);
+  // Check if the user has a "basic" membership
+  if (USER_MEMBERSHIP === "basic") {
+    // If the user is basic, only show Basic-WM and hide others
+    toggleVisibility('Basic-WM');
+    hideSections(['Advanced-WM', 'Text-WM', 'Image-WM']);
+  } else {
+    // For non-basic users, the behavior can be similar or different based on need
+    toggleVisibility('Basic-WM');
+    hideSections(['Advanced-WM', 'Text-WM', 'Image-WM']);
+  }
 }
 
 // Function to handle Advanced button click
@@ -2991,6 +3004,15 @@ function hideSections(classNames) {
 function updateWatermarkPreview() {
   console.log("Updating watermark preview...");
 }
+
+// Event listeners to handle button clicks
+basic_membership.addEventListener("click", handleBasicClick);
+advanced_membership.addEventListener("click", handleAdvancedClick);
+text_mode_btn.addEventListener("click", handleTextModeClick);
+image_mode_btn.addEventListener("click", handleImageModeClick);
+
+
+
 
 function handleImageWatermarkClick() {
   console.log("Watermark button clicked");
@@ -3192,8 +3214,8 @@ document.addEventListener("DOMContentLoaded", function () {
       }
     });
 
-  // Show watermark settings modal
-  document
+
+    document
     .getElementById("watermarkSettingsBtn")
     .addEventListener("click", () => {
       loadModalSettings("watermarkSettingsModal", "watermarkSettings");
