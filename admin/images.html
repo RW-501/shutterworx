@@ -1405,20 +1405,23 @@ display: none !important;transform: scale(1.05);
                           </select>
                           
                           <div class="slider-container"></div> <!-- This is where the sliders will be injected -->
-                          
-                          <!-- Adjustments -->
+                          <button id="applyPreset">Apply Preset</button>
+                          <button id="saveFilters">Save Filters</button>
+                          <button id="resetButton">Reset Filters</button>
+
                
-                          <button id="undoBtn">undoBtn</button>
-                          <button id="redoBtn">redoBtn</button>
-              
-                          <button id="saveFilters">saveFilters</button>
+                          <button id="undoBtn">Undo</button>
+                          <button id="redoBtn">Redo</button>
+                                        <!-- Adjustments -->
+
                           <button id="resizeImage">resizeImage</button>
               
                           <button id="cropImage">cropImage</button>
-                          <button id="saveImage">saveImage</button>
-              
+
                           <!-- Action Buttons -->
-                          <button id="resetButton">Reset</button>
+
+                          <button id="saveImage">Save Image</button>
+              
                           <button id="closeImageEditor">Apply Changes</button>
                         </div>
                       </div>
@@ -2421,7 +2424,10 @@ function addLogo(event) {
       logoImg.onload = () => {
         drawLogo(); // Draw logo once it's loaded
         saveToHistory(); // Save the state after adding a logo
-      };
+   
+        document.getElementById("logoImage").src = e.target.result;
+   
+    };
     };
     reader.readAsDataURL(file);
   }
@@ -2446,7 +2452,7 @@ function updateLogoSize(event) {
   event.preventDefault();
 
   logoScale = event.target.value;
-  redrawCanvas();
+  redrawCanvas(logoScale);
 }
 
 
@@ -2807,7 +2813,7 @@ function redrawCanvas(img) {
   console.log(ctx, "   <  ctx   filterEffect ",filterEffect,"   canvas ",canvas);
 
   // Draw logo on top, if necessary
- // drawLogo(ctx, canvas); // Assuming `drawLogo` takes ctx as a parameter
+  drawLogo(ctx, canvas); // Assuming `drawLogo` takes ctx as a parameter
 
   // Reset the filter after drawing
   ctx.filter = "none";
@@ -2995,6 +3001,14 @@ document.addEventListener("DOMContentLoaded", function () {
       document.getElementById("imageInput").click();
     });
 
+
+    document
+    .getElementById("logoPreviewContainer")
+    .addEventListener("change", function () {
+      document.getElementById("uploadLogo").click();
+    });
+
+
   // Event Form Button Listener
   document.getElementById("saveEvent").addEventListener("click", saveEvent);
   // Image Upload Click Listener (to trigger file input)
@@ -3040,7 +3054,17 @@ document.addEventListener("DOMContentLoaded", function () {
   document
     .getElementById("openImageEditorBtn")
     .addEventListener("click", () => {
- 
+
+
+
+        document
+        .getElementById("resetButton")
+        .addEventListener("click", resetFilters);
+
+        document
+        .getElementById("applyPreset")
+        .addEventListener("click", applyPreset);
+
       const getImages = document.querySelectorAll(".select-checkbox:checked"); // Get checked checkboxes
 
       if (getImages.length === 0) {
