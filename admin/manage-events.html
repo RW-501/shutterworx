@@ -72,7 +72,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="editModalLabel">Edit Event</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <button type="button" class="btn-close close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
                 <!-- Form fields for editing event details -->
@@ -83,12 +83,14 @@
                 <input type="text" id="editLocation" placeholder="Location" />
                 <input type="text" id="editCollectionPrice" placeholder="Collection On Sell Price" />
                 <input type="text" id="editCollectionOnSellPrice" placeholder="Collection On Sell Price" />
+                <input type="text" id="editeventTags" placeholder="Event Tags" />
+                <input type="text" id="editisPublic" placeholder="Public" />
 
                 <!-- More fields as needed -->
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary" onclick="updateEvent(eventId, {eventName: document.getElementById('editEventName').value, eventDate: document.getElementById('editEventDate').value, eventDescription: document.getElementById('editEventDescription').value })">Save Changes</button>
+                <button type="button" class="btn btn-primary">Save Changes</button>
             </div>
         </div>
     </div>
@@ -338,6 +340,37 @@ function viewEvent(eventId) {
     }
 
 
+    document.getElementById("saveChangesBtn").addEventListener("click", async function() {
+        // Collect the input values
+        const updatedData = {
+            name: document.getElementById("editEventName").value,
+            date: document.getElementById("editEventDate").value,
+            description: document.getElementById("editEventDescription").value,
+            accessCode: document.getElementById("editAccessCode").value,
+            location: document.getElementById("editLocation").value,
+            collectionPrice: document.getElementById("editCollectionPrice").value,
+            collectionOnSellPrice: document.getElementById("editCollectionOnSellPrice").value,
+            eventTags: document.getElementById('editEventTags').value,
+            isPublic: document.getElementById('editIsPublic').value
+        };
+
+        // Replace `yourEventId` with the actual event ID you want to update
+        const eventId = "yourEventId"; // You can set this dynamically if needed
+
+        // Call the update function with the event ID and updated data
+        await updateEvent(eventId, updatedData);
+    });
+
+    // Async function to update event in the database
+    async function updateEvent(eventId, updatedData) {
+        try {
+            await db.collection("Members_Events").doc(eventId).update(updatedData);
+            showToast("Event updated successfully!");
+            location.reload(); // Reload to reflect updated data
+        } catch (error) {
+            console.error("Error updating event:", error);
+        }
+    }
 
 
 
@@ -352,13 +385,15 @@ function openEditModal(eventId) {
             const eventData = docSnap.data();
 
             // Populate the form with the event data
-            document.getElementById('editEventName').value = eventData.eventName || "";
+            document.getElementById('editEventName').value = eventData.title || "";
             document.getElementById('editEventDate').value = eventData.eventDate || "";
             document.getElementById('editEventDescription').value = eventData.eventDescription || "";
             document.getElementById('editAccessCode').value = eventData.accessCode || "";
             document.getElementById('editLocation').value = eventData.location || "";
             document.getElementById('editCollectionPrice').value = eventData.collection_price || "";
             document.getElementById('editCollectionOnSellPrice').value = eventData.collection_OnSellPrice || "";
+            document.getElementById('editEventTags').value = eventData.eventTags || "";
+            document.getElementById('editIsPublic').value = eventData.isPublic || "";
 
             // Show the modal (Bootstrap)
             $('#editModal').modal('show');
