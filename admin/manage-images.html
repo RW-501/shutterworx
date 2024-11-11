@@ -150,9 +150,10 @@
 // Step 1: Fetch event media or user's events based on eventId
 async function getEventMedia(eventId) {
     try {
-        const mediaSnapshot = await db.collection("Members_Media")
-            .where("eventID", "==", eventId) // Fetch all media for the given eventId
-            .get();
+        const membersMediaRef = collection(db, "Members_Media");
+const q = query(membersMediaRef, where("eventID", "==", eventId));
+const mediaSnapshot = await getDocs(q);
+
 
         if (!mediaSnapshot.empty) {
             mediaSnapshot.forEach((mediaDoc) => {
