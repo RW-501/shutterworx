@@ -1658,6 +1658,12 @@ function addWatermark(ctx, width, height, watermarkImg) {
 
   // Restore the context to its previous state
   ctx.restore();
+
+  // Load settings when the document is ready or when the modal opens
+document.addEventListener("DOMContentLoaded", () =>
+  loadModalSettings("watermarkSettingsModal", "watermarkSettings")
+);
+
 }
 
 // Element selectors and default settings
@@ -1683,7 +1689,7 @@ const defaultSettings = {
   text: "Your Watermark",
   font: "Arial Black",
   fontSize: 240,
-  color: "#000000",
+  color: "#fff",
   opacity: 0.5,
   rotation: 0,
   //  posX: 95,
@@ -1697,23 +1703,45 @@ const defaultSettings = {
 
 // Reset settings to defaults
 function resetWatermarkSettings() {
+  let elementCount = 0;
+  let missingElements = [];
+
   // Loop through the default settings keys and update elements with their default values
   Object.keys(defaultSettings).forEach((key) => {
+    elementCount++; // Increment the element count for each key processed
     if (elements[key]) {
-      // If the element exists, reset its value or checked state based on the default settings
+      console.log(`Element '${key}' found. Type: ${elements[key].type}`);
+
+      // Reset value or checked state based on the element type
       if (elements[key].type === "checkbox") {
         elements[key].checked = defaultSettings[key]; // For checkboxes
       } else {
         elements[key].value = defaultSettings[key]; // For other input types like text, color, etc.
       }
+    } else {
+      console.warn(`Element '${key}' is undefined.`);
+      missingElements.push(key); // Track missing elements
     }
   });
+
+  console.log(`Total elements processed: ${elementCount}`);
+  console.log(`Undefined elements:`, missingElements);
 
   // Clear the canvas to remove any current watermark preview
   previewCtx.clearRect(0, 0, previewCanvas.width, previewCanvas.height);
 
   // Re-render the watermark preview with default settings
   updateWatermarkPreview();
+}
+
+// Bind event listeners
+function setupEventListeners() {
+  document
+    .getElementById("resetWatermarkSettings")
+    .addEventListener("click", resetWatermarkSettings);
+  Object.values(watermarkElements).forEach((element) => {
+    element.addEventListener("input", updateWatermarkPreview);
+  });
 }
 
 function getWatermarkSettings() {
@@ -2018,15 +2046,7 @@ document.getElementById("closeWatermarkModal").addEventListener("click", () => {
   closeWatermarkModal();
 });
 
-// Bind event listeners
-function setupEventListeners() {
-  document
-    .getElementById("resetWatermarkSettings")
-    .addEventListener("click", resetWatermarkSettings);
-  Object.values(watermarkElements).forEach((element) => {
-    element.addEventListener("input", updateWatermarkPreview);
-  });
-}
+
 
 // Unified event position handler for mouse and touch
 function getEventPos(e) {
@@ -3194,10 +3214,7 @@ document.addEventListener("DOMContentLoaded", () =>
   loadModalSettings("eventForm", "event-content")
 );
 
-// Load settings when the document is ready or when the modal opens
-document.addEventListener("DOMContentLoaded", () =>
-  loadModalSettings("watermarkSettingsModal", "watermarkSettings")
-);
+
 
 document.addEventListener("DOMContentLoaded", () => {
   const eventDashboardContent = document.getElementById("eventForm");

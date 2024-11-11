@@ -70,6 +70,31 @@ div, main, label, input, textarea, button, img, image, .btn, div {
     background: linear-gradient(45deg, #009cfa63, #ffffff);
 
 }
+
+
+.close {
+    background-color: #009cfa;
+    appearance: none;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    border: 2px solid #555;
+    color: white;
+    position: relative;
+    font-size: 18px;
+    padding: 8px;
+    cursor: pointer;
+    border: none;
+    transition: background-color 0.3s ease;
+    margin-right: 25px;
+}
+
+.close:hover {
+    border-color: #009cfa;
+    box-shadow: 0 0 5px rgba(0, 156, 250, 0.7);
+}
+
+
         /* Footer Styles */
         #site-footer {
             text-align: center;
