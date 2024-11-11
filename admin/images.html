@@ -2893,12 +2893,14 @@ function resizeImage() {
   saveToHistory(); // Save state after resizing
 }
 
+let saveImageCount = 0;
 // Save edited image
 function saveImage() {
+    saveImageCount += 1;
   const editedImage = canvas.toDataURL("image/png");
   const link = document.createElement("a");
   link.href = editedImage;
-  link.download = "edited-image.png";
+  link.download = `ShutterWorx-edited-image"${saveImageCount}".png`;
   link.click();
 }
 
