@@ -110,8 +110,9 @@ async function getUserEvents() {
 async function getEventMedia(eventId) {
     try {
         const mediaSnapshot = await db.collection("Members_Media")
-            .where("eventID", "==", eventId)  // Filter by eventId
-            .get();
+    .doc(eventId) // Fetch document by its ID (eventId)
+    .get();
+
 
         if (!mediaSnapshot.empty) {
             mediaSnapshot.forEach((mediaDoc) => {
@@ -172,8 +173,15 @@ document.getElementById('imageForm').addEventListener('submit', function(event) 
     this.reset();
 });
 
+
+
+window.onload = function() {
+    const userId = document.getElementById("userIdDiv").innerText;
+    console.log("userId:", userId);
+
 // Call to start the process of fetching events and media
-getUserEvents();
+getUserEvents(userId);
+};
 
     </script>
 

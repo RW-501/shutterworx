@@ -98,11 +98,9 @@
     signInWithEmailAndPassword,
     where, getDocs, storage, collection, auth, analytics } from 'https://shutterworx.co/js/firebaseConfig.js';
        
-    const userId = document.getElementById("userIdDiv").innerText;
-    console.log("userId   ", userId);
 
 // Function to fetch and display user events
-async function fetchUserEvents() {
+async function fetchUserEvents(userId) {
     try {
         const eventsSnapshot = await db.collection("Members_Events")
             .where("userID", "==", userId)
@@ -199,8 +197,13 @@ async function deleteEvent(eventId, btn) {
     }
 }
 
-// Call fetchUserEvents when the page loads to display existing events
-fetchUserEvents();
+window.onload = function() {
+    const userId = document.getElementById("userIdDiv").innerText;
+    console.log("userId:", userId);
+
+    // Call fetchUserEvents when the page loads to display existing events
+    fetchUserEvents(userId);
+};
 
     </script>
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-GNSPWFHKVN"></script>
