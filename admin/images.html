@@ -1479,7 +1479,7 @@ import {
   getDocs,
   storage,
   collection,
-  auth,
+  auth,firebase,
   analytics
 } from "https://shutterworx.co/js/firebaseConfig.js";
 
@@ -3331,6 +3331,7 @@ async function saveImageDetails(
   const baseprice = document.getElementById("baseprice").value;
   const eventId = document.getElementById("currentEventID").innerText;
   const userId = document.getElementById("userIdDiv").innerText;
+
 
   if (eventId && title && baseprice) {
     // Changed condition to check if eventId exists
