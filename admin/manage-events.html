@@ -141,6 +141,7 @@
        
 
 
+    const tableBody = document.getElementById('eventTableBody');
 
 
     function createEventRow(tableBody, eventData, docId, index) {
@@ -245,7 +246,6 @@ document.getElementById('eventForm').addEventListener('submit', async function(e
         });
 
         // Insert the new event into the table
-        const tableBody = document.getElementById('eventTableBody');
         const index = tableBody.rows.length;  // Use the current row length for the index
         createEventRow(tableBody, newEventRef.data(), newEventRef.id, index); // Use the event data and document ID
 
