@@ -1484,7 +1484,7 @@ import {
 } from "https://shutterworx.co/js/firebaseConfig.js";
 
 /*
-     //   const stripe = Stripe("your-publishable-stripe-key");
+//   const stripe = Stripe("your-publishable-stripe-key");
         firebase.auth().onAuthStateChanged(user => {
    
    
@@ -1493,6 +1493,12 @@ import {
     }
 });
 */
+const user = firebase.auth().currentUser;
+if (user) {
+  // Proceed with file upload
+} else {
+  console.log("User not authenticated");
+}
 
 document.addEventListener("DOMContentLoaded", function () {
   const tooltipTriggerList = [].slice.call(
@@ -3262,7 +3268,7 @@ async function uploadToFirebase(
       },
       (error) => {
         console.error("Upload failed:", error);
-        showToast("Original image upload failed.", "error");
+        showToast("Original image upload failed.", error);
       },
       async () => {
         const originalURL = await getDownloadURL(
