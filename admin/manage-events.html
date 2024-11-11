@@ -368,6 +368,7 @@ window.onload = function() {
     detailButtons.forEach(button => {
         // Add an event listener to each button
         button.addEventListener('click', function () {
+            console.log("Click? did it open?");
             // Get the target collapse element using the data-bs-target
             const collapseId = button.getAttribute('data-bs-target');
             const collapseElement = document.querySelector(collapseId);
