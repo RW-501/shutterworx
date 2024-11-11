@@ -294,7 +294,7 @@ async function getUserEvents(userId) {
         const eventsRef = collection(db, "Members_Events");
         const eventsQuery = query(eventsRef, where("userID", "==", userId));
         const eventsSnapshot = await getDocs(eventsQuery);
-        
+        let mediaPromises = [];
         let eventsData = [];
         if (!eventsSnapshot.empty) {
             eventsSnapshot.forEach((eventDoc) => {
