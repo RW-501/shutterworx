@@ -1401,22 +1401,13 @@ display: none !important;transform: scale(1.05);
                           <!-- Filter Selection -->
                           <label for="filters">Filters</label>
                           <select id="filters">
-                            <option value="none">None</option>
-                            <option value="grayscale">Grayscale</option>
-                            <option value="sepia">Sepia</option>
-                            <option value="invert">Invert</option>
+                            <!-- Options will be dynamically added here by JavaScript -->
                           </select>
-              
+                          
+                          <div class="slider-container"></div> <!-- This is where the sliders will be injected -->
+                          
                           <!-- Adjustments -->
-                          <label for="brightnessValue">Brightness</label>
-                          <input type="range" id="brightnessValue" min="0" max="200" value="100">
-              
-                          <label for="contrastValue">Contrast</label>
-                          <input type="range" id="contrastValue" min="0" max="200" value="100">
-              
-                          <label for="saturateValue">Saturation</label>
-                          <input type="range" id="saturateValue" min="0" max="200" value="100">
-              
+               
                           <button id="undoBtn">undoBtn</button>
                           <button id="redoBtn">redoBtn</button>
               
@@ -2472,7 +2463,29 @@ function updateLogoSize(event) {
   redrawCanvas();
 }
 
+
+
+/*  filter selection  /////////////////////////////////////////////
+//////////////////////////////////////////////// ////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////*/
+
 // Function to handle the filter selection change
+// Clear All Filters Function
+function clearAllFilters() {
+  const sliders = document.querySelectorAll(".slider_editor");
+  sliders.forEach(slider => slider.remove()); // Remove all sliders
+
+  const image = document.getElementById("targetImage");
+  image.style.filter = ""; // Clear all image filters
+
+  document.getElementById("filters").value = "none"; // Reset dropdown to 'None'
+  showToast("All filters cleared!");
+}
 
 function showSlider(event) {
   event.preventDefault();
@@ -2495,48 +2508,8 @@ function showSlider(event) {
   }
 }
 
-// Function to update the output display and apply the filter
-function updateValue(filter, value) {
-  const outputId = filter + "Output";
-  const unit =
-    filter === "blur" || filter === "drop-shadow"
-      ? "px"
-      : filter === "hue-rotate"
-      ? "°"
-      : filter === "scale"
-      ? ""
-      : "%";
 
-  const outputElement = document.getElementById(outputId);
-  if (outputElement) {
-    outputElement.textContent = value + unit;
-  } else {
-    console.error(`Element with id "${outputId}" not found.`);
-  }
 
-  applyFilter(filter, value, unit);
-}
-
-// Function to apply the filter on the image element
-function applyFilter(filter, value, unit) {
-  const image = document.getElementById("targetImage");
-  if (!image) {
-    console.error('Image element with id "targetImage" not found.');
-    return;
-  }
-
-  let currentFilters = image.style.filter ? image.style.filter.split(" ") : [];
-
-  const filterValue = `${filter}(${value}${unit})`;
-  const filterIndex = currentFilters.findIndex((f) => f.startsWith(filter));
-  if (filterIndex >= 0) {
-    currentFilters[filterIndex] = filterValue; // Update existing filter
-  } else {
-    currentFilters.push(filterValue); // Add new filter
-  }
-
-  image.style.filter = currentFilters.join(" "); // Apply the updated filters to the image
-}
 
 // Add event listeners for all sliders
 document.querySelectorAll(".slider input[type='range']").forEach((slider) => {
@@ -2562,7 +2535,7 @@ document.querySelectorAll(".slider input[type='range']").forEach((slider) => {
 function saveFilters() {
   const image = document.getElementById("targetImage");
   localStorage.setItem("imageFilters", image.style.filter);
-  alert("Filters saved!");
+  showToast("Filters saved!");
 }
 
 function resetFilters() {
@@ -2574,17 +2547,223 @@ function resetFilters() {
   document.getElementById("filters").value = "none"; // Reset filter selection
   const image = document.getElementById("targetImage");
   image.style.filter = ""; // Clear all filters
-  alert("Filters reset to default!");
+  showToast("Filters reset to default!");
 }
 
-// Load saved filters from localStorage on page load
-window.onload = () => {
-  const savedFilters = localStorage.getItem("imageFilters");
-  if (savedFilters) {
-    document.getElementById("targetImage").style.filter = savedFilters;
-    alert("Loaded saved filters!");
-  }
+const filterPresets = {
+  vintage: { grayscale: 30, sepia: 40, contrast: 90 },
+  bright: { brightness: 150, saturate: 120 },
+  cool: { hueRotate: 180, contrast: 90, saturate: 120 },
+  warm: { sepia: 20, saturate: 130, brightness: 110 },
+  noir: { grayscale: 100, contrast: 120, brightness: 90 },
+  fade: { opacity: 70, saturate: 80, brightness: 110 },
+  dramatic: { contrast: 150, brightness: 85, saturate: 80 },
+  softGlow: { brightness: 110, blur: 3, saturate: 110 },
+  blackAndWhite: { grayscale: 100, contrast: 90 },
+  cinematic: { brightness: 110, contrast: 130, saturate: 90, hueRotate: 20 },
+  sunset: { contrast: 110, sepia: 30, brightness: 120, hueRotate: 50 },
+  highContrast: { contrast: 160, brightness: 110 },
+  coolTones: { hueRotate: 200, saturate: 80, brightness: 100 },
+  sepiaDream: { sepia: 80, contrast: 90, saturate: 110 },
+  neonGlow: { brightness: 130, saturate: 140, hueRotate: 270 },
+  retro: { hueRotate: 45, saturate: 80, contrast: 90 },
+  deepShadow: { contrast: 120, brightness: 95, "shadow-blur": 10, "shadow-opacity": 70 },
+  pastel: { brightness: 120, contrast: 90, saturate: 80, opacity: 85 },
+  winter: { hueRotate: 210, brightness: 90, saturate: 60, contrast: 100 },
 };
+
+const filterConfig = {
+  grayscale: { label: "Grayscale", min: 0, max: 100, defaultValue: 0, unit: "%" },
+  sepia: { label: "Sepia", min: 0, max: 100, defaultValue: 0, unit: "%" },
+  invert: { label: "Invert", min: 0, max: 100, defaultValue: 0, unit: "%" },
+  blur: { label: "Blur", min: 0, max: 20, defaultValue: 0, unit: "px" },
+  brightness: { label: "Brightness", min: 0, max: 200, defaultValue: 100, unit: "%" },
+  contrast: { label: "Contrast", min: 0, max: 200, defaultValue: 100, unit: "%" },
+  "hue-rotate": { label: "Hue Rotate", min: 0, max: 360, defaultValue: 0, unit: "°" },
+  saturate: { label: "Saturation", min: 0, max: 200, defaultValue: 100, unit: "%" },
+  opacity: { label: "Opacity", min: 0, max: 100, defaultValue: 100, unit: "%" },
+  "drop-shadow": { label: "Drop Shadow", min: 0, max: 10, defaultValue: 0, unit: "px" },
+  "shadow-opacity": { label: "Shadow Opacity", min: 0, max: 100, defaultValue: 50, unit: "%" },
+  "shadow-blur": { label: "Shadow Blur", min: 0, max: 20, defaultValue: 5, unit: "px" }
+};
+
+const filterGroups = {
+  basic: [
+    { value: "none", label: "None" },
+    { value: "grayscale", label: "Grayscale" },
+    { value: "sepia", label: "Sepia" },
+    { value: "invert", label: "Invert" }
+  ],
+  advanced: [
+    { value: "blur", label: "Blur" },
+    { value: "brightness", label: "Brightness" },
+    { value: "contrast", label: "Contrast" },
+    { value: "hue-rotate", label: "Hue Rotate" },
+    { value: "saturate", label: "Saturation" },
+    { value: "opacity", label: "Opacity" }
+  ],
+  effects: [
+    { value: "drop-shadow", label: "Drop Shadow" },
+    { value: "shadow-opacity", label: "Shadow Opacity" },
+    { value: "shadow-blur", label: "Shadow Blur" }
+  ]
+};
+
+// Function to populate dropdown with presets and individual filters
+function populateFilterDropdown() {
+  const filterSelect = document.getElementById("filters");
+  filterSelect.innerHTML = ""; 
+
+  // Default "None" option
+  const defaultOption = document.createElement("option");
+  defaultOption.value = "none";
+  defaultOption.textContent = "None";
+  filterSelect.appendChild(defaultOption);
+
+  // Add preset options
+  const presetGroup = document.createElement("optgroup");
+  presetGroup.label = "Presets";
+  Object.keys(filterPresets).forEach(preset => {
+    const option = document.createElement("option");
+    option.value = preset;
+    option.textContent = preset.charAt(0).toUpperCase() + preset.slice(1);
+    presetGroup.appendChild(option);
+  });
+  filterSelect.appendChild(presetGroup);
+
+  // Add individual filter groups
+  Object.keys(filterGroups).forEach(group => {
+    const optgroup = document.createElement("optgroup");
+    optgroup.label = group.charAt(0).toUpperCase() + group.slice(1);
+    filterGroups[group].forEach(filter => {
+      const option = document.createElement("option");
+      option.value = filter.value;
+      option.textContent = filter.label;
+      optgroup.appendChild(option);
+    });
+    filterSelect.appendChild(optgroup);
+  });
+}
+
+window.onload = populateFilterDropdown;
+
+function applyPreset(preset) {
+  const slidersContainer = document.querySelector(".slider-container");
+  slidersContainer.innerHTML = ""; // Clear any existing sliders
+
+  const presetValues = filterPresets[preset];
+  Object.keys(presetValues).forEach(filter => {
+    createSlider(filter); // Create sliders for each filter in the preset
+    updateValue(filter, presetValues[filter]); // Set slider to the preset value
+  });
+}
+
+// Add event listener to filter dropdown
+document.getElementById("filters").addEventListener("change", function(event) {
+  const selectedFilter = event.target.value;
+  const slidersContainer = document.querySelector(".slider-container");
+  
+  // Clear all sliders when a new option is selected
+  slidersContainer.innerHTML = ""; 
+
+  if (filterPresets[selectedFilter]) {
+    applyPreset(selectedFilter); // Apply preset if selected
+  } else if (selectedFilter !== "none") {
+    createSlider(selectedFilter); // Create slider for individual filter
+  }
+});
+
+
+// This function dynamically generates sliders based on selected filter
+function createSlider(filter) {
+  const sliderContainer = document.querySelector(".slider-container");
+
+  // Check if a slider for this filter already exists
+  if (document.getElementById(`${filter}SliderContainer`)) {
+    return; // Slider already exists, so don't add it again
+  }
+
+  // Check if the filter exists in the configuration
+  const filterDetails = filterConfig[filter];
+  if (!filterDetails) return; // If filter doesn't exist in config, do nothing
+
+  // Construct the HTML for the filter slider
+  const sliderHTML = `
+    <div id="${filter}SliderContainer" class="slider_editor visible">
+      <label for="${filter}Value">${filterDetails.label}:</label>
+      <input type="range" id="${filter}Value" min="${filterDetails.min}" max="${filterDetails.max}" value="${filterDetails.defaultValue}">
+      <span id="${filter}Output">${filterDetails.defaultValue}${filterDetails.unit}</span>
+    </div>
+  `;
+
+  // Append the generated slider to the container
+  sliderContainer.insertAdjacentHTML("beforeend", sliderHTML);
+
+  // Add event listener to update the value and apply the filter dynamically
+  const slider = document.getElementById(`${filter}Value`);
+  if (slider) {
+    slider.addEventListener("input", function () {
+      const value = slider.value;
+      const output = document.getElementById(`${filter}Output`);
+      output.textContent = `${value}${filterDetails.unit}`;
+      updateValue(filter, value);
+    });
+  }
+}
+
+// This function updates the displayed value and applies the filter to the image
+const filterValues = {};
+
+function updateValue(filter, value) {
+  filterValues[filter] = value; // Store the current value for each filter
+  const outputId = `${filter}Output`;
+
+  const { unit } = filterConfig[filter] || { unit: "%" };
+  const outputElement = document.getElementById(outputId);
+  if (outputElement) {
+    outputElement.textContent = `${value}${unit}`;
+  }
+  applyAllFilters();
+}
+
+function applyAllFilters() {
+  const image = document.getElementById("targetImage");
+  const filters = Object.keys(filterValues).map(
+    filter => `${filter}(${filterValues[filter]}${filterConfig[filter].unit})`
+  );
+  image.style.filter = filters.join(" ");
+}
+
+
+
+function saveFilters() {
+  localStorage.setItem("imageFilters", JSON.stringify(filterValues));
+  alert("Filters saved!");
+}
+
+function loadFilters() {
+  const savedFilters = JSON.parse(localStorage.getItem("imageFilters"));
+  if (savedFilters) {
+    Object.keys(savedFilters).forEach(filter => {
+      createSlider(filter);
+      document.getElementById(`${filter}Value`).value = savedFilters[filter];
+      updateValue(filter, savedFilters[filter]);
+    });
+    alert("Filters loaded!");
+  }
+}
+
+window.onload = loadFilters;
+
+
+
+
+
+
+
+
+
+
 
 // Save the current canvas state for undo functionality
 function saveToHistory() {
@@ -2849,9 +3028,7 @@ document.addEventListener("DOMContentLoaded", function () {
     .getElementById("logoSize")
     .addEventListener("input", updateLogoSize(event));
 
-  // Filter dropdown
-  document.getElementById("filters").addEventListener("change", showSlider);
-
+  
   // Bind undo/redo buttons
   document.getElementById("undoBtn").addEventListener("click", undo);
   document.getElementById("redoBtn").addEventListener("click", redo);
@@ -2988,6 +3165,15 @@ document.addEventListener("DOMContentLoaded", function () {
   document
     .getElementById("resetWatermarkSettings")
     .addEventListener("click", resetWatermarkSettings);
+
+
+    // Filter dropdown
+document.getElementById("filters").addEventListener("change", showSlider(event));
+
+// Adding Clear All Filters button
+document.getElementById("clearFiltersButton").addEventListener("click", clearAllFilters);
+
+
 });
 
 /*  upload To Firebase  /////////////////////////////////////////////
