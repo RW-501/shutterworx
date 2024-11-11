@@ -2915,39 +2915,55 @@ function handleAdvancedClick() {
 function handleTextModeClick() {
   console.log("Text Watermark button clicked");
   document.getElementById("multipleWaterMark").checked = true;
+  updateWatermarkPreview();
+
 }
 
 function handleImageModeClick() {
   console.log("Image Watermark button clicked");
   document.getElementById("multipleWaterMark").checked = false;
+  updateWatermarkPreview();
+
 }
+
+
 
 function handleImageWatermarkClick() {
   console.log("Watermark button clicked");
   document.getElementById("multipleWaterMark").checked = true;
   document.getElementById("watermarkStyle").value = "regular";
+  updateWatermarkPreview();
+
 }
 
 function handleDiagonalLeftClick() {
   console.log("Diagonal Left Watermark button clicked");
   handleImageWatermarkClick();
   document.getElementById("watermarkStyle").value = "diagonal-left";
+  updateWatermarkPreview();
+
 }
 
 function handleDiagonalRightClick() {
   console.log("Diagonal Right Watermark button clicked");
   handleImageWatermarkClick();
   document.getElementById("watermarkStyle").value = "diagonal-right";
+  updateWatermarkPreview();
+
 }
 
 function handleZoomInClick() {
   const scaleElement = document.getElementById("watermarkScale");
   scaleElement.value = parseInt(scaleElement.value) + 1;
+  updateWatermarkPreview();
+
 }
 
 function handleZoomOutClick() {
   const scaleElement = document.getElementById("watermarkScale");
   scaleElement.value = Math.max(0, parseInt(scaleElement.value) - 1);
+  updateWatermarkPreview();
+
 }
 
 function handleAddWatermarkImageClick() {
