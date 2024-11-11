@@ -99,6 +99,7 @@
     where, getDocs, storage, collection, auth, analytics } from 'https://shutterworx.co/js/firebaseConfig.js';
        
     const userId = document.getElementById("userIdDiv").innerText;
+    console.log("userId   ", userId);
 
 // Function to fetch and display user events
 async function fetchUserEvents() {
@@ -106,6 +107,7 @@ async function fetchUserEvents() {
         const eventsSnapshot = await db.collection("Members_Events")
             .where("userID", "==", userId)
             .get();
+            console.log("userId ???????/   ", userId);
 
         if (!eventsSnapshot.empty) {
             const tableBody = document.getElementById('eventTableBody');
