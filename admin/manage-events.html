@@ -320,75 +320,57 @@ async function updateEvent(eventId, updatedData) {
     }
 }
 
-function openImageModal(eventId) {
-    // Show the image upload modal for the event
-    $('#imageModal').modal('show');
-}
 
 
-async function updateEventImage(eventId, imageFile) {
-    try {
 
-        const shortenedFileName = cleanAndShortenFileName(imageFile, 15);
 
-// Set Firebase storage references for original and compressed images
-const storageRef = ref(
-  storage,
-  `images/${eventId}`);
 
-        // Reference to the storage location where the image will be uploaded
-      //  const storageRef = firebase.storage().ref(`eventImages/${eventId}`);
 
-        // Start uploading the image
-        const uploadTask = storageRef.put(shortenedFileName);
+window.onload = function() {
+        const userId = document.getElementById("userIdDiv").innerText;
+        fetchUserEvents(userId);
 
-        // Monitor the upload progress
-        uploadTask.on('state_changed', 
-            (snapshot) => {
-                // You can display progress here if needed
+        document.getElementById('eventForm').addEventListener('submit', handleEventFormSubmit);
+
+        tableBody.addEventListener("click", (event) => {
+            const target = event.target;
+            const eventId = target.dataset.id;
+
+            if (target.classList.contains("edit-btn")) openEditModal(eventId);
+            else if (target.classList.contains("delete-btn")) deleteEvent(eventId);
+            else if (target.classList.contains("image-btn")) openImageModal(eventId);
+            else if (target.classList.contains("view-btn")) viewEvent(eventId);
+        });
+    };
+
+    function viewEvent(eventId) {
+        window.location.href = `/manage-images.html?eventId=${eventId}`;
+    }
+
+    function openImageModal(eventId) {
+        $('#imageModal').modal('show');
+    }
+
+    async function updateEventImage(eventId, imageFile) {
+        try {
+            const storageRef = ref(storage, `images/${eventId}`);
+            const uploadTask = storageRef.put(imageFile);
+
+            uploadTask.on('state_changed', (snapshot) => {
                 const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
                 showToast(`Upload is ${progress}% done`);
-                // Optionally update a progress bar or something similar here
-            },
-            (error) => {
-                // Handle upload error
-                console.error("Error uploading image:", error);
-                showToast("Error uploading image. Please try again.");
-            }
-        );
+            });
 
-        // Wait for the upload to complete
-        await uploadTask;
+            await uploadTask;
+            const downloadURL = await storageRef.getDownloadURL();
+            await updateDoc(doc(db, "Members_Events", eventId), { watermarkImage: downloadURL });
+            showToast("Image updated successfully!");
 
-        // After successful upload, get the download URL
-        const downloadURL = await storageRef.getDownloadURL();
-
-        // Update the event document in Firestore with the new image URL
-        await db.collection("Members_Events").doc(eventId).update({
-            watermarkImage: downloadURL
-        });
-
-        // Inform the user that the image has been successfully updated
-        showToast("Image updated successfully!");
-        
-        // Optionally, you can update the UI without reloading the page
-        // For example, you could display the new image immediately
-        // document.getElementById('imageElement').src = downloadURL;
-    } catch (error) {
-        // General error handling
-        console.error("Error updating event image:", error);
-        showToast("Error updating event image. Please try again.");
+        } catch (error) {
+            console.error("Error updating event image:", error);
+            showToast("Error updating event image. Please try again.");
+        }
     }
-}
-
-function viewEvent(eventId) {
-    window.location.href = `/manage-images.html?eventId=${eventId}`;
-}
-
-
-
-
-
 
 
 
