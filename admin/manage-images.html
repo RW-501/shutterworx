@@ -86,9 +86,11 @@
 // Step 1: Get events for the user
 async function getUserEvents() {
     try {
-        const eventsSnapshot = await db.collection("Members_Events")
-            .where("userID", "==", userId)  // Filter by userId
-            .get();
+        // Reference the "Members_Events" collection and filter by userId
+        const eventsRef = collection(db, "Members_Events");
+        const eventsQuery = query(eventsRef, where("userID", "==", userId));
+        const eventsSnapshot = await getDocs(eventsQuery);
+
 
         if (!eventsSnapshot.empty) {
             // Loop through each event

@@ -102,10 +102,10 @@
 // Function to fetch and display user events
 async function fetchUserEvents(userId) {
     try {
-        const eventsSnapshot = await db.collection("Members_Events")
-            .where("userID", "==", userId)
-            .get();
-            console.log("userId ???????/   ", userId);
+        // Reference the "Members_Events" collection and filter by userId
+        const eventsRef = collection(db, "Members_Events");
+        const eventsQuery = query(eventsRef, where("userID", "==", userId));
+        const eventsSnapshot = await getDocs(eventsQuery);
 
         if (!eventsSnapshot.empty) {
             const tableBody = document.getElementById('eventTableBody');
