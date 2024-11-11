@@ -1020,15 +1020,20 @@ display: none !important;transform: scale(1.05);
             </div>
   
             <div class="properties-panel">
-  
+            </div>
+            <div class="Text-WM Image-WM">
               <label for="watermarkText">Watermark Text:</label>
               <input type="text" id="watermarkText" placeholder="Enter watermark text" />
-  
+  </div>
+              <div class="Advanced-WM Image-WM">
               <label for="addWatermarkImage">Add Watermark Image:</label>
               <button id="addWatermarkImage" class="button">Add Image Watermark</button>
   
               <input type="file" id="watermarkImage" accept=".svg,.png,.gif,.Svg,.Png,.Gif" hidden />
-  
+  </div>
+
+  <div class="Advanced-WM Text-WM">
+
               <label for="watermarkFont">Font:</label>
               <select id="watermarkFont">
                 <option>Arial Black</option>
@@ -1047,27 +1052,42 @@ display: none !important;transform: scale(1.05);
                 <option>Montserrat</option>
                 <option>Playfair Display</option>
               </select>
-  
+  </div>
+
+  <div class="Advanced-WM Text-WM">
               <label for="watermarkSize">Text Size:</label>
               <input type="number" id="watermarkSize" placeholder="Text size" />
-  
+  </div>
+  <div class="Advanced-WM Text-WM">
               <label for="watermarkColor">Text Color:</label>
               <input type="color" id="watermarkColor" value="#000000" />
-  
+  </div>
+  <div class="Advanced-WM Text-WM Image-WM">
+
               <label for="watermarkOpacity">Opacity:</label>
               <input type="range" id="watermarkOpacity" step=".1" min="0" max="5" value="0.5" />
-  
+            </div>
+            <div class="Advanced-WM Text-WM Image-WM">
+
               <label for="watermarkRotation">Rotation:</label>
               <input type="range" id="watermarkRotation" step="1" min="0" max="360" step="1" value="0" />
-  
+    </div>
+  <div class=" Text-WM ">
               <label for="watermarkBold" class="form-check-label">Bold</label>
               <input type="checkbox" id="watermarkBold" class="form-check-input">
-  
+            </div>
+            <div class="Advanced-WM Text-WM ">
               <label for="watermarkUnderline" class="form-check-label">Underline</label>
               <input type="checkbox" id="watermarkUnderline" class="form-check-input">
+</div>
+
               <div class="hidden">
+
+            <div class="Advanced-WM Text-WM Image-WM">   
                 <label for="watermarkScale">Canvas Zoom:</label>
                 <input type="range" id="watermarkScale" min="1" max="5" step="1" value="1"  />
+            </div>
+            <div class="Advanced-WM Text-WM">
                 <label for="multipleWaterMark" class="form-check-label">Multiple Watermarks</label>
                 <input type="checkbox" id="multipleWaterMark" class="form-check-input">
   
@@ -1078,7 +1098,7 @@ display: none !important;transform: scale(1.05);
                 </select>
                 <label for="gapSize">Gap Size (spacing between watermarks):</label>
                 <input type="number" id="gapSize" value="30" step="5">
-  
+  </div>
               </div>
   
             </div>
@@ -2905,30 +2925,72 @@ function saveImage() {
 }
 
 // Define functions for each button's action
-
+// Function to handle Basic button click
 function handleBasicClick() {
   console.log("Basic button clicked");
+
+  // Show Basic content and hide others
+  toggleVisibility('Basic-WM');
+  hideSections(['Advanced-WM', 'Text-WM', 'Image-WM']);
 }
 
+// Function to handle Advanced button click
 function handleAdvancedClick() {
   console.log("Advanced button clicked");
+
+  // Show Advanced content and hide others
+  toggleVisibility('Advanced-WM');
+  hideSections(['Basic-WM', 'Text-WM', 'Image-WM']);
 }
 
+// Function to handle Text Watermark button click
 function handleTextModeClick() {
   console.log("Text Watermark button clicked");
+
+  // Show Text-WM content and hide others
+  toggleVisibility('Text-WM');
+  hideSections(['Basic-WM', 'Advanced-WM', 'Image-WM']);
+
+  // Additional actions (like setting watermark checkbox)
   document.getElementById("multipleWaterMark").checked = true;
   updateWatermarkPreview();
-
 }
 
+// Function to handle Image Watermark button click
 function handleImageModeClick() {
   console.log("Image Watermark button clicked");
+
+  // Show Image-WM content and hide others
+  toggleVisibility('Image-WM');
+  hideSections(['Basic-WM', 'Advanced-WM', 'Text-WM']);
+
+  // Additional actions (like unsetting watermark checkbox)
   document.getElementById("multipleWaterMark").checked = false;
   updateWatermarkPreview();
-
 }
 
+// Function to toggle visibility of a specific section
+function toggleVisibility(className) {
+  const element = document.querySelector(`.${className}`);
+  if (element) {
+    element.style.display = (element.style.display === 'none' || element.style.display === '') ? 'block' : 'none';
+  }
+}
 
+// Function to hide multiple sections
+function hideSections(classNames) {
+  classNames.forEach(className => {
+    const element = document.querySelector(`.${className}`);
+    if (element) {
+      element.style.display = 'none';
+    }
+  });
+}
+
+// Example placeholder for updateWatermarkPreview function
+function updateWatermarkPreview() {
+  console.log("Updating watermark preview...");
+}
 
 function handleImageWatermarkClick() {
   console.log("Watermark button clicked");
