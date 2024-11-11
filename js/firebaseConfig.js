@@ -58,7 +58,7 @@ const firebaseConfig = {
          db = getFirestore(app); // Initialize Firestore
          storage = getStorage(app); // Initialize Storage
          analytics = initializeAnalytics(app);
-         const user = firebase.auth().currentUser;
+         const user = auth.auth().currentUser;
          if (user) {
             console.log("User is authenticated: ", user);
           } else {
