@@ -2239,7 +2239,7 @@ async function renderImages(imagesData) {
 
     // Create a new div element for each image card
     const imgDiv = document.createElement("div");
-    imgDiv.classList.add("col-md-4", "mt-3");
+    imgDiv.classList.add("col-md-4", "mt-3", "watermark-thumbnail");
 
     // Set the inner HTML with the image details
     imgDiv.innerHTML = `
@@ -2381,7 +2381,7 @@ document.getElementById("saveImagesBtn").addEventListener("click", async () => {
 // Function to remove .card div with a specific data-set-ref value
 function removeCardByRef(picCount) {
   // Select all .card elements
-  const cards = document.querySelectorAll(".card");
+  const cards = document.querySelectorAll(".watermark-thumbnail");
 
   // Loop through the cards to find the one with the matching data-set-ref attribute
   cards.forEach((card) => {
