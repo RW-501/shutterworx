@@ -1743,40 +1743,70 @@ function setupEventListeners() {
     element.addEventListener("input", updateWatermarkPreview);
   });
 }
-
 function getWatermarkSettings() {
   const settings = {};
 
-  // Loop through each element in watermarkElements and fetch its value or checked state
+  // Loop through each element in watermarkElements to fetch its value or checked state
   Object.entries(watermarkElements).forEach(([key, element]) => {
     try {
-      if (element.type === "checkbox") {
-        settings[key] = element.checked; // For checkboxes, use `checked` state
+      // Check if there's a saved setting in sessionStorage for this key
+      const savedSetting = sessionStorage.getItem(`watermark_${key}`);
+      
+      if (savedSetting !== null) {
+        // If there's a saved setting, use it
+        settings[key] = JSON.parse(savedSetting);
+      } else if (element.type === "checkbox") {
+        // For checkboxes, use `checked` state or defaultSettings if not saved
+        settings[key] = element.checked || defaultSettings[key];
       } else if (
         element.type === "text" ||
         element.type === "color" ||
         element.tagName.toLowerCase() === "select"
       ) {
-        // For text, color, and select elements, use their `value` directly
-        settings[key] = element.value || defaultSettings[key]; // Fallback to defaultSettings if no value
+        // For text, color, and select elements, use their `value` directly or fallback to default
+        settings[key] = element.value || defaultSettings[key];
       } else {
-        // For other element types, parse the value (e.g., range sliders, number inputs, etc.)
+        // For other element types, parse the value or use defaultSettings
         settings[key] = parseValue(element, defaultSettings[key]);
       }
     } catch (error) {
       console.error(`Error getting setting for ${key}:`, error);
-      settings[key] = defaultSettings[key]; // Ensure fallback to default if any error occurs
+      settings[key] = defaultSettings[key]; // Fallback to default if error
     }
   });
 
   return settings;
 }
 
+// Save settings to sessionStorage for persistence across sessions
+function saveWatermarkSettings(settings) {
+  Object.entries(settings).forEach(([key, value]) => {
+    sessionStorage.setItem(`watermark_${key}`, JSON.stringify(value));
+  });
+}
+
+// Example usage: Load settings and apply them on page load
+window.onload = () => {
+  const loadedSettings = getWatermarkSettings();
+  applyWatermarkSettings(loadedSettings); // Apply settings to elements
+
+  // Save updated settings if any changes are made
+  saveWatermarkSettings(loadedSettings);
+};
+
+// Helper function to parse element values if needed
+function parseValue(element, defaultValue) {
+  return element.value !== undefined ? element.value : defaultValue;
+}
+
+/*
 // Helper to parse numeric values with fallback
 function parseValue(element, fallback) {
   const value = parseFloat(element.value);
   return isNaN(value) ? fallback : value;
 }
+*/
+
 
 // Update preview with current settings
 function updateWatermarkPreview() {
