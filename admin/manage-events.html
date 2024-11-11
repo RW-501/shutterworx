@@ -321,11 +321,15 @@ function viewEvent(eventId) {
 
 // Function to open the Edit Modal and populate it with event data
 function openEditModal(eventId) {
-    const eventRef = db.collection("Members_Events").doc(eventId);
-    eventRef.get().then((doc) => {
-        if (doc.exists) {
-            const eventData = doc.data();
+    // Get a reference to the event document
+    const eventRef = doc(db, "Members_Events", eventId); // Use doc() to reference a document
 
+    // Fetch the document
+    getDoc(eventRef).then((docSnap) => {
+        if (docSnap.exists()) {
+            const eventData = docSnap.data();
+
+            // Populate the form with the event data
             document.getElementById('editEventName').value = eventData.eventName || "";
             document.getElementById('editEventDate').value = eventData.eventDate || "";
             document.getElementById('editEventDescription').value = eventData.eventDescription || "";
@@ -334,7 +338,7 @@ function openEditModal(eventId) {
             document.getElementById('editCollectionPrice').value = eventData.collection_price || "";
             document.getElementById('editCollectionOnSellPrice').value = eventData.collection_OnSellPrice || "";
 
-            // Show the modal
+            // Show the modal (Bootstrap)
             $('#editModal').modal('show');
         } else {
             console.log("Event not found");
@@ -343,7 +347,6 @@ function openEditModal(eventId) {
         console.error("Error retrieving event:", error);
     });
 }
-
 // Then proceed with your existing event listeners or function calls
 window.onload = function() {
     const userId = document.getElementById("userIdDiv").innerText;
