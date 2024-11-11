@@ -2401,17 +2401,24 @@ document.getElementById("saveImagesBtn").addEventListener("click", async () => {
 
 // Function to remove .card div with a specific data-set-ref value
 function removeCardByRef(picCount) {
-  // Select all .card elements
+  // Convert picCount to a string to ensure matching with attribute value
+  const picCountStr = picCount.toString();
+
+  // Select all .watermark-thumbnail elements (cards)
   const cards = document.querySelectorAll(".watermark-thumbnail");
 
   // Loop through the cards to find the one with the matching data-set-ref attribute
   cards.forEach((card) => {
-    if (card.getAttribute("data-set-ref") === picCount.toString()) {
+    if (card.getAttribute("data-set-ref") === picCountStr) {
       // Remove the card if the data-set-ref matches picCount
       card.remove();
+      
+      // Provide feedback to the user
+      showToast(`Image card #${picCount} removed successfully.`);
     }
   });
 }
+
 
 /*  IMAGE EDITOR FUNCTIONS   /////////////////////////////////////////////
 //////////////////////////////////////////////// ////////////////////////////////////////////
@@ -2736,10 +2743,6 @@ function applyAllFilters() {
 
 
 
-function saveFilters() {
-  localStorage.setItem("imageFilters", JSON.stringify(filterValues));
-  alert("Filters saved!");
-}
 
 function loadFilters() {
   const savedFilters = JSON.parse(localStorage.getItem("imageFilters"));
