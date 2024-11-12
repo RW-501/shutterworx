@@ -1833,22 +1833,26 @@ const watermarkElements = {
 };
 
 const RADIAN_FACTOR = Math.PI / 180;
-
 const defaultSettings = {
-  text: "Your Watermark",
-  font: "Arial Black",
-  fontSize: 240,
-  color: "#fff",
-  opacity: 0.5,
-  rotation: 0,
-  //  posX: 95,
-  // posY: 140,
-  bold: false,
-  underline: false,
-  //    stroke: 2,
-  scale: 1,
-  multipleWatermark: false
+  text: "Your Watermark",      // Default text for the watermark
+  font: "Arial Black",         // Default font style
+  fontSize: 240,               // Default font size (this will scale down if necessary)
+  color: "#fff",               // Default text color (white)
+  opacity: 0.5,                // Default opacity (50% transparent)
+  rotation: 0,                 // Default rotation angle (0 degrees, no rotation)
+  posX: 95,                    // X-position for watermark (in percentage, e.g., 95% from left)
+  posY: 140,                   // Y-position for watermark (in percentage, e.g., 140px from the top)
+  bold: false,                 // Default is not bold
+  underline: false,            // Default is no underline
+  stroke: 2,                   // Stroke width for text if you want an outline
+  scale: 1,                    // Scaling factor for the watermark
+  multipleWatermark: false,    // Whether to display multiple watermarks or just one
+  watermarkImg: null,          // URL for watermark image if needed (default is null)
+  startX: 0,                   // Starting X position for repeated watermark (in pixels or percentage)
+  startY: 0,                   // Starting Y position for repeated watermark (in pixels or percentage)
+  gapSize: 100,                // Gap between repeated watermarks
 };
+
 
 // Reset settings to defaults
 function resetWatermarkSettings() {
