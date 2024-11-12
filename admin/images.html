@@ -2834,21 +2834,20 @@ function removeCardByRef(picCount) {
 
 // Add logo to canvas
 function addLogo(event) {
-  event.preventDefault;
+  event.preventDefault();
 
   const file = event.target.files[0];
   if (file) {
     const reader = new FileReader();
     reader.onload = function (e) {
       logoImg = new Image();
-      logoImg.src = e.target.result;
       logoImg.onload = () => {
-        drawLogo(); // Draw logo once it's loaded
-        saveToHistory(); // Save the state after adding a logo
-   
+        // Ensure the image is loaded before drawing it
+        drawLogo(); 
+        saveToHistory(); // Save the state after adding the logo
         document.getElementById("logoImage").src = e.target.result;
-   
-    };
+      };
+      logoImg.src = e.target.result; // Set the image source
     };
     reader.readAsDataURL(file);
   }
@@ -2873,7 +2872,7 @@ function updateLogoSize(event) {
   event.preventDefault();
 
   logoScale = event.target.value;
-  redrawCanvas(logoScale);
+  redrawCanvas(logoImg); // Pass the logo image to redrawCanvas
 }
 
 
@@ -3090,9 +3089,13 @@ const filterValues = {};
 // Function to save the current canvas state for undo functionality
 function saveToHistory() {
   const canvas = document.getElementById("imageCanvas");
-  history.push(canvas.toDataURL()); // Store current canvas state
-  redoStack = []; // Clear redo stack on new action
+  const state = canvas.toDataURL(); // Store current canvas state
+  if (history[history.length - 1] !== state) { // Prevent duplicate states
+    history.push(state); // Store state if different from the last one
+    redoStack = []; // Clear redo stack on new action
+  }
 }
+
 
 // Event listener for filter dropdown selection
 document.getElementById("filters").addEventListener("change", function(event) {
@@ -3169,7 +3172,8 @@ function applyAllFilters() {
     context.filter = filters.join(" ");
     context.drawImage(image, 0, 0);
 
-    saveToHistory(); // Save current state after applying filters
+    saveFilters(); // Save filters to localStorage immediately after applying
+    saveToHistory(); // Save current state
   };
 }
 
@@ -3254,14 +3258,22 @@ function redrawCanvas(img) {
   const canvas = document.getElementById("imageCanvas");
   const ctx = canvas.getContext("2d");
 
+  if (!img) {
+    console.error('Invalid image passed to redrawCanvas');
+    return;
+  }
+
   // Clear and apply image with filters
   ctx.clearRect(0, 0, canvas.width, canvas.height);
-  ctx.filter = ctx.filter = Object.keys(filterValues).map(
+  ctx.filter = Object.keys(filterValues).map(
     filter => `${filter}(${filterValues[filter]}${filterConfig[filter].unit})`
   ).join(" ");
+  
+  // Ensure img is a valid image
   ctx.drawImage(img, 0, 0);
   saveToHistory();
 }
+
 
 /******************************************************************************************
 ******************************************************************************************
@@ -3287,6 +3299,46 @@ function redrawCanvas(img) {
 // Variables for cropping
 let isDraggingCrop = false;
 let cropStartX = 0, cropStartY = 0, cropWidth = 200, cropHeight = 200;
+
+
+
+
+
+
+
+function cropImage() {
+  const canvas = document.getElementById("imageCanvas");
+  const ctx = canvas.getContext("2d");
+  
+  const image = new Image();
+  image.src = canvas.toDataURL();
+  image.onload = function() {
+    const croppedCanvas = document.createElement('canvas');
+    const croppedCtx = croppedCanvas.getContext('2d');
+    
+    // Set the cropped canvas size
+    croppedCanvas.width = cropWidth;
+    croppedCanvas.height = cropHeight;
+    
+    // Draw the cropped area from the original canvas
+    croppedCtx.drawImage(image, cropStartX, cropStartY, cropWidth, cropHeight, 0, 0, cropWidth, cropHeight);
+    
+    // Replace the main canvas with the cropped content
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.drawImage(croppedCanvas, 0, 0);
+    saveToHistory(); // Save after cropping
+  };
+}
+
+
+
+
+
+
+
+
+
+
 
 // Draws the cropping rectangle with semi-transparent overlay
 function drawCropOverlay() {
@@ -3362,19 +3414,21 @@ function handleResize(event) {
   const x = event.clientX - rect.left;
   const y = event.clientY - rect.top;
 
-  if (currentHandle) {
-    if (currentHandle === "top-left") {
-      cropWidth += cropStartX - x;
-      cropHeight += cropStartY - y;
+  if (currentHandle === "top-left") {
+    const newWidth = cropWidth + cropStartX - x;
+    const newHeight = cropHeight + cropStartY - y;
+    
+    // Boundary check
+    if (newWidth > 50 && newHeight > 50) {
       cropStartX = x;
       cropStartY = y;
+      cropWidth = newWidth;
+      cropHeight = newHeight;
     }
-    // Repeat for each handle case...
-    cropWidth = Math.max(50, cropWidth);
-    cropHeight = Math.max(50, cropHeight);
-    drawCropOverlay();
-    checkCropBounds();
   }
+  // Repeat for each handle...
+  drawCropOverlay();
+  checkCropBounds();
 }
 
 function drawResizeHandles() {
@@ -3484,6 +3538,8 @@ function renderOverlay() {
   drawResizeHandles();
   drawGridOverlay();
 }
+
+
 
 
 
