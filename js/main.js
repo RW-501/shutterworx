@@ -772,13 +772,13 @@ footerLinksContainer.style.gridTemplateColumns = "repeat(auto-fit, minmax(100px,
 const tagLinks = footerLinksContainer.querySelectorAll(".tag-link");
 
 tagLinks.style.color = defaultSettings.linkColor;
-/*
+
 
 tagLinks.forEach(tag => {
   tag.style.color = defaultSettings.tagLinkColor;
   tag.style.color = defaultSettings.tagLinkColor;
 });
-*/
+
 
 
 
