@@ -2442,7 +2442,7 @@ async function renderImages(imagesData) {
 
   // Create a header for the image count
   const imageCountHeader = document.createElement("h5");
-  imageCountHeader.innerText = `Total Images: ${imagesData.length}`;
+  imageCountHeader.innerText = `Total Images: <div id='i-count'>${imagesData.length}</div>`;
   imageCountHeader.classList.add("mb-3", "text-left");
   imageGalleryContainer.appendChild(imageCountHeader);
 
@@ -2620,12 +2620,30 @@ function removeCardByRef(picCount) {
   // Select all cards and find the one with matching data-set-ref
   const cards = document.querySelectorAll(".watermark-thumbnail");
   cards.forEach((card) => {
-    if (card.querySelector(".card").getAttribute("data-set-ref") === picCountStr) {
+    const cardRef = card.querySelector(".card").getAttribute("data-set-ref");
+    if (cardRef === picCountStr) {
+      // Remove the card element from the DOM
       card.remove();
+
+      // Show toast notification
       showToast(`Image card #${picCount} removed successfully.`);
+
+      // Update the image count
+      let imageCount = parseInt(document.getElementById("i-count").innerText); // Get the current count
+      imageCount -= 1; // Decrease the count
+
+      // Update the displayed image count directly in the existing element
+      document.getElementById("i-count").innerText = imageCount;
+
+      // Optionally, if you want to update an image count header as well
+      const imageCountHeader = document.getElementById("image-count-header");
+      if (imageCountHeader) {
+        imageCountHeader.innerText = `Total Images: ${imageCount}`;
+      }
     }
   });
 }
+
 
 
 
