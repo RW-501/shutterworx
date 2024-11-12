@@ -653,20 +653,38 @@ document.getElementById("send-message-btn").innerHTML = "Sending..."; // Show lo
 
 
 // Function to initialize with the username
+// Define the function to get the username from the URL
+window.getUsernameFromURL = function() {
+    const url = window.location.href;
+    const regex = /\/my\/([^\/]+)/;
+    const match = url.match(regex);
+    return match ? match[1] : null; // Return the username if found, otherwise null
+};
+
+// Function to initialize the page for the specific user
 async function init() {
-    const username = getUsernameFromURL();
+    // Get the username from the URL
+    const username = window.getUsernameFromURL();
+    console.log(username); // Outputs the username (or null if no match is found)
 
     if (username) {
         console.log(`Initializing for user: ${username}`);
-        await loadHomePage(username);
-        await loadGallery(username);
+
+        try {
+            // Load the homepage and gallery for the user
+            await loadHomePage(username);
+            await loadGallery(username);
+        } catch (error) {
+            console.error('Error loading user data:', error);
+        }
     } else {
         console.error('Username not found in the URL');
     }
 }
 
-    // Run initialization on window load
-    window.onload = init;
+// Run initialization when the window is loaded
+window.onload = init;
+
 
     
     
