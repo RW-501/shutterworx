@@ -308,7 +308,7 @@ main {
         transform: translateY(5px);
     }
 
-    #site-footer a {
+    #site-footer a::after {
         color: #ffffff !important;
         text-decoration: none;
         background-color: transparent;

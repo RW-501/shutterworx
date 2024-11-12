@@ -2310,8 +2310,10 @@ if (previewCanvas && previewCtx) {
 
 function openImageEditor(image) {
   document.getElementById("imageEditorModal").style.display = "block"; // Show the modal
+console.log("image data   ",image );
 
   const { originalUrl, compressedImage, fileName, fileSize, fileType, orientation, width, height, aspectRatio } = image;
+  console.log("originalUrl   ",originalUrl );
 
   // Display watermark image
   const watermarkImage = document.getElementById("watermarkImage");
@@ -2459,6 +2461,7 @@ async function renderImages(imagesData) {
     // Create image card
     const imgDiv = document.createElement("div");
     imgDiv.classList.add("col-md-4", "mt-3", "watermark-thumbnail");
+    console.log("1st image data   ",image );
 
     imgDiv.innerHTML = `
       <div class="card mb-3" aria-label="Image card for ${fileName}" data-set-ref="${picCount}">
