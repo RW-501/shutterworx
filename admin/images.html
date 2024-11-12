@@ -2310,10 +2310,13 @@ if (previewCanvas && previewCtx) {
 
 function openImageEditor(imageData) {
   document.getElementById("imageEditorModal").style.display = "block"; // Show the modal
-console.log("image data   ",imageData );
+  console.log("image data   ", imageData);
 
-  const { originalUrl, compressedImage, fileName, fileSize, fileType, orientation, width, height, aspectRatio } = imageData;
-  console.log("originalUrl   ",originalUrl );
+  // Assuming imageData is an array with one object, extract the first element
+  const image = imageData[0]; // Access the first object from the array
+
+  const { originalUrl, compressedImage, fileName, fileSize, fileType, orientation, width, height, aspectRatio } = image;
+  console.log("originalUrl   ", originalUrl);
 
   // Display watermark image
   const watermarkImage = document.getElementById("watermarkImage");
@@ -2327,19 +2330,18 @@ console.log("image data   ",imageData );
 
   // Call the loadImage function, passing the image URL
   loadImage(originalUrl, canvas);
-  // Display image details in the 'Image Details' tab
-// Display image details in the 'Image Details' tab
-const imageDetailDiv = document.getElementById("image-editor-c-image-detail");
-imageDetailDiv.innerHTML = `
-  <h6>Image Information:</h6>
-  <p><strong>File Name:</strong> ${fileName}</p>
-  <p><strong>File Type:</strong> ${fileType}</p>
-  <p><strong>File Size:</strong> ${(fileSize / 1024).toFixed(2)} KB</p>
-  <p><strong>Dimensions:</strong> ${width} x ${height} px</p>
-  <p><strong>Aspect Ratio:</strong> ${aspectRatio ? aspectRatio.toFixed(2) : 'N/A'}</p>
-  <p><strong>Orientation:</strong> ${getOrientationText(orientation)}</p>
-`;
 
+  // Display image details in the 'Image Details' tab
+  const imageDetailDiv = document.getElementById("image-editor-c-image-detail");
+  imageDetailDiv.innerHTML = `
+    <h6>Image Information:</h6>
+    <p><strong>File Name:</strong> ${fileName}</p>
+    <p><strong>File Type:</strong> ${fileType}</p>
+    <p><strong>File Size:</strong> ${(fileSize / 1024).toFixed(2)} KB</p>
+    <p><strong>Dimensions:</strong> ${width} x ${height} px</p>
+    <p><strong>Aspect Ratio:</strong> ${aspectRatio ? aspectRatio.toFixed(2) : 'N/A'}</p>
+    <p><strong>Orientation:</strong> ${getOrientationText(orientation)}</p>
+  `;
 
   // Add event listeners to the tabs
   const tabButtons = document.querySelectorAll(".tab-btn");
@@ -2353,12 +2355,10 @@ imageDetailDiv.innerHTML = `
       document.querySelectorAll(".tab-content").forEach(content => content.classList.remove("active"));
       document.querySelector(button.getAttribute("data-target")).classList.add("active");
     });
-  });  
+  });
 
   document.getElementById("imageEditorModal").style.display = "block"; // Show the modal
-
 }
-
 
 function closeImageEditor() {
   document.getElementById("imageEditorModal").style.display = "none";
