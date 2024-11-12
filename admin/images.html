@@ -3190,7 +3190,7 @@ let saveImageCount = 0;
 
 function saveImage() {
   saveImageCount += 1;
-   canvas = document.getElementById("imageCanvas");
+  const canvas = document.getElementById("imageCanvas");
   const editedImage = canvas.toDataURL("image/png"); // Get the filtered image from the canvas
   const link = document.createElement("a");
   link.href = editedImage;
