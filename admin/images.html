@@ -3297,25 +3297,11 @@ function drawCropOverlay() {
 }
 
 
+
 // Handle mousedown for starting drag
 
 let isResizing = false;
 let currentHandle = null;
-
-
-// Draws the cropping rectangle with semi-transparent overlay
-function drawCropOverlay() {
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
-  redrawCanvas(currentImage);
-  ctx.fillStyle = "rgba(0, 0, 0, 0.5)";
-  ctx.fillRect(0, 0, canvas.width, canvas.height);
-  ctx.clearRect(cropStartX, cropStartY, cropWidth, cropHeight);
-  ctx.strokeStyle = "red";
-  ctx.lineWidth = 2;
-  ctx.strokeRect(cropStartX, cropStartY, cropWidth, cropHeight);
-  drawResizeHandles();
-  drawGridOverlay();
-}
 
 canvas.addEventListener("mousedown", (event) => {
   const rect = canvas.getBoundingClientRect();
