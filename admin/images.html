@@ -1406,6 +1406,15 @@ display: none !important;transform: scale(1.05);
     display: flex;
     margin: 1rem;
 }
+#image-editor-wm{
+  width: 200px;
+}
+#watermarkContainer {
+  display: flex;
+}
+
+
+
               </style>
               
               <section id="imageEditorModal" class=" modal " tabindex="-1" role="dialog" aria-labelledby="imageEditorModal">
@@ -2321,13 +2330,13 @@ if (previewCanvas && previewCtx) {
 
 function openImageEditor(imageData) {
   document.getElementById("imageEditorModal").style.display = "block"; // Show the modal
-  console.log("image data   ", imageData);
+  //console.log("image data   ", imageData);
 
   // Assuming imageData is an array with one object, extract the first element
   const image = imageData[0]; // Access the first object from the array
 
   const { originalUrl, compressedImage, fileName, fileSize, fileType, orientation, width, height, aspectRatio } = image;
-  console.log("originalUrl   ", originalUrl);
+  //console.log("originalUrl   ", originalUrl);
 
   // Display watermark image
   const watermarkImage = document.getElementById("image-editor-wm");
@@ -2645,7 +2654,7 @@ function removeCardByRef(picCount) {
       imageCount -= 1; // Decrease the count
 
       // Update the displayed image count directly in the existing element
-      document.getElementById("i-count").innerText = imageCount;
+      document.getElementById("i-count").innerHTML = imageCount;
 
       // Optionally, if you want to update an image count header as well
       const imageCountHeader = document.getElementById("image-count-header");
