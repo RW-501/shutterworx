@@ -757,15 +757,17 @@ display: none !important;transform: scale(1.05);
   
     .zoom-controls button {
       background-color: #009cfa;
-      color: white;
-      border-radius: 50%;
-      width: 40px;
-      height: 40px;
-      font-size: 20px;
-      padding: 0;
-      border: none;
-      cursor: pointer;
-      transition: background-color 0.3s ease;
+    color: white;
+    border-radius: 40px;
+    width: 40px;
+    height: 40px;
+    font-size: 20px;
+    padding: 5px;
+    box-sizing: content-box;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin: .2rem;
     }
   
     .zoom-controls button:hover {
@@ -1402,12 +1404,13 @@ display: none !important;transform: scale(1.05);
   color: white;
 }
 
-.tab-buttons{
+.tab-buttons {
     display: flex;
     margin: 1rem;
 }
-#image-editor-wm{
+#image-editor-wm {
   width: 200px;
+  margin: auto;
 }
 #watermarkContainer {
   display: flex;
@@ -2051,6 +2054,9 @@ function updateWatermarkPreview() {
       const startX = parseInt(settings.startX, 10) || 0;
       const startY = parseInt(settings.startY, 10) || 0;
       const gapSize = parseInt(settings.gapSize, 10) || gap;
+      
+      document.getElementById("watermark-x").value = startX;
+   document.getElementById("watermark-y").value = startY;
 
       previewCtx.drawImage(watermarkImg, startX, startY, previewCanvas.width, previewCanvas.height);
       // Call addWatermark only if there's a need to handle the image-based watermark
@@ -2091,7 +2097,8 @@ function updateWatermarkPreview() {
       drawSingleWatermark(settings, previewCtx, previewCanvas.width / 2, previewCanvas.height / 2);
     }
   }
-
+  
+  
   previewCtx.restore();
 }
 
@@ -2156,6 +2163,10 @@ function drawWatermarks(settings, ctx, width, height, gap, rotation = 0) {
   const maxY = height;
   for (let x = startX; x < maxX; x += gap) {
     for (let y = startY; y < maxY; y += gap) {
+      
+  document.getElementById("watermark-x").value = startX;
+   document.getElementById("watermark-y").value = startY;
+
       ctx.save();
       ctx.translate(x, y);
       ctx.rotate(rotation * RADIAN_FACTOR);
@@ -2464,7 +2475,7 @@ async function renderImages(imagesData) {
 
   // Create a header for the image count
   const imageCountHeader = document.createElement("h5");
-  imageCountHeader.innerText = `Total Images: <div id='i-count'>${imagesData.length}</div>`;
+  imageCountHeader.innerHTML = `Total Images: <div id='i-count'>${imagesData.length}</div>`;
   imageCountHeader.classList.add("mb-3", "text-left");
   imageGalleryContainer.appendChild(imageCountHeader);
 
