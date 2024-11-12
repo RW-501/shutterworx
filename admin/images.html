@@ -1431,32 +1431,40 @@ display: none !important;transform: scale(1.05);
                           <button id="collapseControlsButton">&#9654;</button>
                         </div>
                         <div id="controls">
+                          
+
                           <div id="image-editor-c-top">
                             <!-- Logo Tab -->
                             <div id="image-editor-c-logo" class="tab-content active">
                               <input type="file" id="uploadLogo" hidden>
                               <label for="uploadLogo">Upload Logo</label>
-
-                                 <!-- Logo Preview -->
-                          <div id="logoPreviewContainer">
-                            <img id="logoImage" src="https://shutterworx.co/images/default.png" alt="Logo Preview">
-                          </div>
+                          
+                              <!-- Logo Preview -->
+                              <div id="logoPreviewContainer">
+                                <img id="logoImage" src="https://shutterworx.co/images/default.png" alt="Logo Preview">
+                              </div>
                             </div>
                             
+                            <!-- Watermark Tab -->
+                            <div id="image-editor-c-watermark" class="tab-content">
+                              <div id="watermarkContainer">
+                                <img id="watermarkImage" src="" alt="Watermark Preview">
+                              </div>
+                            </div>
+                          
                             <!-- Image Details Tab -->
                             <div id="image-editor-c-image-detail" class="tab-content">
                               <!-- Image Details will be populated here -->
                             </div>
                           
-                            <!-- Tab Buttons to toggle between Logo and Image Details -->
+                            <!-- Tab Buttons to toggle between Logo, Watermark, and Image Details -->
                             <div class="tab-buttons">
                               <button class="tab-btn active" data-target="#image-editor-c-logo">Logo</button>
+                              <button class="tab-btn" data-target="#image-editor-c-watermark">Watermark</button>
                               <button class="tab-btn" data-target="#image-editor-c-image-detail">Image Details</button>
                             </div>
                           </div>
                           
-
-
                        
               
                           <!-- Logo Size Slider -->
@@ -2302,19 +2310,14 @@ if (previewCanvas && previewCtx) {
 
 function openImageEditor(image) {
   document.getElementById("imageEditorModal").style.display = "block"; // Show the modal
-  
-  // Get the image data for the editor
-  const { originalUrl, compressedImage, fileName, fileSize, fileType, orientation, width, height, aspectRatio } = image;
 
-  // Display image on canvas
-  const canvas = document.getElementById("imageCanvas");
-  if (!canvas) {
-    console.log("Canvas element not found");
-    return;
-  }
-  loadImage(compressedImage, canvas);
+  const { compressedImage, fileName, fileSize, fileType, orientation, width, height, aspectRatio } = image;
 
-  // Show image details in the 'Image Details' tab
+  // Display watermark image
+  const watermarkImage = document.getElementById("watermarkImage");
+  watermarkImage.src = compressedImage;
+
+  // Display image details in the 'Image Details' tab
   const imageDetailDiv = document.getElementById("image-editor-c-image-detail");
   imageDetailDiv.innerHTML = `
     <h6>Image Information:</h6>
@@ -2330,11 +2333,11 @@ function openImageEditor(image) {
   const tabButtons = document.querySelectorAll(".tab-btn");
   tabButtons.forEach(button => {
     button.addEventListener("click", function() {
-      // Toggle active class to show the correct tab
+      // Toggle active class for tabs
       document.querySelectorAll(".tab-btn").forEach(btn => btn.classList.remove("active"));
       button.classList.add("active");
 
-      // Toggle the visibility of the content
+      // Toggle the visibility of tab content
       document.querySelectorAll(".tab-content").forEach(content => content.classList.remove("active"));
       document.querySelector(button.getAttribute("data-target")).classList.add("active");
     });
