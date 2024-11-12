@@ -1433,6 +1433,8 @@ display: none !important;transform: scale(1.05);
                           
                           <div class="slider-container"></div> <!-- This is where the sliders will be injected -->
                           <button id="applyPreset">Apply Preset</button>
+                          <button id="applyAllFilters">Apply Changes</button>
+
                           <button id="clearFiltersButton">Clear Filters Button</button>
                           <button id="saveFilters">Save Filters</button>
                           <button id="resetButton">Reset Filters</button>
@@ -1450,7 +1452,7 @@ display: none !important;transform: scale(1.05);
 
                           <button id="saveImage">Save Image</button>
               
-                          <button id="closeImageEditor">Apply Changes</button>
+                          <button id="closeImageEditor">Close</button>
                         </div>
                       </div>
                     </div>
@@ -2850,22 +2852,27 @@ function updateValue(filter, value) {
 }
 
 
-
 function applyAllFilters() {
-  const image = document.getElementById("imageCanvas");
-  const filters = Object.keys(filterValues).map((filter) => {
-    const filterConfigForFilter = filterConfig[filter];
-    if (filterConfigForFilter) {
-      // Only proceed if the filter exists in filterConfig
-      return `${filter}(${filterValues[filter]}${filterConfigForFilter.unit})`;
-    } else {
-      // If the filter doesn't exist in filterConfig, return an empty string (or handle differently)
-      console.warn(`No config found for filter: ${filter}`);
-      return '';
-    }
-  });
-  image.style.filter = filters.filter(f => f !== '').join(" "); // Remove empty filters
+  const canvas = document.getElementById("imageCanvas");
+  const context = canvas.getContext("2d");
+  const image = new Image();
+  image.src = canvas.toDataURL(); // Get the current image source
+  image.onload = () => {
+    context.clearRect(0, 0, canvas.width, canvas.height); // Clear the canvas
+    const filters = Object.keys(filterValues).map((filter) => {
+      const filterConfigForFilter = filterConfig[filter];
+      if (filterConfigForFilter) {
+        return `${filter}(${filterValues[filter]}${filterConfigForFilter.unit})`;
+      } else {
+        console.warn(`No config found for filter: ${filter}`);
+        return '';
+      }
+    });
+    context.filter = filters.filter(f => f !== '').join(" "); // Apply the filter
+    context.drawImage(image, 0, 0); // Redraw the image on the canvas with the filter
+  };
 }
+
 
 
 // Apply preset filters and generate sliders dynamically
@@ -3037,12 +3044,14 @@ function resizeImage() {
 
 let saveImageCount = 0;
 // Save edited image
+
 function saveImage() {
-    saveImageCount += 1;
-  const editedImage = canvas.toDataURL("image/png");
+  saveImageCount += 1;
+   canvas = document.getElementById("imageCanvas");
+  const editedImage = canvas.toDataURL("image/png"); // Get the filtered image from the canvas
   const link = document.createElement("a");
   link.href = editedImage;
-  link.download = `ShutterWorx-edited-image"${saveImageCount}".png`;
+  link.download = `ShutterWorx-edited-image${saveImageCount}.png`;
   link.click();
 }
 
@@ -3304,7 +3313,9 @@ document.addEventListener("DOMContentLoaded", function () {
     .getElementById("openImageEditorBtn")
     .addEventListener("click", () => {
 
-
+      document
+        .getElementById("applyAllFilters")
+        .addEventListener("click", applyAllFilters);
 
         document
         .getElementById("resetButton")
