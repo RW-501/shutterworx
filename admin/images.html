@@ -3416,8 +3416,9 @@ async function uploadToFirebase(
   fileType
 ) {
   try {
-    const eventId = document.getElementById("currentEventID").innerText;
-    if (!eventId) {
+    const eventId = document.getElementById("currentEventID")?.innerText;
+    const userId = document.getElementById("userIdDiv")?.innerText;
+    if (!eventId || !userId) {
       showToast("Error saving images. Create Event First.", "error");
       return;
     }
@@ -3430,44 +3431,34 @@ async function uploadToFirebase(
     // Set Firebase storage references for original and compressed images
     const storageRefOriginal = ref(
       storage,
-      `images/${eventId}/${shortenedFileName}-original`
+      `images/${userId}/${eventId}/${shortenedFileName}-original`
     );
     const storageRefCompressed = ref(
       storage,
-      `images/${eventId}/${shortenedFileName}-compressed`
+      `images/${userId}/${eventId}/${shortenedFileName}-compressed`
     );
 
     // Upload original image
-    const uploadTaskOriginal = uploadBytesResumable(
-      storageRefOriginal,
-      originalBlob
-    );
-
+    const uploadTaskOriginal = uploadBytesResumable(storageRefOriginal, originalBlob);
     uploadTaskOriginal.on(
       "state_changed",
       (snapshot) => {
-        const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 50; // Show 0-50% for original
+        const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 50;
         updateProgressBar(progress);
       },
       (error) => {
         console.error("Original upload failed:", error);
-        showToast("Original image upload failed.", error);
+        showToast("Original image upload failed.", "error");
       },
       async () => {
-        const originalURL = await getDownloadURL(
-          uploadTaskOriginal.snapshot.ref
-        );
+        const originalURL = await getDownloadURL(uploadTaskOriginal.snapshot.ref);
 
         // Upload compressed image after original is uploaded
-        const uploadTaskCompressed = uploadBytesResumable(
-          storageRefCompressed,
-          compressedBlob
-        );
+        const uploadTaskCompressed = uploadBytesResumable(storageRefCompressed, compressedBlob);
         uploadTaskCompressed.on(
           "state_changed",
           (snapshot) => {
-            const progress =
-              50 + (snapshot.bytesTransferred / snapshot.totalBytes) * 50; // Show 50-100% for compressed
+            const progress = 50 + (snapshot.bytesTransferred / snapshot.totalBytes) * 50;
             updateProgressBar(progress);
           },
           (error) => {
@@ -3475,18 +3466,10 @@ async function uploadToFirebase(
             showToast("Compressed image upload failed.", "error");
           },
           async () => {
-            const compressedURL = await getDownloadURL(
-              uploadTaskCompressed.snapshot.ref
-            );
+            const compressedURL = await getDownloadURL(uploadTaskCompressed.snapshot.ref);
 
             // Save image details to Firestore with both URLs
-            await saveImageDetails(
-              fileName,
-              originalURL,
-              compressedURL,
-              fileSize,
-              fileType
-            );
+            await saveImageDetails(fileName, originalURL, compressedURL, fileSize, fileType);
             showToast("Both images uploaded successfully!", "success");
           }
         );
@@ -3498,92 +3481,77 @@ async function uploadToFirebase(
   }
 }
 
-// Saves image details, including metadata, to Firebase Firestore
 async function saveImageDetails(fileName, originalUrl, compressedUrl, fileSize, fileType) {
-    const title = document.getElementById("eventTitle").value;
-    const baseprice = document.getElementById('baseprice').value;
-    const eventId = document.getElementById("currentEventID").innerText;
-    const userId = document.getElementById("userIdDiv").innerText;
+  const title = document.getElementById("eventTitle")?.value;
+  const baseprice = document.getElementById('baseprice')?.value;
+  const eventId = document.getElementById("currentEventID")?.innerText;
+  const userId = document.getElementById("userIdDiv")?.innerText;
 
-    if (eventId && title && baseprice) {
-        try {
-            // Get reference to Members_Media document using eventId
-            const docRef = doc(db, "Members_Media", eventId);
-
-            await setDoc(docRef, {
-                fileName,
-                title,
-                price: baseprice || "",
-                onSellPrice: "",
-                originalUrl,
-                compressedUrl,
-                fileSize,
-                eventID: eventId,
-                fileType,
-                status: "active",
-                isPublic: true,
-                userId,
-                timestamp: new Date(),
-                comments: [],
-                views: 0,
-                deactived: false
-            });
-
-            showToast("Image details saved successfully!", "success");
-        } catch (error) {
-            console.error("Error saving image details:", error);
-            showToast("Error saving image details. Please try again.", "error");
-        }
-    } else {
-        showToast("Please provide a valid Event ID, title, and price.", "warning");
-    }
-}async function saveEvent() {
-  const title = document.getElementById("eventTitle").value;
-  const date = document.getElementById("eventDate").value;
-  const description = document.getElementById("eventDescription").value;
-  const collection_price = document.getElementById("collection_price").value;
-  const location = document.getElementById("eventLocation").value;
-  const accessCode = document.getElementById("accessCode").value;
-  const userId = document.getElementById("userIdDiv").innerText;
-  const eventIdArea = document.getElementById("currentEventID");
-  console.log("userId   ", userId);
-
-  // Check if all fields are valid
-  if (title && date && description && collection_price) {
+  if (eventId && title && baseprice && userId) {
     try {
-      // Add a new document to the "Members_Events" collection
-      const docRef = await addDoc(collection(db, "Members_Events"), {
+      const docRef = doc(db, "Members", userId, "Members_Media", `${eventId}_${fileName}`);
+      await setDoc(docRef, {
+        fileName,
+        title,
+        price: baseprice || "",
+        originalUrl,
+        compressedUrl,
+        fileSize,
+        eventID: eventId,
+        fileType,
+        status: "active",
+        isPublic: true,
+        userId,
+        timestamp: new Date(),
+        views: 0,
+        deactived: false
+      });
+      showToast("Image details saved successfully!", "success");
+    } catch (error) {
+      console.error("Error saving image details:", error);
+      showToast("Error saving image details. Please try again.", "error");
+    }
+  } else {
+    showToast("Please provide a valid Event ID, title, and price.", "warning");
+  }
+}
+
+async function saveEvent() {
+  const title = document.getElementById("eventTitle")?.value;
+  const date = document.getElementById("eventDate")?.value;
+  const description = document.getElementById("eventDescription")?.value;
+  const collection_price = document.getElementById("collection_price")?.value;
+  const location = document.getElementById("eventLocation")?.value;
+  const accessCode = document.getElementById("accessCode")?.value;
+  const userId = document.getElementById("userIdDiv")?.innerText;
+  const eventIdArea = document.getElementById("currentEventID");
+
+  if (title && date && description && collection_price && userId) {
+    try {
+      const docRef = await addDoc(collection(db, "Members", userId, "Events"), {
         title,
         eventDate: date || new Date(),
         eventDescription: description || "No Description",
         status: "active",
         isPublic: true,
         collection_price: collection_price || "",
-        collection_OnSellPrice: "",
-        eventTags: [],
-        accessCode: accessCode || "",
         location: location || "",
-        userID: userId,
+        accessCode: accessCode || "",
         timestamp: new Date(),
-        comments: [],
         views: 0,
         deactived: false
       });
-      console.log("userId   ", userId);
 
-      // Retrieve and display the document ID
       if (eventIdArea) {
         eventIdArea.innerText = docRef.id;
       }
-
-      // Show success message
-      showToast("Event saved successfully!");
+      showToast("Event saved successfully!", "success");
     } catch (error) {
       console.error("Error saving event:", error);
-      showToast("An error occurred while saving the event. Please try again.");
+      showToast("An error occurred while saving the event. Please try again.", "error");
     }
   } else {
-    showToast("Please fill in all required fields.");
+    showToast("Please fill in all required fields.", "warning");
   }
 }
 
