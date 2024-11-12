@@ -1323,8 +1323,8 @@ display: none !important;transform: scale(1.05);
                 }
               
                 #logoImage {
-                  width: 100px;
-                  height: 100px;
+                  width: 200px;
+                  height: 200px;
                   border-radius: 8px;
                   object-fit: cover;
                   border: 1px solid #444;
@@ -1404,6 +1404,7 @@ display: none !important;transform: scale(1.05);
 
 .tab-buttons{
     display: flex;
+    margin: 1rem;
 }
               </style>
               
@@ -1457,13 +1458,18 @@ display: none !important;transform: scale(1.05);
                             
                             <!-- Watermark Tab -->
                             <div id="image-editor-c-watermark" class="tab-content">
+                              <label for="uploadLogo">Watermark</label>
+
                               <div id="watermarkContainer">
                                 <img id="image-editor-wm" src="" alt="Watermark Preview">
                               </div>
                             </div>
                           
                             <!-- Image Details Tab -->
-                            <div id="image-editor-c-image-detail" class="tab-content">
+                            <div id="imagedetailContainer" class="tab-content">
+                              <label for="imagedetailContainer">Watermark</label>
+
+                            <div id="image-editor-c-image-detail">
                               <!-- Image Details will be populated here -->
                             </div>
                           
