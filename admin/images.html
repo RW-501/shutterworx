@@ -592,7 +592,8 @@ display: none !important;transform: scale(1.05);
       overflow-y: scroll;
       height: 100%;
       padding-bottom: 300px;
-    }
+      scrollbar-width: none;
+        }
   
     .properties-panel h2 {
       color: #009cfa;
@@ -1743,8 +1744,7 @@ async function createLowerQualityImage(mainImageDataURL, watermarkImageURL, qual
       addWatermark(ctx, width, height, wmImg); // Use watermark image
     } else {
       // Add watermark text if no image is provided
-      const watermarkText = document.getElementById("watermarkText").value || "Default Watermark";
-      addWatermarkText(ctx, width, height, watermarkText); // Use text as watermark
+      addWatermark(ctx, width, height); // Use text as watermark
     }
 
     // Return a lower-quality image
