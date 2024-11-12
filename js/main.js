@@ -1231,16 +1231,11 @@ initializeTracking();
 
 });
 
-window.getUsernameFromURL = (function () {
-
-// Function to get the username from the URL
-
-    const url = window.location.href;
-    const regex = /\/my\/([^\/]+)/;
-    const match = url.match(regex);
-    return match ? match[1] : null; // Return the username if found, otherwise null
-});
-
+window.getUsernameFromURL = function() {
+    const hash = window.location.hash;
+    const match = hash.match(/^#([a-zA-Z0-9_-]+)$/);
+    return match ? match[1] : null;
+};
 
 
 
