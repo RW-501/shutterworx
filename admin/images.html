@@ -1661,6 +1661,9 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 let selectedImages = [];
+// Add mouse events to handle dragging and resizing of crop area
+const canvas = document.getElementById("imageCanvas");
+const ctx = canvas.getContext("2d");
 
 const previewCanvas = document.getElementById("watermarkPreviewCanvas");
 const previewCtx = previewCanvas.getContext("2d");
@@ -1668,11 +1671,10 @@ const previewCtx = previewCanvas.getContext("2d");
 console.log(previewCanvas);
 
 const imageInput = document.getElementById("imageInput");
-const canvas = document.getElementById("imageCanvas");
 
 const imagePreviewContainer = document.getElementById("imagePreviewContainer");
 
-let ctx,
+let 
   img,
   logoImg,
   logoScale = 0.5;
@@ -1778,14 +1780,20 @@ function handleFiles(files) {
 }
 
 
-/*  WATER MARK FUNCTIONS  /////////////////////////////////////////////
-//////////////////////////////////////////////// ////////////////////////////////////////////
-///////////////////////////////////////////////////////////////////////////////////////////
-///////////////////////////////////////////////////////////////////////////////////////////
-///////////////////////////////////////////////////////////////////////////////////////////
-///////////////////////////////////////////////////////////////////////////////////////////
-///////////////////////////////////////////////////////////////////////////////////////////
-///////////////////////////////////////////////*/
+/*==============================================================================
+==============================================================================
+
+                    💧💧💧 WATERMARK FUNCTIONS MODULE 💧💧💧
+
+==============================================================================
+  This section contains all functions, utilities, and tools needed for applying 
+  watermarks to images. Organize operations here for watermark placement, styling, 
+  positioning, and transparency. Each function should be clearly documented to 
+  ensure easy maintenance, updates, and expansion as needed.
+==============================================================================
+==============================================================================*/
+
+//----------------------- Add watermark functions below -----------------------
 
 // Function to create lower-quality image with watermark
 async function createLowerQualityImage(mainImageDataURL, watermarkImageURL, quality = 0.7, maxWidth = 800, maxHeight = 600) {
@@ -2334,14 +2342,20 @@ if (previewCanvas && previewCtx) {
   console.error("Preview canvas is not available.");
 }
 
-/*  MAIN IMAGE FUNCTIONS  /////////////////////////////////////////////
-//////////////////////////////////////////////// ////////////////////////////////////////////
-///////////////////////////////////////////////////////////////////////////////////////////
-///////////////////////////////////////////////////////////////////////////////////////////
-///////////////////////////////////////////////////////////////////////////////////////////
-///////////////////////////////////////////////////////////////////////////////////////////
-///////////////////////////////////////////////////////////////////////////////////////////
-///////////////////////////////////////////////*/
+/*==============================================================================
+==============================================================================
+
+                    ⚙️⚙️⚙️ IMAGE PROCESSING MODULE ⚙️⚙️⚙️
+
+==============================================================================
+  This section contains functions, event listeners, and utilities for image 
+  processing tasks. Use this area to manage operations such as file conversions, 
+  compression, quality adjustments, and optimizations. Document each operation 
+  clearly for ease of maintenance and further development.
+==============================================================================
+==============================================================================*/
+
+//----------------------- Add image processing functions below -----------------------
 
 function openImageEditor(imageData) {
   document.getElementById("imageEditorModal").style.display = "block"; // Show the modal
@@ -2683,14 +2697,23 @@ function removeCardByRef(picCount) {
 
 
 
-/*  IMAGE EDITOR FUNCTIONS   /////////////////////////////////////////////
-//////////////////////////////////////////////// ////////////////////////////////////////////
-///////////////////////////////////////////////////////////////////////////////////////////
-///////////////////////////////////////////////////////////////////////////////////////////
-///////////////////////////////////////////////////////////////////////////////////////////
-///////////////////////////////////////////////////////////////////////////////////////////
-///////////////////////////////////////////////////////////////////////////////////////////
-///////////////////////////////////////////////*/
+/******************************************************************************************
+******************************************************************************************
+
+                            ✨ IMAGE EDITOR FUNCTIONS ✨
+
+******************************************************************************************
+******************************************************************************************
+*                                                                                        *
+*   This section is dedicated to all functionality for the image editor. Includes         *
+*   listeners, utilities, and helper functions for editing images—cropping, resizing,     *
+*   rotating, and color adjustments. Maintain a clear structure for easy navigation       *
+*   and future expansion.                                                                 *
+*                                                                                        *
+******************************************************************************************
+******************************************************************************************/
+
+//------------------------ Begin adding image editor tools below ------------------------
 
 // Add logo to canvas
 function addLogo(event) {
@@ -2738,14 +2761,19 @@ function updateLogoSize(event) {
 
 
 
-/*  filter selection  /////////////////////////////////////////////
-//////////////////////////////////////////////// ////////////////////////////////////////////
-///////////////////////////////////////////////////////////////////////////////////////////
-///////////////////////////////////////////////////////////////////////////////////////////
-///////////////////////////////////////////////////////////////////////////////////////////
-///////////////////////////////////////////////////////////////////////////////////////////
-///////////////////////////////////////////////////////////////////////////////////////////
-///////////////////////////////////////////////*/
+/*==============================================================================
+==============================================================================
+
+                     🌈🌈🌈 IMAGE FILTER EVENT LISTENERS 🌈🌈🌈
+
+==============================================================================
+  This section contains all event listeners and functions for applying image 
+  filters. Organize each filter listener here to maintain efficient processing 
+  and an intuitive structure for image manipulation tasks.
+==============================================================================
+==============================================================================*/
+
+//------------------------ Add image filter listeners below ------------------------
 
 // Function to handle the filter selection change
 // Clear All Filters Function
@@ -2942,16 +2970,21 @@ function populateFilterDropdown() {
     filterSelect.appendChild(optgroup);
   });
 }
-
-
-
 // Track active filter values to reapply when a new one is selected
 const filterValues = {};
+
+
+// Function to save the current canvas state for undo functionality
+function saveToHistory() {
+  const canvas = document.getElementById("imageCanvas");
+  history.push(canvas.toDataURL()); // Store current canvas state
+  redoStack = []; // Clear redo stack on new action
+}
 
 // Event listener for filter dropdown selection
 document.getElementById("filters").addEventListener("change", function(event) {
   const selectedFilter = event.target.value;
-  
+
   if (filterPresets[selectedFilter]) {
     applyPreset(selectedFilter); // Apply preset if selected
   } else if (selectedFilter !== "none") {
@@ -2963,8 +2996,6 @@ document.getElementById("filters").addEventListener("change", function(event) {
 
   applyAllFilters(); // Reapply all filters whenever a new filter is selected
 });
-
-
 
 function createSlider(filter) {
   const sliderContainer = document.querySelector(".slider-container");
@@ -2981,6 +3012,7 @@ function createSlider(filter) {
       <label for="${filter}Value">${filterDetails.label}:</label>
       <input type="range" id="${filter}Value" min="${filterDetails.min}" max="${filterDetails.max}" value="${filterDetails.defaultValue}">
       <span id="${filter}Output">${filterDetails.defaultValue}${filterDetails.unit}</span>
+      <button onclick="removeFilter('${filter}')">Remove</button>
     </div>
   `;
 
@@ -2998,17 +3030,15 @@ function createSlider(filter) {
   });
 }
 
-// This function will update the filter's value and apply it to the image
-function updateValue(filter, value) {
-  // Assuming you're applying the filter to an image
-  const image = document.getElementById("imageCanvas");
-  const filterDetails = filterConfig[filter];
-  if (filterDetails) {
-    const filterString = `${filter}(${value}${filterDetails.unit})`;
-    image.style.filter = filterString;
-  }
+// Remove filter function to delete a specific filter
+function removeFilter(filter) {
+  delete filterValues[filter]; // Remove filter from active values
+  const sliderContainer = document.getElementById(`${filter}SliderContainer`);
+  if (sliderContainer) sliderContainer.remove(); // Remove slider from UI
+  applyAllFilters(); // Reapply remaining active filters
 }
 
+// Function to apply all active filters to the image
 function applyAllFilters() {
   const canvas = document.getElementById("imageCanvas");
   const context = canvas.getContext("2d");
@@ -3025,16 +3055,15 @@ function applyAllFilters() {
 
     context.filter = filters.join(" ");
     context.drawImage(image, 0, 0);
+
+    saveToHistory(); // Save current state after applying filters
   };
 }
 
-
-
-
-
+// Function to apply preset filters
 function applyPreset(presetName) {
   const preset = filterPresets[presetName];
-  
+
   Object.keys(preset).forEach(filter => {
     const filterDetails = filterConfig[filter];
     if (filterDetails) {
@@ -3051,50 +3080,42 @@ function applyPreset(presetName) {
   applyAllFilters(); // Apply all filters based on updated filterValues
 }
 
+// Load saved filters from localStorage
 function loadFilters() {
   const savedFilters = JSON.parse(localStorage.getItem("imageFilters"));
   if (savedFilters) {
     Object.keys(savedFilters).forEach(filter => {
+      filterValues[filter] = savedFilters[filter];
       createSlider(filter);
       document.getElementById(`${filter}Value`).value = savedFilters[filter];
-      updateValue(filter, savedFilters[filter]);
     });
+    applyAllFilters();
     alert("Filters loaded!");
   }
 }
 
+// Save current filter settings to localStorage
+function saveFilters() {
+  localStorage.setItem("imageFilters", JSON.stringify(filterValues));
+  alert("Filters saved!");
+}
 
-
+// On load, populate dropdown and load any saved filters
 window.onload = function() {
   populateFilterDropdown();
   loadFilters();
 };
 
 
-
-
-
-
-
-
-
-// Save the current canvas state for undo functionality
-function saveToHistory() {
-  history.push(canvas.toDataURL());
-  redoStack = []; // Clear redo stack on new action
-}
-
 // Undo functionality
 function undo() {
-  if (history.length > 0) {
+  if (history.length > 1) { // Keep one state to avoid empty history
     const lastState = history.pop();
-    redoStack.push(canvas.toDataURL());
+    redoStack.push(lastState);
     const img = new Image();
-    img.src = lastState;
+    img.src = history[history.length - 1];
     img.onload = () => {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
-      drawLogo(); // Redraw logo
+      redrawCanvas(img);
     };
   }
 }
@@ -3103,71 +3124,125 @@ function undo() {
 function redo() {
   if (redoStack.length > 0) {
     const redoState = redoStack.pop();
-    history.push(canvas.toDataURL());
+    history.push(redoState);
     const img = new Image();
     img.src = redoState;
     img.onload = () => {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
-      drawLogo(); // Redraw logo
+      redrawCanvas(img);
     };
   }
 }
 
 // Redraw the canvas with the current image and logo
 function redrawCanvas(img) {
-  // Check if img is defined and is an Image object
-  if (!img || !(img instanceof HTMLImageElement)) {
-    console.log("Invalid image object", img);
-    return;
-  }
-
+  const canvas = document.getElementById("imageCanvas");
   const ctx = canvas.getContext("2d");
-  if (!ctx) {
-    console.log("Canvas context not available");
-    return;
-  }
-  // Set the canvas size based on the image dimensions
-  canvas.width = img.width;
-  canvas.height = img.height;
 
-  // Clear the canvas and apply the filter and image
+  // Clear and apply image with filters
   ctx.clearRect(0, 0, canvas.width, canvas.height);
-  //ctx.filter = filterEffect || "none"; // Apply filter if defined
-  ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
-  console.log(ctx, "   <  ctx   filterEffect ",filterEffect,"   canvas ",canvas);
-
-  // Draw logo on top, if necessary
-  drawLogo(ctx, canvas); // Assuming `drawLogo` takes ctx as a parameter
-
-  // Reset the filter after drawing
-  ctx.filter = "none";
-
-  // Save the current state after redraw
-  saveToHistory(canvas); // Assuming `saveToHistory` takes canvas as a parameter
+  ctx.filter = ctx.filter = Object.keys(filterValues).map(
+    filter => `${filter}(${filterValues[filter]}${filterConfig[filter].unit})`
+  ).join(" ");
+  ctx.drawImage(img, 0, 0);
+  saveToHistory();
 }
 
-// Dynamic cropping functionality
-function cropImage() {
-  const cropWidth = parseInt(prompt("Enter crop width:", "200")); // User-defined crop width
-  const cropHeight = parseInt(prompt("Enter crop height:", "200")); // User-defined crop height
-  const cropStartX = parseInt(prompt("Enter crop start X position:", "0")); // User-defined start X
-  const cropStartY = parseInt(prompt("Enter crop start Y position:", "0")); // User-defined start Y
 
-  const croppedData = ctx.getImageData(
-    cropStartX,
-    cropStartY,
-    cropWidth,
-    cropHeight
-  );
+// Crop selection variables
+let isDraggingCrop = false;
+let cropStartX = 0, cropStartY = 0, cropWidth = 200, cropHeight = 200;
 
-  // Set canvas to cropped dimensions
+
+// Draws the cropping rectangle with semi-transparent overlay
+function drawCropOverlay() {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  redrawCanvas(new Image(canvas.toDataURL())); // Redraw image
+
+  // Draw crop overlay (outside cropping area)
+  ctx.fillStyle = "rgba(0, 0, 0, 0.5)";
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
+  ctx.clearRect(cropStartX, cropStartY, cropWidth, cropHeight);
+
+  // Draw crop boundary
+  ctx.strokeStyle = "red";
+  ctx.lineWidth = 2;
+  ctx.strokeRect(cropStartX, cropStartY, cropWidth, cropHeight);
+}
+
+// Mouse events to handle dragging and resizing
+canvas.addEventListener("mousedown", (event) => {
+  const rect = canvas.getBoundingClientRect();
+  const x = event.clientX - rect.left;
+  const y = event.clientY - rect.top;
+
+  // Check if clicked inside the crop area
+  if (
+    x >= cropStartX &&
+    x <= cropStartX + cropWidth &&
+    y >= cropStartY &&
+    y <= cropStartY + cropHeight
+  ) {
+    isDraggingCrop = true;
+    offsetX = x - cropStartX;
+    offsetY = y - cropStartY;
+  }
+});
+
+canvas.addEventListener("mousemove", (event) => {
+  if (!isDraggingCrop) return;
+
+  const rect = canvas.getBoundingClientRect();
+  cropStartX = event.clientX - rect.left - offsetX;
+  cropStartY = event.clientY - rect.top - offsetY;
+
+  drawCropOverlay(); // Update crop area in real-time
+});
+
+canvas.addEventListener("mouseup", () => {
+  isDraggingCrop = false;
+});
+
+// Crop image based on selection
+function applyCrop() {
+  const croppedData = ctx.getImageData(cropStartX, cropStartY, cropWidth, cropHeight);
+
+  // Adjust canvas to new crop dimensions
   canvas.width = cropWidth;
   canvas.height = cropHeight;
   ctx.putImageData(croppedData, 0, 0);
-  drawLogo(); // Redraw logo on cropped image if needed
-  saveToHistory(); // Save state after cropping
+
+  saveToHistory(); // Save cropped state for undo
+  drawLogo(); // Optional: Redraw logo on the cropped image
+  showToast("Image cropped successfully!");
 }
+
+// Add button to confirm cropping
+document.getElementById("cropButton").addEventListener("click", applyCrop);
+
+// Redo cropping with updated crop area
+function redoCrop() {
+  if (redoStack.length > 0) {
+    const redoState = redoStack.pop();
+    history.push(redoState);
+    const img = new Image();
+    img.src = redoState;
+    img.onload = () => {
+      redrawCanvas(img);
+      drawCropOverlay(); // Show crop overlay on redo
+    };
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
 
 // Resize the image
 function resizeImage() {
@@ -3362,14 +3437,20 @@ function collapseControlsButton() {
 }
 //document.getElementById("cwm-controls").style.display = "none";
 
-/*  Event Listeners  /////////////////////////////////////////////
-//////////////////////////////////////////////// ////////////////////////////////////////////
-///////////////////////////////////////////////////////////////////////////////////////////
-///////////////////////////////////////////////////////////////////////////////////////////
-///////////////////////////////////////////////////////////////////////////////////////////
-///////////////////////////////////////////////////////////////////////////////////////////
-///////////////////////////////////////////////////////////////////////////////////////////
-///////////////////////////////////////////////*/
+/*==============================================================================
+==============================================================================
+
+                         🌟🌟🌟 EVENT LISTENERS 🌟🌟🌟
+
+==============================================================================
+  This section captures all event listeners to handle user interactions across
+  various elements on the page. Group listeners by feature or module for easy 
+  reference and maintenance.
+==============================================================================
+==============================================================================*/
+
+//---------------------------- Add new listeners below ----------------------------
+
 
 // Wait for the document to fully load
 document.addEventListener("DOMContentLoaded", function () {
@@ -3491,6 +3572,26 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
 
+
+/******************************************************************************************
+*******************************************************************************************
+
+                          🔒 WATERMARK HANDLING LISTENERS 🔒
+
+*******************************************************************************************
+*******************************************************************************************
+*                                                                                         *
+*   This section is dedicated to managing watermark listeners and related functions.      *
+*   Organize each listener by functionality to apply, modify, or remove watermarks        *
+*   on uploaded files. Each listener should be clearly documented for easy updates.       *
+*                                                                                         *
+*******************************************************************************************
+******************************************************************************************/
+
+//-------------------------- Begin adding watermark listeners below --------------------------
+
+
+
     document
     .getElementById("watermarkSettingsBtn")
     .addEventListener("click", () => {
@@ -3594,14 +3695,19 @@ document.getElementById("clearFiltersButton").addEventListener("click", clearAll
 
 });
 
-/*  upload To Firebase  /////////////////////////////////////////////
-//////////////////////////////////////////////// ////////////////////////////////////////////
-///////////////////////////////////////////////////////////////////////////////////////////
-///////////////////////////////////////////////////////////////////////////////////////////
-///////////////////////////////////////////////////////////////////////////////////////////
-///////////////////////////////////////////////////////////////////////////////////////////
-///////////////////////////////////////////////////////////////////////////////////////////
-///////////////////////////////////////////////*/
+/*==============================================================================
+==============================================================================
+
+                        🚀🚀🚀 FILE UPLOAD HANDLING 🚀🚀🚀
+
+==============================================================================
+  This section contains all functions, event listeners, and utilities needed to 
+  handle file uploads. Organize file-related operations here for easy reference, 
+  ensuring seamless and efficient upload processing for users.
+==============================================================================
+==============================================================================*/
+
+//---------------------------- Add upload handlers below ----------------------------
 
 // Uploads both the original and compressed images to Firebase with metadata
 async function uploadToFirebase(
