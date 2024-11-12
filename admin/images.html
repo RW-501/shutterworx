@@ -3388,12 +3388,7 @@ function drawResizeHandles() {
     drawGridOverlay();
 }
 
-function checkCropBounds() {
-  const withinBounds = cropStartX >= 0 && cropStartY >= 0 &&
-                       cropStartX + cropWidth <= canvas.width &&
-                       cropStartY + cropHeight <= canvas.height;
-  document.getElementById("cropButton").disabled = !withinBounds;
-}
+
 function handleMouseMove(event) {
   if (!isDraggingCrop && !isResizing) return;
   if (isDraggingCrop) {
@@ -3454,14 +3449,6 @@ function redoCrop() {
 
 
 
-function drawResizeHandles() {
-    const handleSize = 8;
-    ctx.fillStyle = "white";
-    ctx.fillRect(cropStartX - handleSize / 2, cropStartY - handleSize / 2, handleSize, handleSize); // Top-left
-    ctx.fillRect(cropStartX + cropWidth - handleSize / 2, cropStartY - handleSize / 2, handleSize, handleSize); // Top-right
-    ctx.fillRect(cropStartX - handleSize / 2, cropStartY + cropHeight - handleSize / 2, handleSize, handleSize); // Bottom-left
-    ctx.fillRect(cropStartX + cropWidth - handleSize / 2, cropStartY + cropHeight - handleSize / 2, handleSize, handleSize); // Bottom-right
-}
 
 
 function checkCropBounds() {
@@ -3689,39 +3676,6 @@ document.addEventListener("DOMContentLoaded", function() {
 
 
 
-// Dummy Functions for Aspect Ratio, Flip, Rotate, and Zoom
-function setAspectRatio(width, height) {
-    console.log(`Aspect Ratio set to: ${width}:${height}`);
-    const image = document.getElementById("image");
-    const newWidth = image.naturalWidth * (height / width);
-    image.style.width = `${newWidth}px`;
-    image.style.height = `${image.naturalHeight * (width / height)}px`;
-}
-
-function flipHorizontal() {
-    console.log("Image flipped horizontally");
-    const image = document.getElementById("image");
-    image.style.transform = `scaleX(-1)`;
-}
-
-function flipVertical() {
-    console.log("Image flipped vertically");
-    const image = document.getElementById("image");
-    image.style.transform = `scaleY(-1)`;
-}
-
-function rotateImage(degrees) {
-    console.log(`Image rotated by ${degrees}°`);
-    const image = document.getElementById("image");
-    image.style.transform = `rotate(${degrees}deg)`;
-}
-
-function applyZoom() {
-    let zoomLevel = document.getElementById("zoomSlider").value;
-    console.log(`Zoom level: ${zoomLevel}`);
-    const image = document.getElementById("image");
-    image.style.transform = `scale(${zoomLevel})`;
-}
 
 
 let saveImageCount = 0;
