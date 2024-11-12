@@ -2328,16 +2328,18 @@ console.log("image data   ",image );
   // Call the loadImage function, passing the image URL
   loadImage(originalUrl, canvas);
   // Display image details in the 'Image Details' tab
-  const imageDetailDiv = document.getElementById("image-editor-c-image-detail");
-  imageDetailDiv.innerHTML = `
-    <h6>Image Information:</h6>
-    <p><strong>File Name:</strong> ${fileName}</p>
-    <p><strong>File Type:</strong> ${fileType}</p>
-    <p><strong>File Size:</strong> ${(fileSize / 1024).toFixed(2)} KB</p>
-    <p><strong>Dimensions:</strong> ${width} x ${height} px</p>
-    <p><strong>Aspect Ratio:</strong> ${(aspectRatio).toFixed(2)}</p>
-    <p><strong>Orientation:</strong> ${getOrientationText(orientation)}</p>
-  `;
+// Display image details in the 'Image Details' tab
+const imageDetailDiv = document.getElementById("image-editor-c-image-detail");
+imageDetailDiv.innerHTML = `
+  <h6>Image Information:</h6>
+  <p><strong>File Name:</strong> ${fileName}</p>
+  <p><strong>File Type:</strong> ${fileType}</p>
+  <p><strong>File Size:</strong> ${(fileSize / 1024).toFixed(2)} KB</p>
+  <p><strong>Dimensions:</strong> ${width} x ${height} px</p>
+  <p><strong>Aspect Ratio:</strong> ${aspectRatio ? aspectRatio.toFixed(2) : 'N/A'}</p>
+  <p><strong>Orientation:</strong> ${getOrientationText(orientation)}</p>
+`;
+
 
   // Add event listeners to the tabs
   const tabButtons = document.querySelectorAll(".tab-btn");
@@ -2461,7 +2463,6 @@ async function renderImages(imagesData) {
     // Create image card
     const imgDiv = document.createElement("div");
     imgDiv.classList.add("col-md-4", "mt-3", "watermark-thumbnail");
-    console.log("1st image data   ",image );
 
     imgDiv.innerHTML = `
       <div class="card mb-3" aria-label="Image card for ${fileName}" data-set-ref="${picCount}">
