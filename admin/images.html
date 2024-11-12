@@ -2355,7 +2355,7 @@ async function renderImages(imagesData) {
 
     const { originalUrl, compressedImage, fileName, fileSize, fileType } = image[i] || {};
 if (!originalUrl || !compressedImage || !fileName) {
-    console.error(`Invalid image ${fileName}`);   
+   // console.error(`Invalid image ${fileName}`);   
     showToast(`Invalid image ${fileName}`,"error");
 }
 picCount += 1;
