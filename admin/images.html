@@ -2353,14 +2353,16 @@ async function renderImages(imagesData) {
   imageGalleryContainer.appendChild(imageCountHeader);
 
   imagesData.forEach((image) => {
+    const { originalUrl, compressedImage, fileName, fileSize, fileType } = image;
 
-    const { originalUrl, compressedImage, fileName, fileSize, fileType } = image[picCount] || {};
-if (!originalUrl || !compressedImage || !fileName) {
-   // console.error(`Invalid image ${fileName}`);   
-    showToast(`Invalid image ${fileName}`,"error");
-    return;
-}
-picCount += 1;
+    // Validate essential properties
+    if (!originalUrl || !compressedImage || !fileName) {
+      showToast(`Invalid image ${fileName}`, "error");
+      return;
+    }
+    picCount += 1;
+
+    // Create image card
     const imgDiv = document.createElement("div");
     imgDiv.classList.add("col-md-4", "mt-3", "watermark-thumbnail");
 
@@ -2399,7 +2401,6 @@ picCount += 1;
     }
   });
 }
-
 
 // Event listener for "Save Selected Images" button with progress tracking
 document
