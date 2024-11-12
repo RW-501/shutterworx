@@ -3748,9 +3748,32 @@ resizeSlider.addEventListener("input", function() {
 
 
 
-
 let saveImageCount = 0;
-// Save edited image
+
+
+
+function updateImage() {
+  saveImageCount += 1;
+
+  const canvas = document.getElementById("canvas"); // Get the canvas element
+  const editedImage = canvas.toDataURL("image/png"); // Get the edited image from the canvas
+
+ 
+
+  // Now pass the edited image to the processImage function
+  // Assuming you have the necessary image details (file, fileSize, etc.) available
+  const file = {}; // This should be your file object (could be set based on user input)
+  const fileSize = editedImage.length; // Example, in bytes (just an approximation)
+  const fileType = "image/png"; // Or determine the actual file type if necessary
+  const fileName = `ShutterWorx-edited-image${saveImageCount}.png`; // Or use your original file name
+  const orientation = 1; // This should be set based on your image (default 1)
+  const width = canvas.width; // Width of the image
+  const height = canvas.height; // Height of the image
+  const aspectRatio = width / height; // Aspect ratio
+
+  // Call the processImage function with the necessary parameters
+  processImage(editedImage, file, fileSize, fileType, fileName, orientation, width, height, aspectRatio);
+}
 
 function saveImage() {
   saveImageCount += 1;
@@ -3995,7 +4018,12 @@ document.addEventListener("DOMContentLoaded", function () {
     .getElementById("logoSize")
     .addEventListener("input", updateLogoSize(event));
 
-  
+    document.getElementById("saveAndProcessBtn").addEventListener("click", function () {
+  updateImage(); // Call the save image function to save the edited image
+});
+document.getElementById("downloadImageButton").addEventListener("click", () => {
+  saveImage();
+});
   // Bind undo/redo buttons
   document.getElementById("undoBtn").addEventListener("click", undo);
   document.getElementById("redoBtn").addEventListener("click", redo);
