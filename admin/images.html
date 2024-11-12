@@ -3517,43 +3517,57 @@ async function saveImageDetails(fileName, originalUrl, compressedUrl, fileSize, 
 }
 
 async function saveEvent() {
-  const title = document.getElementById("eventTitle")?.value;
-  const date = document.getElementById("eventDate")?.value;
-  const description = document.getElementById("eventDescription")?.value;
-  const collection_price = document.getElementById("collection_price")?.value;
-  const location = document.getElementById("eventLocation")?.value;
-  const accessCode = document.getElementById("accessCode")?.value;
-  const userId = document.getElementById("userIdDiv")?.innerText;
+  const title = document.getElementById("eventTitle").value;
+  const date = document.getElementById("eventDate").value;
+  const description = document.getElementById("eventDescription").value;
+  const collection_price = document.getElementById("collection_price").value;
+  const location = document.getElementById("eventLocation").value;
+  const accessCode = document.getElementById("accessCode").value;
+  const userId = document.getElementById("userIdDiv").innerText;
   const eventIdArea = document.getElementById("currentEventID");
 
-  if (title && date && description && collection_price && userId) {
+  // Check if all fields are valid
+  if (title && date && description && collection_price) {
     try {
-      const docRef = await addDoc(collection(db, "Members", userId, "Events"), {
+      // Define the reference to the Members_Events sub-collection
+      const eventsRef = collection(db, "Members", userId, "Members_Events");
+
+      // Add a new document to Members_Events with the event data
+      const docRef = await addDoc(eventsRef, {
         title,
         eventDate: date || new Date(),
         eventDescription: description || "No Description",
         status: "active",
         isPublic: true,
         collection_price: collection_price || "",
-        location: location || "",
+        collection_OnSellPrice: "",
+        eventTags: [],
         accessCode: accessCode || "",
+        location: location || "",
+        userID: userId,
         timestamp: new Date(),
+        comments: [],
         views: 0,
-        deactived: false
+        deactived: false,
+        Members_Media: []
       });
 
+      // Update UI to show the newly generated event ID
       if (eventIdArea) {
         eventIdArea.innerText = docRef.id;
       }
-      showToast("Event saved successfully!", "success");
+
+      // Show success message
+      showToast("Event saved successfully!");
     } catch (error) {
       console.error("Error saving event:", error);
-      showToast("An error occurred while saving the event. Please try again.", "error");
+      showToast("An error occurred while saving the event. Please try again.");
     }
   } else {
-    showToast("Please fill in all required fields.", "warning");
+    showToast("Please fill in all required fields.");
   }
 }
+
 
 // Utility function to save settings from a modal to localStorage
 function saveModalSettings(modalId, storageKey) {
