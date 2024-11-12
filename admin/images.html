@@ -1434,6 +1434,13 @@ display: none !important;transform: scale(1.05);
                           
 
                           <div id="image-editor-c-top">
+            <!-- Tab Buttons to toggle between Logo, Watermark, and Image Details -->
+            <div class="tab-buttons">
+              <button class="tab-btn active" data-target="#image-editor-c-logo">Logo</button>
+              <button class="tab-btn" data-target="#image-editor-c-watermark">Watermark</button>
+              <button class="tab-btn" data-target="#image-editor-c-image-detail">Image Details</button>
+            </div>
+
                             <!-- Logo Tab -->
                             <div id="image-editor-c-logo" class="tab-content active">
                               <input type="file" id="uploadLogo" hidden>
@@ -1448,7 +1455,7 @@ display: none !important;transform: scale(1.05);
                             <!-- Watermark Tab -->
                             <div id="image-editor-c-watermark" class="tab-content">
                               <div id="watermarkContainer">
-                                <img id="watermarkImage" src="" alt="Watermark Preview">
+                                <img id="image-editor-wm" src="" alt="Watermark Preview">
                               </div>
                             </div>
                           
@@ -1457,12 +1464,7 @@ display: none !important;transform: scale(1.05);
                               <!-- Image Details will be populated here -->
                             </div>
                           
-                            <!-- Tab Buttons to toggle between Logo, Watermark, and Image Details -->
-                            <div class="tab-buttons">
-                              <button class="tab-btn active" data-target="#image-editor-c-logo">Logo</button>
-                              <button class="tab-btn" data-target="#image-editor-c-watermark">Watermark</button>
-                              <button class="tab-btn" data-target="#image-editor-c-image-detail">Image Details</button>
-                            </div>
+                
                           </div>
                           
                        
@@ -2319,7 +2321,7 @@ function openImageEditor(imageData) {
   console.log("originalUrl   ", originalUrl);
 
   // Display watermark image
-  const watermarkImage = document.getElementById("watermarkImage");
+  const watermarkImage = document.getElementById("image-editor-wm");
   watermarkImage.src = compressedImage;
   const canvas = document.getElementById("imageCanvas"); // Target the existing canvas
 
