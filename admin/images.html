@@ -488,6 +488,8 @@ display: none !important;transform: scale(1.05);
       width: 100%;
       overflow: hidden;
       position: relative;
+      justify-content: space-evenly;
+    gap: 0;
     }
   
     /* Sidebar Styles */
@@ -543,7 +545,8 @@ display: none !important;transform: scale(1.05);
   
     /* Main Canvas Area */
     .main-canvas {
-        display: grid;
+      display: grid;
+      width: inherit;
     }
     .canvas-grid {
       position: relative;
@@ -1394,7 +1397,7 @@ display: none !important;transform: scale(1.05);
                     <div id="editorContent" class="content grid">
                       <!-- Canvas Area -->
                       <div id="canvasContainer">
-                        <canvas id="imageCanvas" width="500" height="500"></canvas>
+                        <canvas id="imageCanvas" width="800" height="600"></canvas>
                       </div>
               
                       <!-- Controls Sidebar -->
