@@ -313,6 +313,12 @@ main {
         text-decoration: none;
         background-color: transparent;
     }
+{
+    box-sizing: border-box;
+
+}
+
+
 
 /* Color Classes */
 .mainBGcolor, .bg-mainColor { background-color: #639ad4 !important; }

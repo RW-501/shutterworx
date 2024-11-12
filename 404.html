@@ -128,26 +128,78 @@
         
         <div class="search-container">
             <input type="text" id="search-input" placeholder="Search for photos, events, or articles..." aria-label="Search">
-            <button class="search-button" onclick="handleSearch()">Search</button>
+            <button class="search-button" onclick="handleSearch();">Search</button>
         </div>
         
-        <button class="button-home" onclick=`window.location.href="https://shutterworx.co"`>Go to Home</button>
+        <button class="button-home" onclick="window.location.href='shutterworx.co'">Go to Home</button>
     </div>
     
 
 
- <!-- Footer -->
- <footer id="site-footer">
-    <div class="social-icons">
-        <!-- Social media links dynamically added here -->
-    </div>
-    <footer-body>
-        <p>&copy; 2024 ShutterWorx/ TechNoob All Rights Reserved.</p>
-        <p><small><a href="https://shutterworx.co/privacy" style="color: #fff;">Privacy Policy</a> | <a href="https://shutterworx.co/terms" style="color: #fff;">Terms of Service</a></small></p>
-        <p><a href="https://shutterworx.co/admin-login" style="color: #fff;">Admin Login</a></p>
-    </footer-body>
-</footer>
 
+    <!-- Footer -->
+    <footer id="site-footer">
+        <div class="social-icons">
+            <!-- Social media links dynamically added here -->
+        </div>
+            <footer-body>
+        <!-- Copyright Section -->
+        <p>&copy; 2024 <a href="https://shutterworx.co" style="color: #fff;">ShutterWorx</a> / TechNoob All Rights Reserved.</p>
+        
+        <!-- Privacy and Terms Links -->
+        <p>
+            <small>
+                <a href="https://shutterworx.co/privacy" style="color: #fff;">Privacy Policy</a> | 
+                <a href="https://shutterworx.co/terms" style="color: #fff;">Terms of Service</a>
+            </small>
+        </p>
+
+        <!-- General Links Section -->
+        <div class="footer-links">
+            <div class="general-links">
+                <h4>General</h4>
+                <ul>
+                    <li><a href="https://shutterworx.co" style="color: #fff;">Home</a></li>
+                    <li><a href="https://shutterworx.co/about" style="color: #fff;">About Us</a></li>
+                    <li><a href="https://shutterworx.co/contact" style="color: #fff;">Contact</a></li>
+                    <li><a href="https://shutterworx.co/FAQ" style="color: #fff;">FAQs</a></li>
+                    <li><a href="https://shutterworx.co/join" style="color: #fff;">Join Us</a></li>
+                    <li><a href="https://shutterworx.co/signup" style="color: #fff;">Sign Up</a></li>
+                </ul>
+            </div>
+
+            <!-- Membership Links Section -->
+            <div class="membership-links">
+                <h4>Membership</h4>
+                <ul>
+                    <li><a href="https://shutterworx.co/signup-basic" style="color: #fff;">Basic Membership</a></li>
+                    <li><a href="https://shutterworx.co/signup-pro" style="color: #fff;">Pro Membership</a></li>
+                    <li><a href="https://shutterworx.co/signup-elite" style="color: #fff;">Elite Membership</a></li>
+                </ul>
+            </div>
+
+            <!-- Company Links Section -->
+            <div class="company-links">
+                <h4>Company</h4>
+                <ul>
+                    <li><a href="https://shutterworx.co/Community/" style="color: #fff;">Community</a></li>
+                    <li><a href="https://shutterworx.co/admin-login" style="color: #fff;">Admin Login</a></li>
+                </ul>
+            </div>
+
+            <!-- Legal Links Section -->
+            <div class="legal-links">
+                <h4>Legal</h4>
+                <ul>
+                    <li><a href="https://shutterworx.co/terms" style="color: #fff;">Terms of Service</a></li>
+                    <li><a href="https://shutterworx.co/privacy" style="color: #fff;">Privacy Policy</a></li>
+                </ul>
+            </div>
+        </div>
+    </footer-body>
+    </footer>
+
+    
 <!-- Font Awesome for icons -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-GNSPWFHKVN"></script>
