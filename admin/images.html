@@ -2333,7 +2333,8 @@ async function processImage(dataURL, file, fileSize, fileType, fileName) {
     renderImages(imagesData);
   } catch (error) {
     console.error("Error processing image:", error);
-    showToast("Image processing failed.", "error");
+    showToast(`Image processing failed. ${fileName}`, "error");
+    return;
   }
 }
 
@@ -2357,6 +2358,7 @@ async function renderImages(imagesData) {
 if (!originalUrl || !compressedImage || !fileName) {
    // console.error(`Invalid image ${fileName}`);   
     showToast(`Invalid image ${fileName}`,"error");
+    return;
 }
 picCount += 1;
     const imgDiv = document.createElement("div");
