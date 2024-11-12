@@ -1581,17 +1581,29 @@ display: none !important;transform: scale(1.05);
 <!-- Crop Tab -->
 <div id="crop-tab" class="tab-content">
   <div id="cropOptionsToolbar" class="toolbar">
-      <!-- Aspect Ratio Buttons with Tooltips -->
-      <button id="aspectRatio1_1" class="toolbar-btn" data-tooltip="1:1 Aspect Ratio">1:1</button>
-      <button id="aspectRatio4_3" class="toolbar-btn" data-tooltip="4:3 Aspect Ratio">4:3</button>
-      <button id="aspectRatio16_9" class="toolbar-btn" data-tooltip="16:9 Aspect Ratio">16:9</button>
+<!-- Aspect Ratio Buttons with Tooltips -->
+<button id="aspectRatio1_1" class="toolbar-btn" data-tooltip="1:1 Aspect Ratio">
+  <i class="fas fa-crop-square"></i> 1:1
+</button>
+<button id="aspectRatio4_3" class="toolbar-btn" data-tooltip="4:3 Aspect Ratio">
+  <i class="fas fa-crop-alt"></i> 4:3
+</button>
+<button id="aspectRatio16_9" class="toolbar-btn" data-tooltip="16:9 Aspect Ratio">
+  <i class="fas fa-crop-alt"></i> 16:9
+</button>
 
-      <!-- Flip Buttons -->
-      <button id="flipHorizontalBtn" class="toolbar-btn" data-tooltip="Flip Horizontal">Flip H</button>
-      <button id="flipVerticalBtn" class="toolbar-btn" data-tooltip="Flip Vertical">Flip V</button>
+<!-- Flip Buttons -->
+<button id="flipHorizontalBtn" class="toolbar-btn" data-tooltip="Flip Horizontal">
+  <i class="fas fa-arrow-alt-circle-right"></i> Flip H
+</button>
+<button id="flipVerticalBtn" class="toolbar-btn" data-tooltip="Flip Vertical">
+  <i class="fas fa-arrow-alt-circle-up"></i> Flip V
+</button>
 
-      <!-- Rotate Button -->
-      <button id="rotate90Btn" class="toolbar-btn" data-tooltip="Rotate 90°">Rotate 90°</button>
+<!-- Rotate Button -->
+<button id="rotate90Btn" class="toolbar-btn" data-tooltip="Rotate 90°">
+  <i class="fas fa-sync-alt"></i> Rotate 90°
+</button>
 
       <!-- Zoom Slider with Label -->
       <label for="zoomSlider" class="zoom-label">Zoom:</label>
