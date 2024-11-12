@@ -2498,7 +2498,7 @@ async function renderImages(imagesData) {
       removeCardByRef(ref);
     } else if (event.target.classList.contains("edit-image-btn")) {
      // const originalUrl = event.target.getAttribute("data-original-url");
-      openImageEditor(image);
+      openImageEditor(imagesData);
     }
   });
 }
