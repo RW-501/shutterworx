@@ -451,8 +451,8 @@ padding: 2em;
         snapshot.forEach((doc) => {
             const data = doc.data();
             const imgElement = document.createElement("img");
-            imgElement.src = data.url; // Adjust based on your structure
-            imgElement.alt = data.description || "Gallery Image";
+            imgElement.src = data.compressedUrl; // Adjust based on your structure
+            imgElement.alt = data.title || "Gallery Image";
             imgElement.classList.add("gallery-image"); // Optional: for styling
             imgElement.onclick = function () {
                 openLightbox(imgElement.src);
@@ -652,14 +652,6 @@ document.getElementById("send-message-btn").innerHTML = "Sending..."; // Show lo
 
 
 
-// Function to initialize with the username
-// Define the function to get the username from the URL
-window.getUsernameFromURL = function() {
-    const url = window.location.href;
-    const regex = /\/my\/([^\/]+)/;
-    const match = url.match(regex);
-    return match ? match[1] : null; // Return the username if found, otherwise null
-};
 
 // Function to initialize the page for the specific user
 async function init() {
