@@ -313,9 +313,11 @@ main {
         text-decoration: none;
         background-color: transparent;
     }
-{
+/* Apply to all elements */
+*,
+*::before,
+*::after {
     box-sizing: border-box;
-
 }
 
 
