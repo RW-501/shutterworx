@@ -1103,7 +1103,7 @@ display: none !important;transform: scale(1.05);
                   <option value="diagonal-right">Diagonal Right Watermark</option>
                 </select>
                 <label for="gapSize">Gap Size (spacing between watermarks):</label>
-                <input type="number" id="gapSize" value="30" step="5">
+                <input type="number" id="gapSize" value="30" min="0" max="100" step="5">
   </div>
               </div>
   
@@ -1248,7 +1248,7 @@ display: none !important;transform: scale(1.05);
               
                   display: flex;
                   gap: 15px;
-                  padding: 1rem;
+                  padding-bottom: 300px;
                   border-radius: 8px;
                   overflow-y: auto;
                   max-height: 30%;
@@ -1418,7 +1418,7 @@ display: none !important;transform: scale(1.05);
               
                           <!-- Logo Preview -->
                           <div id="logoPreviewContainer">
-                            <img id="logoImage" src="#" alt="Logo Preview">
+                            <img id="logoImage" src="https://shutterworx.co/images/default.png" alt="Logo Preview">
                           </div>
               
                           <!-- Logo Size Slider -->
