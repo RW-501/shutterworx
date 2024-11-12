@@ -2311,12 +2311,20 @@ if (previewCanvas && previewCtx) {
 function openImageEditor(image) {
   document.getElementById("imageEditorModal").style.display = "block"; // Show the modal
 
-  const { compressedImage, fileName, fileSize, fileType, orientation, width, height, aspectRatio } = image;
+  const { originalUrl, compressedImage, fileName, fileSize, fileType, orientation, width, height, aspectRatio } = image;
 
   // Display watermark image
   const watermarkImage = document.getElementById("watermarkImage");
   watermarkImage.src = compressedImage;
+  const canvas = document.getElementById("imageCanvas"); // Target the existing canvas
 
+  if (!canvas) {
+    console.log("Canvas element not found");
+    return;
+  }
+
+  // Call the loadImage function, passing the image URL
+  loadImage(originalUrl, canvas);
   // Display image details in the 'Image Details' tab
   const imageDetailDiv = document.getElementById("image-editor-c-image-detail");
   imageDetailDiv.innerHTML = `
@@ -2341,7 +2349,10 @@ function openImageEditor(image) {
       document.querySelectorAll(".tab-content").forEach(content => content.classList.remove("active"));
       document.querySelector(button.getAttribute("data-target")).classList.add("active");
     });
-  });
+  });  
+
+  document.getElementById("imageEditorModal").style.display = "block"; // Show the modal
+
 }
 
 
@@ -2482,8 +2493,8 @@ async function renderImages(imagesData) {
       const ref = event.target.getAttribute("data-set-ref");
       removeCardByRef(ref);
     } else if (event.target.classList.contains("edit-image-btn")) {
-      const originalUrl = event.target.getAttribute("data-original-url");
-      openImageEditor(originalUrl);
+     // const originalUrl = event.target.getAttribute("data-original-url");
+      openImageEditor(imagesData);
     }
   });
 }
@@ -2686,33 +2697,58 @@ function clearAllFilters() {
   sliders.forEach(slider => slider.remove()); // Remove all sliders
 
   const image = document.getElementById("imageCanvas");
-  image.style.filter = ""; // Clear all image filters
 
-  document.getElementById("filters").value = "none"; // Reset dropdown to 'None'
-  showToast("All filters cleared!");
+  // Clear all filters applied to the image element
+  image.style.filter = ""; 
+
+  // Get the canvas context and clear the canvas content
+  const canvas = document.getElementById("imageCanvas");
+  const context = canvas.getContext("2d");
+  if (context) {
+    context.clearRect(0, 0, canvas.width, canvas.height); // Clear the canvas content
+  }
+
+  // Reset dropdown to 'None'
+  document.getElementById("filters").value = "none";
+
+  // Show feedback to the user
+  showToast("All filters and canvas cleared!");
 }
+
+
+
 
 function showSlider(event) {
   event.preventDefault();
 
   const sliders = document.querySelectorAll(".slider_editor");
-  sliders.forEach((slider) => {
-    slider.classList.remove("visible");
-  });
+
+  // Check if sliders exist before proceeding
+  if (sliders && sliders.length > 0) {
+    sliders.forEach((slider) => {
+      slider.classList.remove("visible");
+    });
+  } else {
+   // console.error("No sliders found to hide.");
+    return; // Exit the function early if no sliders exist
+  }
 
   const selectedFilter = event.target.value;
 
-  if (selectedFilter !== "none") {
-    console.log("Selected filter:", selectedFilter); // Debugging line
+  if (selectedFilter && selectedFilter !== "none") {
+   // console.log("Selected filter:", selectedFilter); // Debugging line
+
+    // Check if the selected filter element exists
     const filterElement = document.getElementById(selectedFilter);
     if (filterElement) {
       filterElement.classList.add("visible");
     } else {
-      console.error(`Element with id "${selectedFilter}" not found.`);
+    //  console.error(`Element with id "${selectedFilter}" not found.`);
     }
+  } else {
+  //  console.warn("No filter selected or selectedFilter is undefined.");
   }
 }
-
 
 
 
@@ -2852,36 +2888,37 @@ function populateFilterDropdown() {
 
 
 
-// Add event listener to filter dropdown
+// Track active filter values to reapply when a new one is selected
+const filterValues = {};
+
+// Event listener for filter dropdown selection
 document.getElementById("filters").addEventListener("change", function(event) {
   const selectedFilter = event.target.value;
-  const slidersContainer = document.querySelector(".slider-container");
   
-  // Clear all sliders when a new option is selected
-  slidersContainer.innerHTML = ""; 
-
   if (filterPresets[selectedFilter]) {
     applyPreset(selectedFilter); // Apply preset if selected
   } else if (selectedFilter !== "none") {
-    createSlider(selectedFilter); // Create slider for individual filter
+    if (!filterValues[selectedFilter]) {
+      filterValues[selectedFilter] = filterConfig[selectedFilter].defaultValue;
+      createSlider(selectedFilter); // Create slider for the new filter
+    }
   }
+
+  applyAllFilters(); // Reapply all filters whenever a new filter is selected
 });
 
 
-// This function dynamically generates sliders based on selected filter
+
 function createSlider(filter) {
   const sliderContainer = document.querySelector(".slider-container");
 
-  // Check if a slider for this filter already exists
   if (document.getElementById(`${filter}SliderContainer`)) {
-    return; // Slider already exists, so don't add it again
+    return; // Slider already exists
   }
 
-  // Check if the filter exists in the configuration
   const filterDetails = filterConfig[filter];
-  if (!filterDetails) return; // If filter doesn't exist in config, do nothing
+  if (!filterDetails) return;
 
-  // Construct the HTML for the filter slider
   const sliderHTML = `
     <div id="${filter}SliderContainer" class="slider_editor visible">
       <label for="${filter}Value">${filterDetails.label}:</label>
@@ -2890,23 +2927,19 @@ function createSlider(filter) {
     </div>
   `;
 
-  // Append the generated slider to the container
   sliderContainer.insertAdjacentHTML("beforeend", sliderHTML);
 
-  // Add event listener to update the value and apply the filter dynamically
+  // Add slider event listener to update filter value and reapply all filters
   const slider = document.getElementById(`${filter}Value`);
-  if (slider) {
-    slider.addEventListener("input", function () {
-      const value = slider.value;
-      const output = document.getElementById(`${filter}Output`);
-      output.textContent = `${value}${filterDetails.unit}`;
-      updateValue(filter, value);
-    });
-  }
-}
+  slider.addEventListener("input", function () {
+    const value = slider.value;
+    const output = document.getElementById(`${filter}Output`);
+    output.textContent = `${value}${filterDetails.unit}`;
 
-// This function updates the displayed value and applies the filter to the image
-const filterValues = {};
+    filterValues[filter] = value; // Update active filter value
+    applyAllFilters(); // Reapply all active filters
+  });
+}
 
 // This function will update the filter's value and apply it to the image
 function updateValue(filter, value) {
@@ -2919,61 +2952,47 @@ function updateValue(filter, value) {
   }
 }
 
-
 function applyAllFilters() {
   const canvas = document.getElementById("imageCanvas");
   const context = canvas.getContext("2d");
   const image = new Image();
-  image.src = canvas.toDataURL(); // Get the current image source
+  image.src = canvas.toDataURL();
+
   image.onload = () => {
-    context.clearRect(0, 0, canvas.width, canvas.height); // Clear the canvas
-    const filters = Object.keys(filterValues).map((filter) => {
-      const filterConfigForFilter = filterConfig[filter];
-      if (filterConfigForFilter) {
-        return `${filter}(${filterValues[filter]}${filterConfigForFilter.unit})`;
-      } else {
-        console.warn(`No config found for filter: ${filter}`);
-        return '';
-      }
+    context.clearRect(0, 0, canvas.width, canvas.height);
+    const filters = Object.keys(filterValues).map(filter => {
+      const value = filterValues[filter];
+      const filterDetails = filterConfig[filter];
+      return `${filter}(${value}${filterDetails.unit})`;
     });
-    context.filter = filters.filter(f => f !== '').join(" "); // Apply the filter
-    context.drawImage(image, 0, 0); // Redraw the image on the canvas with the filter
+
+    context.filter = filters.join(" ");
+    context.drawImage(image, 0, 0);
   };
 }
 
 
 
-// Apply preset filters and generate sliders dynamically
+
+
 function applyPreset(presetName) {
   const preset = filterPresets[presetName];
-  const sliderContainer = document.querySelector(".slider-container");
+  
+  Object.keys(preset).forEach(filter => {
+    const filterDetails = filterConfig[filter];
+    if (filterDetails) {
+      filterValues[filter] = preset[filter]; // Set value in active filters
+      createSlider(filter); // Ensure slider exists
 
-  // Loop through each filter in the preset and create sliders
-  for (const filter in preset) {
-    if (preset.hasOwnProperty(filter)) {
-      // Ensure the filter exists in the config
-      const filterDetails = filterConfig[filter];
-      if (filterDetails) {
-        // Create slider for this filter if not already created
-        if (!document.getElementById(`${filter}SliderContainer`)) {
-          createSlider(filter);
-        }
-
-        // Set the value based on the preset
-        const slider = document.getElementById(`${filter}Value`);
-        const output = document.getElementById(`${filter}Output`);
-        slider.value = preset[filter];
-        output.textContent = `${preset[filter]}${filterDetails.unit}`;
-        
-        // Apply the filter immediately
-        updateValue(filter, preset[filter]);
-      }
+      const slider = document.getElementById(`${filter}Value`);
+      const output = document.getElementById(`${filter}Output`);
+      slider.value = preset[filter];
+      output.textContent = `${preset[filter]}${filterDetails.unit}`;
     }
-  }
+  });
+
+  applyAllFilters(); // Apply all filters based on updated filterValues
 }
-
-
-
 
 function loadFilters() {
   const savedFilters = JSON.parse(localStorage.getItem("imageFilters"));
@@ -2986,6 +3005,9 @@ function loadFilters() {
     alert("Filters loaded!");
   }
 }
+
+
+
 window.onload = function() {
   populateFilterDropdown();
   loadFilters();
