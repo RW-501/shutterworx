@@ -1232,8 +1232,9 @@ initializeTracking();
 });
 
 window.getUsernameFromURL = function() {
-    const hash = window.location.hash;
-    const match = hash.match(/^#([a-zA-Z0-9_-]+)$/);
+    const url = window.location.href;
+    const regex = /\/my\/([^\/]+)/; // Capture the username after "/my/"
+    const match = url.match(regex);
     return match ? match[1] : null;
 };
 
