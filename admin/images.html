@@ -1604,7 +1604,9 @@ display: none !important;transform: scale(1.05);
                               <button id="cropButton" class="toolbar-btn" data-tooltip="Apply Crop">
                                 <i class="fas fa-crop-alt"></i> Apply Crop
                               </button>
-
+                              <input type="range" id="resizeSlider" min="0.1" max="2" step="0.1" value="0.5">
+                              <p>Scale Factor: <span id="scaleValue">0.5</span></p>
+                              
 
                               <!-- Flip Buttons -->
                               <button id="flipHorizontalBtn" class="toolbar-btn" data-tooltip="Flip Horizontal">
@@ -3665,7 +3667,21 @@ function applyZoom(scaleFactor = 1.1) {
 document.getElementById("cropButton").addEventListener("click", applyCrop);
 
 document.addEventListener("DOMContentLoaded", function() {
-    // Aspect Ratio Buttons with Tooltip
+    
+  
+  const resizeSlider = document.getElementById("resizeSlider");
+const scaleValueDisplay = document.getElementById("scaleValue");
+
+resizeSlider.addEventListener("input", function() {
+  const scaleFactor = parseFloat(resizeSlider.value);
+  scaleValueDisplay.textContent = scaleFactor; // Update the displayed value
+
+  resizeImage(scaleFactor); // Call the resize function with the new scale factor
+});
+  
+  
+  
+  // Aspect Ratio Buttons with Tooltip
     document.getElementById("aspectRatio1_1").addEventListener("click", function() {
         setAspectRatio(1, 1);
         showTooltip(this, "1:1 Aspect Ratio selected");
@@ -3985,7 +4001,7 @@ document.addEventListener("DOMContentLoaded", function () {
   document.getElementById("redoBtn").addEventListener("click", redo);
 
   document.getElementById("saveFilters").addEventListener("click", saveFilters);
-  document.getElementById("resizeImage").addEventListener("click", resizeImage);
+
   document.getElementById("cropImage").addEventListener("click", cropImage);
 
   document.getElementById("saveImage").addEventListener("click", saveImage);
