@@ -382,7 +382,7 @@ padding: 2em;
                     <a href="https://shutterworx.co/terms" class="footer-link">Terms of Service</a>
                 </small>
             </p>
-            <p><a href="https://shutterworx.co/views/admin-login" class="footer-link">Admin Login</a></p>
+            <p><a href="https://shutterworx.co/admin-login" class="footer-link">Admin Login</a></p>
         </div>
     </div>
 </footer>
@@ -419,7 +419,7 @@ padding: 2em;
     galleryGrid.appendChild(loadingIndicator);
 
     try {
-        const q = query(collection(db, "images"), where("isPublic", "==", true));
+        const q = query(collection(db, "Members_Media"), where("isPublic", "==", true));
         const snapshot = await getDocs(q);
 
         // Clear loading indicator once data is ready
@@ -512,11 +512,6 @@ async function loadHomePage() {
 
 
 
-    // Initialize Gallery and Testimonials
-    async function init() {
-        await loadHomePage();
-        await loadGallery();
-    }
 
 
 // Sample function to handle the access code
@@ -530,7 +525,7 @@ async function handleAccessCode(event) {
 
     try {
         // Check the events collection for the access code
-        const snapshot = await db.collection('events').where('accessCode', '==', accessCode).get();
+        const snapshot = await db.collection('events').where('Members_Events', '==', accessCode).get();
 
         if (!snapshot.empty) {
             // If the access code is valid, redirect to the private photos page
@@ -650,6 +645,21 @@ document.getElementById("send-message-btn").innerHTML = "Sending..."; // Show lo
         formResponse.innerHTML = ""; 
     }
 });
+
+
+
+// Function to initialize with the username
+async function init() {
+    const username = getUsernameFromURL();
+
+    if (username) {
+        console.log(`Initializing for user: ${username}`);
+        await loadHomePage(username);
+        await loadGallery(username);
+    } else {
+        console.error('Username not found in the URL');
+    }
+}
 
     // Run initialization on window load
     window.onload = init;

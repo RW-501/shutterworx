@@ -552,8 +552,8 @@ async function updateSW_Footer() {
         elite: { link: "https://shutterworx.co/signup-elite", title: "Elite Membership", status: "active", order: 9 },
       },
       company: {
-        community: { link: "https://shutterworx.co/views/", title: "Community", status: "inactive", order: 10 },
-        admin_login: { link: "https://shutterworx.co/views/admin-login", title: "Admin Login", status: "active", order: 11 },
+        community: { link: "https://shutterworx.co/Community/", title: "Community", status: "inactive", order: 10 },
+        admin_login: { link: "https://shutterworx.co/admin-login", title: "Admin Login", status: "active", order: 11 },
       },
       legal: {
         terms: { link: "https://shutterworx.co/terms", title: "Terms of Service", status: "active", order: 12 },
@@ -1202,7 +1202,7 @@ checkAndStoreUserIdInSession();
 
 
   // Check if either /admin/ OR shutterWorx exists in the URL
-  if (window.checkUrl("/views/") || window.checkUrl("/views/") &&  !window.checkUrl("/admin-login/")) {
+  if (window.checkUrl("/my/") || window.checkUrl("/my") &&  !window.checkUrl("/admin-login/")) {
     console.log("User View");
 
     
@@ -1231,8 +1231,15 @@ initializeTracking();
 
 });
 
+window.getUsernameFromURL = (function () {
 
+// Function to get the username from the URL
 
+    const url = window.location.href;
+    const regex = /\/my\/([^\/]+)/;
+    const match = url.match(regex);
+    return match ? match[1] : null; // Return the username if found, otherwise null
+});
 
 
 
