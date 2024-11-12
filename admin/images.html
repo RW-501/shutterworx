@@ -2878,11 +2878,7 @@ document.querySelectorAll(".slider input[type='range']").forEach((slider) => {
   });
 });
 
-function saveFilters() {
-  const image = document.getElementById("imageCanvas");
-  localStorage.setItem("imageFilters", image.style.filter);
-  showToast("Filters saved!");
-}
+
 
 function resetFilters() {
   const sliders = document.querySelectorAll(".slider");
@@ -3118,8 +3114,11 @@ function loadFilters() {
 function saveFilters() {
   localStorage.setItem("imageFilters", JSON.stringify(filterValues));
   alert("Filters saved!");
-}
 
+  const image = document.getElementById("imageCanvas");
+  localStorage.setItem("imageFilters", image.style.filter);
+  showToast("Filters saved!");
+}
 // On load, populate dropdown and load any saved filters
 window.onload = function() {
   populateFilterDropdown();
@@ -3354,8 +3353,6 @@ function applyCrop() {
 }
 
 
-// Add button to confirm cropping
-document.getElementById("cropButton").addEventListener("click", applyCrop);
 
 // Redo cropping with updated crop area
 function redoCrop() {
@@ -3439,7 +3436,107 @@ function resizeImage(scaleFactor = 0.5) {
 }
 
 
+function setAspectRatio(widthRatio, heightRatio) {
+    const currentWidth = cropWidth;
+    const currentHeight = cropHeight;
 
+    if (widthRatio > heightRatio) {
+        cropHeight = (cropWidth * heightRatio) / widthRatio;
+    } else {
+        cropWidth = (cropHeight * widthRatio) / heightRatio;
+    }
+
+    // Adjust cropStartX and cropStartY to keep the crop area centered
+    const centerX = cropStartX + cropWidth / 2;
+    const centerY = cropStartY + cropHeight / 2;
+    cropStartX = centerX - cropWidth / 2;
+    cropStartY = centerY - cropHeight / 2;
+
+    drawCropOverlay();
+}
+
+
+function flipHorizontal() {
+    const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+    const flippedCanvas = document.createElement("canvas");
+    const flippedCtx = flippedCanvas.getContext("2d");
+
+    flippedCanvas.width = canvas.width;
+    flippedCanvas.height = canvas.height;
+
+    flippedCtx.save();
+    flippedCtx.scale(-1, 1);
+    flippedCtx.drawImage(canvas, -canvas.width, 0);
+    flippedCtx.restore();
+
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.drawImage(flippedCanvas, 0, 0);
+    saveToHistory();
+}
+
+function flipVertical() {
+    const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+    const flippedCanvas = document.createElement("canvas");
+    const flippedCtx = flippedCanvas.getContext("2d");
+
+    flippedCanvas.width = canvas.width;
+    flippedCanvas.height = canvas.height;
+
+    flippedCtx.save();
+    flippedCtx.scale(1, -1);
+    flippedCtx.drawImage(canvas, 0, -canvas.height);
+    flippedCtx.restore();
+
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.drawImage(flippedCanvas, 0, 0);
+    saveToHistory();
+}
+
+
+
+function rotateImage(angle = 90) {
+    const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+    const rotatedCanvas = document.createElement("canvas");
+    const rotatedCtx = rotatedCanvas.getContext("2d");
+
+    rotatedCanvas.width = canvas.height; // Rotate canvas dimensions
+    rotatedCanvas.height = canvas.width;
+
+    rotatedCtx.save();
+    rotatedCtx.translate(rotatedCanvas.width / 2, rotatedCanvas.height / 2);
+    rotatedCtx.rotate((angle * Math.PI) / 180);
+    rotatedCtx.drawImage(canvas, -canvas.width / 2, -canvas.height / 2);
+    rotatedCtx.restore();
+
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.drawImage(rotatedCanvas, 0, 0);
+    saveToHistory();
+}
+
+
+
+function applyZoom(scaleFactor = 1.1) {
+    const newWidth = canvas.width * scaleFactor;
+    const newHeight = canvas.height * scaleFactor;
+
+    const zoomedCanvas = document.createElement("canvas");
+    const zoomedCtx = zoomedCanvas.getContext("2d");
+
+    zoomedCanvas.width = newWidth;
+    zoomedCanvas.height = newHeight;
+
+    zoomedCtx.drawImage(canvas, 0, 0, newWidth, newHeight);
+
+    canvas.width = newWidth;
+    canvas.height = newHeight;
+    ctx.drawImage(zoomedCanvas, 0, 0);
+    saveToHistory();
+}
+
+
+
+// Add button to confirm cropping
+document.getElementById("cropButton").addEventListener("click", applyCrop);
 
 
 document.addEventListener("DOMContentLoaded", function() {
