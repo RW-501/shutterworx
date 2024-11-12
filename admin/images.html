@@ -3304,8 +3304,19 @@ let cropStartX = 0, cropStartY = 0, cropWidth = 200, cropHeight = 200;
 
 
 
+/*
+function applyCrop() {
+  const croppedData = ctx.getImageData(cropStartX, cropStartY, cropWidth, cropHeight);
+  canvas.width = cropWidth;
+  canvas.height = cropHeight;
+  ctx.putImageData(croppedData, 0, 0);
+  saveToHistory();
 
+  drawLogo();
 
+  showToast("Image cropped successfully!", "info");
+}
+  */
 
 
 function cropImage() {
@@ -3329,6 +3340,8 @@ function cropImage() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     ctx.drawImage(croppedCanvas, 0, 0);
     saveToHistory(); // Save after cropping
+    showToast("Image cropped successfully!", "info");
+
   };
 }
 
@@ -3474,17 +3487,7 @@ function snapToEdge(value, edge, threshold = 10) {
 
 
 
-function applyCrop() {
-  const croppedData = ctx.getImageData(cropStartX, cropStartY, cropWidth, cropHeight);
-  canvas.width = cropWidth;
-  canvas.height = cropHeight;
-  ctx.putImageData(croppedData, 0, 0);
-  saveToHistory();
 
-  drawLogo();
-
-  showToast("Image cropped successfully!", "info");
-}
 
 
 
@@ -3662,9 +3665,6 @@ function applyZoom(scaleFactor = 1.1) {
 }
 
 
-
-// Add button to confirm cropping
-document.getElementById("cropButton").addEventListener("click", applyCrop);
 
 document.addEventListener("DOMContentLoaded", function() {
     
@@ -4003,6 +4003,8 @@ document.addEventListener("DOMContentLoaded", function () {
   document.getElementById("saveFilters").addEventListener("click", saveFilters);
 
   document.getElementById("cropImage").addEventListener("click", cropImage);
+// Add button to confirm cropping
+//document.getElementById("cropButton").addEventListener("click", applyCrop);
 
   document.getElementById("saveImage").addEventListener("click", saveImage);
   document
