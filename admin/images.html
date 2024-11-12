@@ -1899,32 +1899,22 @@ function setupEventListeners() {
 function getWatermarkSettings() {
   const settings = {};
 
-  // Loop through each element in watermarkElements to fetch its value or checked state
   Object.entries(watermarkElements).forEach(([key, element]) => {
     try {
-      // Check if there's a saved setting in sessionStorage for this key
       const savedSetting = sessionStorage.getItem(`watermark_${key}`);
       
       if (savedSetting !== null) {
-        // If there's a saved setting, use it
         settings[key] = JSON.parse(savedSetting);
       } else if (element.type === "checkbox") {
-        // For checkboxes, use `checked` state or defaultSettings if not saved
         settings[key] = element.checked || defaultSettings[key];
-      } else if (
-        element.type === "text" ||
-        element.type === "color" ||
-        element.tagName.toLowerCase() === "select"
-      ) {
-        // For text, color, and select elements, use their `value` directly or fallback to default
+      } else if (element.type === "text" || element.type === "color" || element.tagName.toLowerCase() === "select") {
         settings[key] = element.value || defaultSettings[key];
       } else {
-        // For other element types, parse the value or use defaultSettings
         settings[key] = parseValue(element, defaultSettings[key]);
       }
     } catch (error) {
       console.error(`Error getting setting for ${key}:`, error);
-      settings[key] = defaultSettings[key]; // Fallback to default if error
+      settings[key] = defaultSettings[key];
     }
   });
 
