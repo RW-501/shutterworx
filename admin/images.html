@@ -1421,21 +1421,32 @@ display: none !important;transform: scale(1.05);
     display: contents;
 }
 
-/* Toolbar Buttons */
+/* Style for Toolbar Buttons */
 .toolbar-btn {
     padding: 10px 15px;
     margin: 5px;
-    background-color: #007bff;
+    background-color: #264c75;
     color: white;
     border: none;
     border-radius: 4px;
     cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
     transition: background-color 0.3s ease;
 }
 
 .toolbar-btn:hover {
-    background-color: #0056b3;
+    background-color: #1c3e63;
 }
+
+/* Image/Icon inside the button */
+.icon-img {
+    width: 20px;
+    height: 20px;
+    margin-right: 8px; /* Space between the icon and the text */
+}
+
 
 /* Slider Styling */
 .slider {
