@@ -301,14 +301,18 @@ main {
         margin-left: 20px; /* Optional: Indents the bullet for better alignment */
     }
     
-    a:hover {
-        color: #272829;
-        text-decoration: underline;
-        font-weight: 700;
+   #site-footer a:hover {
+        color: #007bff;
+        text-decoration: none;
+        font-weight: 200;
         transform: translateY(5px);
     }
 
-
+    #site-footer a {
+        color: #ffffff !important;
+        text-decoration: none;
+        background-color: transparent;
+    }
 
 /* Color Classes */
 .mainBGcolor, .bg-mainColor { background-color: #639ad4 !important; }
