@@ -490,7 +490,7 @@ const membershipPlans = {
    // Display membership details based on URL
    function loadMembershipDetails() {
        const url = window.location.href;
-       const membershipType = url.split('?-')[1] || 'basic'; // Assuming the plan type is in the URL
+       const membershipType = url.split('#')[1] || 'basic'; // Assuming the plan type is in the URL
        const plan = membershipPlans[membershipType];
    
        // Populate the membership details
