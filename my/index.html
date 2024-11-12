@@ -420,10 +420,10 @@ padding: 2em;
 
     try {
         const q = query(
-    collection(db, "Members_Media"), 
-    where("isPublic", "==", true),
-    where("userId", "==", userId)
+    collection(db, "Members", userId, "Members_Media"),  // Point directly to the 'Members_Media' subcollection within the specific user document
+    where("galleryBool", "==", true) // Query for documents where galleryBool is true
 );
+
         const snapshot = await getDocs(q);
 
         // Clear loading indicator once data is ready
