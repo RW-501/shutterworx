@@ -3373,6 +3373,11 @@ document.addEventListener("DOMContentLoaded", function () {
         .getElementById("wm-controlsBTN")
         .addEventListener("click", handleControlsClick);
 
+        document
+        .getElementById("watermarkStyle")
+        .addEventListener("change", updateWatermarkPreview);
+
+
       document.getElementById("watermarkSettingsModal").style.display = "block";
     });
 
