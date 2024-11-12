@@ -1421,6 +1421,64 @@ display: none !important;transform: scale(1.05);
     display: contents;
 }
 
+/* Toolbar Buttons */
+.toolbar-btn {
+    padding: 10px 15px;
+    margin: 5px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.toolbar-btn:hover {
+    background-color: #0056b3;
+}
+
+/* Slider Styling */
+.slider {
+    width: 100%;
+    margin: 10px 0;
+}
+
+.zoom-label {
+    font-size: 14px;
+    font-weight: bold;
+    margin-right: 10px;
+}
+
+/* Tooltip Styling */
+.tooltip {
+    position: absolute;
+    background-color: #333;
+    color: #fff;
+    padding: 5px;
+    border-radius: 4px;
+    font-size: 12px;
+    z-index: 10;
+}
+
+/* Zoom Progress Bar */
+.progress-bar {
+    height: 5px;
+    background-color: #1d4d81;
+    width: 0%;
+    margin-top: 5px;
+    transition: width 0.2s ease;
+}
+
+/* Image Container and Editable Image Styling */
+.image-container {
+    margin-top: 20px;
+    text-align: center;
+}
+
+.editable-image {
+    max-width: 100%;
+    transition: transform 0.3s ease-in-out, width 0.3s ease-in-out;
+}
 
               </style>
               
@@ -1520,17 +1578,34 @@ display: none !important;transform: scale(1.05);
                
                        <!-- Adjustments -->
    <!-- Crop Tab -->
-   <div id="crop-tab" class="tab-content">
-    <div id="cropOptionsToolbar" class="toolbar">
-        <button id="aspectRatio1_1">1:1</button>
-        <button id="aspectRatio4_3">4:3</button>
-        <button id="aspectRatio16_9">16:9</button>
-        <button id="flipHorizontalBtn">Flip H</button>
-        <button id="flipVerticalBtn">Flip V</button>
-        <button id="rotate90Btn">Rotate 90°</button>
-        <input type="range" id="zoomSlider" min="1" max="3" step="0.1">
-    </div>
+<!-- Crop Tab -->
+<div id="crop-tab" class="tab-content">
+  <div id="cropOptionsToolbar" class="toolbar">
+      <!-- Aspect Ratio Buttons with Tooltips -->
+      <button id="aspectRatio1_1" class="toolbar-btn" data-tooltip="1:1 Aspect Ratio">1:1</button>
+      <button id="aspectRatio4_3" class="toolbar-btn" data-tooltip="4:3 Aspect Ratio">4:3</button>
+      <button id="aspectRatio16_9" class="toolbar-btn" data-tooltip="16:9 Aspect Ratio">16:9</button>
+
+      <!-- Flip Buttons -->
+      <button id="flipHorizontalBtn" class="toolbar-btn" data-tooltip="Flip Horizontal">Flip H</button>
+      <button id="flipVerticalBtn" class="toolbar-btn" data-tooltip="Flip Vertical">Flip V</button>
+
+      <!-- Rotate Button -->
+      <button id="rotate90Btn" class="toolbar-btn" data-tooltip="Rotate 90°">Rotate 90°</button>
+
+      <!-- Zoom Slider with Label -->
+      <label for="zoomSlider" class="zoom-label">Zoom:</label>
+      <input type="range" id="zoomSlider" min="1" max="3" step="0.1" class="slider">
+      <span id="zoomValue">1</span>x
+
+      <!-- Optional: Smooth Slider Animation -->
+      <div id="zoomSliderProgress" class="progress-bar"></div>
+  </div>
+
+
+  
 </div>
+
             
               
          <!-- Action Buttons -->
@@ -3538,39 +3613,106 @@ function applyZoom(scaleFactor = 1.1) {
 // Add button to confirm cropping
 document.getElementById("cropButton").addEventListener("click", applyCrop);
 
-
 document.addEventListener("DOMContentLoaded", function() {
-    // Aspect Ratio Buttons
+    // Aspect Ratio Buttons with Tooltip
     document.getElementById("aspectRatio1_1").addEventListener("click", function() {
         setAspectRatio(1, 1);
+        showTooltip(this, "1:1 Aspect Ratio selected");
     });
 
     document.getElementById("aspectRatio4_3").addEventListener("click", function() {
         setAspectRatio(4, 3);
+        showTooltip(this, "4:3 Aspect Ratio selected");
     });
 
     document.getElementById("aspectRatio16_9").addEventListener("click", function() {
         setAspectRatio(16, 9);
+        showTooltip(this, "16:9 Aspect Ratio selected");
     });
 
-    // Flip Buttons
-    document.getElementById("flipHorizontalBtn").addEventListener("click", flipHorizontal);
-    document.getElementById("flipVerticalBtn").addEventListener("click", flipVertical);
+    // Flip Buttons with Tooltip
+    document.getElementById("flipHorizontalBtn").addEventListener("click", function() {
+        flipHorizontal();
+        showTooltip(this, "Flipped Horizontal");
+    });
 
-    // Rotate Button
+    document.getElementById("flipVerticalBtn").addEventListener("click", function() {
+        flipVertical();
+        showTooltip(this, "Flipped Vertical");
+    });
+
+    // Rotate Button with Tooltip
     document.getElementById("rotate90Btn").addEventListener("click", function() {
         rotateImage(90);
+        showTooltip(this, "Rotated 90°");
     });
 
-    // Zoom Slider
-    document.getElementById("zoomSlider").addEventListener("change", applyZoom);
+    // Zoom Slider with Dynamic Zoom Value Display
+    document.getElementById("zoomSlider").addEventListener("input", function() {
+        applyZoom();
+        document.getElementById("zoomValue").textContent = this.value; // Show zoom value
+        updateProgressBar(this.value); // Optional: Visualize zoom progress
+    });
+
+    // Tooltips functionality
+    function showTooltip(element, message) {
+        let tooltip = document.createElement("span");
+        tooltip.classList.add("tooltip");
+        tooltip.textContent = message;
+        document.body.appendChild(tooltip);
+
+        const rect = element.getBoundingClientRect();
+        tooltip.style.left = rect.left + (rect.width / 2) - (tooltip.offsetWidth / 2) + 'px';
+        tooltip.style.top = rect.top - tooltip.offsetHeight - 5 + 'px';
+
+        setTimeout(() => {
+            tooltip.remove();
+        }, 2000); // Remove tooltip after 2 seconds
+    }
+
+    // Zoom progress bar visualization (Optional)
+    function updateProgressBar(value) {
+        const progressBar = document.getElementById("zoomSliderProgress");
+        progressBar.style.width = (value - 1) * 50 + '%'; // Progress based on zoom level
+    }
 });
 
 
 
 
+// Dummy Functions for Aspect Ratio, Flip, Rotate, and Zoom
+function setAspectRatio(width, height) {
+    console.log(`Aspect Ratio set to: ${width}:${height}`);
+    const image = document.getElementById("image");
+    const newWidth = image.naturalWidth * (height / width);
+    image.style.width = `${newWidth}px`;
+    image.style.height = `${image.naturalHeight * (width / height)}px`;
+}
 
+function flipHorizontal() {
+    console.log("Image flipped horizontally");
+    const image = document.getElementById("image");
+    image.style.transform = `scaleX(-1)`;
+}
 
+function flipVertical() {
+    console.log("Image flipped vertically");
+    const image = document.getElementById("image");
+    image.style.transform = `scaleY(-1)`;
+}
+
+function rotateImage(degrees) {
+    console.log(`Image rotated by ${degrees}°`);
+    const image = document.getElementById("image");
+    image.style.transform = `rotate(${degrees}deg)`;
+}
+
+function applyZoom() {
+    let zoomLevel = document.getElementById("zoomSlider").value;
+    console.log(`Zoom level: ${zoomLevel}`);
+    const image = document.getElementById("image");
+    image.style.transform = `scale(${zoomLevel})`;
+}
 
 
 let saveImageCount = 0;
