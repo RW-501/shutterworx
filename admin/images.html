@@ -1616,34 +1616,86 @@ let picCount = 0;
 let imagesData;
 
 // Main function to handle file uploads
-// Handle image files with error handling in place
 function handleFiles(files) {
+  const maxFileSize = 5 * 1024 * 1024; // 5 MB limit
+  const acceptedFileTypes = [
+    "image/jpeg", "image/png", "image/gif", "image/webp", "image/bmp", "image/tiff"
+  ];
+
   Array.from(files).forEach((file) => {
     const fileSize = file.size;
     const fileType = file.type;
     const fileName = file.name;
 
+    // Check file type
+    if (!acceptedFileTypes.includes(fileType)) {
+      showToast(`Unsupported file type for ${fileName}. Please upload JPEG, PNG, or GIF images.`, "warning");
+      return;
+    }
+
+    // Check file size
+    if (fileSize > maxFileSize) {
+      showToast(`File ${fileName} exceeds the 5 MB limit. Please choose a smaller file.`, "warning");
+      return;
+    }
+
     const reader = new FileReader();
-    
-    // Add error handling to detect read errors
+
+    // Error handling
     reader.onerror = (e) => {
       console.error(`Error reading file ${fileName}:`, e);
-      alert(`Could not read file ${fileName}. Please try a different file.`);
+      showToast(`Could not read file ${fileName}. Please try a different file.`, "error");
     };
 
     reader.onload = (e) => {
       e.preventDefault();
-      try {
-        processImage(e.target.result, file, fileSize, fileType, fileName);
-      } catch (error) {
-        console.error(`Error processing image ${fileName}:`, error);
-        alert(`Could not process image ${fileName}. It may be an unsupported format or corrupted.`);
-      }
+      const img = new Image();
+      img.onload = () => {
+        const width = img.width;
+        const height = img.height;
+        const aspectRatio = width / height;
+        console.log(`Image Dimensions: ${width}x${height}`);
+        console.log(`Aspect Ratio: ${aspectRatio}`);
+
+        // Example for Exif metadata (if JPEG)
+        EXIF.getData(img, function() {
+          const exifData = EXIF.getAllTags(this);
+          console.log('Exif Data:', exifData);  // Output all Exif data
+
+          // Extract orientation
+          const orientation = EXIF.getTag(this, 'Orientation');
+          console.log(`Orientation: ${orientation}`);
+
+          // Handle orientation rotation (if needed)
+          if (orientation === 6) {
+            // Rotate 90 degrees counter-clockwise
+            console.log('Rotating image 90 degrees counter-clockwise');
+            // Handle rotation logic (e.g., canvas manipulation)
+          } else if (orientation === 8) {
+            // Rotate 90 degrees clockwise
+            console.log('Rotating image 90 degrees clockwise');
+            // Handle rotation logic (e.g., canvas manipulation)
+          } else if (orientation === 3) {
+            // Rotate 180 degrees
+            console.log('Rotating image 180 degrees');
+            // Handle rotation logic (e.g., canvas manipulation)
+          } else {
+            // No rotation needed
+            console.log('No rotation needed');
+          }
+
+          // Now pass all relevant data to the processImage function
+          processImage(e.target.result, file, fileSize, fileType, fileName, orientation, width, height, aspectRatio);
+        });
+      };
+      img.src = e.target.result;  // Image data URL
     };
 
     reader.readAsDataURL(file);
   });
 }
+
+
 /*  WATER MARK FUNCTIONS  /////////////////////////////////////////////
 //////////////////////////////////////////////// ////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////
@@ -1654,14 +1706,22 @@ function handleFiles(files) {
 ///////////////////////////////////////////////*/
 
 // Function to create lower-quality image with watermark
-async function createLowerQualityImage(mainImageDataURL, watermarkImageURL) {
+async function createLowerQualityImage(mainImageDataURL, watermarkImageURL, quality = 0.7, maxWidth = 800, maxHeight = 600) {
   try {
     const img = new Image();
     img.src = mainImageDataURL;
     await img.decode();
 
-    const width = 800;
-    const height = (img.height / img.width) * width;
+    // Calculate the new width and height while maintaining the aspect ratio
+    const aspectRatio = img.width / img.height;
+    let width = maxWidth;
+    let height = Math.floor(maxWidth / aspectRatio);
+
+    if (height > maxHeight) {
+      height = maxHeight;
+      width = Math.floor(maxHeight * aspectRatio);
+    }
+
     const canvas = document.createElement('canvas');
     canvas.width = width;
     canvas.height = height;
@@ -1669,18 +1729,20 @@ async function createLowerQualityImage(mainImageDataURL, watermarkImageURL) {
     const ctx = canvas.getContext("2d");
     ctx.drawImage(img, 0, 0, width, height);
 
+    // Add watermark image if provided
     if (watermarkImageURL) {
       const wmImg = new Image();
       wmImg.src = watermarkImageURL;
       await wmImg.decode();
-
-      // Add watermark image
-      addWatermark(ctx, width, height, wmImg);
+      addWatermark(ctx, width, height, wmImg); // Use watermark image
     } else {
-      addWatermark(ctx, width, height);
+      // Add watermark text if no image is provided
+      const watermarkText = document.getElementById("watermarkText").value || "Default Watermark";
+      addWatermarkText(ctx, width, height, watermarkText); // Use text as watermark
     }
 
-    return canvas.toDataURL("image/jpeg", 0.7);
+    // Return a lower-quality image
+    return canvas.toDataURL("image/jpeg", quality);
   } catch (error) {
     console.error("Error creating lower-quality image:", error);
     alert("Failed to create a lower-quality image. Please check the image format or try another image.");
@@ -1715,13 +1777,16 @@ function addWatermark(ctx, width, height, watermarkImg) {
 
     let selectedStyle = document.getElementById("watermarkStyle").value;
 
-    if (selectedStyle === "diagonal-left") {
-      drawDiagonalLeftWatermarks(settings, ctx, width, height, gap);
-    } else if (selectedStyle === "diagonal-right") {
-      drawDiagonalRightWatermarks(settings, ctx, width, height, gap);
-    } else {
-      // Draw repeated watermarks across the canvas
-      drawRepeatedWatermarks(settings, ctx, width, height, gap);
+    switch (selectedStyle) {
+      case "diagonal-left":
+        drawWatermarks(settings, ctx, width, height, gap, -45);
+        break;
+      case "diagonal-right":
+        drawWatermarks(settings, ctx, width, height, gap, 45);
+        break;
+      default:
+        drawWatermarks(settings, ctx, width, height, gap);
+        break;
     }
   } else {
     // For single watermark, center it on the canvas
@@ -1893,6 +1958,7 @@ function parseValue(element, fallback) {
 
 
 // Update preview with current settings
+// Function to update watermark preview based on current settings
 function updateWatermarkPreview() {
   // Clear canvas before redrawing
   previewCtx.clearRect(0, 0, previewCanvas.width, previewCanvas.height);
@@ -1902,9 +1968,7 @@ function updateWatermarkPreview() {
 
   // Set up watermark style properties
   previewCtx.globalAlpha = settings.opacity;
-  previewCtx.font = `${settings.bold ? "bold" : "normal"} ${
-    settings.fontSize
-  }px ${settings.font}`;
+  previewCtx.font = `${settings.bold ? "bold" : "normal"} ${settings.fontSize}px ${settings.font}`;
   previewCtx.fillStyle = settings.color;
   previewCtx.scale(settings.scale, settings.scale); // Apply scale to the watermark
 
@@ -1920,19 +1984,9 @@ function updateWatermarkPreview() {
       const startY = parseInt(settings.startY, 10) || 0;
       const gapSize = parseInt(settings.gapSize, 10) || gap;
 
-      previewCtx.drawImage(
-        watermarkImg,
-        startX,
-        startY,
-        previewCanvas.width,
-        previewCanvas.height
-      );
-      addWatermark(
-        previewCtx,
-        previewCanvas.width,
-        previewCanvas.height,
-        watermarkImg
-      );
+      previewCtx.drawImage(watermarkImg, startX, startY, previewCanvas.width, previewCanvas.height);
+      // Call addWatermark only if there's a need to handle the image-based watermark
+      addWatermark(previewCtx, previewCanvas.width, previewCanvas.height, watermarkImg);
     };
   } else {
     // Handle text watermark
@@ -1942,12 +1996,8 @@ function updateWatermarkPreview() {
       // Dynamic adjustment for text size if too wide
       const maxWidth = previewCanvas.width * 0.8;
       if (textWidth > maxWidth) {
-        settings.fontSize = Math.floor(
-          settings.fontSize * (maxWidth / textWidth)
-        );
-        previewCtx.font = `${settings.bold ? "bold" : "normal"} ${
-          settings.fontSize
-        }px ${settings.font}`;
+        settings.fontSize = Math.floor(settings.fontSize * (maxWidth / textWidth));
+        previewCtx.font = `${settings.bold ? "bold" : "normal"} ${settings.fontSize}px ${settings.font}`;
       }
 
       const selectedStyle = document.getElementById("watermarkStyle").value;
@@ -1956,31 +2006,13 @@ function updateWatermarkPreview() {
       // Draw watermarks based on the selected style
       switch (selectedStyle) {
         case "diagonal-left":
-          drawDiagonalLeftWatermarks(
-            settings,
-            previewCtx,
-            previewCanvas.width,
-            previewCanvas.height,
-            adjustedGap
-          );
+          drawWatermarks(settings, previewCtx, previewCanvas.width, previewCanvas.height, adjustedGap, -45);
           break;
         case "diagonal-right":
-          drawDiagonalRightWatermarks(
-            settings,
-            previewCtx,
-            previewCanvas.width,
-            previewCanvas.height,
-            adjustedGap
-          );
+          drawWatermarks(settings, previewCtx, previewCanvas.width, previewCanvas.height, adjustedGap, 45);
           break;
         default:
-          drawRepeatedWatermarks(
-            settings,
-            previewCtx,
-            previewCanvas.width,
-            previewCanvas.height,
-            adjustedGap
-          );
+          drawWatermarks(settings, previewCtx, previewCanvas.width, previewCanvas.height, adjustedGap);
           break;
       }
     } else {
@@ -1988,17 +2020,13 @@ function updateWatermarkPreview() {
       document.getElementById("watermarkStyle").style.display = "none";
       previewCtx.textAlign = "center";
       previewCtx.textBaseline = "middle";
-      drawSingleWatermark(
-        settings,
-        previewCtx,
-        previewCanvas.width / 2,
-        previewCanvas.height / 2
-      );
+      drawSingleWatermark(settings, previewCtx, previewCanvas.width / 2, previewCanvas.height / 2);
     }
   }
 
   previewCtx.restore();
 }
+
 
 // Show the uploaded logo preview
 function previewLogo(input) {
@@ -2055,39 +2083,14 @@ function drawSingleWatermark(settings, textWidth) {
   if (settings.underline) drawUnderline(textWidth, settings.fontSize);
   previewCtx.restore();
 }
-
-function drawDiagonalLeftWatermarks(settings, ctx, width, height, gap) {
-  // Modify the settings to apply a -45 degree rotation for diagonal left
-
-  settings.rotation = -45; // Rotate watermark to diagonal left
-  //
-
-  drawRepeatedWatermarks(settings, ctx, width, height, gap); // Call the common function to draw the watermarks
-}
-
-function drawDiagonalRightWatermarks(settings, ctx, width, height, gap) {
-  // Modify the settings to apply a 45 degree rotation for diagonal right
-
-  settings.rotation = 45; // Rotate watermark to diagonal right
-
-  drawRepeatedWatermarks(settings, ctx, width, height, gap); // Call the common function to draw the watermarks
-}
-
-function drawRegularWatermarks(settings, ctx, width, height, gap) {
-  // No rotation needed for regular watermarks
-
-  settings.rotation = 0; // Set rotation to 0 for no rotation
-  drawRepeatedWatermarks(settings, ctx, width, height, gap); // Call the common function to draw the watermarks
-}
-
-function drawRepeatedWatermarks(settings, ctx, width, height, gap) {
+function drawWatermarks(settings, ctx, width, height, gap, rotation = 0) {
   const maxX = width;
   const maxY = height;
   for (let x = startX; x < maxX; x += gap) {
     for (let y = startY; y < maxY; y += gap) {
       ctx.save();
       ctx.translate(x, y);
-      ctx.rotate(settings.rotation * RADIAN_FACTOR);
+      ctx.rotate(rotation * RADIAN_FACTOR);
       renderText(ctx, settings, width);
       ctx.restore();
     }
@@ -2305,7 +2308,7 @@ function updateProgressBar(progress) {
 
 
 // Function to process image and apply watermark
-async function processImage(dataURL, file, fileSize, fileType, fileName) {
+async function processImage(dataURL, file, fileSize, fileType, fileName, orientation, width, height, aspectRatio) { 
   try {
     const waterMarkText = document.getElementById("watermarkText").value;
 
@@ -2316,16 +2319,24 @@ async function processImage(dataURL, file, fileSize, fileType, fileName) {
       return;
     }
 
+    // Log image details for debugging
+    console.log(`Processing image with:
+                 Orientation: ${orientation}, Width: ${width}, Height: ${height}, Aspect Ratio: ${aspectRatio}`);
+
     // Create a compressed image with a watermark
     const compressedImage = await createLowerQualityImage(dataURL);
 
-    imagesData = [
+    const imagesData = [
       {
         compressedImage: compressedImage,
         originalUrl: dataURL,
         fileType: fileType,
         fileName: fileName,
-        fileSize: fileSize // in bytes
+        fileSize: fileSize, // in bytes
+        orientation: orientation,
+        width: width,
+        height: height,
+        aspectRatio: aspectRatio
       }
     ];
 
@@ -2352,8 +2363,10 @@ async function renderImages(imagesData) {
   imageCountHeader.classList.add("mb-3", "text-left");
   imageGalleryContainer.appendChild(imageCountHeader);
 
+  let picCount = 0; // Initialize picCount here
+
   imagesData.forEach((image) => {
-    const { originalUrl, compressedImage, fileName, fileSize, fileType } = image;
+    const { originalUrl, compressedImage, fileName, fileSize, fileType, orientation, width, height, aspectRatio } = image;
 
     // Validate essential properties
     if (!originalUrl || !compressedImage || !fileName) {
@@ -2375,6 +2388,9 @@ async function renderImages(imagesData) {
           <p class="card-text">
             Type: ${fileType} <br>
             Size: ${(fileSize / 1024).toFixed(2)} KB <br>
+            Dimensions: ${width} x ${height} px <br>
+            Aspect Ratio: ${(aspectRatio).toFixed(2)} <br>
+            Orientation: ${getOrientationText(orientation)} <br>
             <strong>Image #${picCount}</strong>
           </p>
           <button class="btn btn-primary edit-image-btn btn-sm mt-2" aria-label="Edit image of ${fileName}" data-original-url="${originalUrl}">
@@ -2400,6 +2416,20 @@ async function renderImages(imagesData) {
       openImageEditor(originalUrl);
     }
   });
+}
+
+// Helper function to return the orientation text
+function getOrientationText(orientation) {
+  switch(orientation) {
+    case 6:
+      return "Rotated 90 degrees counter-clockwise";
+    case 8:
+      return "Rotated 90 degrees clockwise";
+    case 3:
+      return "Rotated 180 degrees";
+    default:
+      return "Normal orientation";
+  }
 }
 
 // Event listener for "Save Selected Images" button with progress tracking
