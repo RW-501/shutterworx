@@ -9,7 +9,7 @@ Allow: /signup
 Allow: /terms
 Allow: /privacy
 Allow: /community
-Allow: /views
+Allow: /my
 Allow: /signup-basic
 Allow: /signup-pro
 Allow: /signup-elite
