@@ -2308,11 +2308,11 @@ if (previewCanvas && previewCtx) {
 ///////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////*/
 
-function openImageEditor(image) {
+function openImageEditor(imageData) {
   document.getElementById("imageEditorModal").style.display = "block"; // Show the modal
-console.log("image data   ",image );
+console.log("image data   ",imageData );
 
-  const { originalUrl, compressedImage, fileName, fileSize, fileType, orientation, width, height, aspectRatio } = image;
+  const { originalUrl, compressedImage, fileName, fileSize, fileType, orientation, width, height, aspectRatio } = imageData;
   console.log("originalUrl   ",originalUrl );
 
   // Display watermark image
