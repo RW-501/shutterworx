@@ -410,7 +410,7 @@ padding: 2em;
 
 
         // Load Gallery
-        async function loadGallery() {
+        async function loadGallery(userId) {
     const galleryGrid = document.getElementById("gallery-grid");
     
     // Show loading text or spinner
@@ -419,7 +419,11 @@ padding: 2em;
     galleryGrid.appendChild(loadingIndicator);
 
     try {
-        const q = query(collection(db, "Members_Media"), where("isPublic", "==", true));
+        const q = query(
+    collection(db, "Members_Media"), 
+    where("isPublic", "==", true),
+    where("userId", "==", userId)
+);
         const snapshot = await getDocs(q);
 
         // Clear loading indicator once data is ready
