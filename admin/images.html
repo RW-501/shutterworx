@@ -3064,7 +3064,10 @@ function saveToHistoryChrome() {
 
 // Event listener for filter dropdown selection
 document.getElementById("filters").addEventListener("change", function(event) {
-  undo();
+  if(filterValues.length > 0){
+    undo();
+
+  }
   const selectedFilter = event.target.value;
 
   if (filterPresets[selectedFilter]) {
@@ -3331,8 +3334,8 @@ function drawCropOverlay() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
  
   const img = new Image();
-    img.src = history[history.length];
-    img.onload = () => {
+  img.src = history[history.length - 1]; // Access the last item in history
+  img.onload = () => {
       redrawCanvas(img);
     };
 
@@ -3774,6 +3777,7 @@ const toleranceSlider = document.getElementById("toleranceSlider");
   let chromaKeyActive = false;
     const colorPicker = document.getElementById("colorPicker");
 
+let chomeKeyBool = false;
 
   updateColorDisplay(selectedColor);
 
@@ -3803,11 +3807,16 @@ const toleranceSlider = document.getElementById("toleranceSlider");
   });
 
   function chromeKey(color, tolerance, feather, brightness, contrast) {
+    if(chomeKeyBool){
     undo();
-    const [r, g, b] = hexToRgb(color);
+
+  }
+      const [r, g, b] = hexToRgb(color);
     const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
     const data = imageData.data;
+    chomeKeyBool = true;
 
+    
     for (let i = 0; i < data.length; i += 4) {
       const redDiff = Math.abs(data[i] - r);
       const greenDiff = Math.abs(data[i + 1] - g);
