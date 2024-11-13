@@ -3049,8 +3049,10 @@ const filterValues = {};
 
 // Function to save the current canvas state for undo functionality
 function saveToHistory() {
-  const canvas = document.getElementById("imageCanvas");
-  const state = canvas.toDataURL(); // Store current canvas state
+  const state = ctx.getImageData(0, 0, canvas.width, canvas.height);
+
+  //const canvas = document.getElementById("imageCanvas");
+ // const state = canvas.toDataURL(); // Store current canvas state
   if (history[history.length - 1] !== state) { // Prevent duplicate states
     history.push(state); // Store state if different from the last one
     redoStack = []; // Clear redo stack on new action
@@ -3185,8 +3187,8 @@ function saveFilters() {
   localStorage.setItem("imageFilters", JSON.stringify(filterValues));
   //alert("Filters saved!");
 
-  const image = document.getElementById("imageCanvas");
-  localStorage.setItem("imageFilters", image.style.filter);
+ // const image = document.getElementById("imageCanvas");
+  //localStorage.setItem("imageFilters", image.style.filter);
   showToast("Filters saved!");
 }
 // On load, populate dropdown and load any saved filters
@@ -3195,7 +3197,7 @@ window.onload = function() {
   loadFilters();
 };
 
-
+/*
 // Undo functionality
 function undo() {
   if (history.length > 1) { // Keep one state to avoid empty history
@@ -3208,16 +3210,16 @@ function undo() {
     };
   }
 }
+*/
 
-/*
-function undoChrome() {
+function undo() {
     if (history.length > 1) {
       history.pop(); // Remove the latest state
       const lastState = history[history.length - 1];
       ctx.putImageData(lastState, 0, 0);
     }
   }
-  */
+  
 // Redo functionality
 function redo() {
   if (redoStack.length > 0) {
@@ -3816,7 +3818,7 @@ let chomeKeyBool = false;
     const data = imageData.data;
     chomeKeyBool = true;
 
-    
+
     for (let i = 0; i < data.length; i += 4) {
       const redDiff = Math.abs(data[i] - r);
       const greenDiff = Math.abs(data[i + 1] - g);
