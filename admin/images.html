@@ -3372,6 +3372,18 @@ let isResizing = false;
 let currentHandle = null;
 
 
+// Utility functions
+function isInsideCropArea(x, y) {
+  return x >= cropStartX && x <= cropStartX + cropWidth && y >= cropStartY && y <= cropStartY + cropHeight;
+}
+
+
+function getCanvasCoordinates(event) {
+  const rect = canvas.getBoundingClientRect();
+  return { x: event.clientX - rect.left, y: event.clientY - rect.top };
+}
+
+
 // Mouse events for dragging and resizing crop area
 canvas.addEventListener("mousedown", (event) => {
   const { x, y } = getCanvasCoordinates(event);
