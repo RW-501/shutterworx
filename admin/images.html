@@ -3313,7 +3313,12 @@ function cropImage() {
 // Draws the cropping rectangle with semi-transparent overlay
 function drawCropOverlay() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
-  redrawCanvas(currentImage); // Use a saved reference to the current image
+ 
+  const img = new Image();
+    img.src = history[history.length];
+    img.onload = () => {
+      redrawCanvas(img);
+    };
 
   // Semi-transparent overlay
   ctx.fillStyle = "rgba(0, 0, 0, 0.5)";
