@@ -3096,9 +3096,17 @@ function createSlider(filter) {
   const sliderHTML = `
     <div id="${filter}SliderContainer" class="slider_editor visible">
       <label for="${filter}Value">${filterDetails.label}:</label>
+      <div class="flex">
+      <div >
       <input type="range" id="${filter}Value" min="${filterDetails.min}" max="${filterDetails.max}" value="${filterDetails.defaultValue}">
       <span id="${filter}Output">${filterDetails.defaultValue}${filterDetails.unit}</span>
+      </div> 
+      <div >
       <button onclick="removeFilter('${filter}')">Remove</button>
+</div>
+</div>
+
+
     </div>
   `;
 
@@ -3208,39 +3216,7 @@ window.onload = function() {
   loadFilters();
 };
 
-/*
-// Undo functionality
-function undo() {
-  if (history.length > 1) { // Keep one state to avoid empty history
-    const lastState = history.pop();
-    redoStack.push(lastState);
-    const img = new Image();
-    img.src = history[history.length - 1];
-    img.onload = () => {
-      redrawCanvas(img);
-    };
-  }
-}
-*/
 
-// Undo functionality with ImageData
-function undo() {
-  if (history.length > 1) {
-    redoStack.push(history.pop()); // Move the current state to redoStack
-    const lastState = history[history.length - 1];
-    ctx.putImageData(lastState, 0, 0); // Draw previous state
-  }
-}
-  
-// Redo functionality
-// Redo functionality with ImageData
-function redo() {
-  if (redoStack.length > 0) {
-    const redoState = redoStack.pop();
-    history.push(redoState); // Move redo state back to history
-    ctx.putImageData(redoState, 0, 0); // Draw redo state
-  }
-}
 // Redraw the canvas with the current image and logo
 function redrawCanvas(img) {
   const canvas = document.getElementById("imageCanvas");
@@ -3264,19 +3240,44 @@ function redrawCanvas(img) {
 
 
 
-function mainResetBTN() {
 
-
-
+// Undo functionality with ImageData
+function undo() {
+  if (history.length > 1) {
+    redoStack.push(history.pop()); // Move the current state to redoStack
+    const lastState = history[history.length - 1];
+    ctx.putImageData(lastState, 0, 0); // Draw previous state
+  }
+}
   
+// Redo functionality
+// Redo functionality with ImageData
+function redo() {
+  if (redoStack.length > 0) {
+    const redoState = redoStack.pop();
+    history.push(redoState); // Move redo state back to history
+    ctx.putImageData(redoState, 0, 0); // Draw redo state
+  }
+}
+
+function mainResetBTN() {
+  const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+
+  document.getElementById("filters").value = "none"; // Reset filter selection
+imageData.style.filter = ""; // Clear all filters
+
+
+  ctx.putImageData(imageData, 0, 0);
+
+  redrawCanvas(imageData)
+  
+
 const sliders = document.querySelectorAll(".slider");
 sliders.forEach((slider) => {
   slider.classList.remove("visible");
 });
 
-document.getElementById("filters").value = "none"; // Reset filter selection
-const image = document.getElementById("imageCanvas");
-image.style.filter = ""; // Clear all filters
+
 showToast(" Reset to default!");
 }
 /******************************************************************************************
