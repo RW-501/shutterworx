@@ -1345,7 +1345,7 @@ button:hover {
 
 /* Tab Content and Buttons */
 .tab-buttons {
-  display: flex;
+  display: grid;
   margin: 1rem;
   gap: 10px;
 }
@@ -1397,6 +1397,10 @@ select {
   border-radius: 10px;
   border: 2px solid #444;
   padding: 12px;
+}
+
+.tab-content {
+display: none;
 }
  </style>
             
@@ -1495,8 +1499,7 @@ select {
                           <div id="chromeKey-tab" class="tab-content">
             
                             <div class="controls">
-                              <label for="fileInput">Upload Image:</label>
-                              <input type="file" id="fileInput" accept="image/*">
+
                               <label>Chroma Key Color: </label>
                               <div id="colorDisplay"></div>
                               <input type="color" id="colorPicker" hidden>
