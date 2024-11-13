@@ -1416,6 +1416,12 @@ display: none;
   border: 2px solid #6f6e6e;
   padding: 12px;
 }
+
+.flex-l-r {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+}
  </style>
             
             <section id="imageEditorModal" class=" modal " tabindex="-1" role="dialog" aria-labelledby="imageEditorModal">
@@ -2445,7 +2451,6 @@ if (previewCanvas && previewCtx) {
 
 function openImageEditor(imageData) {
   document.getElementById("imageEditorModal").style.display = "block"; // Show the modal
-  //console.log("image data   ", imageData);
 
   // Assuming imageData is an array with one object, extract the first element
   const image = imageData[0]; // Access the first object from the array
@@ -2458,6 +2463,10 @@ function openImageEditor(imageData) {
   watermarkImage.src = compressedImage;
    canvas = document.getElementById("imageCanvas"); // Target the existing canvas
   context = canvas.getContext("2d");
+
+
+  console.log("canvas data   ", canvas);
+  console.log("context data   ", context);
 
   if (!canvas) {
     console.log("Canvas element not found");
@@ -3106,7 +3115,7 @@ function createSlider(filter) {
   const sliderHTML = `
     <div id="${filter}SliderContainer" class="slider_editor visible">
       <label for="${filter}Value">${filterDetails.label}:</label>
-      <div class="flex">
+      <div class="flex-l-r">
       <div >
       <input type="range" id="${filter}Value" min="${filterDetails.min}" max="${filterDetails.max}" value="${filterDetails.defaultValue}">
       <span id="${filter}Output">${filterDetails.defaultValue}${filterDetails.unit}</span>
