@@ -3749,7 +3749,6 @@ const toleranceSlider = document.getElementById("toleranceSlider");
   const contrastSlider = document.getElementById("contrastSlider");
   const applyButton = document.getElementById("applyChromeKeyBtn");
   const colorDisplay = document.getElementById("colorDisplay");
-  const undoBtn = document.getElementById("undoBtn");
   const fileInput = document.getElementById("fileInput");
 
   let selectedColor = "#00FF00";  // Default green for chroma key
@@ -3786,7 +3785,6 @@ const toleranceSlider = document.getElementById("toleranceSlider");
     }
   });
 
-  undoBtn.addEventListener("click", undo);
 
   // Trigger color picker when colorDisplay is clicked
   colorDisplay.addEventListener("click", function() {
