@@ -1432,11 +1432,11 @@ display: none;
                       <!-- Collapse Button -->
             
                       <div class="collapseBtnArea">
-            
+
                         <button id="collapseControlsButton">&#9654;</button>
                       </div>
                       <div id="controls">
-            
+                      
                         <div id="image-editor-c-top">
                           <!-- Tab Navigation -->
                           <div class="tab-buttons">
@@ -1448,41 +1448,41 @@ display: none;
                             <button class="tab-btn" data-target="#chromeKey-tab">Chrome Key</button>
                             <button class="tab-btn" data-target="#imagedetailContainer">Image Details</button>
                           </div>
-                          
+                      
                           <!-- Logo Tab -->
                           <div id="logo-tab" class="tab-content ">
                             <input type="file" id="uploadLogo" hidden>
                             <label for="uploadLogo">Upload Logo</label>
-            
+                      
                             <!-- Logo Preview -->
                             <div id="logoPreviewContainer">
                               <img id="logoImage" src="https://shutterworx.co/images/cam_1.png" alt="Logo Preview">
                             </div>
-            
+                      
                             <!-- Logo Size Slider -->
                             <label for="logoSize">Logo Size</label>
                             <input type="range" id="logoSize" min="1" max="100" value="50">
-            
+                      
                           </div>
-            
+                      
                           <!-- Watermark Tab -->
                           <div id="watermark-tab" class="tab-content active">
                             <label for="uploadLogo">Watermark</label>
-            
+                      
                             <div id="watermarkContainer">
                               <img id="image-editor-wm" src="https://shutterworx.co/images/logo.png" alt="Watermark Preview">
                             </div>
-</div>
-<div id="imagedetailContainer" class="tab-content">
-
-  <label for="image-editor-c-image-detail">Image Detail</label>
-
+                          </div>
+                          <div id="imagedetailContainer" class="tab-content">
+                      
+                            <label for="image-editor-c-image-detail">Image Detail</label>
+                      
                             <div id="image-editor-c-image-detail">
                               <!-- Image Details will be populated here -->
                             </div>
-            
+                      
                           </div>
-            
+                      
                           <!-- Filters Tab -->
                           <div id="filters-tab" class="tab-content">
                             <!-- Filter Selection -->
@@ -1490,25 +1490,25 @@ display: none;
                             <select id="filters">
                               <!-- Options will be dynamically added here by JavaScript -->
                             </select>
-            
+                      
                             <div class="slider-container"></div> <!-- This is where the sliders will be injected -->
                             <button id="applyPreset">Apply Preset</button>
                             <button id="applyAllFilters">Apply Changes</button>
-            
+                      
                             <button id="clearFiltersButton">Clear Filters Button</button>
                             <button id="saveFilters">Save Filters</button>
                           </div>
-            
+                      
                           <!-- Crome key -->
-            
+                      
                           <div id="chromeKey-tab" class="tab-content">
-            
+                      
                             <div class="controls">
-
+                      
                               <label>Chroma Key Color: </label>
                               <div id="colorDisplay"></div>
                               <input type="color" id="colorPicker" hidden>
-            
+                      
                               <div>
                                 <label for="toleranceSlider">Tolerance: </label>
                                 <input type="range" id="toleranceSlider" step="0.1" min="0" max="100" value="50">
@@ -1530,9 +1530,9 @@ display: none;
                                 <span id="contrastValue">0</span>
                               </div>
                               <button id="applyChromeKeyBtn" class="inactive-button">Apply Chroma Key</button>
-
+                      
                             </div>
-            
+                      
                           </div>
                           <!-- Crop Tab -->
                           <div id="crop-tab" class="tab-content">
@@ -1547,45 +1547,43 @@ display: none;
                               <button id="aspectRatio16_9" class="toolbar-btn" data-tooltip="16:9 Aspect Ratio">
                                 <i class="fas fa-crop-alt"></i> 16:9
                               </button>
-            
+                      
                               <button id="cropImage" class="toolbar-btn" data-tooltip="Apply Crop">
                                 <i class="fas fa-crop-alt"></i> Apply Crop
                               </button>
                               <input type="range" id="resizeSlider" min="0.1" max="2" step="0.1" value="0.5">
                               <p>Scale Factor: <span id="scaleValue">0.5</span></p>
-                              
-
+                      
                             </div>
-</div>
-
-                              <div id="adjustments-tab" class="tab-content">
-
-                              <!-- Flip Buttons -->
-                              <button id="flipHorizontalBtn" class="toolbar-btn" data-tooltip="Flip Horizontal">
-                                <i class="fas fa-arrow-alt-circle-right"></i> Flip H
-                              </button>
-            
-                              <button id="flipVerticalBtn" class="toolbar-btn" data-tooltip="Flip Vertical">
-                                <i class="fas fa-arrow-alt-circle-up"></i> Flip V
-                              </button>
-            
-                              <!-- Rotate Button -->
-                              <button id="rotate90Btn" class="toolbar-btn" data-tooltip="Rotate 90°">
-                                <i class="fas fa-sync-alt"></i> Rotate 90°
-                              </button>
-            
-                              <!-- Zoom Slider with Label -->
-                              <label for="zoomSlider" class="zoom-label">Zoom:</label>
-                              <input type="range" id="zoomSlider" min="1" max="3" step="0.1" class="slider">
-                              <span id="zoomValue">1</span>x
-            
-                              <!-- Optional: Smooth Slider Animation -->
-                              <div id="zoomSliderProgress" class="progress-bar"></div>
-                            </div>
-
-                            <!-- end-->
                           </div>
-            
+                      
+                          <div id="adjustments-tab" class="tab-content">
+                      
+                            <!-- Flip Buttons -->
+                            <button id="flipHorizontalBtn" class="toolbar-btn" data-tooltip="Flip Horizontal">
+                              <i class="fas fa-arrow-alt-circle-right"></i> Flip H
+                            </button>
+                      
+                            <button id="flipVerticalBtn" class="toolbar-btn" data-tooltip="Flip Vertical">
+                              <i class="fas fa-arrow-alt-circle-up"></i> Flip V
+                            </button>
+                      
+                            <!-- Rotate Button -->
+                            <button id="rotate90Btn" class="toolbar-btn" data-tooltip="Rotate 90°">
+                              <i class="fas fa-sync-alt"></i> Rotate 90°
+                            </button>
+                      
+                            <!-- Zoom Slider with Label -->
+                            <label for="zoomSlider" class="zoom-label">Zoom:</label>
+                            <input type="range" id="zoomSlider" min="1" max="3" step="0.1" class="slider">
+                            <span id="zoomValue">1</span>x
+                      
+                            <!-- Optional: Smooth Slider Animation -->
+                            <div id="zoomSliderProgress" class="progress-bar"></div>
+                          </div>
+                      
+                          <!-- end-->
+                        </div>
                           <!-- Action Buttons -->
                           <div class="action-buttons">
                             <button id="editUndoBtn">Undo</button>
@@ -1602,8 +1600,9 @@ display: none;
                             <button id="closeImageEditor">Close</button>
                           </div>
             
-                       
+                       <!-- end control-->
                       </div>
+
                     </div>
                   </div>
                 </div>
@@ -2936,18 +2935,6 @@ document.querySelectorAll(".slider input[type='range']").forEach((slider) => {
 
 
 
-function reset() {
-  const sliders = document.querySelectorAll(".slider");
-  sliders.forEach((slider) => {
-    slider.classList.remove("visible");
-  });
-
-  document.getElementById("filters").value = "none"; // Reset filter selection
-  const image = document.getElementById("imageCanvas");
-  image.style.filter = ""; // Clear all filters
-  showToast("Filters reset to default!");
-}
-
 const filterPresets = {
   vintage: { grayscale: 30, sepia: 40, contrast: 90 },
   bright: { brightness: 150, saturate: 120 },
@@ -3276,6 +3263,22 @@ function redrawCanvas(img) {
 }
 
 
+
+function mainResetBTN() {
+
+
+
+  
+const sliders = document.querySelectorAll(".slider");
+sliders.forEach((slider) => {
+  slider.classList.remove("visible");
+});
+
+document.getElementById("filters").value = "none"; // Reset filter selection
+const image = document.getElementById("imageCanvas");
+image.style.filter = ""; // Clear all filters
+showToast(" Reset to default!");
+}
 /******************************************************************************************
 ******************************************************************************************
 
@@ -3318,60 +3321,48 @@ function applyCrop() {
   */
 
 
-function cropImage() {
+// Crop the image
+function cropImage() { 
+  const croppedCanvas = document.createElement('canvas');
+  const croppedCtx = croppedCanvas.getContext('2d');
+  
+  // Set the cropped canvas size
+  croppedCanvas.width = cropWidth;
+  croppedCanvas.height = cropHeight;
+  
+  // Draw cropped area from main canvas
+  croppedCtx.drawImage(
+    canvas, 
+    cropStartX, cropStartY, cropWidth, cropHeight, 
+    0, 0, cropWidth, cropHeight
+  );
 
-  const image = new Image();
-  image.src = canvas.toDataURL();
-  image.onload = function() {
-    const croppedCanvas = document.createElement('canvas');
-    const croppedCtx = croppedCanvas.getContext('2d');
-    
-    // Set the cropped canvas size
-    croppedCanvas.width = cropWidth;
-    croppedCanvas.height = cropHeight;
-    
-    // Draw the cropped area from the original canvas
-    croppedCtx.drawImage(image, cropStartX, cropStartY, cropWidth, cropHeight, 0, 0, cropWidth, cropHeight);
-    
-    // Replace the main canvas with the cropped content
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    ctx.drawImage(croppedCanvas, 0, 0);
-    saveToHistory(); // Save after cropping
-    showToast("Image cropped successfully!", "info");
-
-  };
+  // Clear main canvas and draw cropped content
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  ctx.drawImage(croppedCanvas, 0, 0);
+  
+  saveToHistory(); // Save after cropping
+  showToast("Image cropped successfully!", "info");
 }
 
 
 
 
 
-
-
-
-
-
-
-
-// Draw the cropping overlay with semi-transparent background
+// Draw cropping overlay with semi-transparent background
 function drawCropOverlay() {
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  ctx.putImageData(history[history.length - 1], 0, 0); // Restore last state
   
-  // Restore the last saved state from history (as ImageData)
-  const lastState = history[history.length - 1];
-  ctx.putImageData(lastState, 0, 0);
-
-  // Semi-transparent overlay for cropping
+  // Draw overlay and crop area
   ctx.fillStyle = "rgba(0, 0, 0, 0.5)";
   ctx.fillRect(0, 0, canvas.width, canvas.height);
   ctx.clearRect(cropStartX, cropStartY, cropWidth, cropHeight);
 
-  // Draw crop boundary and handles
+  // Draw boundary and resize handles
   ctx.strokeStyle = "red";
   ctx.lineWidth = 2;
   ctx.strokeRect(cropStartX, cropStartY, cropWidth, cropHeight);
-  drawResizeHandles(); // Add resize handles
-  drawGridOverlay();   // Add grid overlay for alignment
+
 }
 
 // Handle mousedown for starting drag
@@ -3379,37 +3370,30 @@ function drawCropOverlay() {
 let isResizing = false;
 let currentHandle = null;
 
-canvas.addEventListener("mousedown", (event) => {
-  const rect = canvas.getBoundingClientRect();
-  const x = event.clientX - rect.left;
-  const y = event.clientY - rect.top;
-  const handleSize = 8;
 
-  // Check if clicking on resize handles or within crop area
-  if (Math.abs(x - cropStartX) < handleSize && Math.abs(y - cropStartY) < handleSize) {
-    isResizing = true; currentHandle = "top-left";
-  } else if (Math.abs(x - (cropStartX + cropWidth)) < handleSize && Math.abs(y - cropStartY) < handleSize) {
-    isResizing = true; currentHandle = "top-right";
-  } else if (Math.abs(x - cropStartX) < handleSize && Math.abs(y - (cropStartY + cropHeight)) < handleSize) {
-    isResizing = true; currentHandle = "bottom-left";
-  } else if (Math.abs(x - (cropStartX + cropWidth)) < handleSize && Math.abs(y - (cropStartY + cropHeight)) < handleSize) {
-    isResizing = true; currentHandle = "bottom-right";
-  } else if (x >= cropStartX && x <= cropStartX + cropWidth && y >= cropStartY && y <= cropStartY + cropHeight) {
-    isDraggingCrop = true; offsetX = x - cropStartX; offsetY = y - cropStartY;
-  }
+// Mouse events for dragging and resizing crop area
+canvas.addEventListener("mousedown", (event) => {
+  const { x, y } = getCanvasCoordinates(event);
+
+  // Determine if on handle or crop area
+  if (isOnTopLeftHandle(x, y)) { isResizing = true; currentHandle = "top-left"; }
+  else if (isOnTopRightHandle(x, y)) { isResizing = true; currentHandle = "top-right"; }
+  else if (isOnBottomLeftHandle(x, y)) { isResizing = true; currentHandle = "bottom-left"; }
+  else if (isOnBottomRightHandle(x, y)) { isResizing = true; currentHandle = "bottom-right"; }
+  else if (isInsideCropArea(x, y)) { isDraggingCrop = true; offsetX = x - cropStartX; offsetY = y - cropStartY; }
 });
 
-// Handle mouse movements for resizing and dragging
+
+
 canvas.addEventListener("mousemove", (event) => {
-  const rect = canvas.getBoundingClientRect();
-  const x = event.clientX - rect.left;
-  const y = event.clientY - rect.top;
+  const { x, y } = getCanvasCoordinates(event);
 
   if (isDraggingCrop) {
-    cropStartX = Math.max(0, Math.min(x - offsetX, canvas.width - cropWidth));
-    cropStartY = Math.max(0, Math.min(y - offsetY, canvas.height - cropHeight));
-    drawCropOverlay();
+    // Adjust crop position within bounds
+    cropStartX = snapToEdge(x - offsetX, 0);
+    cropStartY = snapToEdge(y - offsetY, 0);
     checkCropBounds();
+    renderOverlay();
   } else if (isResizing) {
     handleResize(event);
   } else {
@@ -3423,25 +3407,15 @@ canvas.addEventListener("mouseup", () => {
   currentHandle = null;
 });
 
+// Resize crop based on handle type
 function handleResize(event) {
-  const rect = canvas.getBoundingClientRect();
-  const x = event.clientX - rect.left;
-  const y = event.clientY - rect.top;
-
+  const { x, y } = getCanvasCoordinates(event);
   if (currentHandle === "top-left") {
     const newWidth = cropWidth + cropStartX - x;
     const newHeight = cropHeight + cropStartY - y;
-    
-    // Boundary check
-    if (newWidth > 50 && newHeight > 50) {
-      cropStartX = x;
-      cropStartY = y;
-      cropWidth = newWidth;
-      cropHeight = newHeight;
-    }
+    if (newWidth > 50 && newHeight > 50) { cropStartX = x; cropStartY = y; cropWidth = newWidth; cropHeight = newHeight; }
   }
-  // Repeat for each handle...
-  drawCropOverlay();
+  renderOverlay();
   checkCropBounds();
 }
 
@@ -3452,7 +3426,6 @@ function drawResizeHandles() {
     ctx.fillRect(cropStartX + cropWidth - handleSize / 2, cropStartY - handleSize / 2, handleSize, handleSize);
     ctx.fillRect(cropStartX - handleSize / 2, cropStartY + cropHeight - handleSize / 2, handleSize, handleSize);
     ctx.fillRect(cropStartX + cropWidth - handleSize / 2, cropStartY + cropHeight - handleSize / 2, handleSize, handleSize);
-    drawGridOverlay();
 }
 
 
@@ -3517,7 +3490,7 @@ function redoCrop() {
     const redoState = redoStack.pop();
     history.push(redoState); // Restore redo state to history
     ctx.putImageData(redoState, 0, 0); // Draw the redo state
-    drawCropOverlay(); // Show crop overlay on redo
+    renderOverlay(); // Show crop overlay on redo
   }
 }
 
@@ -3599,7 +3572,7 @@ function setAspectRatio(widthRatio, heightRatio) {
     cropStartX = centerX - cropWidth / 2;
     cropStartY = centerY - cropHeight / 2;
 
-    drawCropOverlay();
+    renderOverlay();
 }
 
 
@@ -4317,7 +4290,7 @@ document.getElementById("downloadImageButton").addEventListener("click", () => {
 //document.getElementById("cropButton").addEventListener("click", applyCrop);
 document
         .getElementById("resetButton")
-        .addEventListener("click", reset);
+        .addEventListener("click", mainResetBTN);
 
   document
     .getElementById("closeImageEditorX")
