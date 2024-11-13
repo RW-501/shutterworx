@@ -2565,7 +2565,9 @@ async function renderImages(imagesData) {
 
   // Create a header for the image count
   const imageCountHeader = document.createElement("h5");
-  imageCountHeader.innerHTML = `Total Images: <div id='i-count'>${imagesData.length}</div>`;
+  imageCountHeader.innerHTML = `Total Images: <div 
+    display: contents;
+ id='i-count'>${imagesData.length}</div>`;
   imageCountHeader.classList.add("mb-3", "text-left");
   imageGalleryContainer.appendChild(imageCountHeader);
 
@@ -2756,12 +2758,13 @@ function removeCardByRef(picCount) {
 
       // Update the displayed image count directly in the existing element
       document.getElementById("i-count").innerHTML = imageCount;
-
+/*
       // Optionally, if you want to update an image count header as well
       const imageCountHeader = document.getElementById("image-count-header");
       if (imageCountHeader) {
         imageCountHeader.innerText = `Total Images: ${imageCount}`;
       }
+        */
     }
   });
 }
