@@ -1404,6 +1404,9 @@ select {
 .tab-content {
 display: none;
 }
+.active {
+  display: block;
+}
  </style>
             
             <section id="imageEditorModal" class=" modal " tabindex="-1" role="dialog" aria-labelledby="imageEditorModal">
@@ -2463,6 +2466,14 @@ function openImageEditor(imageData) {
     <p><strong>Orientation:</strong> ${getOrientationText(orientation)}</p>
   `;
 
+
+
+  document.getElementById("imageEditorModal").style.display = "block"; // Show the modal
+}
+
+function closeImageEditor() {
+  document.getElementById("imageEditorModal").style.display = "none";
+}
   // Add event listeners to the tabs
   const tabButtons = document.querySelectorAll(".tab-btn");
   tabButtons.forEach(button => {
@@ -2477,12 +2488,6 @@ function openImageEditor(imageData) {
     });
   });
 
-  document.getElementById("imageEditorModal").style.display = "block"; // Show the modal
-}
-
-function closeImageEditor() {
-  document.getElementById("imageEditorModal").style.display = "none";
-}
 
 // Load and draw the original image onto the canvas
 function loadImage(image, canvas) {
