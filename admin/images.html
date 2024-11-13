@@ -2565,8 +2565,7 @@ async function renderImages(imagesData) {
 
   // Create a header for the image count
   const imageCountHeader = document.createElement("h5");
-  imageCountHeader.innerHTML = `Total Images: <div 
-    display: contents;
+  imageCountHeader.innerHTML = `Total Images: <div style=" display: contents;
  id='i-count'>${imagesData.length}</div>`;
   imageCountHeader.classList.add("mb-3", "text-left");
   imageGalleryContainer.appendChild(imageCountHeader);
