@@ -1738,11 +1738,12 @@ document.addEventListener("DOMContentLoaded", function () {
 
 let selectedImages = [];
 // Add mouse events to handle dragging and resizing of crop area
-const canvas = document.getElementById("imageCanvas");
-const ctx = canvas.getContext("2d");
+let canvas = document.getElementById("imageCanvas");
+let context = canvas.getContext("2d");
 
 const previewCanvas = document.getElementById("watermarkPreviewCanvas");
 const previewCtx = previewCanvas.getContext("2d");
+let ctx = canvas.getContext("2d");
 
 console.log(previewCanvas);
 
@@ -2446,7 +2447,8 @@ function openImageEditor(imageData) {
   // Display watermark image
   const watermarkImage = document.getElementById("image-editor-wm");
   watermarkImage.src = compressedImage;
-  const canvas = document.getElementById("imageCanvas"); // Target the existing canvas
+   canvas = document.getElementById("imageCanvas"); // Target the existing canvas
+  context = canvas.getContext("2d");
 
   if (!canvas) {
     console.log("Canvas element not found");
@@ -2496,7 +2498,7 @@ function loadImage(image, canvas) {
   const img = new Image();
   img.src = image; // Load the image dynamically
   img.onload = () => {
-    ctx.drawImage(img, 0, 0); // Draw image on canvas
+   context.drawImage(img, 0, 0); // Draw image on canvas
     saveToHistory(); // Save initial state as ImageData
   };
 }
@@ -2815,7 +2817,7 @@ function drawLogo() {
   if (logoImg) {
     const logoWidth = logoImg.width * logoScale;
     const logoHeight = logoImg.height * logoScale;
-    ctx.drawImage(
+   context.drawImage(
       logoImg,
       canvas.width - logoWidth - 10,
       canvas.height - logoHeight - 10,
@@ -2856,14 +2858,13 @@ function clearAllFilters() {
   const sliders = document.querySelectorAll(".slider_editor");
   sliders.forEach(slider => slider.remove()); // Remove all sliders
 
-  const image = document.getElementById("imageCanvas");
-
-  // Clear all filters applied to the image element
-  image.style.filter = ""; 
-
   // Get the canvas context and clear the canvas content
-  const canvas = document.getElementById("imageCanvas");
-  const context = canvas.getContext("2d");
+   canvas = document.getElementById("imageCanvas");
+   context = canvas.getContext("2d");
+  // Clear all filters applied to the image element
+  canvas.style.filter = ""; 
+
+
   if (context) {
     context.clearRect(0, 0, canvas.width, canvas.height); // Clear the canvas content
   }
@@ -3036,7 +3037,7 @@ const filterValues = {};
 // Function to save the current canvas state for undo functionality
 function saveToHistory() {
   // Capture the current canvas state as ImageData
-  const currentState = ctx.getImageData(0, 0, canvas.width, canvas.height);
+  const currentState =context.getImageData(0, 0, canvas.width, canvas.height);
 
   // Check for duplicates by comparing the dimensions and pixel data length of ImageData
   if (
@@ -3146,8 +3147,8 @@ function removeFilter(filter) {
 
 // Function to apply all active filters to the image
 function applyAllFilters() {
-  const canvas = document.getElementById("imageCanvas");
-  const context = canvas.getContext("2d");
+   canvas = document.getElementById("imageCanvas");
+   context = canvas.getContext("2d");
   const image = new Image();
   image.src = canvas.toDataURL();
 
@@ -3219,8 +3220,8 @@ window.onload = function() {
 
 // Redraw the canvas with the current image and logo
 function redrawCanvas(img) {
-  const canvas = document.getElementById("imageCanvas");
-  const ctx = canvas.getContext("2d");
+   canvas = document.getElementById("imageCanvas");
+  context = canvas.getContext("2d");
 
   if (!img) {
   //  console.error('Invalid image passed to redrawCanvas');
@@ -3228,13 +3229,13 @@ function redrawCanvas(img) {
   }
 
   // Clear and apply image with filters
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
-  ctx.filter = Object.keys(filterValues).map(
+ context.clearRect(0, 0, canvas.width, canvas.height);
+ context.filter = Object.keys(filterValues).map(
     filter => `${filter}(${filterValues[filter]}${filterConfig[filter].unit})`
   ).join(" ");
   
   // Ensure img is a valid image
-  ctx.drawImage(img, 0, 0);
+ context.drawImage(img, 0, 0);
   saveToHistory();
 }
 
@@ -3246,7 +3247,7 @@ function undo() {
   if (history.length > 1) {
     redoStack.push(history.pop()); // Move the current state to redoStack
     const lastState = history[history.length - 1];
-    ctx.putImageData(lastState, 0, 0); // Draw previous state
+   context.putImageData(lastState, 0, 0); // Draw previous state
   }
 }
   
@@ -3256,18 +3257,18 @@ function redo() {
   if (redoStack.length > 0) {
     const redoState = redoStack.pop();
     history.push(redoState); // Move redo state back to history
-    ctx.putImageData(redoState, 0, 0); // Draw redo state
+   context.putImageData(redoState, 0, 0); // Draw redo state
   }
 }
 
 function mainResetBTN() {
-  const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+  const imageData =context.getImageData(0, 0, canvas.width, canvas.height);
 
   document.getElementById("filters").value = "none"; // Reset filter selection
 imageData.style.filter = ""; // Clear all filters
 
 
-  ctx.putImageData(imageData, 0, 0);
+ context.putImageData(imageData, 0, 0);
 
   redrawCanvas(imageData)
   
@@ -3309,10 +3310,10 @@ let cropStartX = 0, cropStartY = 0, cropWidth = 200, cropHeight = 200;
 
 /*
 function applyCrop() {
-  const croppedData = ctx.getImageData(cropStartX, cropStartY, cropWidth, cropHeight);
+  const croppedData =context.getImageData(cropStartX, cropStartY, cropWidth, cropHeight);
   canvas.width = cropWidth;
   canvas.height = cropHeight;
-  ctx.putImageData(croppedData, 0, 0);
+ context.putImageData(croppedData, 0, 0);
   saveToHistory();
 
   drawLogo();
@@ -3339,8 +3340,8 @@ function cropImage() {
   );
 
   // Clear main canvas and draw cropped content
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
-  ctx.drawImage(croppedCanvas, 0, 0);
+ context.clearRect(0, 0, canvas.width, canvas.height);
+ context.drawImage(croppedCanvas, 0, 0);
   
   saveToHistory(); // Save after cropping
   showToast("Image cropped successfully!", "info");
@@ -3352,17 +3353,17 @@ function cropImage() {
 
 // Draw cropping overlay with semi-transparent background
 function drawCropOverlay() {
-  ctx.putImageData(history[history.length - 1], 0, 0); // Restore last state
+ context.putImageData(history[history.length - 1], 0, 0); // Restore last state
   
   // Draw overlay and crop area
-  ctx.fillStyle = "rgba(0, 0, 0, 0.5)";
-  ctx.fillRect(0, 0, canvas.width, canvas.height);
-  ctx.clearRect(cropStartX, cropStartY, cropWidth, cropHeight);
+ context.fillStyle = "rgba(0, 0, 0, 0.5)";
+ context.fillRect(0, 0, canvas.width, canvas.height);
+ context.clearRect(cropStartX, cropStartY, cropWidth, cropHeight);
 
   // Draw boundary and resize handles
-  ctx.strokeStyle = "red";
-  ctx.lineWidth = 2;
-  ctx.strokeRect(cropStartX, cropStartY, cropWidth, cropHeight);
+ context.strokeStyle = "red";
+ context.lineWidth = 2;
+ context.strokeRect(cropStartX, cropStartY, cropWidth, cropHeight);
 
 }
 
@@ -3434,11 +3435,11 @@ function handleResize(event) {
 
 function drawResizeHandles() {
     const handleSize = 8;
-    ctx.fillStyle = "white";
-    ctx.fillRect(cropStartX - handleSize / 2, cropStartY - handleSize / 2, handleSize, handleSize);
-    ctx.fillRect(cropStartX + cropWidth - handleSize / 2, cropStartY - handleSize / 2, handleSize, handleSize);
-    ctx.fillRect(cropStartX - handleSize / 2, cropStartY + cropHeight - handleSize / 2, handleSize, handleSize);
-    ctx.fillRect(cropStartX + cropWidth - handleSize / 2, cropStartY + cropHeight - handleSize / 2, handleSize, handleSize);
+   context.fillStyle = "white";
+   context.fillRect(cropStartX - handleSize / 2, cropStartY - handleSize / 2, handleSize, handleSize);
+   context.fillRect(cropStartX + cropWidth - handleSize / 2, cropStartY - handleSize / 2, handleSize, handleSize);
+   context.fillRect(cropStartX - handleSize / 2, cropStartY + cropHeight - handleSize / 2, handleSize, handleSize);
+   context.fillRect(cropStartX + cropWidth - handleSize / 2, cropStartY + cropHeight - handleSize / 2, handleSize, handleSize);
 }
 
 
@@ -3502,7 +3503,7 @@ function redoCrop() {
   if (redoStack.length > 0) {
     const redoState = redoStack.pop();
     history.push(redoState); // Restore redo state to history
-    ctx.putImageData(redoState, 0, 0); // Draw the redo state
+   context.putImageData(redoState, 0, 0); // Draw the redo state
     renderOverlay(); // Show crop overlay on redo
   }
 }
@@ -3521,18 +3522,18 @@ function checkCropBounds() {
 
 function drawGridOverlay() {
     const cols = 3, rows = 3;
-    ctx.strokeStyle = "rgba(255, 255, 255, 0.3)";
+   context.strokeStyle = "rgba(255, 255, 255, 0.3)";
     for (let i = 1; i < cols; i++) {
         let x = cropStartX + (cropWidth / cols) * i;
-        ctx.moveTo(x, cropStartY);
-        ctx.lineTo(x, cropStartY + cropHeight);
+       context.moveTo(x, cropStartY);
+       context.lineTo(x, cropStartY + cropHeight);
     }
     for (let i = 1; i < rows; i++) {
         let y = cropStartY + (cropHeight / rows) * i;
-        ctx.moveTo(cropStartX, y);
-        ctx.lineTo(cropStartX + cropWidth, y);
+       context.moveTo(cropStartX, y);
+       context.lineTo(cropStartX + cropWidth, y);
     }
-    ctx.stroke();
+   context.stroke();
 }
 
 
@@ -3564,7 +3565,7 @@ function resizeImage(scaleFactor = 0.5) {
 
   canvas.width = newWidth;
   canvas.height = newHeight;
-  ctx.drawImage(resizedCanvas, 0, 0);
+ context.drawImage(resizedCanvas, 0, 0);
   saveToHistory();
 }
 
@@ -3590,7 +3591,7 @@ function setAspectRatio(widthRatio, heightRatio) {
 
 
 function flipHorizontal() {
-    const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+    const imageData =context.getImageData(0, 0, canvas.width, canvas.height);
     const flippedCanvas = document.createElement("canvas");
     const flippedCtx = flippedCanvas.getContext("2d");
 
@@ -3602,13 +3603,13 @@ function flipHorizontal() {
     flippedCtx.drawImage(canvas, -canvas.width, 0);
     flippedCtx.restore();
 
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    ctx.drawImage(flippedCanvas, 0, 0);
+   context.clearRect(0, 0, canvas.width, canvas.height);
+   context.drawImage(flippedCanvas, 0, 0);
     saveToHistory();
 }
 
 function flipVertical() {
-    const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+    const imageData =context.getImageData(0, 0, canvas.width, canvas.height);
     const flippedCanvas = document.createElement("canvas");
     const flippedCtx = flippedCanvas.getContext("2d");
 
@@ -3620,15 +3621,15 @@ function flipVertical() {
     flippedCtx.drawImage(canvas, 0, -canvas.height);
     flippedCtx.restore();
 
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    ctx.drawImage(flippedCanvas, 0, 0);
+   context.clearRect(0, 0, canvas.width, canvas.height);
+   context.drawImage(flippedCanvas, 0, 0);
     saveToHistory();
 }
 
 
 
 function rotateImage(angle = 90) {
-    const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+    const imageData =context.getImageData(0, 0, canvas.width, canvas.height);
     const rotatedCanvas = document.createElement("canvas");
     const rotatedCtx = rotatedCanvas.getContext("2d");
 
@@ -3641,8 +3642,8 @@ function rotateImage(angle = 90) {
     rotatedCtx.drawImage(canvas, -canvas.width / 2, -canvas.height / 2);
     rotatedCtx.restore();
 
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    ctx.drawImage(rotatedCanvas, 0, 0);
+   context.clearRect(0, 0, canvas.width, canvas.height);
+   context.drawImage(rotatedCanvas, 0, 0);
     saveToHistory();
 }
 
@@ -3662,7 +3663,7 @@ function applyZoom(scaleFactor = 1.1) {
 
     canvas.width = newWidth;
     canvas.height = newHeight;
-    ctx.drawImage(zoomedCanvas, 0, 0);
+   context.drawImage(zoomedCanvas, 0, 0);
     saveToHistory();
 }
 
@@ -3803,7 +3804,7 @@ let chomeKeyBool = false;
   canvas.addEventListener("click", function(event) {
     const x = event.offsetX;
     const y = event.offsetY;
-    const pixel = ctx.getImageData(x, y, 1, 1).data; // Get pixel data at clicked position
+    const pixel =context.getImageData(x, y, 1, 1).data; // Get pixel data at clicked position
     selectedColor = rgbToHex(pixel[0], pixel[1], pixel[2]);
     updateColorDisplay(selectedColor);
   });
@@ -3814,7 +3815,7 @@ let chomeKeyBool = false;
 
   }
       const [r, g, b] = hexToRgb(color);
-    const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+    const imageData =context.getImageData(0, 0, canvas.width, canvas.height);
     const data = imageData.data;
     chomeKeyBool = true;
 
@@ -3833,7 +3834,7 @@ let chomeKeyBool = false;
     applyFeathering(imageData, feather);
     applyBrightnessContrast(imageData, brightness, contrast);
 
-    ctx.putImageData(imageData, 0, 0);
+   context.putImageData(imageData, 0, 0);
     saveToHistory();
   }
 
@@ -3913,8 +3914,8 @@ let chomeKeyBool = false;
   }
 
   function resetCanvas() {
-    const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
-    ctx.putImageData(imageData, 0, 0);
+    const imageData =context.getImageData(0, 0, canvas.width, canvas.height);
+   context.putImageData(imageData, 0, 0);
   }
 
 
