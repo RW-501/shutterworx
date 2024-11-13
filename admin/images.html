@@ -1437,8 +1437,9 @@ select {
                             <button class="tab-btn" data-target="#filters-tab">Filters</button>
                             <button class="tab-btn" data-target="#crop-tab">Crop</button>
                             <button class="tab-btn" data-target="#chromeKey-tab">Chrome Key</button>
+                            <button class="tab-btn" data-target="#imagedetailContainer">Image Details</button>
                           </div>
-            
+                          
                           <!-- Logo Tab -->
                           <div id="logo-tab" class="tab-content ">
                             <input type="file" id="uploadLogo" hidden>
@@ -1459,7 +1460,14 @@ select {
                           <div id="watermark-tab" class="tab-content active">
                             <label for="uploadLogo">Watermark</label>
             
-  
+                            <div id="watermarkContainer">
+                              <img id="image-editor-wm" src="https://shutterworx.co/images/logo.png" alt="Watermark Preview">
+                            </div>
+</div>
+<div id="imagedetailContainer" class="tab-content">
+
+  <label for="image-editor-c-image-detail">Image Detail</label>
+
                             <div id="image-editor-c-image-detail">
                               <!-- Image Details will be populated here -->
                             </div>
