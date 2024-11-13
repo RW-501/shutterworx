@@ -3293,9 +3293,7 @@ function applyCrop() {
 
 
 function cropImage() {
-  const canvas = document.getElementById("imageCanvas");
-  const ctx = canvas.getContext("2d");
-  
+
   const image = new Image();
   image.src = canvas.toDataURL();
   image.onload = function() {
@@ -3512,7 +3510,7 @@ function checkCropBounds() {
     const withinBounds = cropStartX >= 0 && cropStartY >= 0 &&
                         cropStartX + cropWidth <= canvas.width &&
                         cropStartY + cropHeight <= canvas.height;
-    document.getElementById("cropButton").disabled = !withinBounds;
+    document.getElementById("cropImage").disabled = !withinBounds;
     return withinBounds;
 }
 
