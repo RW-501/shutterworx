@@ -2489,18 +2489,13 @@ function closeImageEditor() {
   });
 
 
-// Load and draw the original image onto the canvas
+// Load and draw the original image onto the canvas, saving the initial state
 function loadImage(image, canvas) {
   const img = new Image();
   img.src = image; // Load the image dynamically
   img.onload = () => {
-    saveToHistory(); // Save initial state (if needed)
-    redrawCanvas(img, canvas); // Redraw canvas with loaded image
-  };
-
-  // Log any errors during image loading
-  img.onerror = () => {
-    console.log("Error loading image:", image);
+    ctx.drawImage(img, 0, 0); // Draw image on canvas
+    saveToHistory(); // Save initial state as ImageData
   };
 }
 
@@ -2828,13 +2823,14 @@ function drawLogo() {
   }
 }
 
-// Update logo size and redraw canvas
+// Update the logo size and redraw the canvas
 function updateLogoSize(event) {
   event.preventDefault();
-
   logoScale = event.target.value;
-  redrawCanvas(logoImg); // Pass the logo image to redrawCanvas
+  redrawCanvas(logoImg); // Reuse the updated logo image in the redrawCanvas function
+  saveToHistory(); // Save the state after resizing the logo
 }
+
 
 
 
@@ -3049,19 +3045,21 @@ const filterValues = {};
 
 // Function to save the current canvas state for undo functionality
 function saveToHistory() {
-  const state = ctx.getImageData(0, 0, canvas.width, canvas.height);
+  // Capture the current canvas state as ImageData
+  const currentState = ctx.getImageData(0, 0, canvas.width, canvas.height);
 
-  //const canvas = document.getElementById("imageCanvas");
- // const state = canvas.toDataURL(); // Store current canvas state
-  if (history[history.length - 1] !== state) { // Prevent duplicate states
-    history.push(state); // Store state if different from the last one
-    redoStack = []; // Clear redo stack on new action
+  // Check for duplicates by comparing the dimensions and pixel data length of ImageData
+  if (
+    history.length === 0 || // Add if history is empty
+    (history[history.length - 1].width !== currentState.width || // Check width
+    history[history.length - 1].height !== currentState.height || // Check height
+    history[history.length - 1].data.toString() !== currentState.data.toString()) // Check pixel data
+  ) {
+    history.push(currentState); // Store current state if it's unique
+    redoStack = []; // Clear redoStack when new action is saved
   }
 }
-function saveToHistoryChrome() {
-    const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
-    history.push(imageData);
-  }
+
 
 
 // Event listener for filter dropdown selection
@@ -3083,17 +3081,28 @@ document.getElementById("filters").addEventListener("change", function(event) {
 
   applyAllFilters(); // Reapply all filters whenever a new filter is selected
 });
-
 function createSlider(filter) {
   const sliderContainer = document.querySelector(".slider-container");
+  
+  // Check if the slider container exists before proceeding
+  if (!sliderContainer) {
+    console.error("Slider container not found");
+    return;
+  }
 
+  // Check if the filter slider already exists
   if (document.getElementById(`${filter}SliderContainer`)) {
     return; // Slider already exists
   }
 
+  // Get filter details from the filter configuration
   const filterDetails = filterConfig[filter];
-  if (!filterDetails) return;
+  if (!filterDetails) {
+    console.error(`Filter configuration for "${filter}" not found`);
+    return;
+  }
 
+  // Create slider HTML
   const sliderHTML = `
     <div id="${filter}SliderContainer" class="slider_editor visible">
       <label for="${filter}Value">${filterDetails.label}:</label>
@@ -3103,25 +3112,37 @@ function createSlider(filter) {
     </div>
   `;
 
+  // Append the slider HTML to the slider container
   sliderContainer.insertAdjacentHTML("beforeend", sliderHTML);
-// Remove filter function to delete a specific filter
-function removeFilter(filter) {
-  delete filterValues[filter]; // Remove filter from active values
-  const sliderContainer = document.getElementById(`${filter}SliderContainer`);
-  if (sliderContainer) sliderContainer.remove(); // Remove slider from UI
-  applyAllFilters(); // Reapply remaining active filters
+
+  // Add event listener to update filter value and reapply all filters
+  const slider = document.getElementById(`${filter}Value`);
+  if (slider) {
+    slider.addEventListener("input", function () {
+      const value = slider.value;
+      const output = document.getElementById(`${filter}Output`);
+      output.textContent = `${value}${filterDetails.unit}`;
+
+      filterValues[filter] = value; // Update active filter value
+      applyAllFilters(); // Reapply all active filters
+    });
+  } else {
+    console.error(`Slider element for "${filter}" could not be found`);
+  }
 }
 
-  // Add slider event listener to update filter value and reapply all filters
-  const slider = document.getElementById(`${filter}Value`);
-  slider.addEventListener("input", function () {
-    const value = slider.value;
-    const output = document.getElementById(`${filter}Output`);
-    output.textContent = `${value}${filterDetails.unit}`;
+// Function to remove a specific filter slider and update active filters
+function removeFilter(filter) {
+  delete filterValues[filter]; // Remove filter from active values
 
-    filterValues[filter] = value; // Update active filter value
-    applyAllFilters(); // Reapply all active filters
-  });
+  const sliderContainer = document.getElementById(`${filter}SliderContainer`);
+  if (sliderContainer) {
+    sliderContainer.remove(); // Remove slider from UI
+  } else {
+    console.error(`Slider container for "${filter}" not found`);
+  }
+
+  applyAllFilters(); // Reapply remaining active filters
 }
 
 
@@ -3212,27 +3233,24 @@ function undo() {
 }
 */
 
+// Undo functionality with ImageData
 function undo() {
-    if (history.length > 1) {
-      history.pop(); // Remove the latest state
-      const lastState = history[history.length - 1];
-      ctx.putImageData(lastState, 0, 0);
-    }
+  if (history.length > 1) {
+    redoStack.push(history.pop()); // Move the current state to redoStack
+    const lastState = history[history.length - 1];
+    ctx.putImageData(lastState, 0, 0); // Draw previous state
   }
+}
   
 // Redo functionality
+// Redo functionality with ImageData
 function redo() {
   if (redoStack.length > 0) {
     const redoState = redoStack.pop();
-    history.push(redoState);
-    const img = new Image();
-    img.src = redoState;
-    img.onload = () => {
-      redrawCanvas(img);
-    };
+    history.push(redoState); // Move redo state back to history
+    ctx.putImageData(redoState, 0, 0); // Draw redo state
   }
 }
-
 // Redraw the canvas with the current image and logo
 function redrawCanvas(img) {
   const canvas = document.getElementById("imageCanvas");
@@ -3331,17 +3349,16 @@ function cropImage() {
 
 
 
-// Draws the cropping rectangle with semi-transparent overlay
+
+// Draw the cropping overlay with semi-transparent background
 function drawCropOverlay() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
- 
-  const img = new Image();
-  img.src = history[history.length - 1]; // Access the last item in history
-  img.onload = () => {
-      redrawCanvas(img);
-    };
+  
+  // Restore the last saved state from history (as ImageData)
+  const lastState = history[history.length - 1];
+  ctx.putImageData(lastState, 0, 0);
 
-  // Semi-transparent overlay
+  // Semi-transparent overlay for cropping
   ctx.fillStyle = "rgba(0, 0, 0, 0.5)";
   ctx.fillRect(0, 0, canvas.width, canvas.height);
   ctx.clearRect(cropStartX, cropStartY, cropWidth, cropHeight);
@@ -3353,8 +3370,6 @@ function drawCropOverlay() {
   drawResizeHandles(); // Add resize handles
   drawGridOverlay();   // Add grid overlay for alignment
 }
-
-
 
 // Handle mousedown for starting drag
 
@@ -3493,17 +3508,13 @@ function snapToEdge(value, edge, threshold = 10) {
 
 
 
-// Redo cropping with updated crop area
+// Redo crop functionality with ImageData
 function redoCrop() {
   if (redoStack.length > 0) {
     const redoState = redoStack.pop();
-    history.push(redoState);
-    const img = new Image();
-    img.src = redoState;
-    img.onload = () => {
-      redrawCanvas(img);
-      drawCropOverlay(); // Show crop overlay on redo
-    };
+    history.push(redoState); // Restore redo state to history
+    ctx.putImageData(redoState, 0, 0); // Draw the redo state
+    drawCropOverlay(); // Show crop overlay on redo
   }
 }
 

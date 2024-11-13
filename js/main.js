@@ -777,6 +777,7 @@ tagLinks.style.color = defaultSettings.linkColor;
 tagLinks.forEach(tag => {
   tag.style.color = defaultSettings.tagLinkColor;
   tag.style.color = defaultSettings.tagLinkColor;
+  console.log("tag   ",tag);
 });
 
 
