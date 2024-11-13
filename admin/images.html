@@ -3441,6 +3441,27 @@ cropHeight = snapToEdge(cropStartY + cropHeight, canvas.height) - cropStartY;
   requestAnimationFrame(drawCropOverlay);
 }
 
+function isOnTopLeftHandle(x, y) {
+    const handleSize = 8;
+    return Math.abs(x - cropStartX) < handleSize && Math.abs(y - cropStartY) < handleSize;
+}
+
+function isOnTopRightHandle(x, y) {
+    const handleSize = 8;
+    return Math.abs(x - (cropStartX + cropWidth)) < handleSize && Math.abs(y - cropStartY) < handleSize;
+}
+
+function isOnBottomLeftHandle(x, y) {
+    const handleSize = 8;
+    return Math.abs(x - cropStartX) < handleSize && Math.abs(y - (cropStartY + cropHeight)) < handleSize;
+}
+
+function isOnBottomRightHandle(x, y) {
+    const handleSize = 8;
+    return Math.abs(x - (cropStartX + cropWidth)) < handleSize && Math.abs(y - (cropStartY + cropHeight)) < handleSize;
+}
+
+
 function updateCursor(x, y) {
     if (isOnTopLeftHandle(x, y)) canvas.style.cursor = "nwse-resize";
     else if (isOnTopRightHandle(x, y)) canvas.style.cursor = "nesw-resize";
