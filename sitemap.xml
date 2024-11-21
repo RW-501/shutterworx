@@ -4,9 +4,9 @@
     <!-- Home Page -->
     <url>
         <loc>https://shutterworx.co/</loc>
-        <lastmod>2024-11-08</lastmod> <!-- Optional: specify the last modified date -->
-        <changefreq>hourly</changefreq> <!-- Optional: specify how often the page changes -->
-        <priority>1.0</priority> <!-- Optional: specify page priority -->
+        <lastmod>2024-11-08</lastmod>
+        <changefreq>hourly</changefreq>
+        <priority>1.0</priority>
     </url>
 
     <!-- About Us Page -->
@@ -105,4 +105,541 @@
         <priority>0.5</priority>
     </url>
 
+    <!-- FAQ Section: Account -->
+    <url>
+        <loc>https://shutterworx.co/FAQ/#Account</loc>
+        <lastmod>2024-11-08</lastmod>
+        <changefreq>daily</changefreq>
+        <priority>0.5</priority>
+    </url>
+
+    <!-- FAQ Section: General -->
+    <url>
+        <loc>https://shutterworx.co/FAQ/#General</loc>
+        <lastmod>2024-11-08</lastmod>
+        <changefreq>daily</changefreq>
+        <priority>0.5</priority>
+    </url>
+
+    <!-- FAQ Section: Subscription -->
+    <url>
+        <loc>https://shutterworx.co/FAQ/#Subscription</loc>
+        <lastmod>2024-11-08</lastmod>
+        <changefreq>daily</changefreq>
+        <priority>0.5</priority>
+    </url>
+
+    <!-- FAQ Section: Support -->
+    <url>
+        <loc>https://shutterworx.co/FAQ/#Support</loc>
+        <lastmod>2024-11-08</lastmod>
+        <changefreq>daily</changefreq>
+        <priority>0.5</priority>
+    </url>
+
+    <!-- FAQ Section: Gallery -->
+    <url>
+        <loc>https://shutterworx.co/FAQ/#Gallery</loc>
+        <lastmod>2024-11-08</lastmod>
+        <changefreq>daily</changefreq>
+        <priority>0.5</priority>
+    </url>
+
+    <!-- FAQ Section: Legal -->
+    <url>
+        <loc>https://shutterworx.co/FAQ/#Legal</loc>
+        <lastmod>2024-11-08</lastmod>
+        <changefreq>daily</changefreq>
+        <priority>0.5</priority>
+    </url>
+
+    <!-- FAQ Section: Analytics -->
+    <url>
+        <loc>https://shutterworx.co/FAQ/#Analytics</loc>
+        <lastmod>2024-11-08</lastmod>
+        <changefreq>daily</changefreq>
+        <priority>0.5</priority>
+    </url>
+
+    <!-- FAQ Section: Community -->
+    <url>
+        <loc>https://shutterworx.co/FAQ/#Community</loc>
+        <lastmod>2024-11-08</lastmod>
+        <changefreq>daily</changefreq>
+        <priority>0.5</priority>
+    </url>
+
+    <!-- FAQ Section: Purchase -->
+    <url>
+        <loc>https://shutterworx.co/FAQ/#Purchase</loc>
+        <lastmod>2024-11-08</lastmod>
+        <changefreq>daily</changefreq>
+        <priority>0.5</priority>
+    </url>
+
+    <!-- FAQ Section: SEO -->
+    <url>
+        <loc>https://shutterworx.co/FAQ/#SEO</loc>
+        <lastmod>2024-11-08</lastmod>
+        <changefreq>daily</changefreq>
+        <priority>0.5</priority>
+    </url>
+
+    <!-- FAQ Section: Payments -->
+    <url>
+        <loc>https://shutterworx.co/FAQ/#Payments</loc>
+        <lastmod>2024-11-08</lastmod>
+        <changefreq>daily</changefreq>
+        <priority>0.5</priority>
+    </url>
+
+    <!-- FAQ Section: Privacy -->
+    <url>
+        <loc>https://shutterworx.co/FAQ/#Privacy</loc>
+        <lastmod>2024-11-08</lastmod>
+        <changefreq>daily</changefreq>
+        <priority>0.5</priority>
+    </url>
+
+    <!-- FAQ Section: Notifications -->
+    <url>
+        <loc>https://shutterworx.co/FAQ/#Notifications</loc>
+        <lastmod>2024-11-08</lastmod>
+        <changefreq>daily</changefreq>
+        <priority>0.5</priority>
+    </url>
+
+    <!-- FAQ Section: Events -->
+    <url>
+        <loc>https://shutterworx.co/FAQ/#Events</loc>
+        <lastmod>2024-11-08</lastmod>
+        <changefreq>daily</changefreq>
+        <priority>0.5</priority>
+    </url>
+
+    <!-- FAQ Section: Admin -->
+    <url>
+        <loc>https://shutterworx.co/FAQ/#Admin</loc>
+        <lastmod>2024-11-08</lastmod>
+        <changefreq>daily</changefreq>
+        <priority>0.5</priority>
+    </url>
+
+    <!-- FAQ Section: Appointments -->
+    <url>
+        <loc>https://shutterworx.co/FAQ/#Appointments</loc>
+        <lastmod>2024-11-08</lastmod>
+        <changefreq>daily</changefreq>
+        <priority>0.5</priority>
+    </url>
+
+    <!-- FAQ Section: Navigation -->
+    <url>
+        <loc>https://shutterworx.co/FAQ/#Navigation</loc>
+        <lastmod>2024-11-08</lastmod>
+        <changefreq>daily</changefreq>
+        <priority>0.5</priority>
+    </url>
+
+    <!-- FAQ Section: Payments -->
+    <url>
+        <loc>https://shutterworx.co/FAQ/#Payments</loc>
+        <lastmod>2024-11-08</lastmod>
+        <changefreq>daily</changefreq>
+        <priority>0.5</priority>
+    </url>
+
 </urlset>
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
+
+    <!-- Home Page -->
+    <url>
+        <loc>https://shutterworx.co/</loc>
+        <lastmod>2024-11-08</lastmod>
+        <changefreq>hourly</changefreq>
+        <priority>1.0</priority>
+        <xhtml:link rel="alternate" hreflang="en-us" href="https://shutterworx.co/"/>
+        <xhtml:link rel="canonical" href="https://shutterworx.co/"/>
+        <script type="application/ld+json">
+            {
+                "@context": "https://schema.org",
+                "@type": "WebPage",
+                "url": "https://shutterworx.co",
+                "name": "ShutterWorx Homepage",
+                "description": "Join ShutterWorx for exclusive photography services, community membership benefits, easy photo sales, and seamless event photo management.",
+                "publisher": {
+                    "@type": "Organization",
+                    "name": "ShutterWorx",
+                    "logo": {
+                        "@type": "ImageObject",
+                        "url": "https://shutterworx.co/images/logo.png"
+                    }
+                },
+                "mainEntityOfPage": "https://shutterworx.co"
+            }
+        </script>
+    </url>
+
+    <!-- About Us Page -->
+    <url>
+        <loc>https://shutterworx.co/about</loc>
+        <lastmod>2024-11-08</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+        <xhtml:link rel="alternate" hreflang="en-us" href="https://shutterworx.co/about"/>
+        <xhtml:link rel="canonical" href="https://shutterworx.co/about"/>
+        <script type="application/ld+json">
+            {
+                "@context": "https://schema.org",
+                "@type": "WebPage",
+                "url": "https://shutterworx.co/about",
+                "name": "About ShutterWorx",
+                "description": "Learn more about ShutterWorx, the platform dedicated to supporting photographers with professional services, community, and tools.",
+                "mainEntityOfPage": "https://shutterworx.co/about"
+            }
+        </script>
+    </url>
+
+    <!-- Contact Page -->
+    <url>
+        <loc>https://shutterworx.co/contact</loc>
+        <lastmod>2024-11-08</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+        <xhtml:link rel="alternate" hreflang="en-us" href="https://shutterworx.co/contact"/>
+        <xhtml:link rel="canonical" href="https://shutterworx.co/contact"/>
+        <script type="application/ld+json">
+            {
+                "@context": "https://schema.org",
+                "@type": "WebPage",
+                "url": "https://shutterworx.co/contact",
+                "name": "Contact ShutterWorx",
+                "description": "Get in touch with ShutterWorx for any questions regarding our services, membership, or photo sales.",
+                "mainEntityOfPage": "https://shutterworx.co/contact"
+            }
+        </script>
+    </url>
+
+    <!-- FAQ Page -->
+    <url>
+        <loc>https://shutterworx.co/faq</loc>
+        <lastmod>2024-11-08</lastmod>
+        <changefreq>daily</changefreq>
+        <priority>0.6</priority>
+        <xhtml:link rel="alternate" hreflang="en-us" href="https://shutterworx.co/faq"/>
+        <xhtml:link rel="canonical" href="https://shutterworx.co/faq"/>
+        <script type="application/ld+json">
+            {
+                "@context": "https://schema.org",
+                "@type": "FAQPage",
+                "url": "https://shutterworx.co/faq",
+                "mainEntity": [
+                    {
+                        "@type": "Question",
+                        "name": "How do I join ShutterWorx?",
+                        "acceptedAnswer": {
+                            "@type": "Answer",
+                            "text": "To join ShutterWorx, visit our signup page and choose the membership that fits your needs."
+                        }
+                    },
+                    {
+                        "@type": "Question",
+                        "name": "What benefits does a membership provide?",
+                        "acceptedAnswer": {
+                            "@type": "Answer",
+                            "text": "ShutterWorx memberships offer access to professional photography tools, a community of photographers, and a platform for selling your images."
+                        }
+                    }
+                ]
+            }
+        </script>
+    </url>
+
+    <!-- Join Us Page -->
+    <url>
+        <loc>https://shutterworx.co/join</loc>
+        <lastmod>2024-11-08</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.7</priority>
+        <xhtml:link rel="alternate" hreflang="en-us" href="https://shutterworx.co/join"/>
+        <xhtml:link rel="canonical" href="https://shutterworx.co/join"/>
+        <script type="application/ld+json">
+            {
+                "@context": "https://schema.org",
+                "@type": "WebPage",
+                "url": "https://shutterworx.co/join",
+                "name": "Join ShutterWorx",
+                "description": "Become a member of ShutterWorx today and gain access to exclusive tools and services for photographers.",
+                "mainEntityOfPage": "https://shutterworx.co/join"
+            }
+        </script>
+    </url>
+
+    <!-- Membership Pages (Basic, Pro, Elite) -->
+    <url>
+        <loc>https://shutterworx.co/signup-basic</loc>
+        <lastmod>2024-11-08</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+        <xhtml:link rel="alternate" hreflang="en-us" href="https://shutterworx.co/signup-basic"/>
+        <xhtml:link rel="canonical" href="https://shutterworx.co/signup-basic"/>
+        <script type="application/ld+json">
+            {
+                "@context": "https://schema.org",
+                "@type": "WebPage",
+                "url": "https://shutterworx.co/signup-basic",
+                "name": "Basic Membership",
+                "description": "Sign up for the Basic Membership and enjoy the fundamental tools and resources ShutterWorx has to offer.",
+                "mainEntityOfPage": "https://shutterworx.co/signup-basic"
+            }
+        </script>
+    </url>
+
+    <url>
+        <loc>https://shutterworx.co/signup-pro</loc>
+        <lastmod>2024-11-08</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.7</priority>
+        <xhtml:link rel="alternate" hreflang="en-us" href="https://shutterworx.co/signup-pro"/>
+        <xhtml:link rel="canonical" href="https://shutterworx.co/signup-pro"/>
+        <script type="application/ld+json">
+            {
+                "@context": "https://schema.org",
+                "@type": "WebPage",
+                "url": "https://shutterworx.co/signup-pro",
+                "name": "Pro Membership",
+                "description": "The Pro Membership offers advanced tools for professional photographers who want to elevate their business.",
+                "mainEntityOfPage": "https://shutterworx.co/signup-pro"
+            }
+        </script>
+    </url>
+
+    <url>
+        <loc>https://shutterworx.co/signup-elite</loc>
+        <lastmod>2024-11-08</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.7</priority>
+        <xhtml:link rel="alternate" hreflang="en-us" href="https://shutterworx.co/signup-elite"/>
+        <xhtml:link rel="canonical" href="https://shutterworx.co/signup-elite"/>
+        <script type="application/ld+json">
+            {
+                "@context": "https://schema.org",
+                "@type": "WebPage",
+                "url": "https://shutterworx.co/signup-elite",
+                "name": "Elite Membership",
+                "description": "The Elite Membership is for the top-tier photographers looking for exclusive perks, advanced features, and maximum exposure.",
+                "mainEntityOfPage": "https://shutterworx.co/signup-elite"
+            }
+        </script>
+    </url>
+
+</urlset>
+
+<!-- FAQPage Schema with SearchAction and WebSite Schema -->
+<script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Account",
+          "url": "https://shutterworx.co/FAQ/#Account",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Find answers related to account setup, management, and troubleshooting."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "General",
+          "url": "https://shutterworx.co/FAQ/#General",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "General questions about using ShutterWorx and its features."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Subscription",
+          "url": "https://shutterworx.co/FAQ/#Subscription",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Learn about subscription plans, billing cycles, and upgrades."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Support",
+          "url": "https://shutterworx.co/FAQ/#Support",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Get help with technical issues or contact customer support."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Gallery",
+          "url": "https://shutterworx.co/FAQ/#Gallery",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "FAQs related to uploading, managing, and viewing galleries."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Legal",
+          "url": "https://shutterworx.co/FAQ/#Legal",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Understand the terms of service, copyright policies, and other legal questions."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Analytics",
+          "url": "https://shutterworx.co/FAQ/#Analytics",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Learn about tracking your gallery views and user engagement."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Community",
+          "url": "https://shutterworx.co/FAQ/#Community",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Find out how to connect and collaborate within the ShutterWorx community."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Purchase",
+          "url": "https://shutterworx.co/FAQ/#Purchase",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Answers to questions about purchasing products and services."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "SEO",
+          "url": "https://shutterworx.co/FAQ/#SEO",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "FAQs on optimizing your galleries and pages for search engines."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Payments",
+          "url": "https://shutterworx.co/FAQ/#Payments",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Payment methods, processing times, and refunds."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Privacy",
+          "url": "https://shutterworx.co/FAQ/#Privacy",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Understand how your data is handled and protected."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Notifications",
+          "url": "https://shutterworx.co/FAQ/#Notifications",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Learn about setting up and managing notifications."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Events",
+          "url": "https://shutterworx.co/FAQ/#Events",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "FAQs about creating and managing events on the platform."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Admin",
+          "url": "https://shutterworx.co/FAQ/#Admin",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Help for admins managing accounts and content."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Appointments",
+          "url": "https://shutterworx.co/FAQ/#Appointments",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Questions related to booking and managing appointments."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Navigation",
+          "url": "https://shutterworx.co/FAQ/#Navigation",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Learn how to navigate the website and find resources easily."
+          }
+        }
+      ]
+    }
+    </script>
+    
+    
+    <!-- WebSite Schema with SearchAction -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "url": "https://shutterworx.co/",
+      "name": "ShutterWorx",
+      "description": "ShutterWorx is a platform for photographers to manage their portfolio, sell photos, and manage events.",
+      "publisher": {
+        "@type": "Organization",
+        "name": "ShutterWorx"
+      },
+      "potentialAction": {
+        "@type": "SearchAction",
+        "target": "https://shutterworx.co/FAQ?q={search_term}",
+        "query-input": "required name=search_term"
+      }
+    }
+    </script>
+    
+    <!-- Organization Schema -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": "ShutterWorx",
+      "url": "https://shutterworx.co",
+      "logo": "https://shutterworx.co/images/logo.png",
+      "contactPoint": {
+        "@type": "ContactPoint",
+        "telephone": "+14692259929", 
+        "contactType": "Customer Support",
+        "areaServed": "US",
+        "availableLanguage": "English"
+      },
+      "sameAs": [
+        "https://www.facebook.com/shutterworx_SW",
+        "https://twitter.com/shutterworx_SW",
+        "https://www.instagram.com/shutterworx_SW"
+      ]
+    }
+    </script>
+    
