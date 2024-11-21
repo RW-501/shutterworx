@@ -1,5 +1,6 @@
-<?xml version="1.0" encoding="UTF-8"?> 
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
+
 
     <!-- Home Page -->
     <url>
@@ -249,9 +250,7 @@
         <priority>0.5</priority>
     </url>
 
-</urlset>
-<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
+
 
     <!-- Home Page -->
     <url>
@@ -434,10 +433,10 @@
         </script>
     </url>
 
-</urlset>
+
 
 <!-- FAQPage Schema with SearchAction and WebSite Schema -->
-<script type="application/ld+json">
+
     {
       "@context": "https://schema.org",
       "@type": "FAQPage",
@@ -597,11 +596,11 @@
         }
       ]
     }
-    </script>
+
     
     
     <!-- WebSite Schema with SearchAction -->
-    <script type="application/ld+json">
+
     {
       "@context": "https://schema.org",
       "@type": "WebSite",
@@ -618,10 +617,10 @@
         "query-input": "required name=search_term"
       }
     }
-    </script>
+
     
     <!-- Organization Schema -->
-    <script type="application/ld+json">
+  
     {
       "@context": "https://schema.org",
       "@type": "Organization",
@@ -641,5 +640,5 @@
         "https://www.instagram.com/shutterworx_SW"
       ]
     }
-    </script>
-    
+   
+    </urlset>
