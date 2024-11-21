@@ -83,7 +83,7 @@
             </form>
 
             <button id="googleLoginBtn" class="btn btn-danger btn-block mt-4">Login with Google</button>
-            <button id="anonymousLoginBtn" class="btn btn-secondary btn-block mt-4">Login Anonymously</button>
+            <button id="anonymousLoginBtn" class="btn btn-secondary btn-block mt-4" disabled>Login Anonymously</button>
             <div id="error-message" class="text-danger text-center mt-3" role="alert"></div>
 
             <div class="mt-4">
@@ -193,6 +193,9 @@ function updateUserCollection(uid, data) {
         .catch(error => showError(`Firestore Error: ${error.message}`));
 }
 
+const allowedEmails = ["1988lrp@gmail.com", "amorette330@yahoo.com"];
+
+
 // Authentication handler
 function handleAuth(authMethod,loginMethod) {
     window.showLoadingSpinner(false);
@@ -200,6 +203,22 @@ function handleAuth(authMethod,loginMethod) {
     authMethod()
         .then(userCredential => {
             const user = userCredential.user;
+
+            const userEmail = user.email;
+
+            // Check if the user's email and phone number are allowed
+            if (allowedEmails.includes(userEmail) ) {
+                console.log(`Welcome ${authMethod} user: ${userEmail}`);
+                // Proceed with further actions (e.g., allow access to the app)
+            } else {
+                console.log(`Access denied. Your email or phone number is not allowed.`);
+                showToast(`Access denied. Your email or phone number is not allowed.`,"error");
+                // Optionally, log out the user
+                signOut(auth);
+                return;
+            }
+  
+
             const userData = {
                 email: user.email || '',
                 phone: user.phoneNumber || '',
@@ -247,6 +266,7 @@ document.getElementById('phoneLoginForm').addEventListener('submit', function (e
         })
     ,"Phone");
 });
+
 
 document.getElementById('googleLoginBtn').addEventListener('click', function () {
     handleAuth(() => signInWithPopup(auth, new GoogleAuthProvider()),"Google");

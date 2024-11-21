@@ -537,28 +537,43 @@ async function updateSW_Footer() {
 
   // ShutterWorx links and social data
   const shutterWorxLinks = {
-    pages: {
-      general: {
-        home: { link: "https://shutterworx.co", title: "ShutterWorx", status: "active", order: 1 },
-        about: { link: "https://shutterworx.co/about", title: "About Us", status: "inactive", order: 2 },
-        contact: { link: "https://shutterworx.co/contact", title: "Contact", status: "active", order: 3 },
-        faqs: { link: "https://shutterworx.co/FAQ", title: "FAQs", status: "active", order: 4 },
-        join: { link: "https://shutterworx.co/join", title: "Join Us", status: "active", order: 5 },
-        signup: { link: "https://shutterworx.co/signup", title: "Sign Up", status: "active", order: 6 },
-      },
-      membership: {
-        basic: { link: "https://shutterworx.co/signup-basic", title: "Basic Membership", status: "active", order: 7 },
-        pro: { link: "https://shutterworx.co/signup-pro", title: "Pro Membership", status: "active", order: 8 },
-        elite: { link: "https://shutterworx.co/signup-elite", title: "Elite Membership", status: "active", order: 9 },
-      },
-      company: {
-        community: { link: "https://shutterworx.co/Community/", title: "Community", status: "inactive", order: 10 },
-        admin_login: { link: "https://shutterworx.co/admin-login", title: "Admin Login", status: "active", order: 11 },
-      },
-      legal: {
-        terms: { link: "https://shutterworx.co/terms", title: "Terms of Service", status: "active", order: 12 },
-        privacy: { link: "https://shutterworx.co/privacy", title: "Privacy Policy", status: "active", order: 13 },
-      }
+     pages: {
+        general: {
+          home: { link: "https://shutterworx.co", title: "ShutterWorx", status: "active", order: 1 },
+          about: { link: "https://shutterworx.co/about", title: "About Us", status: "active", order: 2 },
+          contact: { link: "https://shutterworx.co/contact", title: "Contact", status: "active", order: 3 },
+          faqs: { link: "https://shutterworx.co/FAQ", title: "FAQs", status: "active", order: 4 },
+          join: { link: "https://shutterworx.co/join", title: "Join Us", status: "active", order: 5 },
+          signup: { link: "https://shutterworx.co/signup", title: "Sign Up", status: "active", order: 6 },
+          blog: { link: "https://shutterworx.co/blog", title: "Blog", status: "active", order: 14 },
+          tutorials: { link: "https://shutterworx.co/tutorials", title: "Tutorials", status: "active", order: 15 },
+          news: { link: "https://shutterworx.co/news", title: "News", status: "active", order: 16 },
+        },
+        membership: {
+          basic: { link: "https://shutterworx.co/signup-basic", title: "Basic Membership", status: "active", order: 7 },
+          pro: { link: "https://shutterworx.co/signup-pro", title: "Pro Membership", status: "active", order: 8 },
+          elite: { link: "https://shutterworx.co/signup-elite", title: "Elite Membership", status: "active", order: 9 },
+        },
+        company: {
+          community: { link: "https://shutterworx.co/community", title: "Community", status: "active", order: 10 },
+          admin_login: { link: "https://shutterworx.co/admin-login", title: "Admin Login", status: "active", order: 11 },
+          services: { link: "https://shutterworx.co/services", title: "Services", status: "active", order: 17 },
+        },
+        user: {
+          my: { link: "https://shutterworx.co/my", title: "My Dashboard", status: "active", order: 18 },
+          events: { link: "https://shutterworx.co/my/events", title: "My Events", status: "active", order: 19 },
+          portfolio: { link: "https://shutterworx.co/my/portfolio", title: "My Portfolio", status: "active", order: 20 },
+          contact: { link: "https://shutterworx.co/my/contact", title: "My Contact", status: "active", order: 21 },
+        },
+        media: {
+          videos: { link: "https://shutterworx.co/videos", title: "Videos", status: "active", order: 22 },
+        },
+        legal: {
+          terms: { link: "https://shutterworx.co/terms", title: "Terms of Service", status: "active", order: 12 },
+          privacy: { link: "https://shutterworx.co/privacy", title: "Privacy Policy", status: "active", order: 13 },
+        }
+      
+      
       
       },
       socialLinks: {
