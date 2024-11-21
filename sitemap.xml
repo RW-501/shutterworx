@@ -260,7 +260,6 @@
         <priority>1.0</priority>
         <xhtml:link rel="alternate" hreflang="en-us" href="https://shutterworx.co/"/>
         <xhtml:link rel="canonical" href="https://shutterworx.co/"/>
-        <script type="application/ld+json">
             {
                 "@context": "https://schema.org",
                 "@type": "WebPage",
@@ -288,7 +287,6 @@
         <priority>0.8</priority>
         <xhtml:link rel="alternate" hreflang="en-us" href="https://shutterworx.co/about"/>
         <xhtml:link rel="canonical" href="https://shutterworx.co/about"/>
-        <script type="application/ld+json">
             {
                 "@context": "https://schema.org",
                 "@type": "WebPage",
@@ -308,7 +306,6 @@
         <priority>0.8</priority>
         <xhtml:link rel="alternate" hreflang="en-us" href="https://shutterworx.co/contact"/>
         <xhtml:link rel="canonical" href="https://shutterworx.co/contact"/>
-        <script type="application/ld+json">
             {
                 "@context": "https://schema.org",
                 "@type": "WebPage",
