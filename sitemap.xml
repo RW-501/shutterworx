@@ -294,7 +294,6 @@
                 "description": "Learn more about ShutterWorx, the platform dedicated to supporting photographers with professional services, community, and tools.",
                 "mainEntityOfPage": "https://shutterworx.co/about"
             }
-        </script>
     </url>
 
     <!-- Contact Page -->
@@ -313,7 +312,6 @@
                 "description": "Get in touch with ShutterWorx for any questions regarding our services, membership, or photo sales.",
                 "mainEntityOfPage": "https://shutterworx.co/contact"
             }
-        </script>
     </url>
 
     <!-- FAQ Page -->
@@ -324,7 +322,7 @@
         <priority>0.6</priority>
         <xhtml:link rel="alternate" hreflang="en-us" href="https://shutterworx.co/faq"/>
         <xhtml:link rel="canonical" href="https://shutterworx.co/faq"/>
-        <script type="application/ld+json">
+
             {
                 "@context": "https://schema.org",
                 "@type": "FAQPage",
@@ -348,7 +346,7 @@
                     }
                 ]
             }
-        </script>
+
     </url>
 
     <!-- Join Us Page -->
@@ -359,7 +357,7 @@
         <priority>0.7</priority>
         <xhtml:link rel="alternate" hreflang="en-us" href="https://shutterworx.co/join"/>
         <xhtml:link rel="canonical" href="https://shutterworx.co/join"/>
-        <script type="application/ld+json">
+
             {
                 "@context": "https://schema.org",
                 "@type": "WebPage",
@@ -368,7 +366,7 @@
                 "description": "Become a member of ShutterWorx today and gain access to exclusive tools and services for photographers.",
                 "mainEntityOfPage": "https://shutterworx.co/join"
             }
-        </script>
+
     </url>
 
     <!-- Membership Pages (Basic, Pro, Elite) -->
@@ -379,7 +377,7 @@
         <priority>0.6</priority>
         <xhtml:link rel="alternate" hreflang="en-us" href="https://shutterworx.co/signup-basic"/>
         <xhtml:link rel="canonical" href="https://shutterworx.co/signup-basic"/>
-        <script type="application/ld+json">
+
             {
                 "@context": "https://schema.org",
                 "@type": "WebPage",
@@ -388,7 +386,7 @@
                 "description": "Sign up for the Basic Membership and enjoy the fundamental tools and resources ShutterWorx has to offer.",
                 "mainEntityOfPage": "https://shutterworx.co/signup-basic"
             }
-        </script>
+
     </url>
 
     <url>
@@ -398,7 +396,7 @@
         <priority>0.7</priority>
         <xhtml:link rel="alternate" hreflang="en-us" href="https://shutterworx.co/signup-pro"/>
         <xhtml:link rel="canonical" href="https://shutterworx.co/signup-pro"/>
-        <script type="application/ld+json">
+
             {
                 "@context": "https://schema.org",
                 "@type": "WebPage",
@@ -407,7 +405,7 @@
                 "description": "The Pro Membership offers advanced tools for professional photographers who want to elevate their business.",
                 "mainEntityOfPage": "https://shutterworx.co/signup-pro"
             }
-        </script>
+
     </url>
 
     <url>
@@ -417,7 +415,7 @@
         <priority>0.7</priority>
         <xhtml:link rel="alternate" hreflang="en-us" href="https://shutterworx.co/signup-elite"/>
         <xhtml:link rel="canonical" href="https://shutterworx.co/signup-elite"/>
-        <script type="application/ld+json">
+
             {
                 "@context": "https://schema.org",
                 "@type": "WebPage",
@@ -426,7 +424,7 @@
                 "description": "The Elite Membership is for the top-tier photographers looking for exclusive perks, advanced features, and maximum exposure.",
                 "mainEntityOfPage": "https://shutterworx.co/signup-elite"
             }
-        </script>
+
     </url>
 
 
