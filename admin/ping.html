@@ -92,6 +92,23 @@
                 width: 100%;
             }
         }
+
+        select:focus, button:focus {
+    outline: 2px solid #0056b3;
+    outline-offset: 2px;
+}
+
+#error, #success {
+    opacity: 0;
+    animation: fade-in 0.5s forwards;
+}
+
+@keyframes fade-in {
+    to {
+        opacity: 1;
+    }
+}
+
     </style>
 </head>
 <body>
@@ -112,6 +129,8 @@
 
         <p id="loading">Sending requests... Please wait.</p>
         <p id="result"></p>
+        <div id="results"></div>
+
     </div>
 
     <script>
@@ -140,6 +159,18 @@
     { name: 'Exalead', url: 'https://www.exalead.com/search/ping?sitemap=' }  // Exalead is a search engine by Dassault Systèmes
 ];
 
+if (!sitemapURL || selectedEngines.length === 0) {
+    document.getElementById('result').textContent = 'Please select a domain and at least one search engine.';
+    document.getElementById('result').classList.add('error');
+    button.disabled = false;
+    document.getElementById('loading').style.display = 'none';
+    return;
+}
+let dots = 0;
+const loadingInterval = setInterval(() => {
+    dots = (dots + 1) % 4;
+    document.getElementById('loading').textContent = `Sending requests${'.'.repeat(dots)}`;
+}, 500);
 
         // Populate domain select options dynamically
         const domainSelect = document.getElementById('domainSelect');
@@ -159,47 +190,99 @@
             searchEnginesSelect.appendChild(option);
         });
 
-        // Event listener for the ping button
-        document.getElementById('pingButton').addEventListener('click', function() {
-            const button = document.getElementById('pingButton');
-            button.disabled = true;
-            document.getElementById('loading').style.display = 'block';
-            document.getElementById('result').textContent = '';
+        document.getElementById('pingButton').addEventListener('click', async () => {
+    try {
+        // Save selected domain and engines to localStorage
+        const domainSelect = document.getElementById('domainSelect');
+        const searchEnginesSelect = document.getElementById('searchEnginesSelect');
+        const sitemapURL = domainSelect.value;
+        const selectedEngines = Array.from(searchEnginesSelect.selectedOptions).map(option => option.value);
 
-            // Get the selected domain and search engines
-            const sitemapURL = document.getElementById('domainSelect').value;
-            const selectedEngines = Array.from(searchEnginesSelect.selectedOptions).map(option => option.value);
+        localStorage.setItem('selectedDomain', sitemapURL);
+        localStorage.setItem('selectedEngines', JSON.stringify(selectedEngines));
 
-            // Send requests to selected search engines
-            const requests = selectedEngines.map(url => fetch(`${url}${sitemapURL}`).then(response => ({
+        // Load saved settings
+        const savedDomain = localStorage.getItem('selectedDomain');
+        const savedEngines = JSON.parse(localStorage.getItem('selectedEngines'));
+        if (savedDomain) domainSelect.value = savedDomain;
+        if (savedEngines) {
+            searchEnginesSelect.querySelectorAll('option').forEach(option => {
+                option.selected = savedEngines.includes(option.value);
+            });
+        }
+
+        // UI feedback during operation
+        const button = document.getElementById('pingButton');
+        button.disabled = true;
+        document.getElementById('loading').style.display = 'block';
+        document.getElementById('result').textContent = '';
+        document.getElementById('results').innerHTML = '';
+
+        // Start pinging search engines
+        const startTime = performance.now();
+        const requests = selectedEngines.map(async (url) => {
+            const engineStartTime = performance.now();
+            const response = await fetch(`${url}${sitemapURL}`);
+            const engineEndTime = performance.now();
+            return {
                 url,
-                status: response.ok
-            })));
-
-            Promise.all(requests)
-                .then(results => {
-                    const success = results.filter(result => result.status);
-                    const failed = results.filter(result => !result.status);
-                    
-                    // Display success and error messages
-                    if (success.length === selectedEngines.length) {
-                        document.getElementById('result').textContent = `Successfully pinged ${success.map(r => r.url).join(', ')}!`;
-                        document.getElementById('result').classList.add('success');
-                    } else {
-                        document.getElementById('result').textContent = `Failed to ping ${failed.map(r => r.url).join(', ')}.`;
-                        document.getElementById('result').classList.add('error');
-                    }
-                })
-                .catch(error => {
-                    console.error('Error:', error);
-                    document.getElementById('result').textContent = 'An error occurred while pinging.';
-                    document.getElementById('result').classList.add('error');
-                })
-                .finally(() => {
-                    button.disabled = false;
-                    document.getElementById('loading').style.display = 'none';
-                });
+                status: response.ok ? 'Success' : 'Failed',
+                statusCode: response.status,
+                responseTime: `${(engineEndTime - engineStartTime).toFixed(2)} ms`
+            };
         });
+
+        // Wait for all requests to finish
+        const results = await Promise.all(requests);
+
+        // Generate and render results table
+        const resultsContainer = document.getElementById('results');
+        resultsContainer.innerHTML = `
+            <table>
+                <thead>
+                    <tr>
+                        <th>Search Engine</th>
+                        <th>Status</th>
+                        <th>Status Code</th>
+                        <th>Response Time</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    ${results.map(result => `
+                        <tr>
+                            <td>${result.url}</td>
+                            <td>${result.status}</td>
+                            <td>${result.statusCode}</td>
+                            <td>${result.responseTime}</td>
+                        </tr>
+                    `).join('')}
+                </tbody>
+            </table>
+        `;
+
+        // Display success and error summaries
+        const success = results.filter(result => result.status === 'Success');
+        const failed = results.filter(result => result.status === 'Failed');
+
+        if (success.length === selectedEngines.length) {
+            document.getElementById('result').textContent = `Successfully pinged ${success.map(r => r.url).join(', ')}!`;
+            document.getElementById('result').className = 'success';
+        } else {
+            document.getElementById('result').textContent = `Failed to ping ${failed.map(r => r.url).join(', ')}.`;
+            document.getElementById('result').className = 'error';
+        }
+
+    } catch (error) {
+        console.error('An error occurred while pinging search engines:', error);
+        document.getElementById('result').textContent = 'An error occurred while pinging.';
+        document.getElementById('result').className = 'error';
+    } finally {
+        // Reset UI after operation
+        document.getElementById('pingButton').disabled = false;
+        document.getElementById('loading').style.display = 'none';
+    }
+});
+
     </script>
 </body>
 </html>
