@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ping Search Engines</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f7f6;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            color: #333;
+        }
+
+        .container {
+            text-align: center;
+            padding: 20px;
+            border-radius: 10px;
+            background-color: #fff;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+            max-width: 450px;
+            width: 100%;
+        }
+
+        h1 {
+            font-size: 24px;
+            margin-bottom: 20px;
+            color: #007BFF;
+        }
+
+        select, button {
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            margin-top: 15px;
+            border-radius: 5px;
+            border: 1px solid #007BFF;
+            outline: none;
+        }
+
+        select {
+            width: 100%;
+        }
+
+        button {
+            background-color: #007BFF;
+            color: white;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        button:disabled {
+            background-color: #aaa;
+            cursor: not-allowed;
+        }
+
+        #result {
+            margin-top: 20px;
+            font-size: 16px;
+            font-weight: bold;
+            transition: opacity 0.5s ease-in-out;
+        }
+
+        #loading {
+            display: none;
+            color: #28a745;
+            font-size: 18px;
+            margin-top: 10px;
+        }
+
+        .error {
+            color: #dc3545;
+        }
+
+        .success {
+            color: #28a745;
+        }
+
+        @media (max-width: 600px) {
+            h1 {
+                font-size: 20px;
+            }
+
+            select, button {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Ping Search Engines</h1>
+
+        <label for="domainSelect">Select Your Domain:</label>
+        <select id="domainSelect">
+            <!-- Options will be populated by JavaScript -->
+        </select>
+
+        <label for="searchEnginesSelect">Select Search Engines to Ping:</label>
+        <select id="searchEnginesSelect" multiple>
+            <!-- Options will be populated by JavaScript -->
+        </select>
+
+        <button id="pingButton">Ping Selected Search Engines</button>
+
+        <p id="loading">Sending requests... Please wait.</p>
+        <p id="result"></p>
+    </div>
+
+    <script>
+        // List of domains and search engines
+        const domains = [
+            { name: 'Shutterworx.co', url: 'https://shutterworx.co/sitemap.xml' },
+            { name: 'maximusbrand.com', url: 'https://maximusbrand.com/sitemap.xml' },
+            { name: 'rawphotographysite.com', url: 'https://rawphotographysite.com/sitemap.xml' },
+            { name: 'reelcareer.co', url: 'https://reelcareer.co/sitemap.xml' },
+            { name: 'rw-501.github.io%2FPortfolio', url: 'https://rw-501.github.io%2FPortfolio/sitemap.xml' }
+        ];
+
+        const searchEngines = [
+    { name: 'Google', url: 'https://www.google.com/ping?sitemap=' },
+    { name: 'Bing', url: 'https://www.bing.com/ping?sitemap=' },
+    { name: 'Yandex', url: 'https://webmaster.yandex.com/ping?sitemap=' },
+    { name: 'Baidu', url: 'https://ping.baidu.com/ping?sitemap=' },
+    { name: 'DuckDuckGo', url: 'https://duckduckgo.com/ping?sitemap=' },
+    { name: 'Ecosia', url: 'https://www.ecosia.org/ping?sitemap=' },  // Example of another search engine
+    { name: 'Ask.com', url: 'https://submissions.ask.com/ping?sitemap=' },  // Example of adding Ask.com
+    { name: 'Seznam', url: 'https://search.seznam.cz/ping?sitemap=' },  // Example of adding Seznam (Czech search engine)
+    { name: 'Naver', url: 'https://sitemap.naver.com/ping?sitemap=' },  // Naver is a popular search engine in South Korea
+    { name: 'Sogou', url: 'https://www.sogou.com/sogou-ping/ping?sitemap=' },  // Sogou is a Chinese search engine
+    { name: 'Qwant', url: 'https://www.qwant.com/ping?sitemap=' },  // Qwant is a privacy-focused European search engine
+    { name: 'Yahoo', url: 'https://search.yahoo.com/ping?sitemap=' },  // Yahoo search engine
+    { name: 'Exalead', url: 'https://www.exalead.com/search/ping?sitemap=' }  // Exalead is a search engine by Dassault Systèmes
+];
+
+
+        // Populate domain select options dynamically
+        const domainSelect = document.getElementById('domainSelect');
+        domains.forEach(domain => {
+            const option = document.createElement('option');
+            option.value = domain.url;
+            option.textContent = domain.name;
+            domainSelect.appendChild(option);
+        });
+
+        // Populate search engine select options dynamically
+        const searchEnginesSelect = document.getElementById('searchEnginesSelect');
+        searchEngines.forEach(engine => {
+            const option = document.createElement('option');
+            option.value = engine.url;
+            option.textContent = engine.name;
+            searchEnginesSelect.appendChild(option);
+        });
+
+        // Event listener for the ping button
+        document.getElementById('pingButton').addEventListener('click', function() {
+            const button = document.getElementById('pingButton');
+            button.disabled = true;
+            document.getElementById('loading').style.display = 'block';
+            document.getElementById('result').textContent = '';
+
+            // Get the selected domain and search engines
+            const sitemapURL = document.getElementById('domainSelect').value;
+            const selectedEngines = Array.from(searchEnginesSelect.selectedOptions).map(option => option.value);
+
+            // Send requests to selected search engines
+            const requests = selectedEngines.map(url => fetch(`${url}${sitemapURL}`).then(response => ({
+                url,
+                status: response.ok
+            })));
+
+            Promise.all(requests)
+                .then(results => {
+                    const success = results.filter(result => result.status);
+                    const failed = results.filter(result => !result.status);
+                    
+                    // Display success and error messages
+                    if (success.length === selectedEngines.length) {
+                        document.getElementById('result').textContent = `Successfully pinged ${success.map(r => r.url).join(', ')}!`;
+                        document.getElementById('result').classList.add('success');
+                    } else {
+                        document.getElementById('result').textContent = `Failed to ping ${failed.map(r => r.url).join(', ')}.`;
+                        document.getElementById('result').classList.add('error');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    document.getElementById('result').textContent = 'An error occurred while pinging.';
+                    document.getElementById('result').classList.add('error');
+                })
+                .finally(() => {
+                    button.disabled = false;
+                    document.getElementById('loading').style.display = 'none';
+                });
+        });
+    </script>
+</body>
+</html>
