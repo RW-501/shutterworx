@@ -755,6 +755,7 @@ topics.forEach(topic => {
 
     const topicElement = document.createElement("div");
     topicElement.classList.add("topic");
+    topicElement.id = topic;
     topicElement.textContent = topic;
     topicElement.addEventListener("click", () => {
         const filteredFaqs = faqs.filter(faq => faq.topic === topic);
